@@ -37,3 +37,4 @@ object Pikachu extends Monster {
     override def name = "It's Pikachuuuuuu"
 
 }
+
