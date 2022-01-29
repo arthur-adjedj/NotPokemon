@@ -74,6 +74,17 @@ object Swift extends Attack {
     val attackType = Normal
 }
 
+object Agility extends Attack {
+    override val name = "Agility"
+    override def toString : String = 
+        "The user relaxes and lightens its body to move faster. This sharply raises the Speed stat."
+    override val power = 0
+    override val accuracy: Float = Float.PositiveInfinity
+    val attackType = Normal
+    override def cast(self: Monster, ennemy: Monster): Unit = 
+        self.speedStage = (6).max(self.speedStage + 2)
+}
+
 object Thunder extends Attack {
     override val name = "Thunder"
     override def toString : String = 
