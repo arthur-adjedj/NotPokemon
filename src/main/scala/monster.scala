@@ -32,21 +32,22 @@ abstract class Monster {
     def originalName : String = {this.getClass.getSimpleName}
     def typeName : String = {monsterType.name}
 
-    def castAttack (attack : Attack, other : Monster) : Boolean = {
+    def castAttack (attack : Attack, other : Monster) : Unit = {
         var random = scala.util.Random.nextFloat()
         var thisAccuracyEff = this.accuracyBattle * calcModifier(this, "accuracy")
         var otherEvasionEff = other.evasionBattle * calcModifier(other, "evasion")
-        if (random <= attack.accuracy*thisAccuracyEff*otherEvasionEff) {
-            other.receiveAttack(attack, this); true
-        } else {
-            if (random <= attack.accuracy) {
-                println("Attack missed")
-            } else if (random <= attack.accuracy*thisAccuracyEff) {
-                println("You missed your attack")
+        for (i <- 1 to attack.nOfHits){
+            if (random <= attack.accuracy*thisAccuracyEff*otherEvasionEff) {
+                other.receiveAttack(attack, this)
             } else {
-                println("He dodged")
+                if (random <= attack.accuracy) {
+                    println("Attack missed")
+                } else if (random <= attack.accuracy*thisAccuracyEff) {
+                    println("You missed your attack")
+                } else {
+                    println("He dodged")
+                }
             }
-            false
         }
     }
 
@@ -77,7 +78,7 @@ abstract class Monster {
 
     }
 
-    def receiveAttack (attack : Attack, other : Monster) : Boolean = {
+    def receiveAttack (attack : Attack, other : Monster) : Unit = {
         
         var otherAttackEff = other.attackBattle * calcModifier(other, "attack")
         var thisDefenseEff = defenseBattle * calcModifier(this, "defense")
@@ -87,7 +88,6 @@ abstract class Monster {
         var damage = ((((2/5*other.level+2)*attack.power*otherAttackEff/thisDefenseEff)/50+2)*random).toInt
 
         takeDamage(damage)
-        true
         
     }
 
