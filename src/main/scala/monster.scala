@@ -147,6 +147,7 @@ class Pikachu extends Monster {
     attacks(0) = QuickAttack
     attacks(1) = DoubleSlap
     attacks(2) = Thunder
+    attacks(3) = EmptyAttack
 }
 
 class Carapuce extends Monster {

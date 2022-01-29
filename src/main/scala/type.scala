@@ -1,15 +1,14 @@
 abstract class Type {
-    def name : String 
-    def multDamage (t : Type) : Float
+    var name : String = "" 
+    def multDamage (t : Type) : Float = 1
 }
 
 object Normal extends Type {
-    override def name = "Normal"
-    override def multDamage(t: Type) : Float = 1
+    name = "Normal"
 }
 
 object Fire extends Type {
-    override def name = "Fire"
+    name = "Fire"
     override def multDamage(t: Type) : Float = {t.name match {
         case "Fire" => 1/2
         case "Water" => 1/2
@@ -21,7 +20,7 @@ object Fire extends Type {
 }
 
 object Water extends Type {
-    override def name = "Water"
+    name = "Water"
     override def multDamage(t: Type) : Float = {t.name match {
         case "Fire" => 2
         case "Water" => 1/2
@@ -32,7 +31,7 @@ object Water extends Type {
 }
 
 object Electric extends Type {
-    override def name = "Electric"
+    name = "Electric"
     override def multDamage(t: Type) : Float = {t.name match {
         case "Water" => 2
         case "Electric" => 1/2
@@ -43,7 +42,7 @@ object Electric extends Type {
 }   
 
 object Grass extends Type {
-    override def name = "Grass"
+    name = "Grass"
     override def multDamage(t: Type) : Float = {t.name match {
         case "Fire" => 1/2
         case "Water" => 2
@@ -54,7 +53,7 @@ object Grass extends Type {
 }
 
 object Ice extends Type {
-    override def name = "Ice"
+    name = "Ice"
     override def multDamage(t: Type) : Float = {t.name match {
         case "Water" => 1/2
         case "Grass" => 2   
