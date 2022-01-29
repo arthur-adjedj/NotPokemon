@@ -3,40 +3,62 @@ abstract class Type {
     def multDamage (t : Type) : Float
 }
 
-object NormalType extends Type {
-    override def name = "normal"
+object Normal extends Type {
+    override def name = "Normal"
     override def multDamage(t: Type) : Float = 1
 }
 
-object FireType extends Type {
-    override def name = "fire"
+object Fire extends Type {
+    override def name = "Fire"
     override def multDamage(t: Type) : Float = {t.name match {
-        case "normal" => 1
-        case "fire" => 1/2
-        case "water" => 1/2
-        case "grass" => 2   
+        case "Fire" => 1/2
+        case "Water" => 1/2
+        case "Grass" => 2  
+        case _ => 1 
         }
     }
 }
 
-object WaterType extends Type {
-    override def name = "water"
+object Water extends Type {
+    override def name = "Water"
     override def multDamage(t: Type) : Float = {t.name match {
-        case "normal" => 1
-        case "fire" => 2
-        case "water" => 1/2
-        case "grass" => 1/2   
+        case "Fire" => 2
+        case "Water" => 1/2
+        case "Grass" => 1/2 
+        case _ => 1
         }
     }
 }
 
-object GrassType extends Type {
-    override def name = "grass"
+object Electric extends Type {
+    override def name = "Electric"
     override def multDamage(t: Type) : Float = {t.name match {
-        case "normal" => 1
-        case "fire" => 1/2
-        case "water" => 2
-        case "grass" => 1/2   
+        case "Water" => 2
+        case "Electric" => 1/2
+        case "Grass" => 1/2   
+        case _ => 1
+        }
+    }
+}   
+
+object Grass extends Type {
+    override def name = "Grass"
+    override def multDamage(t: Type) : Float = {t.name match {
+        case "Fire" => 1/2
+        case "Water" => 2
+        case "Grass" => 1/2   
+        case _ => 1
         }
     }
 }
+
+object Ice extends Type {
+    override def name = "Ice"
+    override def multDamage(t: Type) : Float = {t.name match {
+        case "Fire" => 1/2
+        case "Water" => 2
+        case "Grass" => 1/2   
+        case _ => 1
+        }
+    }
+}   

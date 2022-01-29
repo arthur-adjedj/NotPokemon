@@ -5,18 +5,36 @@ abstract class Attack {
     val priority : Int = 0
     val accuracy : Float = 1
     val attackType : Type     
-    val inducedStatus : Status = NoStatus
-    val induceStatusChance : Float = 0
-    val minHits = 1
-    val maxHits = 1
+    def inducedStatus() : Status = NoStatus
+    def nOfHits() : Int = 1
 }
 
 object QuickAttack extends Attack {
-    override val name = "quick attack"
+    override val name = "Quick Attack"
+    override def toString : String = 
+        "The user lunges at the foe at a speed that makes " +
+        "it almost invisible. It is sure to strike first."
     override val power = 40
-    override val priority: Int = 1
-    val attackType: Type = NormalType
+    override val priority = 1
+    val attackType= NormalType
 }
 
 
+object DoubleSlap extends Attack {
+    override val name = "Double Slap"
+    override def toString : String = 
+        "The target is slapped repeatedly, back and forth,"+
+        " two to five times in a row."
+    override val power = 15
+    override val accuracy: Float = 0.85f
+    val attackType = NormalType
+    override def nOfHits(): Int = { scala.util.Random.nextFloat() match {
+        case x if x<= 32.5 => 2
+        case x if x<= 65 => 3
+        case x if x<= 77.5 => 4
+        case _ => 5
+
+    }}
+
+}
 
