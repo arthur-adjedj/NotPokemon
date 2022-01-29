@@ -16,7 +16,7 @@ object QuickAttack extends Attack {
         "it almost invisible. It is sure to strike first."
     override val power = 40
     override val priority = 1
-    val attackType= NormalType
+    val attackType= Normal
 }
 
 
@@ -27,7 +27,7 @@ object DoubleSlap extends Attack {
         " two to five times in a row."
     override val power = 15
     override val accuracy: Float = 0.85f
-    val attackType = NormalType
+    val attackType = Normal
     override def nOfHits(): Int = { scala.util.Random.nextFloat() match {
         case x if x<= 32.5 => 2
         case x if x<= 65 => 3

@@ -14,6 +14,7 @@ object Fire extends Type {
         case "Fire" => 1/2
         case "Water" => 1/2
         case "Grass" => 2  
+        case "Ice" => 2
         case _ => 1 
         }
     }
@@ -55,9 +56,9 @@ object Grass extends Type {
 object Ice extends Type {
     override def name = "Ice"
     override def multDamage(t: Type) : Float = {t.name match {
-        case "Fire" => 1/2
-        case "Water" => 2
-        case "Grass" => 1/2   
+        case "Water" => 1/2
+        case "Grass" => 2   
+        case "Ice" => 1/2
         case _ => 1
         }
     }
