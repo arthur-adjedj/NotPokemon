@@ -1,5 +1,5 @@
 class Player {
-    var team = Array[Monster](EmptyMonster, EmptyMonster, EmptyMonster, EmptyMonster, EmptyMonster, EmptyMonster)
+    var team = Array.fill(6){EmptyMonster}
     var name = ""
 
 }

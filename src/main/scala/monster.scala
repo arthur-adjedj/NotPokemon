@@ -55,12 +55,13 @@ abstract class Monster {
             println(name + "cannot attack because he's sleeping")
         } else if (status.exists(x => name == "Paralysis") && scala.util.Random.nextFloat() <= 1/4) {
             println(name + "cannot attack because he's paralysed")
-        } else if (status.forall(x => x.name != "Protection")) {
+        } else if (other.status.exists(x => x.name == "Protection")) {
+            println(other.name + " is protected")
+        } else {
             for (i <- 1 to attack.nOfHits){
                 if (status.exists(x => x.name == "Confusion") && random <= 0.5) {
                     this.receiveAttack(attack, this)
-                }
-                if (random <= attack.accuracy*thisAccuracyEff*otherEvasionEff) {
+                } else if (random <= attack.accuracy*thisAccuracyEff*otherEvasionEff) {
                     other.receiveAttack(attack, this)
                 } else {
                     if (random <= attack.accuracy) {
@@ -68,12 +69,10 @@ abstract class Monster {
                     } else if (random <= attack.accuracy*thisAccuracyEff) {
                         println(name + " missed his attack")
                     } else {
-                        println(other.name + "dodged")
+                        println(other.name + " dodged")
                     }
                 }
             }
-        } else { 
-            println(other.name + " is protected")
         }
     }
 
