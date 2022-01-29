@@ -26,11 +26,25 @@ abstract class Monster {
     var status : List[Status] = List()
     var attacks : Array[Attack] = new Array[Attack](4)
 
-    val monsterType : Type
+    var monsterType : Type = Normal
     var name : String = ""
 
     def originalName : String = {this.getClass.getSimpleName}
     def typeName : String = {monsterType.name}
+
+    def enterBattle : Unit = {
+        attackBattle = attackStat
+        defenseBattle = defenseStat
+        speedBattle = speedStat 
+        accuracyBattle = 1
+        evasionBattle = 1
+
+        attackStage = 0
+        defenseStage = 0
+        speedStage = 0
+        accuracyStage  = 0
+        evasionStage = 0
+    }
 
     def castAttack (attack : Attack, other : Monster) : Unit = {
         var random = scala.util.Random.nextFloat()
@@ -128,8 +142,11 @@ class Pikachu extends Monster {
     defenseStat = 40
     speedStat = 90
 
-    override val monsterType = Electric
+    monsterType = Electric
     name = "Pikachuuuuu"
+    attacks(0) = QuickAttack
+    attacks(1) = DoubleSlap
+    attacks(2) = Thunder
 }
 
 class Carapuce extends Monster {
@@ -140,7 +157,7 @@ class Carapuce extends Monster {
     speedStat = 50
 
 
-    override val monsterType = Water
+    monsterType = Water
     name = "Carapuuuuuce"
 
 }
