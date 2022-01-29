@@ -50,18 +50,22 @@ abstract class Monster {
         var random = scala.util.Random.nextFloat()
         var thisAccuracyEff = this.accuracyBattle * calcModifier(this, "accuracy")
         var otherEvasionEff = other.evasionBattle * calcModifier(other, "evasion")
-        for (i <- 1 to attack.nOfHits){
-            if (random <= attack.accuracy*thisAccuracyEff*otherEvasionEff) {
-                other.receiveAttack(attack, this)
-            } else {
-                if (random <= attack.accuracy) {
-                    println("Attack missed")
-                } else if (random <= attack.accuracy*thisAccuracyEff) {
-                    println("You missed your attack")
+        if (status.forall(x => x.name != "Protection")) {
+            for (i <- 1 to attack.nOfHits){
+                if (random <= attack.accuracy*thisAccuracyEff*otherEvasionEff) {
+                    other.receiveAttack(attack, this)
                 } else {
-                    println("He dodged")
+                    if (random <= attack.accuracy) {
+                        println(attack.name + " missed")
+                    } else if (random <= attack.accuracy*thisAccuracyEff) {
+                        println(name + " missed his attack")
+                    } else {
+                        println(other.name + "dodged")
+                    }
                 }
             }
+        } else { 
+            println(other.name + " is protected")
         }
     }
 
@@ -99,13 +103,36 @@ abstract class Monster {
 
         var random = scala.util.Random.nextFloat()*38/255 + 217/255
 
-        var damage = ((((2/5*other.level+2)*attack.power*otherAttackEff/thisDefenseEff)/50+2)*random).toInt
+        var damage = ((((2/5*other.level+2)*attack.power*otherAttackEff/thisDefenseEff)/50+2)*random*attack.attackType.multDamage(other.monsterType)).toInt
 
         takeDamage(damage)
         
     }
 
-  
+    def receiveStatus (stat : Status) : Unit = {
+        def max_duration (s : Status, name : String) : Unit = {
+            if (s.name == name) {
+                s.durationLeft = s.duration
+            }
+        }
+
+        var exists = status.exists(x => x.name == stat.name)
+        if (exists) {
+            status.foreach(x => max_duration(x, stat.name))
+        } else {
+            status = stat :: status
+            stat.onAdd
+        }
+    }
+
+    def removeStatus (stat : Status) : Unit = {
+        status = status.filter(x => x.name != stat.name)
+    }
+
+    def endTurnStatus : Unit = {
+        status.foreach(x => x.onEndTurn)
+        status = status.filter(x => x.durationLeft != 0)
+    }
 
     def heal (amount : Int) : Unit = {
         hp += amount
