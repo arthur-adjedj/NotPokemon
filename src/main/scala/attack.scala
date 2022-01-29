@@ -65,7 +65,7 @@ object Growl extends Attack {
         "The user growls in an endearing way, making opposing" +
         "Pokémon less wary. This lowers their Attack stat."
     override def cast(self: Monster, ennemy: Monster): Unit = 
-        ennemy.attackStage = (-6).min(ennemy.attackStage -1)
+        ennemy.attackStage = (-6).max(ennemy.attackStage -1)
 }
 
 object Swift extends Attack {
@@ -79,12 +79,11 @@ object Swift extends Attack {
 
 object Agility extends Attack {
     name = "Agility"
-    power = 0
     accuracy = Float.PositiveInfinity
     override def toString : String = 
         "The user relaxes and lightens its body to move faster. This sharply raises the Speed stat."
     override def cast(self: Monster, ennemy: Monster): Unit = 
-        self.speedStage = (6).max(self.speedStage + 2)
+        self.speedStage = (6).min(self.speedStage + 2)
 }
 
 object Thunder extends Attack {
@@ -97,9 +96,105 @@ object Thunder extends Attack {
         " This may also leave the target with paralysis."
     override def cast(self: Monster, ennemy: Monster): Unit = {
         if (scala.util.Random.nextFloat() < 0.3f){
-            var TO_DO = ennemy.status
+            ennemy.receiveStatus(new Paralysis)
         }
     }
+}
+
+object Tackle extends Attack {
+    name = "Tackle"
+    power = 40
+    override def toString : String = 
+        "A physical attack in which the user charges "+
+        "and slams into the target with its whole body."
+}
+
+object TailWhip extends Attack {
+    name = "Tail Whip"
+    override def toString : String = 
+        "The user wags its tail cutely, making opposing Pokémon less wary and lowering their Defense stat."
+    override def cast(self: Monster, ennemy: Monster): Unit = 
+        ennemy.defenseStage = (-6).max(ennemy.defenseStage-1)
+}
+
+object WaterGun extends Attack {
+    name = "Water Gun"
+    power = 40
+    attackType = Water
+    override def toString : String = 
+        "The target is blasted with a forceful shot of water."
+}
+
+object Withdraw extends Attack {
+    name = "Withdraw"
+    attackType = Water
+    override def toString : String = 
+        "The user wags its tail cutely, making opposing Pokémon less wary and lowering their Defense stat."
+    override def cast(self: Monster, ennemy: Monster): Unit = 
+        self.defenseStage = (6).min(self.defenseStage+1)
+    
+}
+
+object RapidSpin extends Attack {
+    name = "Rapid Spin"
+    power = 50
+    override def toString : String = 
+        "A spin attack that can also eliminate such moves as Bind, Wrap, Leech Seed, and Spikes."
+    override def cast(self: Monster, ennemy: Monster): Unit = 
+        self.speedStage = (6).min(self.speedStage+1)
+    
+}
+
+
+object WaterPulse extends Attack {
+    name = "Water Pulse"
+    power = 60
+    override def toString : String = 
+        "The user attacks the target with a pulsing blast of water. This may also confuse the target."
+    override def cast(self: Monster, ennemy: Monster): Unit = {
+        if (scala.util.Random.nextFloat() < 0.2f){
+            ennemy.receiveStatus(new Confusion) 
+       }
+    }
+    
+}
+
+
+object Protect extends Attack {
+    name = "Protect"
+    override def toString : String = 
+        "Enables the user to evade all attacks. Its chance of failing rises if it is used in succession."
+    override def cast(self: Monster, ennemy: Monster): Unit = {
+            ennemy.receiveStatus(new Protection) 
+       
+    }
+}
+
+
+object AquaTail extends Attack {
+    name = "Aqua Tail"
+    power = 90
+    accuracy = 0.9f
+    override def toString : String = 
+        "The user attacks by swinging its tail as if it were a vicious wave in a raging storm."
+}
+
+object ShellSmash extends Attack {
+    name = "Shell Smash"
+    override def toString : String = 
+        "A spin attack that can also eliminate such moves as Bind, Wrap, Leech Seed, and Spikes."
+    override def cast(self: Monster, ennemy: Monster): Unit = 
+        ennemy.defenseStage = (-6).max(ennemy.defenseStage-1)
+    
+}
+
+object IronDefense extends Attack {
+    name = "Iron Defense"
+    override def toString : String = 
+        "The user hardens its body’s surface like iron, sharply raising its Defense stat."
+    override def cast(self: Monster, ennemy: Monster): Unit = 
+        self.defenseStage = (6).min(self.defenseStage+2)
+    
 }
 
 //TODO faire attacks squirtle
