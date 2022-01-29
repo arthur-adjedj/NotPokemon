@@ -1,9 +1,13 @@
 abstract class Status {
-    def name : String 
-    def duration : Int 
+    var name : String = ""
+    var duration : Int  = 0
 }
 
 object NoStatus extends Status {
-    def name = "none"
-    def duration: Int = 0
+    name = "none"
+    duration = 0
+}
+
+object Paralysis extends Status {
+    //TODO
 }
