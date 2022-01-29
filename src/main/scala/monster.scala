@@ -11,7 +11,6 @@ abstract class Monster {
     var attackBattle : Int = 100
     var defenseBattle : Int = 100
     var speedBattle : Int = 100
-
     var accuracyBattle : Float = 1
     var evasionBattle : Float = 1
 
@@ -50,8 +49,17 @@ abstract class Monster {
         var random = scala.util.Random.nextFloat()
         var thisAccuracyEff = this.accuracyBattle * calcModifier(this, "accuracy")
         var otherEvasionEff = other.evasionBattle * calcModifier(other, "evasion")
-        if (status.forall(x => x.name != "Protection")) {
+        if (status.exists(x => x.name == "Freeze")) {
+            println(name + "cannot attack because he's frozen")
+        } else if (status.exists(x => x.name == "Sleep")) {
+            println(name + "cannot attack because he's sleeping")
+        } else if (status.exists(x => name == "Paralysis") && scala.util.Random.nextFloat() <= 1/4) {
+            println(name + "cannot attack because he's paralysed")
+        } else if (status.forall(x => x.name != "Protection")) {
             for (i <- 1 to attack.nOfHits){
+                if (status.exists(x => x.name == "Confusion") && random <= 0.5) {
+                    this.receiveAttack(attack, this)
+                }
                 if (random <= attack.accuracy*thisAccuracyEff*otherEvasionEff) {
                     other.receiveAttack(attack, this)
                 } else {
