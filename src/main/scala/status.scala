@@ -1,11 +1,12 @@
 abstract class Status {
-    var name : String = ""
-    var duration : Int  = 0
+    var name : String = "Empty"
+    var duration : Int = 0
+    var durationLeft : Int = 0
 }
 
-object NoStatus extends Status {
+class NoStatus extends Status {
 }
 
-object Paralysis extends Status {
+class Paralysis extends Status {
     //TODO
 }

@@ -1,6 +1,8 @@
 abstract class Type {
     var name : String = "" 
     def multDamage (t : Type) : Float = 1
+
+    override def toString : String = name
 }
 
 object Normal extends Type {

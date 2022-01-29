@@ -24,7 +24,7 @@ abstract class Monster {
     var evasionStage : Int = 0
 
     var status : List[Status] = List()
-    var attacks : Array[Attack] = new Array[Attack](4)
+    var attacks : Array[Attack] = Array[Attack](EmptyAttack, EmptyAttack, EmptyAttack, EmptyAttack)
 
     var monsterType : Type = Normal
     var name : String = ""
@@ -105,6 +105,8 @@ abstract class Monster {
         
     }
 
+  
+
     def heal (amount : Int) : Unit = {
         hp += amount
         if (hp > hpMax) {
@@ -161,5 +163,9 @@ class Carapuce extends Monster {
     monsterType = Water
     name = "Carapuuuuuce"
 
+}
+
+object EmptyMonster extends Monster {
+    name = "Empty"
 }
 
