@@ -23,7 +23,7 @@ abstract class Monster {
     var accuracyStage : Int = 0
     var evasionStage : Int = 0
 
-    var statuts : Array[Status] = new Array[Status](10)
+    var status : List[Status] = List()
     var attacks : Array[Attack] = new Array[Attack](4)
 
     val monsterType : Type

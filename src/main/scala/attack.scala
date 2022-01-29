@@ -97,7 +97,7 @@ object Thunder extends Attack {
         " This may also leave the target with paralysis."
     override def cast(self: Monster, ennemy: Monster): Unit = {
         if (scala.util.Random.nextFloat() < 0.3f){
-            //TODO add paralysis
+            ennemy.statuts
         }
     }
 }

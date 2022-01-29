@@ -4,8 +4,6 @@ abstract class Status {
 }
 
 object NoStatus extends Status {
-    name = "none"
-    duration = 0
 }
 
 object Paralysis extends Status {
