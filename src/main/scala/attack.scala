@@ -1,32 +1,36 @@
 abstract class Attack {
-    val name : String = ""
-    val power : Int = 0
-    val critChance : Float = 0
-    val priority : Int = 0
-    val accuracy : Float = 1
-    val attackType : Type     
+    var name : String = ""
+    var power : Int = 0
+    var critChance : Float = 0
+    var priority : Int = 0
+    var accuracy : Float = 1
+    var attackType : Type = Normal
     def nOfHits() : Int = 1
     def cast(self : Monster,ennemy: Monster) : Unit = ()
 }
 
+object EmptyAttack extends Attack {
+    name = "Empty"
+}
+
+
 object QuickAttack extends Attack {
-    override val name = "Quick Attack"
+    name = "Quick Attack"
+    power = 40
+    priority = 1
     override def toString : String = 
         "The user lunges at the foe at a speed that makes " +
         "it almost invisible. It is sure to strike first."
-    override val power = 40
-    override val priority = 1
-    val attackType= Normal
 }
 
 object DoubleSlap extends Attack {
-    override val name = "Double Slap"
+    name = "Double Slap"
+    power = 15
+    accuracy = 0.85f
     override def toString : String = 
         "The target is slapped repeatedly, back and forth,"+
         " two to five times in a row."
-    override val power = 15
-    override val accuracy: Float = 0.85f
-    val attackType = Normal
+    
     override def nOfHits(): Int = { scala.util.Random.nextFloat() match {
         case x if x<= 32.5 => 2
         case x if x<= 65 => 3
@@ -37,62 +41,60 @@ object DoubleSlap extends Attack {
 }
 
 object ThunderShock extends Attack {
-    override val name = "Thunder Shock"
+    name = "Thunder Shock"
+    power = 40
+    attackType = Electric
     override def toString : String = 
         "A jolt of electricity crashes down on the target to " +
         "inflict damage. This may also leave the target with paralysis."
-    override val power = 40
-    val attackType = Electric
 }
 
 object ThunderWave extends Attack {
-    override val name = "Thunder Wave"
+    name = "Thunder Wave"
+    accuracy = 0.9f
+    attackType = Electric
     override def toString : String = 
         "The user launches a weak jolt of electricity that paralyzes the target."
-    override val accuracy: Float = 0.9f
-    val attackType = Electric
     override def cast(self: Monster, ennemy: Monster): Unit = ()//TODO add Paralysis
 }
 
 object Growl extends Attack {
-    override val name = "Growl"
+    name = "Growl"
+    power = 40
     override def toString : String = 
         "The user growls in an endearing way, making opposing" +
         "Pokémon less wary. This lowers their Attack stat."
-    override val power = 40
-    val attackType = Normal 
     override def cast(self: Monster, ennemy: Monster): Unit = 
         ennemy.attackStage = (-6).min(ennemy.attackStage -1)
 }
 
 object Swift extends Attack {
-    override val name = "Swift"
+    name = "Swift"
+    power = 40
+    accuracy = Float.PositiveInfinity
+    attackType = Normal
     override def toString : String = 
-        "Star-shaped rays are shot at the opposing Pokémon. This attack never misses."
-    override val power = 40
-    override val accuracy: Float = Float.PositiveInfinity
-    val attackType = Normal
+        "Star-shaped rays are shot at the opposing Pokémon. This attack never misses."    
 }
 
 object Agility extends Attack {
-    override val name = "Agility"
+    name = "Agility"
+    power = 0
+    accuracy = Float.PositiveInfinity
     override def toString : String = 
         "The user relaxes and lightens its body to move faster. This sharply raises the Speed stat."
-    override val power = 0
-    override val accuracy: Float = Float.PositiveInfinity
-    val attackType = Normal
     override def cast(self: Monster, ennemy: Monster): Unit = 
         self.speedStage = (6).max(self.speedStage + 2)
 }
 
 object Thunder extends Attack {
-    override val name = "Thunder"
+    name = "Thunder"
+    power = 110
+    accuracy= 0.7f
+    attackType = Electric
     override def toString : String = 
         "A wicked thunderbolt is dropped on the target to inflict damage."+
         " This may also leave the target with paralysis."
-    override val power = 110
-    override val accuracy: Float = 0.7f
-    val attackType = Electric
     override def cast(self: Monster, ennemy: Monster): Unit = {
         if (scala.util.Random.nextFloat() < 0.3f){
             //TODO add paralysis
