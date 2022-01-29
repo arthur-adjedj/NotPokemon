@@ -2,9 +2,14 @@ abstract class Status {
     var name : String = "Empty"
     var duration : Int = 0
     var durationLeft : Int = 0
-    def onAdd : Unit = {}
-    def onDelete : Unit = {}
-    def onEndTurn : Unit = {durationLeft -=1}
+    def onAdd (target : Monster) : Unit = {}
+    def onDelete (target : Monster) : Unit = {}
+    def onEndTurn (target : Monster) : Unit = {
+        durationLeft -= 1
+        if (durationLeft == 0) {
+            onDelete(target)
+        }
+    }
 }
 
 class NoStatus extends Status {
@@ -12,35 +17,52 @@ class NoStatus extends Status {
 
 class Paralysis extends Status {
     name = "Paralysis"
-    //TODO
+    override def onAdd (target : Monster) : Unit = {
+        target.speedBattle /= 4
+    }
+
+    override def onDelete (target : Monster) : Unit = {
+        target.speedBattle *= 4
+    }
 }
 
 class Confusion extends Status {
     name = "Confusion"
-    //TODO
 }
 
 class Protection extends Status {
     name = "Protection"
-    //TODO
 }
+
 class Burn extends Status {
     name = "Burn"
-    //TODO
+    override def onAdd (target : Monster) : Unit = {
+        target.attackBattle /= 2
+    }
+
+    override def onDelete (target : Monster) : Unit = {
+        target.attackBattle *= 2
+    }
+
+    override def onEndTurn (target : Monster) : Unit = {
+        target.takeDamage(target.hpMax / 16)
+        super.onEndTurn(target)
+    }
 }
 
 class Freeze extends Status {
     name = "Freeze"
-    //TODO
 }
 
 
 class Poison extends Status {
     name = "Poison"
-    //TODO
+    override def onEndTurn (target : Monster) : Unit = {
+        target.takeDamage(target.hpMax / 16)
+        super.onEndTurn(target)
+    }
 }
 
 class Sleep extends Status {
     name = "Sleep"
-    //TODO
 }

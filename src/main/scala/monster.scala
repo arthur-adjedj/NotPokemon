@@ -129,7 +129,7 @@ abstract class Monster {
             status.foreach(x => max_duration(x, stat.name))
         } else {
             status = stat :: status
-            stat.onAdd
+            stat.onAdd(this)
         }
     }
 
@@ -138,7 +138,7 @@ abstract class Monster {
     }
 
     def endTurnStatus : Unit = {
-        status.foreach(x => x.onEndTurn)
+        status.foreach(x => x.onEndTurn(this))
         status = status.filter(x => x.durationLeft != 0)
     }
 
