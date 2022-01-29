@@ -149,6 +149,7 @@ object RapidSpin extends Attack {
 object WaterPulse extends Attack {
     name = "Water Pulse"
     power = 60
+    attackType = Water
     override def toString : String = 
         "The user attacks the target with a pulsing blast of water. This may also confuse the target."
     override def cast(self: Monster, ennemy: Monster): Unit = {
@@ -175,6 +176,7 @@ object AquaTail extends Attack {
     name = "Aqua Tail"
     power = 90
     accuracy = 0.9f
+    attackType = Water
     override def toString : String = 
         "The user attacks by swinging its tail as if it were a vicious wave in a raging storm."
 }
@@ -185,7 +187,6 @@ object ShellSmash extends Attack {
         "A spin attack that can also eliminate such moves as Bind, Wrap, Leech Seed, and Spikes."
     override def cast(self: Monster, ennemy: Monster): Unit = 
         ennemy.defenseStage = (-6).max(ennemy.defenseStage-1)
-    
 }
 
 object IronDefense extends Attack {
@@ -193,9 +194,25 @@ object IronDefense extends Attack {
     override def toString : String = 
         "The user hardens its body’s surface like iron, sharply raising its Defense stat."
     override def cast(self: Monster, ennemy: Monster): Unit = 
-        self.defenseStage = (6).min(self.defenseStage+2)
-    
+        self.defenseStage = (6).min(self.defenseStage+2)    
 }
 
-//TODO faire attacks squirtle
+object HydroPump extends Attack {
+    name = "Hydro Pump"
+    power = 110
+    accuracy = 0.8f
+    attackType = Water
+    override def toString : String = 
+        "The target is blasted by a huge volume of water launched under great pressure."
+}
+
+object SkullBash extends Attack {
+    name = "Skull Bash"
+    power = 130
+    override def toString : String = 
+        "The user tucks in its head to raise its Defense, then rams the target."
+    override def cast(self: Monster, ennemy: Monster): Unit = 
+        self.defenseStage = (6).min(self.defenseStage+1)    
+}
+
 
