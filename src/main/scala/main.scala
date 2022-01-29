@@ -1,5 +1,6 @@
 object MyProgram {
     def main(args: Array[String]): Unit = {
-        println( Pikachu.name )
+        println( new Pikachu )
+        println( new Carapuce )
     }
 }
