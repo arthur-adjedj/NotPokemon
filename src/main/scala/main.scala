@@ -1,12 +1,20 @@
-import swing._
+import scala.swing._
+import scala.swing.event._
 
-object MyApp extends SimpleSwingApplication {
-    def top = new MainFrame {
-        title = "My App"
-        contents = new BorderPanel {
-            add(new Label((new Pikachu).toString), BorderPanel.Position.North)
-            add(new Label(ShellSmash.toString), BorderPanel.Position.Center)
-            add(new Label((new Carapuce).toString), BorderPanel.Position.South)
+object ButtonApp extends SimpleSwingApplication {
+  def top: Frame = new MainFrame {
+    title = "My Frame"
+    contents = new GridPanel(7, 100) {
+      hGap = 3
+      vGap = 3
+      contents += new Button {
+        text = "Press Me!"
+        reactions += {
+          case ButtonClicked(_) => text = "Hello Scala"
         }
+      }
+      contents += new Label("This is a label !")
     }
-}
+    size = new Dimension(800,800)
+  }
+}   
