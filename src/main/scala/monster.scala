@@ -23,7 +23,7 @@ abstract class Monster {
     var evasionStage : Int = 0
 
     var status : List[Status] = List()
-    var attacks : Array[Attack] = Array[Attack](EmptyAttack, EmptyAttack, EmptyAttack, EmptyAttack)
+    var attacks : Array[Attack] = Array.fill(4){EmptyAttack}
 
     var monsterType : Type = Normal
     var name : String = ""
