@@ -4,7 +4,7 @@ import java.awt.{Color,Graphics2D,BasicStroke}
 import java.awt.image.BufferedImage
 
 
-class Battle extends Component {
+class BattleUI extends Component {
   preferredSize = new Dimension(800, 800)
   var battleBackgroundImg = javax.imageio.ImageIO.read(getClass.getResource("BattleBackground.png"))
   var pokemonFrontImg = javax.imageio.ImageIO.read(getClass.getResource("PikachuFront.png"))
