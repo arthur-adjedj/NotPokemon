@@ -6,12 +6,14 @@ import java.awt.image.BufferedImage
 
 class Battle extends Component {
   preferredSize = new Dimension(800, 800)
-  var img = javax.imageio.ImageIO.read(getClass.getResource("test.png"))
-
+  var battleBackgroundImg = javax.imageio.ImageIO.read(getClass.getResource("BattleBackground.png"))
+  var pokemonFrontImg = javax.imageio.ImageIO.read(getClass.getResource("PikachuFront.png"))
+  var pokemonBackImg = javax.imageio.ImageIO.read(getClass.getResource("SquirtleBack.png"))
   override def paintComponent (g : Graphics2D) : Unit = {
     super.paintComponent(g)
-    g.drawImage(img, 500, 100, null)
-    g.drawImage(img, 200, 600, null)
+    g.drawImage(battleBackgroundImg, 0, 0, null)
+    g.drawImage(pokemonFrontImg,375,20,null)
+    g.drawImage(pokemonBackImg,85,159,null)
   }
 
 }
