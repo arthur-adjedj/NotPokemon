@@ -25,7 +25,7 @@ class BattleUI extends Component {
 
 object MyApp extends SimpleSwingApplication {
   
-  var battle = new Battle
+  var battle = new BattleUI
 
   def top = new MainFrame {
     title = "MyApplication"
