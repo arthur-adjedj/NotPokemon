@@ -1,7 +1,10 @@
 import java.text.Normalizer
+import java.lang.Math
+
 abstract class Monster {
     var hpMax : Int = 100
     var hp : Int = 100
+    var xp : Int = 0
     var level : Int = 1
 
     var attackStat : Int = 100
@@ -17,7 +20,6 @@ abstract class Monster {
     var alive : Boolean = true
     var wild : Boolean = false
     var monstersSeen : List[Monster] = List()
-    var baseXp : Int = 1
 
     var hpMaxPerLevel : Int = 10
 
@@ -29,6 +31,12 @@ abstract class Monster {
 
     var status : List[Status] = List()
     var attacks : Array[Attack] = Array.fill(4){EmptyAttack}
+
+    var baseXp : Int = 1
+    var xpGraph : String = "Fast"
+    var previousXpStep : Int = 0
+    var nextXpStep : Int = 0
+    def xpRate : Float = {(xp - previousXpStep) / (nextXpStep - xp)}
 
     var monsterType : Type = Normal
     var name : String = ""
@@ -174,7 +182,7 @@ abstract class Monster {
     def die : Int = {
         alive = false
         var monstersSeenAlive = monstersSeen.map(x => x.alive)
-        var exp : Float = baseXp*level
+        var exp : Float = baseXp*level/7/monstersSeenAlive.length
         if (!wild) {
             exp *= 3/2
         }
@@ -182,10 +190,27 @@ abstract class Monster {
 
     }
 
-    def levelUp = {
+    def gainXp (amount : Int) : Unit = {
+        xp += amount
+        if (xp >= nextXpStep) {
+            var diff = xp - nextXpStep
+            xp = nextXpStep
+            levelUp
+            gainXp(diff)
+        }
+    }
+
+    def levelUp : Unit = {
         hpMax += hpMaxPerLevel
         hp = hpMax
         level += 1
+        previousXpStep = nextXpStep
+        xpGraph match {
+            case "Fast" => nextXpStep = (0.8 * Math.pow(level, 3)).toInt
+            case "Medium Fast" => nextXpStep = (Math.pow(level, 3)).toInt
+            case "Medium Slow" => nextXpStep = (1.2 * Math.pow(level, 3) - 15 * Math.pow(level, 2) + 100 * level - 140).toInt
+            case "Slow" => nextXpStep = (1.25 * Math.pow(level, 3)).toInt
+        }
     }
 
     override def toString : String = {
