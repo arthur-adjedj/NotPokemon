@@ -5,7 +5,7 @@ abstract class Monster {
     var hpMax : Int = 100
     var hp : Int = 100
     var xp : Int = 0
-    var level : Int = 1
+    var level : Int = 0
 
     var attackStat : Int = 100
     var defenseStat : Int = 100
@@ -201,7 +201,9 @@ abstract class Monster {
     }
 
     def levelUp : Unit = {
-        hpMax += hpMaxPerLevel
+        if (level != 0) {
+            hpMax += hpMaxPerLevel
+        }
         hp = hpMax
         level += 1
         previousXpStep = nextXpStep
@@ -217,6 +219,8 @@ abstract class Monster {
         name + " is a " + originalName + " monster of type " + typeName
     }
 
+    levelUp
+
 }
 
 class Pikachu extends Monster {
@@ -225,6 +229,8 @@ class Pikachu extends Monster {
     attackStat = 55
     defenseStat = 40
     speedStat = 90
+
+    xpGraph = "Medium Fast"
 
     monsterType = Electric
     name = "Pikachuuuuu"
@@ -240,6 +246,8 @@ class Squirtle extends Monster {
     attackStat = 48
     defenseStat = 65
     speedStat = 50
+
+    xpGraph = "Medium Slow"
 
 
     monsterType = Water
