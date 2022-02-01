@@ -14,6 +14,11 @@ abstract class Monster {
     var accuracyBattle : Float = 1
     var evasionBattle : Float = 1
 
+    var alive : Boolean = true
+    var wild : Boolean = false
+    var monstersSeen : List[Monster] = List()
+    var baseXp : Int = 1
+
     var hpMaxPerLevel : Int = 10
 
     var attackStage : Int = 0
@@ -27,6 +32,8 @@ abstract class Monster {
 
     var monsterType : Type = Normal
     var name : String = ""
+    def imgNameFront : String = {this.getClass.getSimpleName + "Front.png"}
+    def imgNameBack : String = {this.getClass.getSimpleName + "Back.png"}
 
     def originalName : String = {this.getClass.getSimpleName}
     def typeName : String = {monsterType.name}
@@ -43,7 +50,16 @@ abstract class Monster {
         speedStage = 0
         accuracyStage  = 0
         evasionStage = 0
+
+        monstersSeen = List()
     }
+
+    def newMonsterSeen (other : Monster) : Unit = {
+        if (monstersSeen.forall(x => x.name != other.name)){
+            monstersSeen = other :: monstersSeen 
+        }
+    }
+
 
     def castAttack (attack : Attack, other : Monster) : Unit = {
         var random = scala.util.Random.nextFloat()
@@ -155,8 +171,15 @@ abstract class Monster {
         }
     }
 
-    def die = {
-        println("I'm dying")
+    def die : Int = {
+        alive = false
+        var monstersSeenAlive = monstersSeen.map(x => x.alive)
+        var exp : Float = baseXp*level
+        if (!wild) {
+            exp *= 3/2
+        }
+        exp.toInt
+
     }
 
     def levelUp = {
@@ -186,7 +209,7 @@ class Pikachu extends Monster {
     attacks(3) = EmptyAttack
 }
 
-class Carapuce extends Monster {
+class Squirtle extends Monster {
     hpMax = 44
     hp = 44
     attackStat = 48
