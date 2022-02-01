@@ -39,10 +39,12 @@ abstract class Monster {
     def xpRate : Float = {(xp - previousXpStep) / (nextXpStep - xp)}
 
     var monsterType : Type = Normal
+
     var name : String = ""
+    var owner : Player = EmptyPlayer
+
     def imgNameFront : String = {this.getClass.getSimpleName + "Front.png"}
     def imgNameBack : String = {this.getClass.getSimpleName + "Back.png"}
-
     def originalName : String = {this.getClass.getSimpleName}
     def typeName : String = {monsterType.name}
 
@@ -60,12 +62,27 @@ abstract class Monster {
         evasionStage = 0
 
         monstersSeen = List()
+        enterField
+    }
+
+    def enterField : Unit = {
+        print(owner)
+        newMonsterSeen(owner.opponent.currentMonster)
+        owner.opponent.currentMonster.newMonsterSeen(this)
     }
 
     def newMonsterSeen (other : Monster) : Unit = {
-        if (monstersSeen.forall(x => x.name != other.name)){
+        if (monstersSeen.forall(x => x.name != other.name) && other.name != "Empty"){
             monstersSeen = other :: monstersSeen 
         }
+    }
+
+    def newTurn : Unit = {
+
+    }
+
+    def endTurn : Unit = {
+        endTurnStatus
     }
 
 
@@ -86,6 +103,7 @@ abstract class Monster {
                 if (status.exists(x => x.name == "Confusion") && random <= 0.5) {
                     this.receiveAttack(attack, this)
                 } else if (random <= attack.accuracy*thisAccuracyEff*otherEvasionEff) {
+                    println(name + " casts " + attack.name + " on " + other.name)
                     other.receiveAttack(attack, this)
                 } else {
                     if (random <= attack.accuracy) {
@@ -132,9 +150,10 @@ abstract class Monster {
         var otherAttackEff = other.attackBattle * calcModifier(other, "attack")
         var thisDefenseEff = defenseBattle * calcModifier(this, "defense")
 
-        var random = scala.util.Random.nextFloat()*38/255 + 217/255
+        var random = scala.util.Random.nextFloat()*38.0/255.0 + 217.0/255.0
 
         var damage = ((((2/5*other.level+2)*attack.power*otherAttackEff/thisDefenseEff)/50+2)*random*attack.attackType.multDamage(other.monsterType)).toInt
+
 
         takeDamage(damage)
         
@@ -179,14 +198,16 @@ abstract class Monster {
         }
     }
 
-    def die : Int = {
+    def die : Unit = {
+        println(name + " died !")
         alive = false
-        var monstersSeenAlive = monstersSeen.map(x => x.alive)
+        var monstersSeenAlive = monstersSeen.map(x => x.alive && x.name != "Empty")
         var exp : Float = baseXp*level/7/monstersSeenAlive.length
         if (!wild) {
             exp *= 3/2
         }
-        exp.toInt
+        monstersSeenAlive.foreach(x => gainXp(exp.toInt))
+        owner.changeMonster
 
     }
 
@@ -208,10 +229,10 @@ abstract class Monster {
         level += 1
         previousXpStep = nextXpStep
         xpGraph match {
-            case "Fast" => nextXpStep = (0.8 * Math.pow(level, 3)).toInt
-            case "Medium Fast" => nextXpStep = (Math.pow(level, 3)).toInt
-            case "Medium Slow" => nextXpStep = (1.2 * Math.pow(level, 3) - 15 * Math.pow(level, 2) + 100 * level - 140).toInt
-            case "Slow" => nextXpStep = (1.25 * Math.pow(level, 3)).toInt
+            case "Fast" => nextXpStep = (0.8 * Math.pow(level+1, 3)).toInt
+            case "Medium Fast" => nextXpStep = (Math.pow(level+1, 3)).toInt
+            case "Medium Slow" => nextXpStep = (1.2 * Math.pow(level+1, 3) - 15 * Math.pow(level+1, 2) + 100 * (level+1) - 140).toInt
+            case "Slow" => nextXpStep = (1.25 * Math.pow(level+1, 3)).toInt
         }
     }
 
@@ -252,6 +273,8 @@ class Squirtle extends Monster {
 
     monsterType = Water
     name = "Carapuuuuuce"
+
+    attacks(0) = QuickAttack
 
 }
 
