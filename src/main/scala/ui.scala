@@ -230,6 +230,8 @@ abstract class HpBar {
     }
 
     def display (g : Graphics) : Unit = {
+        g.setColor(java.awt.Color.white)
+        g.fillRect( x, y ,width,height)       
         setColor(g)
         g.fillRect( x, y ,(width.toFloat*hpRate).toInt,height)       
     }
@@ -240,7 +242,7 @@ object EnnemyHpBar extends HpBar {
     y = 56
 }
 object YourHpBar extends HpBar {
-    x = 444
+    x = 443
     y = 226
     hpRate = 0.2f
 }
@@ -267,13 +269,13 @@ class DrawPanel (buttonList : List[MyButton], p1 : Player, p2 : Player) extends 
     var ennemyBarImg = javax.imageio.ImageIO.read(getClass.getResource("EnnemyBar.png"))
     var yourBarImg = javax.imageio.ImageIO.read(getClass.getResource("YourBar.png"))
     var buttonImg = javax.imageio.ImageIO.read(getClass.getResource("Button.png"))
-    val font_file : File = new File("pokemon_pixel_font.ttf");
-    val poke_font : Font = Font.createFont(Font.TRUETYPE_FONT, font_file);
+    //val font_file : File = new File("pokemon_pixel_font.ttf");
+    //val poke_font : Font = Font.createFont(Font.TRUETYPE_FONT, font_file);
 
   
     override def paintComponent (g : Graphics) : Unit = {
         super.paintComponent(g)
-        g.setFont(poke_font)
+        //g.setFont(poke_font)
         g.drawImage(battleBackgroundImg, 0, 0, null)
         g.drawImage(pokemonFrontImg, 370, 35, null)
         g.drawImage(pokemonBackImg, 75, 141, null)
@@ -281,12 +283,12 @@ class DrawPanel (buttonList : List[MyButton], p1 : Player, p2 : Player) extends 
         EnnemyHpBar.setRatio(p2.currentMonster.hpRate)
         YourHpBar.setRatio(p1.currentMonster.hpRate)
         YourExpBar.setRatio(p1.currentMonster.xpRate)
-        println(p1.currentMonster.xpRate)
-        g.drawImage(ennemyBarImg, 10, 20, null)
-        g.drawImage(yourBarImg, 320, 190, null)
         EnnemyHpBar.display(g)
         YourHpBar.display(g)
-        YourExpBar.display(g)
+        YourExpBar.display(g)        
+        g.drawImage(ennemyBarImg, 10, 20, null)
+        g.drawImage(yourBarImg, 320, 190, null)
+
 
         buttonList.foreach(x => x.display(g))
     }
