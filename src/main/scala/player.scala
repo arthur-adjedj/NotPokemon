@@ -77,7 +77,7 @@ object EmptyPlayer extends Player {
 object FirstPlayer extends Player {
     team(0) = new Pikachu
     team(0).owner = this
-    team(0).attackStat = 50000
+    team(0).attackStat = 100000
     name = "You"
     opponent = SecondPlayer
     var hisTurn : Boolean = false

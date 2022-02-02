@@ -153,8 +153,8 @@ abstract class Monster {
 
         var random = scala.util.Random.nextFloat()*38.0/255.0 + 217.0/255.0
 
-        var damage = ((((2/5*other.level+2)*attack.power*otherAttackEff/thisDefenseEff)/50+2)*random*attack.attackType.multDamage(other.monsterType)).toInt
-
+        var damage = ((((2.0/5.0*other.level.toFloat+2.0)*attack.power.toFloat*otherAttackEff.toFloat/thisDefenseEff.toFloat)/50.0+2)*random*attack.attackType.multDamage(other.monsterType)).toInt
+        println(name + " takes " + damage + "damages from " + other.name)
 
         takeDamage(damage)
         
