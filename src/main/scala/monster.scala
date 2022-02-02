@@ -36,7 +36,7 @@ abstract class Monster {
     var xpGraph : String = "Fast"
     var previousXpStep : Int = 0
     var nextXpStep : Int = 0
-    def xpRate : Float = {(hp - previousXpStep).toFloat / (nextXpStep - xp).toFloat}
+    def xpRate : Float = {(xp - previousXpStep).toFloat / (nextXpStep - previousXpStep).toFloat}
     def hpRate : Float = {hp.toFloat / hpMax.toFloat}
 
     var monsterType : Type = EmptyType

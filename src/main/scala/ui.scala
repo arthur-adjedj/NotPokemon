@@ -1,9 +1,10 @@
 import swing._
 import java.awt.event._
-import java.awt.{Color,Graphics,BasicStroke}
+import java.awt.{Color,Graphics,BasicStroke,Font}
 import java.awt.image.BufferedImage
 import java.awt.event.MouseEvent
 import javax.swing.{JFrame, JPanel}
+import java.io.File
 
 import java.util.concurrent.TimeUnit
 
@@ -207,25 +208,21 @@ class BattleUI (p1 : Player, p2 : Player, battle : Battle) extends JFrame with M
 }
 
 abstract class HpBar {
-    var maxHp: Int = 0
-    var currentHp : Int = 0
+    var hpRate : Float = 1f
     var x : Int = 0
     var y : Int = 0
-    var width : Int = 0
-    var height : Int = 0
+    var width : Int = 136
+    var height : Int = 10
 
-    def setMaxHp(value : Int) {
-        maxHp = value
+    def setRatio(value : Float) {
+        hpRate = value
     }
 
-    def setCurrentHp(value : Int) {
-        currentHp = value
-    }
 
     def setColor(g : Graphics) : Unit = {
-        if ( currentHp.toFloat / maxHp.toFloat < 0.25 ) {
+        if ( hpRate < 0.25 ) {
             g.setColor(java.awt.Color.red)
-        } else {if ( currentHp.toFloat / maxHp.toFloat < 0.75 ) {
+        } else {if ( hpRate < 0.75 ) {
             g.setColor(java.awt.Color.orange)
         } else {
             g.setColor(java.awt.Color.green)}
@@ -234,25 +231,32 @@ abstract class HpBar {
 
     def display (g : Graphics) : Unit = {
         setColor(g)
-        g.fillRect( x, y ,(width.toFloat*(currentHp.toFloat/maxHp.toFloat)).toInt,height)       
+        g.fillRect( x, y ,(width.toFloat*hpRate).toInt,height)       
     }
 }
 
-class EnnemyHpBar extends HpBar {
+object EnnemyHpBar extends HpBar {
     x = 112
     y = 56
-    width = 136
-    height = 10
-    maxHp = 10
-    currentHp = 10
 }
-class YourHpBar extends HpBar {
+object YourHpBar extends HpBar {
     x = 444
     y = 226
-    width = 135
-    height = 10
-    maxHp = 150
-    currentHp = 100
+    hpRate = 0.2f
+}
+
+object YourExpBar extends HpBar {
+    x = 402
+    y = 264
+    width = 177
+    height = 8
+    hpRate = 1f
+
+    val color : Color = new Color(128,128,64)
+    override def setColor(g: Graphics): Unit = {
+        g.setColor(color)
+    }
+
 }
 
 class DrawPanel (buttonList : List[MyButton], p1 : Player, p2 : Player) extends JPanel {
@@ -263,19 +267,26 @@ class DrawPanel (buttonList : List[MyButton], p1 : Player, p2 : Player) extends 
     var ennemyBarImg = javax.imageio.ImageIO.read(getClass.getResource("EnnemyBar.png"))
     var yourBarImg = javax.imageio.ImageIO.read(getClass.getResource("YourBar.png"))
     var buttonImg = javax.imageio.ImageIO.read(getClass.getResource("Button.png"))
-    var ennemyHpBar = new EnnemyHpBar
-    var yourHpBar = new YourHpBar
+    val font_file : File = new File("pokemon_pixel_font.ttf");
+    val poke_font : Font = Font.createFont(Font.TRUETYPE_FONT, font_file);
 
   
     override def paintComponent (g : Graphics) : Unit = {
         super.paintComponent(g)
+        g.setFont(poke_font)
         g.drawImage(battleBackgroundImg, 0, 0, null)
         g.drawImage(pokemonFrontImg, 370, 35, null)
         g.drawImage(pokemonBackImg, 75, 141, null)
+        
+        EnnemyHpBar.setRatio(p2.currentMonster.hpRate)
+        YourHpBar.setRatio(p1.currentMonster.hpRate)
+        YourExpBar.setRatio(p1.currentMonster.xpRate)
+        println(p1.currentMonster.xpRate)
         g.drawImage(ennemyBarImg, 10, 20, null)
         g.drawImage(yourBarImg, 320, 190, null)
-        ennemyHpBar.display(g)
-        yourHpBar.display(g)
+        EnnemyHpBar.display(g)
+        YourHpBar.display(g)
+        YourExpBar.display(g)
 
         buttonList.foreach(x => x.display(g))
     }
