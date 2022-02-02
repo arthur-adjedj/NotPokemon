@@ -269,13 +269,13 @@ class DrawPanel (buttonList : List[MyButton], p1 : Player, p2 : Player) extends 
     var ennemyBarImg = javax.imageio.ImageIO.read(getClass.getResource("EnnemyBar.png"))
     var yourBarImg = javax.imageio.ImageIO.read(getClass.getResource("YourBar.png"))
     var buttonImg = javax.imageio.ImageIO.read(getClass.getResource("Button.png"))
-    //val font_file : File = new File("pokemon_pixel_font.ttf");
-    //val poke_font : Font = Font.createFont(Font.TRUETYPE_FONT, font_file);
-
+    //val font_file : File = new File(getClass.getResource("PokemonPixelFont.ttf").toString);
+    var poke_font : Font = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("PokemonPixelFont.ttf"));
+    poke_font = poke_font.deriveFont(2400);
   
     override def paintComponent (g : Graphics) : Unit = {
         super.paintComponent(g)
-        //g.setFont(poke_font)
+        g.setFont(poke_font)
         g.drawImage(battleBackgroundImg, 0, 0, null)
         g.drawImage(pokemonFrontImg, 370, 35, null)
         g.drawImage(pokemonBackImg, 75, 141, null)
@@ -291,6 +291,8 @@ class DrawPanel (buttonList : List[MyButton], p1 : Player, p2 : Player) extends 
 
 
         buttonList.foreach(x => x.display(g))
+        g.setColor(java.awt.Color.red)
+        g.drawString("teshjagvezzfajfgazioufhaoizfht",200,200)
     }
 
     def updateImages : Unit = {
