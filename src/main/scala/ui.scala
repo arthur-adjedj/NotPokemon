@@ -158,7 +158,7 @@ object CastAttackButton4 extends CastAttackButton ("Button.png") {
 class BattleUI (p1 : Player, p2 : Player, battle : Battle) extends JFrame with MouseListener {
     var buttonList : List[MyButton] = List(AttackButton, BagButton, MonsterButton, LeaveButton,
                                             CastAttackButton1, CastAttackButton2, CastAttackButton3, CastAttackButton4)
-    var pane = new DrawPane(buttonList, p1, p2)
+    var pane = new DrawPanel(buttonList, p1, p2)
 
     def initialise : Unit = {
         setSize(614, 420)
@@ -207,7 +207,33 @@ class BattleUI (p1 : Player, p2 : Player, battle : Battle) extends JFrame with M
 
 }
 
-class DrawPane (buttonList : List[MyButton], p1 : Player, p2 : Player) extends JPanel {
+abstract class HpBar(maxHp: Int, currentHp : Int) {
+    var x : Int = 0
+    var y : Int = 0
+    var width : Int = 0
+    var height : Int = 0
+
+    def setColor(g : Graphics) {
+        if ( currentHp / maxHp < 0.25 ) {
+            g.setColor(java.awt.Color.red)
+        } else if ( currentHp / maxHp < 0.75 ) {
+            g.setColor(java.awt.Color.orange)
+        } else {
+            g.setColor(java.awt.Color.green)
+        }
+    }
+
+    def display (g : Graphics) : Unit = {
+            setColor(g)
+            g.drawRect( x, y ,x+width,y+height)       
+    }
+}
+
+class EnnemyHpBar(maxHp: Int, currentHp : Int) extends HpBar(maxHp: Int, currentHp : Int) {
+    x = 2
+}
+
+class DrawPanel (buttonList : List[MyButton], p1 : Player, p2 : Player) extends JPanel {
     var toShow : Boolean = false
     var battleBackgroundImg = javax.imageio.ImageIO.read(getClass.getResource("BattleBackground.png"))
     var pokemonFrontImg = javax.imageio.ImageIO.read(getClass.getResource("EmptyFront.png"))
@@ -215,12 +241,13 @@ class DrawPane (buttonList : List[MyButton], p1 : Player, p2 : Player) extends J
     var ennemyBarImg = javax.imageio.ImageIO.read(getClass.getResource("EnnemyBar.png"))
     var yourBarImg = javax.imageio.ImageIO.read(getClass.getResource("YourBar.png"))
     var buttonImg = javax.imageio.ImageIO.read(getClass.getResource("Button.png"))
+
   
     override def paintComponent (g : Graphics) : Unit = {
         super.paintComponent(g)
         g.drawImage(battleBackgroundImg, 0, 0, null)
-        g.drawImage(pokemonFrontImg, 375, 20, null)
-        g.drawImage(pokemonBackImg, 85, 159, null)
+        g.drawImage(pokemonFrontImg, 370, 35, null)
+        g.drawImage(pokemonBackImg, 75, 141, null)
         g.drawImage(ennemyBarImg, 10, 20, null)
         g.drawImage(yourBarImg, 320, 190, null)
 
