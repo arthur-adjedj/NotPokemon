@@ -1,3 +1,6 @@
+import java.util.concurrent.TimeUnit
+
+
 class Player {
     var team : Array[Monster] = Array.fill(6){EmptyMonster}
     var name : String = ""
@@ -12,32 +15,48 @@ class Player {
 
     def enterBattle : Unit = {
         playing = true
+        team.foreach(x => x.enterBattle)
         currentMonster = team(0)
-        currentMonster.enterBattle
+        currentMonster.enterField
+
+        battle.ui.updateImages
 
     }
 
     def newTurn : Unit = {
         currentMonster.newTurn
         availableAttacks = currentMonster.attacks.filter(x => x.name != "Empty")
-        var l = availableAttacks.length
-        castAttack(availableAttacks(scala.util.Random.nextInt(l)))
+        
 
-        endTurn
 
     }
 
     def endTurn : Unit = {
+        currentMonster.endTurn
+    }
 
+    def castAttack (x : Int) : Boolean = {
+        if (currentMonster.attacks(x).name != "Empty") {
+            castAttack(currentMonster.attacks(x))
+            true
+        } else {
+            false
+        }
     }
 
     def castAttack (attack : Attack) : Unit = {
         currentMonster.castAttack(attack, opponent.currentMonster)
+        endTurn
     }
 
     def changeMonster : Unit = {
         if (team.exists(x => x.alive && x.name != "Empty")) {
-            
+            var alives = team.filter(x => x.alive && x.name != "Empty")
+            var l = alives.length
+            println(l)
+            currentMonster = alives(scala.util.Random.nextInt(l))
+            currentMonster.enterField
+            battle.ui.updateImages
         } else {
             lose
         }
@@ -58,13 +77,38 @@ object EmptyPlayer extends Player {
 object FirstPlayer extends Player {
     team(0) = new Pikachu
     team(0).owner = this
+    team(0).attackStat = 50000
     name = "You"
     opponent = SecondPlayer
+    var hisTurn : Boolean = false
+
+    override def newTurn : Unit = {
+        hisTurn = true
+        super.newTurn
+        while (hisTurn) {
+            TimeUnit.SECONDS.sleep(1)
+        }
+    }
+
+    override def endTurn : Unit = {
+        super.endTurn
+        hisTurn = false
+    }
 }
 
 object SecondPlayer extends Player {
     team(0) = new Squirtle
     team(0).owner = this
+
+    team(1) = new Pikachu
+    team(1).owner = this
     name = "Opponent"
     opponent = FirstPlayer
+
+    override def newTurn : Unit = {
+        super.newTurn
+        var l = availableAttacks.length
+        castAttack(availableAttacks(scala.util.Random.nextInt(l)))
+    }
+
 }

@@ -43,9 +43,9 @@ abstract class Monster {
     var name : String = ""
     var owner : Player = EmptyPlayer
 
-    def imgNameFront : String = {this.getClass.getSimpleName + "Front.png"}
-    def imgNameBack : String = {this.getClass.getSimpleName + "Back.png"}
-    def originalName : String = {this.getClass.getSimpleName}
+    def imgNameFront : String = {originalName + "Front.png"}
+    def imgNameBack : String = {originalName + "Back.png"}
+    var originalName : String = ""
     def typeName : String = {monsterType.name}
 
     def enterBattle : Unit = {
@@ -58,15 +58,13 @@ abstract class Monster {
         attackStage = 0
         defenseStage = 0
         speedStage = 0
-        accuracyStage  = 0
+        accuracyStage = 0
         evasionStage = 0
 
         monstersSeen = List()
-        enterField
     }
 
     def enterField : Unit = {
-        print(owner)
         newMonsterSeen(owner.opponent.currentMonster)
         owner.opponent.currentMonster.newMonsterSeen(this)
     }
@@ -100,18 +98,21 @@ abstract class Monster {
             println(other.name + " is protected")
         } else {
             for (i <- 1 to attack.nOfHits){
-                if (status.exists(x => x.name == "Confusion") && random <= 0.5) {
-                    this.receiveAttack(attack, this)
-                } else if (random <= attack.accuracy*thisAccuracyEff*otherEvasionEff) {
-                    println(name + " casts " + attack.name + " on " + other.name)
-                    other.receiveAttack(attack, this)
-                } else {
-                    if (random <= attack.accuracy) {
-                        println(attack.name + " missed")
-                    } else if (random <= attack.accuracy*thisAccuracyEff) {
-                        println(name + " missed his attack")
+                if (other.alive) {
+                    random = scala.util.Random.nextFloat()
+                    if (status.exists(x => x.name == "Confusion") && random <= 0.5) {
+                        this.receiveAttack(attack, this)
+                    } else if (random <= attack.accuracy*thisAccuracyEff*otherEvasionEff) {
+                        println(name + " casts " + attack.name + " on " + other.name)
+                        other.receiveAttack(attack, this)
                     } else {
-                        println(other.name + " dodged")
+                        if (random <= attack.accuracy) {
+                            println(attack.name + " missed")
+                        } else if (random <= attack.accuracy*thisAccuracyEff) {
+                            println(name + " missed his attack")
+                        } else {
+                            println(other.name + " dodged")
+                        }
                     }
                 }
             }
@@ -255,6 +256,7 @@ class Pikachu extends Monster {
 
     monsterType = Electric
     name = "Pikachuuuuu"
+    originalName = "Pikachu"
     attacks(0) = QuickAttack
     attacks(1) = DoubleSlap
     attacks(2) = Thunder
@@ -273,6 +275,7 @@ class Squirtle extends Monster {
 
     monsterType = Water
     name = "Carapuuuuuce"
+    originalName = "Squirtle"
 
     attacks(0) = QuickAttack
 
@@ -280,5 +283,6 @@ class Squirtle extends Monster {
 
 object EmptyMonster extends Monster {
     name = "Empty"
+    originalName = "Empty"
 }
 

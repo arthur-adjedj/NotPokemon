@@ -32,9 +32,9 @@ object DoubleSlap extends Attack {
         " two to five times in a row."
     
     override def nOfHits(): Int = { scala.util.Random.nextFloat() match {
-        case x if x<= 32.5 => 2
-        case x if x<= 65 => 3
-        case x if x<= 77.5 => 4
+        case x if x<= 0.325 => 2
+        case x if x<= 0.65 => 3
+        case x if x<= 0.775 => 4
         case _ => 5
     }}
 
