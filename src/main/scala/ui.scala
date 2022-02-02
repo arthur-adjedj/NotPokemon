@@ -22,8 +22,7 @@ abstract class MyButton (imageName : String) {
     }
 
     def onClick (x_click : Int, y_click : Int) : Boolean = {
-        // We have to substract 24 to y_click because the Listener handles the top bar but the drawing doesn't
-        if (visible && x <= x_click && x_click <= (x + width) && y <= (y_click - 24) && (y_click - 24) <= (y + height)) {
+        if (visible && x <= x_click && x_click <= (x + width) && y <= y_click && y_click <= (y + height)) {
             isClicked
             true
         } else {
@@ -165,10 +164,10 @@ class BattleUI (p1 : Player, p2 : Player, battle : Battle) extends JFrame with M
         
         addMouseListener(this)
         setLayout(null)
-        
+
+        setUndecorated(true)
         setContentPane(pane)
         setVisible(true)
-  
     }
     
   
@@ -213,7 +212,7 @@ abstract class HpBar(maxHp: Int, currentHp : Int) {
     var width : Int = 0
     var height : Int = 0
 
-    def setColor(g : Graphics) {
+    def setColor(g : Graphics) : Unit = {
         if ( currentHp / maxHp < 0.25 ) {
             g.setColor(java.awt.Color.red)
         } else if ( currentHp / maxHp < 0.75 ) {
