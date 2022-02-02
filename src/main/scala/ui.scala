@@ -206,30 +206,53 @@ class BattleUI (p1 : Player, p2 : Player, battle : Battle) extends JFrame with M
 
 }
 
-abstract class HpBar(maxHp: Int, currentHp : Int) {
+abstract class HpBar {
+    var maxHp: Int = 0
+    var currentHp : Int = 0
     var x : Int = 0
     var y : Int = 0
     var width : Int = 0
     var height : Int = 0
 
+    def setMaxHp(value : Int) {
+        maxHp = value
+    }
+
+    def setCurrentHp(value : Int) {
+        currentHp = value
+    }
+
     def setColor(g : Graphics) : Unit = {
-        if ( currentHp / maxHp < 0.25 ) {
+        if ( currentHp.toFloat / maxHp.toFloat < 0.25 ) {
             g.setColor(java.awt.Color.red)
-        } else if ( currentHp / maxHp < 0.75 ) {
+        } else {if ( currentHp.toFloat / maxHp.toFloat < 0.75 ) {
             g.setColor(java.awt.Color.orange)
         } else {
-            g.setColor(java.awt.Color.green)
+            g.setColor(java.awt.Color.green)}
         }
     }
 
     def display (g : Graphics) : Unit = {
-            setColor(g)
-            g.drawRect( x, y ,x+width,y+height)       
+        setColor(g)
+        g.fillRect( x, y ,(width.toFloat*(currentHp.toFloat/maxHp.toFloat)).toInt,height)       
     }
 }
 
-class EnnemyHpBar(maxHp: Int, currentHp : Int) extends HpBar(maxHp: Int, currentHp : Int) {
-    x = 2
+class EnnemyHpBar extends HpBar {
+    x = 112
+    y = 56
+    width = 136
+    height = 10
+    maxHp = 10
+    currentHp = 10
+}
+class YourHpBar extends HpBar {
+    x = 444
+    y = 226
+    width = 135
+    height = 10
+    maxHp = 150
+    currentHp = 100
 }
 
 class DrawPanel (buttonList : List[MyButton], p1 : Player, p2 : Player) extends JPanel {
@@ -240,6 +263,8 @@ class DrawPanel (buttonList : List[MyButton], p1 : Player, p2 : Player) extends 
     var ennemyBarImg = javax.imageio.ImageIO.read(getClass.getResource("EnnemyBar.png"))
     var yourBarImg = javax.imageio.ImageIO.read(getClass.getResource("YourBar.png"))
     var buttonImg = javax.imageio.ImageIO.read(getClass.getResource("Button.png"))
+    var ennemyHpBar = new EnnemyHpBar
+    var yourHpBar = new YourHpBar
 
   
     override def paintComponent (g : Graphics) : Unit = {
@@ -249,6 +274,8 @@ class DrawPanel (buttonList : List[MyButton], p1 : Player, p2 : Player) extends 
         g.drawImage(pokemonBackImg, 75, 141, null)
         g.drawImage(ennemyBarImg, 10, 20, null)
         g.drawImage(yourBarImg, 320, 190, null)
+        ennemyHpBar.display(g)
+        yourHpBar.display(g)
 
         buttonList.foreach(x => x.display(g))
     }
