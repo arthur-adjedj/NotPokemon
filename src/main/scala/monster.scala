@@ -38,7 +38,7 @@ abstract class Monster {
     var nextXpStep : Int = 0
     def xpRate : Float = {(xp - previousXpStep) / (nextXpStep - xp)}
 
-    var monsterType : Type = Normal
+    var monsterType : Type = EmptyType
 
     var name : String = ""
     var owner : Player = EmptyPlayer
