@@ -201,50 +201,50 @@ object CastAttackButton4 extends CastAttackButton ("Button.png") {
 }
 
 object ChangeMonsterButton1 extends ChangeMonsterButton ("Button.png") {
-    x = 320
-    y = 300
-    width = 130
-    height = 40
+    x = 3
+    y = 405
+    width = 300
+    height = 136
     n = 0
 }
 
 object ChangeMonsterButton2 extends ChangeMonsterButton ("Button.png") {
-    x = 460
-    y = 300
-    width = 130
-    height = 40
+    x = 311
+    y = 405
+    width = 300
+    height = 136
     n = 1
 }
 
 object ChangeMonsterButton3 extends ChangeMonsterButton ("Button.png") {
-    x = 320
-    y = 350
-    width = 130
-    height = 40
+    x = 3
+    y = 549
+    width = 300
+    height = 136
     n = 2
 }
 
 object ChangeMonsterButton4 extends ChangeMonsterButton ("Button.png") {
-    x = 460
-    y = 350
-    width = 130
-    height = 40
+    x = 311
+    y = 549
+    width = 300
+    height = 136
     n = 3
 }
 
 object ChangeMonsterButton5 extends ChangeMonsterButton ("Button.png") {
-    x = 320
-    y = 400
-    width = 130
-    height = 40
+    x = 3
+    y = 693
+    width = 300
+    height = 136
     n = 4
 }
 
 object ChangeMonsterButton6 extends ChangeMonsterButton ("Button.png") {
-    x = 460
-    y = 400
-    width = 130
-    height = 40
+    x = 311
+    y = 693
+    width = 300
+    height = 136
     n = 5
 }
 
@@ -297,7 +297,7 @@ class BattleUI (p1 : Player, p2 : Player, battle : Battle) extends JFrame with M
     var pane = new DrawPanel(buttonList, p1, p2)
 
     def initialise : Unit = {
-        setSize(614, 689)
+        setSize(614, 828 + 30)
         
         addMouseListener(this)
         setLayout(null)
@@ -431,7 +431,7 @@ class DrawPanel (buttonList : List[MyButton], p1 : Player, p2 : Player) extends 
     def updateImages : Unit = {
         pokemonFrontImg = javax.imageio.ImageIO.read(getClass.getResource(p2.currentMonster.imgNameFront))
         pokemonBackImg = javax.imageio.ImageIO.read(getClass.getResource(p1.currentMonster.imgNameBack))
-        repaint(0, 0, 800, 800)
+        repaint(0, 0, 900, 900)
     }
 }
 
