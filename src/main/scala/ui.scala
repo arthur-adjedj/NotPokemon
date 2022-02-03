@@ -296,7 +296,7 @@ class BattleUI (p1 : Player, p2 : Player, battle : Battle) extends JFrame with M
     var pane = new DrawPanel(buttonList, p1, p2)
 
     def initialise : Unit = {
-        setSize(614, 500)
+        setSize(614, 587)
         
         addMouseListener(this)
         setLayout(null)
