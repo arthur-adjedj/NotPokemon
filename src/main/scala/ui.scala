@@ -34,6 +34,10 @@ abstract class MyButton (imageName : String) {
     def isClicked : Unit = {
         println("The button is clicked")
     }
+
+    def setVisible(b : Boolean) : Unit = {
+        visible = b
+    }
 }
 
 abstract class CastAttackButton (imageName : String) extends MyButton (imageName) {
@@ -42,16 +46,20 @@ abstract class CastAttackButton (imageName : String) extends MyButton (imageName
     override def isClicked : Unit = {
         if (FirstPlayer.castAttack(n)) {
 
-            CastAttackButton1.visible = false
-            CastAttackButton2.visible = false
-            CastAttackButton3.visible = false
-            CastAttackButton4.visible = false
+            CastAttackButton1.setVisible(false)
+            CastAttackButton2.setVisible(false)
+            CastAttackButton3.setVisible(false)
+            CastAttackButton4.setVisible(false)
 
-            AttackButton.visible = true
-            BagButton.visible = true
-            MonsterButton.visible = true
-            LeaveButton.visible = true
+            AttackButton.setVisible(true)
+            BagButton.setVisible(true)
+            MonsterButton.setVisible(true)
+            LeaveButton.setVisible(true)
         }
+    }
+
+    override def setVisible (b : Boolean) : Unit = {
+        visible = b && FirstPlayer.currentMonster.attacks(n).name != "Empty"
     }
 }
 
@@ -61,19 +69,24 @@ abstract class ChangeMonsterButton (imageName : String) extends MyButton (imageN
 
     override def isClicked : Unit = {
         if (FirstPlayer.changeMonster(n)) {
-            ChangeMonsterButton1.visible = false
-            ChangeMonsterButton2.visible = false
-            ChangeMonsterButton3.visible = false
-            ChangeMonsterButton4.visible = false
-            ChangeMonsterButton5.visible = false
-            ChangeMonsterButton6.visible = false
+            ChangeMonsterButton1.setVisible(false)
+            ChangeMonsterButton2.setVisible(false)
+            ChangeMonsterButton3.setVisible(false)
+            ChangeMonsterButton4.setVisible(false)
+            ChangeMonsterButton5.setVisible(false)
+            ChangeMonsterButton6.setVisible(false)
 
-            AttackButton.visible = true
-            BagButton.visible = true
-            MonsterButton.visible = true
-            LeaveButton.visible = true
+            AttackButton.setVisible(true)
+            BagButton.setVisible(true)
+            MonsterButton.setVisible(true)
+            LeaveButton.setVisible(true)
         }        
     }
+
+    override def setVisible (b : Boolean) : Unit = {
+        visible = b && FirstPlayer.team(n).alive && FirstPlayer.team(n).name != "Empty" && FirstPlayer.team(n) != FirstPlayer.currentMonster
+    }
+
 }
 
 
@@ -89,15 +102,15 @@ object AttackButton extends MyButton ("Button.png") {
 
         println("Showing the attacks")
 
-        AttackButton.visible = false
-        BagButton.visible = false
-        MonsterButton.visible = false
-        LeaveButton.visible = false
+        AttackButton.setVisible(false)
+        BagButton.setVisible(false)
+        MonsterButton.setVisible(false)
+        LeaveButton.setVisible(false)
 
-        CastAttackButton1.visible = true
-        CastAttackButton2.visible = true
-        CastAttackButton3.visible = true
-        CastAttackButton4.visible = true
+        CastAttackButton1.setVisible(true)
+        CastAttackButton2.setVisible(true)
+        CastAttackButton3.setVisible(true)
+        CastAttackButton4.setVisible(true)
     }
 }
 
@@ -125,17 +138,17 @@ object MonsterButton extends MyButton ("Button.png") {
     override def isClicked : Unit = {
         println("Showing the available monsters")
 
-        AttackButton.visible = false
-        BagButton.visible = false
-        MonsterButton.visible = false
-        LeaveButton.visible = false
+        AttackButton.setVisible(false)
+        BagButton.setVisible(false)
+        MonsterButton.setVisible(false)
+        LeaveButton.setVisible(false)
 
-        ChangeMonsterButton1.visible = true
-        ChangeMonsterButton2.visible = true
-        ChangeMonsterButton3.visible = true
-        ChangeMonsterButton4.visible = true
-        ChangeMonsterButton5.visible = true
-        ChangeMonsterButton6.visible = true
+        ChangeMonsterButton1.setVisible(true)
+        ChangeMonsterButton2.setVisible(true)
+        ChangeMonsterButton3.setVisible(true)
+        ChangeMonsterButton4.setVisible(true)
+        ChangeMonsterButton5.setVisible(true)
+        ChangeMonsterButton6.setVisible(true)
 
 
     }
