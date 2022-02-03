@@ -53,12 +53,23 @@ class Player {
         if (team.exists(x => x.alive && x.name != "Empty")) {
             var alives = team.filter(x => x.alive && x.name != "Empty")
             var l = alives.length
-            println(l)
             currentMonster = alives(scala.util.Random.nextInt(l))
             currentMonster.enterField
             battle.ui.updateImages
         } else {
             lose
+        }
+    }
+
+    def changeMonster (n : Int) : Boolean = {
+        if (team(n).alive && team(n).name != "Empty" && team(n) != currentMonster) {
+            currentMonster = team(n)
+            currentMonster.enterField
+            battle.ui.updateImages
+            endTurn
+            true
+        } else {
+            false
         }
     }
 
@@ -76,9 +87,14 @@ object EmptyPlayer extends Player {
 
 object FirstPlayer extends Player {
     team(0) = new Pikachu
-    team(0).gainXp(12)
+    team(0).gainLvl(5)
     team(0).owner = this
-    team(0).attackStat = 10
+
+    team(1) = new Squirtle
+    team(1).gainLvl(5)
+    team(1).owner = this
+
+
     name = "You"
     opponent = SecondPlayer
     var hisTurn : Boolean = false

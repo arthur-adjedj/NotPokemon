@@ -155,7 +155,6 @@ abstract class Monster {
         var random = scala.util.Random.nextFloat()*38.0/255.0 + 217.0/255.0
 
         var damage = ((((2.0/5.0*other.level.toFloat+2.0)*attack.power.toFloat*otherAttackEff.toFloat/thisDefenseEff.toFloat)/50.0+2)*random*attack.attackType.multDamage(other.monsterType)).toInt
-        println(name + " takes " + damage + "damages from " + other.name)
 
         takeDamage(damage)
         
@@ -203,12 +202,12 @@ abstract class Monster {
     def die : Unit = {
         println(name + " died !")
         alive = false
-        var monstersSeenAlive = monstersSeen.map(x => x.alive && x.name != "Empty")
-        var exp : Float = baseXp*level/7/monstersSeenAlive.length
+        var monstersSeenAlive = monstersSeen.filter(x => x.alive && x.name != "Empty")
+        var exp : Float = baseXp.toFloat*level.toFloat/7/monstersSeenAlive.length.toFloat
         if (!wild) {
             exp *= 3/2
         }
-        monstersSeenAlive.foreach(x => gainXp(exp.toInt))
+        monstersSeenAlive.foreach(x => x.gainXp(exp.toInt))
         owner.changeMonster
 
     }
@@ -236,6 +235,15 @@ abstract class Monster {
             case "Medium Slow" => nextXpStep = (1.2 * Math.pow(level+1, 3) - 15 * Math.pow(level+1, 2) + 100 * (level+1) - 140).toInt
             case "Slow" => nextXpStep = (1.25 * Math.pow(level+1, 3)).toInt
         }
+        if (level > 1) {
+            println(name + " is now level " + level)
+        }
+    }
+
+    def gainLvl (n : Int) : Unit = {
+        for (i <- 1 to n) {
+            gainXp(nextXpStep - xp)
+        }
     }
 
     override def toString : String = {
@@ -254,6 +262,7 @@ class Pikachu extends Monster {
     speedStat = 90
 
     xpGraph = "Medium Fast"
+    baseXp = 112
 
     monsterType = Electric
     name = "Pikachuuuuu"
@@ -272,7 +281,7 @@ class Squirtle extends Monster {
     speedStat = 50
 
     xpGraph = "Medium Slow"
-
+    baseXp = 63
 
     monsterType = Water
     name = "Carapuuuuuce"

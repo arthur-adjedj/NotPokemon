@@ -3,7 +3,7 @@ import java.awt.event._
 import java.awt.{Color,Graphics,BasicStroke,Font}
 import java.awt.image.BufferedImage
 import java.awt.event.MouseEvent
-import javax.swing.{JFrame, JPanel}
+import javax.swing.{JFrame, JPanel, JLabel}
 import java.io.File
 
 import java.util.concurrent.TimeUnit
@@ -55,6 +55,27 @@ abstract class CastAttackButton (imageName : String) extends MyButton (imageName
     }
 }
 
+abstract class ChangeMonsterButton (imageName : String) extends MyButton (imageName) {
+    var n : Int = 0
+    visible = false
+
+    override def isClicked : Unit = {
+        if (FirstPlayer.changeMonster(n)) {
+            ChangeMonsterButton1.visible = false
+            ChangeMonsterButton2.visible = false
+            ChangeMonsterButton3.visible = false
+            ChangeMonsterButton4.visible = false
+            ChangeMonsterButton5.visible = false
+            ChangeMonsterButton6.visible = false
+
+            AttackButton.visible = true
+            BagButton.visible = true
+            MonsterButton.visible = true
+            LeaveButton.visible = true
+        }        
+    }
+}
+
 
 
 object AttackButton extends MyButton ("Button.png") {
@@ -103,6 +124,20 @@ object MonsterButton extends MyButton ("Button.png") {
 
     override def isClicked : Unit = {
         println("Showing the available monsters")
+
+        AttackButton.visible = false
+        BagButton.visible = false
+        MonsterButton.visible = false
+        LeaveButton.visible = false
+
+        ChangeMonsterButton1.visible = true
+        ChangeMonsterButton2.visible = true
+        ChangeMonsterButton3.visible = true
+        ChangeMonsterButton4.visible = true
+        ChangeMonsterButton5.visible = true
+        ChangeMonsterButton6.visible = true
+
+
     }
 }
 
@@ -151,61 +186,54 @@ object CastAttackButton4 extends CastAttackButton ("Button.png") {
     n = 3
 }
 
-
-
-
-
-class BattleUI (p1 : Player, p2 : Player, battle : Battle) extends JFrame with MouseListener {
-    var buttonList : List[MyButton] = List(AttackButton, BagButton, MonsterButton, LeaveButton,
-                                            CastAttackButton1, CastAttackButton2, CastAttackButton3, CastAttackButton4)
-    var pane = new DrawPanel(buttonList, p1, p2)
-
-    def initialise : Unit = {
-        setSize(614, 420)
-        
-        addMouseListener(this)
-        setLayout(null)
-
-        setUndecorated(true)
-        setContentPane(pane)
-        setVisible(true)
-    }
-    
-  
-
-    def mouseClicked (e : MouseEvent) : Unit = {
-        if (FirstPlayer.hisTurn) {
-            var clickCaught : Boolean = false
-            def clickAButton (b : MyButton) : Unit = {
-                if (!clickCaught) {
-                    clickCaught = b.onClick(e.getX, e.getY)
-                }
-            }
-
-            buttonList.foreach(clickAButton)
-            clickCaught = false
-        }    
-        updateImages
-
-    }
-    def mouseEntered (e : MouseEvent) : Unit = {
-
-    }
-    def mouseExited (e : MouseEvent) : Unit = {
-
-    }
-    def mousePressed (e : MouseEvent) : Unit = {
-
-    }
-    def mouseReleased (e : MouseEvent) : Unit = {
-
-    }
-
-    def updateImages : Unit = {
-        pane.updateImages
-    }
-
+object ChangeMonsterButton1 extends ChangeMonsterButton ("Button.png") {
+    x = 320
+    y = 300
+    width = 130
+    height = 40
+    n = 0
 }
+
+object ChangeMonsterButton2 extends ChangeMonsterButton ("Button.png") {
+    x = 460
+    y = 300
+    width = 130
+    height = 40
+    n = 1
+}
+
+object ChangeMonsterButton3 extends ChangeMonsterButton ("Button.png") {
+    x = 320
+    y = 350
+    width = 130
+    height = 40
+    n = 2
+}
+
+object ChangeMonsterButton4 extends ChangeMonsterButton ("Button.png") {
+    x = 460
+    y = 350
+    width = 130
+    height = 40
+    n = 3
+}
+
+object ChangeMonsterButton5 extends ChangeMonsterButton ("Button.png") {
+    x = 320
+    y = 400
+    width = 130
+    height = 40
+    n = 4
+}
+
+object ChangeMonsterButton6 extends ChangeMonsterButton ("Button.png") {
+    x = 460
+    y = 400
+    width = 130
+    height = 40
+    n = 5
+}
+
 
 abstract class HpBar {
     var hpRate : Float = 1f
@@ -214,7 +242,7 @@ abstract class HpBar {
     var width : Int = 136
     var height : Int = 10
 
-    def setRatio(value : Float) {
+    def setRatio(value : Float) : Unit = {
         hpRate = value
     }
 
@@ -258,8 +286,73 @@ object YourExpBar extends HpBar {
     override def setColor(g: Graphics): Unit = {
         g.setColor(color)
     }
+}
+
+
+
+
+class BattleUI (p1 : Player, p2 : Player, battle : Battle) extends JFrame with MouseListener {
+    
+    var buttonList : List[MyButton] = List(AttackButton, BagButton, MonsterButton, LeaveButton,
+                                            CastAttackButton1, CastAttackButton2, CastAttackButton3, CastAttackButton4,
+                                            ChangeMonsterButton1, ChangeMonsterButton2, ChangeMonsterButton3, 
+                                            ChangeMonsterButton4, ChangeMonsterButton5, ChangeMonsterButton6)
+
+    
+    var pane = new DrawPanel(buttonList, p1, p2)
+
+    def initialise : Unit = {
+        setSize(614, 500)
+        
+        addMouseListener(this)
+        setLayout(null)
+
+        setUndecorated(true)
+        setContentPane(pane)
+
+
+        setLocation(100, 100)
+        setVisible(true)
+
+    }
+    
+  
+
+    def mouseClicked (e : MouseEvent) : Unit = {
+        if (FirstPlayer.hisTurn) {
+            var clickCaught : Boolean = false
+            def clickAButton (b : MyButton) : Unit = {
+                if (!clickCaught) {
+                    clickCaught = b.onClick(e.getX, e.getY)
+                }
+            }
+
+            buttonList.foreach(clickAButton)
+            clickCaught = false
+        }    
+        updateImages
+
+    }
+    def mouseEntered (e : MouseEvent) : Unit = {
+
+    }
+    def mouseExited (e : MouseEvent) : Unit = {
+
+    }
+    def mousePressed (e : MouseEvent) : Unit = {
+
+    }
+    def mouseReleased (e : MouseEvent) : Unit = {
+
+    }
+
+    def updateImages : Unit = {
+        pane.updateImages
+    }
 
 }
+
+
 
 class DrawPanel (buttonList : List[MyButton], p1 : Player, p2 : Player) extends JPanel {
     var toShow : Boolean = false
@@ -272,10 +365,11 @@ class DrawPanel (buttonList : List[MyButton], p1 : Player, p2 : Player) extends 
     //val font_file : File = new File(getClass.getResource("PokemonPixelFont.ttf").toString);
     var poke_font : Font = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("PokemonPixelFont.ttf"));
     poke_font = poke_font.deriveFont(2400);
+
   
     override def paintComponent (g : Graphics) : Unit = {
         super.paintComponent(g)
-        g.setFont(poke_font)
+        //g.setFont(poke_font)
         g.drawImage(battleBackgroundImg, 0, 0, null)
         g.drawImage(pokemonFrontImg, 370, 35, null)
         g.drawImage(pokemonBackImg, 75, 141, null)
@@ -292,7 +386,9 @@ class DrawPanel (buttonList : List[MyButton], p1 : Player, p2 : Player) extends 
 
         buttonList.foreach(x => x.display(g))
         g.setColor(java.awt.Color.red)
-        g.drawString("teshjagvezzfajfgazioufhaoizfht",200,200)
+
+
+        g.drawString("teshjagvez\nzfajfgazioufhaoidhdoizajdoizajidoazjoidjzaijzfht",200,200)
     }
 
     def updateImages : Unit = {
