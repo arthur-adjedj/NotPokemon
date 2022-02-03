@@ -54,7 +54,7 @@ abstract class CastAttackButton (imageName : String) extends MyButton (imageName
             AttackButton.setVisible(true)
             BagButton.setVisible(true)
             MonsterButton.setVisible(true)
-            LeaveButton.setVisible(true)
+            RunButton.setVisible(true)
         }
     }
 
@@ -79,7 +79,7 @@ abstract class ChangeMonsterButton (imageName : String) extends MyButton (imageN
             AttackButton.setVisible(true)
             BagButton.setVisible(true)
             MonsterButton.setVisible(true)
-            LeaveButton.setVisible(true)
+            RunButton.setVisible(true)
         }        
     }
 
@@ -92,10 +92,10 @@ abstract class ChangeMonsterButton (imageName : String) extends MyButton (imageN
 
 
 object AttackButton extends MyButton ("Button.png") {
-    x = 320
-    y = 300
-    width = 130
-    height = 40
+    x = 3
+    y = 405
+    width = 300
+    height = 136
     visible = true
 
     override def isClicked : Unit = {
@@ -105,7 +105,7 @@ object AttackButton extends MyButton ("Button.png") {
         AttackButton.setVisible(false)
         BagButton.setVisible(false)
         MonsterButton.setVisible(false)
-        LeaveButton.setVisible(false)
+        RunButton.setVisible(false)
 
         CastAttackButton1.setVisible(true)
         CastAttackButton2.setVisible(true)
@@ -116,10 +116,10 @@ object AttackButton extends MyButton ("Button.png") {
 
 
 object BagButton extends MyButton ("Button.png") {
-    x = 460
-    y = 300
-    width = 130
-    height = 40
+    x = 311
+    y = 405
+    width = 300
+    height = 136
     visible = true
 
     override def isClicked : Unit = {
@@ -129,10 +129,10 @@ object BagButton extends MyButton ("Button.png") {
 
 
 object MonsterButton extends MyButton ("Button.png") {
-    x = 320
-    y = 350
-    width = 130
-    height = 40
+    x = 3
+    y = 549
+    width = 300
+    height = 136
     visible = true
 
     override def isClicked : Unit = {
@@ -141,7 +141,7 @@ object MonsterButton extends MyButton ("Button.png") {
         AttackButton.setVisible(false)
         BagButton.setVisible(false)
         MonsterButton.setVisible(false)
-        LeaveButton.setVisible(false)
+        RunButton.setVisible(false)
 
         ChangeMonsterButton1.setVisible(true)
         ChangeMonsterButton2.setVisible(true)
@@ -155,47 +155,48 @@ object MonsterButton extends MyButton ("Button.png") {
 }
 
 
-object LeaveButton extends MyButton ("Button.png") {
-    x = 460
-    y = 350
-    width = 130
-    height = 40
+object RunButton extends MyButton ("Button.png") {
+    x = 311
+    y = 549
+    width = 300
+    height = 136
     visible = true
 
     override def isClicked : Unit = {
-        println("Leave the battle")
+        println("Run away from the battle")
     }
 }
 
 object CastAttackButton1 extends CastAttackButton ("Button.png") {
-    x = 320
-    y = 300
-    width = 130
-    height = 40
+    x = 3
+    y = 405
+    width = 300
+    height = 136
+
     n = 0
 }
 
 object CastAttackButton2 extends CastAttackButton ("Button.png") {
-    x = 460
-    y = 300
-    width = 130
-    height = 40
+    x = 311
+    y = 405
+    width = 300
+    height = 136
     n = 1
 }
 
 object CastAttackButton3 extends CastAttackButton ("Button.png") {
-    x = 320
-    y = 350
-    width = 130
-    height = 40
+    x = 3
+    y = 549
+    width = 300
+    height = 136
     n = 2
 }
 
 object CastAttackButton4 extends CastAttackButton ("Button.png") {
-    x = 460
-    y = 350
-    width = 130
-    height = 40
+    x = 311
+    y = 549
+    width = 300
+    height = 136
     n = 3
 }
 
@@ -287,7 +288,7 @@ abstract class HpBar {
 
 class BattleUI (p1 : Player, p2 : Player, battle : Battle) extends JFrame with MouseListener {
     
-    var buttonList : List[MyButton] = List(AttackButton, BagButton, MonsterButton, LeaveButton,
+    var buttonList : List[MyButton] = List(AttackButton, BagButton, MonsterButton, RunButton,
                                             CastAttackButton1, CastAttackButton2, CastAttackButton3, CastAttackButton4,
                                             ChangeMonsterButton1, ChangeMonsterButton2, ChangeMonsterButton3, 
                                             ChangeMonsterButton4, ChangeMonsterButton5, ChangeMonsterButton6)
@@ -296,7 +297,7 @@ class BattleUI (p1 : Player, p2 : Player, battle : Battle) extends JFrame with M
     var pane = new DrawPanel(buttonList, p1, p2)
 
     def initialise : Unit = {
-        setSize(614, 587)
+        setSize(614, 689)
         
         addMouseListener(this)
         setLayout(null)
@@ -356,8 +357,10 @@ class DrawPanel (buttonList : List[MyButton], p1 : Player, p2 : Player) extends 
     var ennemyBarImg = javax.imageio.ImageIO.read(getClass.getResource("EnnemyBar.png"))
     var yourBarImg = javax.imageio.ImageIO.read(getClass.getResource("YourBar.png"))
     var buttonImg = javax.imageio.ImageIO.read(getClass.getResource("Button.png"))
-    var poke_font : Font = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("PokemonPixelFont.ttf"));
-    poke_font = poke_font.deriveFont(Font.PLAIN,30);
+    var textBarImg = javax.imageio.ImageIO.read(getClass.getResource("TextBar.png"))
+    var poke_font : Font = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("PokemonPixelFont.ttf"))
+    poke_font = poke_font.deriveFont(Font.PLAIN,30)
+
     object EnnemyBar{
         object EnnemyHpBar extends HpBar {
             x =  112
@@ -408,9 +411,6 @@ class DrawPanel (buttonList : List[MyButton], p1 : Player, p2 : Player) extends 
 
 
 
-
-
-
   
     override def paintComponent (g : Graphics) : Unit = {
         super.paintComponent(g)
@@ -424,6 +424,7 @@ class DrawPanel (buttonList : List[MyButton], p1 : Player, p2 : Player) extends 
 
 
         buttonList.foreach(x => x.display(g))
+        g.drawImage(textBarImg,0,287,null)
 
     }
 
