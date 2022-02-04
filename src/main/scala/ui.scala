@@ -8,6 +8,7 @@ import java.awt.font.TextAttribute
 
 
 import java.util.concurrent.TimeUnit
+import scala.runtime.EmptyMethodCache
 
 
 abstract class HpBar {
@@ -43,7 +44,7 @@ abstract class HpBar {
 object DiscusionLabel {
     var text1 : String = "Ceci est un test"
     var text2 : String = "ceci est un second test"
-    var text3 : String = ""
+    var battleUi : BattleUI = EmptyBattleUI
     var charPerLine : Int = 50
     var x : Int = 40
     var y : Int = 325
@@ -61,12 +62,26 @@ object DiscusionLabel {
     def changeText (s : String) : Unit = {
         text1 = ""
         text2 = ""
+        var t1 = ""
+        var t2 = ""
         if (s.length < charPerLine) {
-            text1 = s
+            for (i <- 0 to s.length - 1) {
+                text1 = text1 + s(i)
+                //TimeUnit.MILLISECONDS.sleep(20)
+                battleUi.refresh
+            }
         } else {
-            var t1 = s.substring(0, charPerLine).lastIndexOf(" ")
-            text1 = s.substring(0, t1)
-            text2 = s.substring(t1+1)
+            var l = s.substring(0, charPerLine).lastIndexOf(" ")
+            //text1 = s.substring(0, l)
+            //text2 = s.substring(l+1)
+            for (i <- 0 to l-1) {
+                text1 = text1 + s(i)
+                battleUi.refresh
+            }
+            for (i <- l+1 to s.length - 1) {
+                text2 = text2 + s(i)
+                battleUi.refresh
+            }
         }
     }
 }
@@ -127,9 +142,17 @@ class BattleUI (p1 : Player, p2 : Player, battle : Battle) extends JFrame with M
 
     }
 
+    def refresh : Unit = {
+        pane.repaint(0, 0, 900, 900)
+    }
+
     def updateImages : Unit = {
         pane.updateImages
     }
+
+}
+
+object EmptyBattleUI extends BattleUI (EmptyPlayer, EmptyPlayer, EmptyBattle) {
 
 }
 

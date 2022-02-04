@@ -108,7 +108,7 @@ object FirstPlayer extends Player {
         hisTurn = true
         super.newTurn
         while (hisTurn) {
-            TimeUnit.SECONDS.sleep(1)
+            TimeUnit.MILLISECONDS.sleep(10)
         }
     }
 
