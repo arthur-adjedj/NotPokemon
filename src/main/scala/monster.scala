@@ -237,7 +237,7 @@ abstract class Monster {
             case "Slow" => nextXpStep = (1.25 * Math.pow(level+1, 3)).toInt
         }
         if (level > 1) {
-            println(name + " is now level " + level)
+            DiscusionLabel.changeText(name + " is now level " + level)
         }
     }
 

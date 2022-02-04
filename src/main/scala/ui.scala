@@ -4,7 +4,7 @@ import java.awt.event.MouseEvent
 import javax.swing.{JFrame, JPanel, JLabel}
 import java.io.File
 import java.awt.font.TextAttribute
-
+import collection.JavaConverters._
 
 
 import java.util.concurrent.TimeUnit
@@ -47,11 +47,13 @@ object DiscusionLabel {
     var battleUi : BattleUI = EmptyBattleUI
     var charPerLine : Int = 50
     var x : Int = 40
-    var y : Int = 325
+    var y : Int = 330
     var font : Font = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("PokemonPixelFont.ttf"))
-    font = font.deriveFont(Font.PLAIN,17)
+    font = font.deriveFont(Font.PLAIN,40)
+    val attributes = (collection.Map(TextAttribute.TRACKING -> 0.05)).asJava
+    font = font.deriveFont(attributes)
+    font = font.deriveFont(font.getStyle() | Font.BOLD)
 
-    //font = font.deriveFont(TextAttribute.TRACKING, 0.5)
 
     def display (g : Graphics) : Unit = {
         g.setFont(font)
@@ -152,11 +154,7 @@ class BattleUI (p1 : Player, p2 : Player, battle : Battle) extends JFrame with M
 
 }
 
-object EmptyBattleUI extends BattleUI (EmptyPlayer, EmptyPlayer, EmptyBattle) {
-
-}
-
-
+object EmptyBattleUI extends BattleUI (EmptyPlayer, EmptyPlayer, EmptyBattle) {}
 
 class DrawPanel (buttonList : List[MyButton], p1 : Player, p2 : Player) extends JPanel {
     var toShow : Boolean = false
@@ -217,8 +215,6 @@ class DrawPanel (buttonList : List[MyButton], p1 : Player, p2 : Player) extends 
             g.drawString(p1.currentMonster.hp + " / "+ p1.currentMonster.hpMax,500,257)
         }
     }
-
-
 
   
     override def paintComponent (g : Graphics) : Unit = {

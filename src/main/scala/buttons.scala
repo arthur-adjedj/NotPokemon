@@ -11,10 +11,21 @@ abstract class MyButton (imageName : String) {
     var height : Int = 0
     var image = javax.imageio.ImageIO.read(getClass.getResource(imageName))
     var visible : Boolean = false
-
+    var poke_font : Font = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("PokemonPixelFont.ttf"))
+    poke_font = poke_font.deriveFont(Font.PLAIN,30)
+    var text : String = ""
+    var xtext  = 0
+    var ytext = 0
     def display (g : Graphics) : Unit = {
         if (visible) {
+            g.setFont(poke_font)
+            var metrics = g.getFontMetrics(poke_font);
+            // Coordonées du texte
+            xtext = x + (width - metrics.stringWidth(text)) / 2;
+            ytext = y + ((height - metrics.getHeight()) / 2) + metrics.getAscent();
+            println((x,y,xtext,ytext))
             g.drawImage(image, x, y, null)
+            g.drawString(text,xtext,ytext)
         }
     }
 
@@ -87,12 +98,13 @@ abstract class ChangeMonsterButton (imageName : String) extends MyButton (imageN
 
 
 
-object AttackButton extends MyButton ("Button.png") {
+object AttackButton extends MyButton ("AttackButton.png") {
     x = 3
     y = 405
     width = 300
     height = 136
     visible = true
+    text = "Attack"
 
     override def isClicked : Unit = {
 
@@ -111,12 +123,14 @@ object AttackButton extends MyButton ("Button.png") {
 }
 
 
-object BagButton extends MyButton ("Button.png") {
+object BagButton extends MyButton ("BagButton.png") {
     x = 311
     y = 405
     width = 300
     height = 136
     visible = true
+    text = "Bag"
+
 
     override def isClicked : Unit = {
         println("Showing the bag")
@@ -124,12 +138,13 @@ object BagButton extends MyButton ("Button.png") {
 }
 
 
-object MonsterButton extends MyButton ("Button.png") {
+object MonsterButton extends MyButton ("MonstersButton.png") {
     x = 3
     y = 549
     width = 300
     height = 136
     visible = true
+    text = "Pokemons"
 
     override def isClicked : Unit = {
         println("Showing the available monsters")
@@ -151,19 +166,20 @@ object MonsterButton extends MyButton ("Button.png") {
 }
 
 
-object RunButton extends MyButton ("Button.png") {
+object RunButton extends MyButton ("RunButton.png") {
     x = 311
     y = 549
     width = 300
     height = 136
     visible = true
+    text = "Run"
 
     override def isClicked : Unit = {
         println("Run away from the battle")
     }
 }
 
-object CastAttackButton1 extends CastAttackButton ("Button.png") {
+object CastAttackButton1 extends CastAttackButton ("WaterButton.png") {
     x = 3
     y = 405
     width = 300
@@ -172,7 +188,7 @@ object CastAttackButton1 extends CastAttackButton ("Button.png") {
     n = 0
 }
 
-object CastAttackButton2 extends CastAttackButton ("Button.png") {
+object CastAttackButton2 extends CastAttackButton ("FireButton.png") {
     x = 311
     y = 405
     width = 300
@@ -180,7 +196,7 @@ object CastAttackButton2 extends CastAttackButton ("Button.png") {
     n = 1
 }
 
-object CastAttackButton3 extends CastAttackButton ("Button.png") {
+object CastAttackButton3 extends CastAttackButton ("GrassButton.png") {
     x = 3
     y = 549
     width = 300
@@ -188,7 +204,7 @@ object CastAttackButton3 extends CastAttackButton ("Button.png") {
     n = 2
 }
 
-object CastAttackButton4 extends CastAttackButton ("Button.png") {
+object CastAttackButton4 extends CastAttackButton ("IceButton.png") {
     x = 311
     y = 549
     width = 300
@@ -196,7 +212,7 @@ object CastAttackButton4 extends CastAttackButton ("Button.png") {
     n = 3
 }
 
-object ChangeMonsterButton1 extends ChangeMonsterButton ("Button.png") {
+object ChangeMonsterButton1 extends ChangeMonsterButton ("ElectricButton.png") {
     x = 3
     y = 405
     width = 300
