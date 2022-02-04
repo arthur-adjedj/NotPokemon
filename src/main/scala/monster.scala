@@ -272,6 +272,8 @@ class Pikachu extends Monster {
     attacks(1) = DoubleSlap
     attacks(2) = Thunder
     attacks(3) = EmptyAttack
+
+    uiYShift = 120
 }
 
 class Squirtle extends Monster {
