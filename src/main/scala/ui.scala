@@ -1,10 +1,10 @@
 import java.awt.event._
 import java.awt.{Color,Graphics,BasicStroke,Font}
-import java.awt.image.BufferedImage
 import java.awt.event.MouseEvent
 import javax.swing.{JFrame, JPanel, JLabel}
 import java.io.File
-import java.awt.font.TextAttribute 
+import java.awt.font.TextAttribute
+
 
 
 import java.util.concurrent.TimeUnit
@@ -284,10 +284,12 @@ object DiscusionLabel {
     var text1 : String = "Ceci est un test"
     var text2 : String = "ceci est un second test"
     var text3 : String = ""
+    var charPerLine : Int = 50
     var x : Int = 40
     var y : Int = 325
     var font : Font = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("PokemonPixelFont.ttf"))
     font = font.deriveFont(Font.PLAIN,17)
+
     //font = font.deriveFont(TextAttribute.TRACKING, 0.5)
 
     def display (g : Graphics) : Unit = {
@@ -297,7 +299,15 @@ object DiscusionLabel {
     }
 
     def changeText (s : String) : Unit = {
-        text1 = s
+        text1 = ""
+        text2 = ""
+        if (s.length < charPerLine) {
+            text1 = s
+        } else {
+            var t1 = s.substring(0, charPerLine).lastIndexOf(" ")
+            text1 = s.substring(0, t1)
+            text2 = s.substring(t1+1)
+        }
     }
 }
 

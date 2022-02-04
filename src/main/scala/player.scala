@@ -74,7 +74,7 @@ class Player {
     }
 
     def lose : Unit = {
-        println(name + " just lost")
+        DiscusionLabel.changeText(name + " just lost")
         playing = false
         opponent.playing = false
     }

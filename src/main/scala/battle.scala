@@ -1,3 +1,5 @@
+import java.util.concurrent.TimeUnit
+
 class Battle (p1 : Player, p2 : Player) {
     var ui : BattleUI = new BattleUI(p1, p2, this)
     def initialise : Unit = {
@@ -16,9 +18,11 @@ class Battle (p1 : Player, p2 : Player) {
         while (p1.playing && p2.playing) {
             p1.newTurn
             ui.updateImages
+            TimeUnit.SECONDS.sleep(1)
             if (p2.playing) {
                 p2.newTurn
                 ui.updateImages
+                TimeUnit.SECONDS.sleep(1)
             }
         }
     }
