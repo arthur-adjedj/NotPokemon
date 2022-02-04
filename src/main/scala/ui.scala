@@ -415,8 +415,8 @@ class DrawPanel (buttonList : List[MyButton], p1 : Player, p2 : Player) extends 
         super.paintComponent(g)
         g.setFont(poke_font)
         g.drawImage(battleBackgroundImg, 0, 0, null)
-        g.drawImage(pokemonFrontImg, 370, 35- p2.currentMonster.uiYShift, null)
-        g.drawImage(pokemonBackImg, 75, 141 - p1.currentMonster.uiYShift, null)
+        g.drawImage(pokemonFrontImg, 370, 35 + p2.currentMonster.uiYShift, null)
+        g.drawImage(pokemonBackImg, 75, 141 + p1.currentMonster.uiYShift, null)
         
         EnnemyBar.display(g)
         YourBar.display(g)
