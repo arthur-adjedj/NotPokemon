@@ -278,6 +278,22 @@ abstract class HpBar {
     }
 }
 
+object DiscusionLabel {
+    var text1 : String = "Ceci est un test"
+    var text2 : String = ""
+    var text3 : String = ""
+    var x : Int = 33
+    var y : Int = 330
+
+    def display (g : Graphics) : Unit = {
+        g.drawString(text1, x, y)
+    }
+
+    def changeText (s : String) : Unit = {
+        text1 = s
+    }
+}
+
 
 
 
@@ -362,7 +378,7 @@ class DrawPanel (buttonList : List[MyButton], p1 : Player, p2 : Player) extends 
 
     object EnnemyBar{
         object EnnemyHpBar extends HpBar {
-            x =  112
+            x = 112
             y = 56
         }
         def display (g : Graphics) : Unit = {
@@ -424,6 +440,7 @@ class DrawPanel (buttonList : List[MyButton], p1 : Player, p2 : Player) extends 
 
         buttonList.foreach(x => x.display(g))
         g.drawImage(textBarImg,0,287,null)
+        DiscusionLabel.display(g)
 
     }
 
