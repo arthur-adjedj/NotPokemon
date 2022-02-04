@@ -1,4 +1,3 @@
-import swing._
 import java.awt.event._
 import java.awt.{Color,Graphics,BasicStroke,Font}
 import java.awt.image.BufferedImage
