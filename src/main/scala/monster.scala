@@ -46,6 +46,7 @@ abstract class Monster {
 
     def imgNameFront : String = {originalName + "Front.png"}
     def imgNameBack : String = {originalName + "Back.png"}
+    var uiYShift : Int = 0
     var originalName : String = ""
     def typeName : String = {monsterType.name}
 
