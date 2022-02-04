@@ -4,6 +4,8 @@ import java.awt.image.BufferedImage
 import java.awt.event.MouseEvent
 import javax.swing.{JFrame, JPanel, JLabel}
 import java.io.File
+import java.awt.font.TextAttribute 
+
 
 import java.util.concurrent.TimeUnit
 
@@ -280,13 +282,18 @@ abstract class HpBar {
 
 object DiscusionLabel {
     var text1 : String = "Ceci est un test"
-    var text2 : String = ""
+    var text2 : String = "ceci est un second test"
     var text3 : String = ""
-    var x : Int = 33
-    var y : Int = 330
+    var x : Int = 40
+    var y : Int = 325
+    var font : Font = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("PokemonPixelFont.ttf"))
+    font = font.deriveFont(Font.PLAIN,17)
+    //font = font.deriveFont(TextAttribute.TRACKING, 0.5)
 
     def display (g : Graphics) : Unit = {
+        g.setFont(font)
         g.drawString(text1, x, y)
+        g.drawString(text2, x, y+30)
     }
 
     def changeText (s : String) : Unit = {
