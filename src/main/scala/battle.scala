@@ -22,7 +22,7 @@ class Battle (p1 : Player, p2 : Player) {
             if (p2.playing) {
                 p2.newTurn
                 ui.updateImages
-                TimeUnit.SECONDS.sleep(1)
+                //TimeUnit.SECONDS.sleep(1)
             }
         }
     }

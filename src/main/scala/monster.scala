@@ -44,8 +44,8 @@ abstract class Monster {
     var name : String = ""
     var owner : Player = EmptyPlayer
 
-    def imgNameFront : String = {originalName + "Front.png"}
-    def imgNameBack : String = {originalName + "Back.png"}
+    def imgNameFront : String = {"Monsters/" + originalName + "Front.png"}
+    def imgNameBack : String = {"Monsters/" + originalName + "Back.png"}
     var uiYShift : Int = 0
     var originalName : String = ""
     def typeName : String = {monsterType.name}
@@ -266,7 +266,7 @@ class Pikachu extends Monster {
     baseXp = 112
 
     monsterType = Electric
-    name = "Pikachuuuuu"
+    name = "Pikachuuuu"
     originalName = "Pikachu"
     attacks(0) = QuickAttack
     attacks(1) = DoubleSlap
@@ -284,7 +284,7 @@ class Squirtle extends Monster {
     baseXp = 63
 
     monsterType = Water
-    name = "Carapuuuuuce"
+    name = "Carapuuuce"
     originalName = "Squirtle"
 
     attacks(0) = QuickAttack
@@ -292,6 +292,41 @@ class Squirtle extends Monster {
 
     uiYShift = 18
 
+}
+
+
+class Bulbasaur extends Monster {
+    hpMax = 45
+    hp = 45
+    attackStat = 49
+    defenseStat = 49
+    speedStat = 45
+
+    xpGraph = "Medium Slow"
+    baseXp = 64
+
+    monsterType = Grass
+    name = "Bulbizaare"
+    originalName = "Bulbasaur"
+
+    attacks(0) = QuickAttack
+}
+
+class Charmander extends Monster {
+    hpMax = 39
+    hp = 39
+    attackStat = 52
+    defenseStat = 43
+    speedStat = 65
+
+    xpGraph = "Medium Slow"
+    baseXp = 62
+
+    monsterType = Fire
+    name = "Saalameche"
+    originalName = "Charmander"
+
+    attacks(0) = QuickAttack
 }
 
 object EmptyMonster extends Monster {

@@ -130,7 +130,7 @@ abstract class ChangeMonsterButton (imageNam : String) extends MyButton (imageNa
 
 
 
-object AttackButton extends MyButton ("AttackButton.png") {
+object AttackButton extends MyButton ("Buttons/AttackButton.png") {
     x = 3
     y = 405
     width = 300
@@ -155,7 +155,7 @@ object AttackButton extends MyButton ("AttackButton.png") {
 }
 
 
-object BagButton extends MyButton ("BagButton.png") {
+object BagButton extends MyButton ("Buttons/BagButton.png") {
     x = 311
     y = 405
     width = 300
@@ -171,7 +171,7 @@ object BagButton extends MyButton ("BagButton.png") {
 }
 
 
-object MonsterButton extends MyButton ("MonstersButton.png") {
+object MonsterButton extends MyButton ("Buttons/MonstersButton.png") {
     x = 3
     y = 549
     width = 300
@@ -199,7 +199,7 @@ object MonsterButton extends MyButton ("MonstersButton.png") {
 }
 
 
-object RunButton extends MyButton ("RunButton.png") {
+object RunButton extends MyButton ("Buttons/RunButton.png") {
     x = 311
     y = 549
     width = 300
@@ -213,7 +213,7 @@ object RunButton extends MyButton ("RunButton.png") {
     }
 }
 
-object CastAttackButton1 extends CastAttackButton ("WaterButton.png") {
+object CastAttackButton1 extends CastAttackButton ("Buttons/WaterButton.png") {
     x = 3
     y = 405
     width = 300
@@ -223,7 +223,7 @@ object CastAttackButton1 extends CastAttackButton ("WaterButton.png") {
 
 }
 
-object CastAttackButton2 extends CastAttackButton ("FireButton.png") {
+object CastAttackButton2 extends CastAttackButton ("Buttons/FireButton.png") {
     x = 311
     y = 405
     width = 300
@@ -231,7 +231,7 @@ object CastAttackButton2 extends CastAttackButton ("FireButton.png") {
     n = 1
 }
 
-object CastAttackButton3 extends CastAttackButton ("GrassButton.png") {
+object CastAttackButton3 extends CastAttackButton ("Buttons/GrassButton.png") {
     x = 3
     y = 549
     width = 300
@@ -239,7 +239,7 @@ object CastAttackButton3 extends CastAttackButton ("GrassButton.png") {
     n = 2
 }
 
-object CastAttackButton4 extends CastAttackButton ("IceButton.png") {
+object CastAttackButton4 extends CastAttackButton ("Buttons/IceButton.png") {
     x = 311
     y = 549
     width = 300
@@ -247,7 +247,7 @@ object CastAttackButton4 extends CastAttackButton ("IceButton.png") {
     n = 3
 }
 
-object ChangeMonsterButton1 extends ChangeMonsterButton ("ElectricButton.png") {
+object ChangeMonsterButton1 extends ChangeMonsterButton ("Buttons/ElectricButton.png") {
     x = 3
     y = 405
     width = 300
@@ -255,7 +255,7 @@ object ChangeMonsterButton1 extends ChangeMonsterButton ("ElectricButton.png") {
     n = 0
 }
 
-object ChangeMonsterButton2 extends ChangeMonsterButton ("Button.png") {
+object ChangeMonsterButton2 extends ChangeMonsterButton ("Buttons/EmptyButton.png") {
     x = 311
     y = 405
     width = 300
@@ -263,7 +263,7 @@ object ChangeMonsterButton2 extends ChangeMonsterButton ("Button.png") {
     n = 1
 }
 
-object ChangeMonsterButton3 extends ChangeMonsterButton ("Button.png") {
+object ChangeMonsterButton3 extends ChangeMonsterButton ("Buttons/EmptyButton.png") {
     x = 3
     y = 549
     width = 300
@@ -271,7 +271,7 @@ object ChangeMonsterButton3 extends ChangeMonsterButton ("Button.png") {
     n = 2
 }
 
-object ChangeMonsterButton4 extends ChangeMonsterButton ("Button.png") {
+object ChangeMonsterButton4 extends ChangeMonsterButton ("Buttons/EmptyButton.png") {
     x = 311
     y = 549
     width = 300
@@ -279,7 +279,7 @@ object ChangeMonsterButton4 extends ChangeMonsterButton ("Button.png") {
     n = 3
 }
 
-object ChangeMonsterButton5 extends ChangeMonsterButton ("Button.png") {
+object ChangeMonsterButton5 extends ChangeMonsterButton ("Buttons/EmptyButton.png") {
     x = 3
     y = 693
     width = 300
@@ -287,7 +287,7 @@ object ChangeMonsterButton5 extends ChangeMonsterButton ("Button.png") {
     n = 4
 }
 
-object ChangeMonsterButton6 extends ChangeMonsterButton ("Button.png") {
+object ChangeMonsterButton6 extends ChangeMonsterButton ("Buttons/EmptyButton.png") {
     x = 311
     y = 693
     width = 300

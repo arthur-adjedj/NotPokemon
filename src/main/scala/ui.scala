@@ -159,11 +159,11 @@ object EmptyBattleUI extends BattleUI (EmptyPlayer, EmptyPlayer, EmptyBattle) {}
 class DrawPanel (buttonList : List[MyButton], p1 : Player, p2 : Player) extends JPanel {
     var toShow : Boolean = false
     var battleBackgroundImg = javax.imageio.ImageIO.read(getClass.getResource("BattleBackground.png"))
-    var pokemonFrontImg = javax.imageio.ImageIO.read(getClass.getResource("EmptyFront.png"))
-    var pokemonBackImg = javax.imageio.ImageIO.read(getClass.getResource("EmptyBack.png"))
+    var pokemonFrontImg = javax.imageio.ImageIO.read(getClass.getResource("Monsters/EmptyFront.png"))
+    var pokemonBackImg = javax.imageio.ImageIO.read(getClass.getResource("Monsters/EmptyBack.png"))
     var ennemyBarImg = javax.imageio.ImageIO.read(getClass.getResource("EnnemyBar.png"))
     var yourBarImg = javax.imageio.ImageIO.read(getClass.getResource("YourBar.png"))
-    var buttonImg = javax.imageio.ImageIO.read(getClass.getResource("Button.png"))
+    //var buttonImg = javax.imageio.ImageIO.read(getClass.getResource("Button.png"))
     var textBarImg = javax.imageio.ImageIO.read(getClass.getResource("TextBar.png"))
     var poke_font : Font = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("PokemonPixelFont.ttf"))
     poke_font = poke_font.deriveFont(Font.PLAIN,30)
