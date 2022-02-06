@@ -145,7 +145,6 @@ object RapidSpin extends Attack {
     
 }
 
-
 object WaterPulse extends Attack {
     name = "Water Pulse"
     power = 60
@@ -160,7 +159,6 @@ object WaterPulse extends Attack {
     
 }
 
-
 object Protect extends Attack {
     name = "Protect"
     override def toString : String = 
@@ -170,7 +168,6 @@ object Protect extends Attack {
        
     }
 }
-
 
 object AquaTail extends Attack {
     name = "Aqua Tail"
@@ -215,4 +212,20 @@ object SkullBash extends Attack {
         self.defenseStage = (6).min(self.defenseStage+1)    
 }
 
+object VineWhip extends Attack {
+    name = "Quick Attack"
+    power = 45
+    override def toString : String = 
+        "The target is struck with slender, whiplike vines to inflict damage."
+
+    attackType = Grass
+}
+
+object Growth extends Attack {
+    name = "Growth"
+    override def toString : String = 
+        "The user’s body grows all at once, raising the Attack stats."
+    override def cast(self: Monster, ennemy: Monster): Unit = 
+        self.attackStage = (6).max(self.attackStage + 1)
+}
 

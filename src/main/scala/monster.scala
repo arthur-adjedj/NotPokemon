@@ -310,6 +310,7 @@ class Bulbasaur extends Monster {
     originalName = "Bulbasaur"
 
     attacks(0) = QuickAttack
+    uiYShift = 23
 }
 
 class Charmander extends Monster {
