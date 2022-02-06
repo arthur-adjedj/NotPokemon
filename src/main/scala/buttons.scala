@@ -4,7 +4,8 @@ import java.awt.{Color,Graphics,BasicStroke,Font}
 
 
 
-abstract class MyButton (imageName : String) {
+abstract class MyButton (imageNam : String) {
+    var imageName = imageNam
     var x : Int = 0
     var y : Int = 0
     var width : Int = 0
@@ -44,10 +45,13 @@ abstract class MyButton (imageName : String) {
 
     def setVisible(b : Boolean) : Unit = {
         visible = b
+        update
     }
+
+    def update : Unit = {}
 }
 
-abstract class CastAttackButton (imageName : String) extends MyButton (imageName) {
+abstract class CastAttackButton (imageNam : String) extends MyButton (imageNam) {
     var n : Int = 0
     visible = false
     override def isClicked : Unit = {
@@ -66,11 +70,25 @@ abstract class CastAttackButton (imageName : String) extends MyButton (imageName
     }
 
     override def setVisible (b : Boolean) : Unit = {
-        visible = b && FirstPlayer.currentMonster.attacks(n).name != "Empty"
+        if (FirstPlayer.currentMonster.attacks(n).name != "Empty") {
+            visible = b
+            update
+        } else {
+            visible = false
+        }
+    }
+
+    override def update : Unit = {
+        if (FirstPlayer.currentMonster.attacks(n).name != "Empty") {
+            imageName = FirstPlayer.currentMonster.attacks(n).attackType.imageButtonName
+            image = javax.imageio.ImageIO.read(getClass.getResource(imageName))
+            text = FirstPlayer.currentMonster.attacks(n).name
+
+        }
     }
 }
 
-abstract class ChangeMonsterButton (imageName : String) extends MyButton (imageName) {
+abstract class ChangeMonsterButton (imageNam : String) extends MyButton (imageNam) {
     var n : Int = 0
     visible = false
 
@@ -91,7 +109,21 @@ abstract class ChangeMonsterButton (imageName : String) extends MyButton (imageN
     }
 
     override def setVisible (b : Boolean) : Unit = {
-        visible = b && FirstPlayer.team(n).alive && FirstPlayer.team(n).name != "Empty" && FirstPlayer.team(n) != FirstPlayer.currentMonster
+        if (FirstPlayer.team(n).alive && FirstPlayer.team(n).name != "Empty" && FirstPlayer.team(n) != FirstPlayer.currentMonster) {
+            visible = b
+            update
+        } else {
+            visible = false
+        }
+    }
+
+    override def update : Unit = {
+        if (FirstPlayer.team(n).alive && FirstPlayer.team(n).name != "Empty" && FirstPlayer.team(n) != FirstPlayer.currentMonster) {
+            imageName = FirstPlayer.team(n).monsterType.imageButtonName
+            image = javax.imageio.ImageIO.read(getClass.getResource(imageName))
+            text = FirstPlayer.team(n).name
+            
+        }
     }
 
 }
@@ -134,6 +166,7 @@ object BagButton extends MyButton ("BagButton.png") {
 
     override def isClicked : Unit = {
         println("Showing the bag")
+        DiscusionLabel.changeText("Your bag is empty !")
     }
 }
 
@@ -176,6 +209,7 @@ object RunButton extends MyButton ("RunButton.png") {
 
     override def isClicked : Unit = {
         println("Run away from the battle")
+        DiscusionLabel.changeText("For the moment, you cannot run !")
     }
 }
 
@@ -186,6 +220,7 @@ object CastAttackButton1 extends CastAttackButton ("WaterButton.png") {
     height = 136
 
     n = 0
+
 }
 
 object CastAttackButton2 extends CastAttackButton ("FireButton.png") {

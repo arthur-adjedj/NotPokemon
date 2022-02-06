@@ -288,6 +288,7 @@ class Squirtle extends Monster {
     originalName = "Squirtle"
 
     attacks(0) = QuickAttack
+    attacks(1) = AquaTail
 
     uiYShift = 18
 

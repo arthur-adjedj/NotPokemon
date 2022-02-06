@@ -1,6 +1,7 @@
 abstract class Type {
     var name : String = "" 
     def multDamage (t : Type) : Float = 1
+    def imageButtonName : String = {name + "Button.png"}
 
     override def toString : String = name
 }

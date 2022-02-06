@@ -45,7 +45,7 @@ object DiscusionLabel {
     var text1 : String = "Ceci est un test"
     var text2 : String = "ceci est un second test"
     var battleUi : BattleUI = EmptyBattleUI
-    var charPerLine : Int = 50
+    var charPerLine : Int = 25
     var x : Int = 40
     var y : Int = 330
     var font : Font = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("PokemonPixelFont.ttf"))
