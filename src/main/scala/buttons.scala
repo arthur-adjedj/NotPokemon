@@ -24,7 +24,6 @@ abstract class MyButton (imageNam : String) {
             // Coordonées du texte
             xtext = x + (width - metrics.stringWidth(text)) / 2;
             ytext = y + ((height - metrics.getHeight()) / 2) + metrics.getAscent();
-            println((x,y,xtext,ytext))
             g.drawImage(image, x, y, null)
             g.drawString(text,xtext,ytext)
         }
