@@ -69,22 +69,15 @@ abstract class CastAttackButton (imageNam : String) extends MyButton (imageNam) 
         }
     }
 
-    override def setVisible (b : Boolean) : Unit = {
-        if (FirstPlayer.currentMonster.attacks(n).name != "Empty") {
-            visible = b
-            update
-        } else {
-            visible = false
-        }
-    }
-
     override def update : Unit = {
         if (FirstPlayer.currentMonster.attacks(n).name != "Empty") {
             imageName = FirstPlayer.currentMonster.attacks(n).attackType.imageButtonName
-            image = javax.imageio.ImageIO.read(getClass.getResource(imageName))
             text = FirstPlayer.currentMonster.attacks(n).name
-
+        } else {
+            imageName = "Buttons/EmptyButton.png"
+            text = "Empty Slot"
         }
+        image = javax.imageio.ImageIO.read(getClass.getResource(imageName))
     }
 }
 
@@ -108,22 +101,14 @@ abstract class ChangeMonsterButton (imageNam : String) extends MyButton (imageNa
         }        
     }
 
-    override def setVisible (b : Boolean) : Unit = {
-        if (FirstPlayer.team(n).alive && FirstPlayer.team(n).name != "Empty" && FirstPlayer.team(n) != FirstPlayer.currentMonster) {
-            visible = b
-            update
-        } else {
-            visible = false
-        }
-    }
-
     override def update : Unit = {
         if (FirstPlayer.team(n).alive && FirstPlayer.team(n).name != "Empty" && FirstPlayer.team(n) != FirstPlayer.currentMonster) {
             imageName = FirstPlayer.team(n).monsterType.imageButtonName
-            image = javax.imageio.ImageIO.read(getClass.getResource(imageName))
-            text = FirstPlayer.team(n).name
-            
+        } else {
+            imageName = "Buttons/EmptyButton.png"
         }
+        text = FirstPlayer.team(n).name
+        image = javax.imageio.ImageIO.read(getClass.getResource(imageName))
     }
 
 }
