@@ -98,9 +98,13 @@ object FirstPlayer extends Player {
     team(1).gainLvl(5)
     team(1).owner = this
 
-    team(3) = team(2)
-    team(4) = team(2)
-    team(5) = team(2)
+    team(3) = new Charmander
+    team(3).gainLvl(5)
+    team(3).owner = this
+
+    team(4) = new Rattata
+    team(4).gainLvl(5)
+    team(4).owner = this
 
 
     name = "You"

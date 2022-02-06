@@ -105,7 +105,7 @@ abstract class Monster {
                     if (status.exists(x => x.name == "Confusion") && random <= 0.5) {
                         this.receiveAttack(attack, this)
                     } else if (random <= attack.accuracy*thisAccuracyEff*otherEvasionEff) {
-                        DiscusionLabel.changeText(name + " casts " + attack.name + " on " + other.name)
+                        DiscusionLabel.changeText(name + " casts " + attack.name)
                         other.receiveAttack(attack, this)
                     } else {
                         if (random <= attack.accuracy) {
@@ -327,6 +327,24 @@ class Charmander extends Monster {
     originalName = "Charmander"
 
     attacks(0) = QuickAttack
+}
+
+class Rattata extends Monster {
+    hpMax = 30
+    hp = 30
+    attackStat = 56
+    defenseStat = 35
+    speedStat = 72
+
+    xpGraph = "Medium Fast"
+    baseXp = 51
+
+    monsterType = Normal
+    name = "Ratatata"
+    originalName = "Rattata"
+
+    attacks(0) = QuickAttack
+
 }
 
 object EmptyMonster extends Monster {
