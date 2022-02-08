@@ -91,11 +91,11 @@ abstract class Monster {
         var thisAccuracyEff = this.accuracyBattle * calcModifier(this, "accuracy")
         var otherEvasionEff = other.evasionBattle * calcModifier(other, "evasion")
         if (status.exists(x => x.name == "Freeze")) {
-            DiscusionLabel.changeText(name + "cannot attack because he's frozen")
+            DiscusionLabel.changeText(name + " cannot attack because he's frozen")
         } else if (status.exists(x => x.name == "Sleep")) {
-            DiscusionLabel.changeText(name + "cannot attack because he's sleeping")
-        } else if (status.exists(x => name == "Paralysis") && scala.util.Random.nextFloat() <= 1/4) {
-            DiscusionLabel.changeText(name + "cannot attack because he's paralysed")
+            DiscusionLabel.changeText(name + " cannot attack because he's sleeping")
+        } else if (status.exists(x => x.name == "Paralysis") && scala.util.Random.nextFloat() <= 1f/4f) {
+            DiscusionLabel.changeText(name + " cannot attack because he's paralysed")
         } else if (other.status.exists(x => x.name == "Protection")) {
             DiscusionLabel.changeText(other.name + " is protected")
         } else {
@@ -104,8 +104,10 @@ abstract class Monster {
                     random = scala.util.Random.nextFloat()
                     if (status.exists(x => x.name == "Confusion") && random <= 0.5) {
                         this.receiveAttack(attack, this)
+                        attack.cast(other, this)
                     } else if (random <= attack.accuracy*thisAccuracyEff*otherEvasionEff) {
                         DiscusionLabel.changeText(name + " casts " + attack.name)
+                        attack.cast(this, other)
                         other.receiveAttack(attack, this)
                     } else {
                         if (random <= attack.accuracy) {
@@ -121,7 +123,7 @@ abstract class Monster {
         }
     }
 
-    def calcModifier (monster : Monster, stat : String) : Int = {
+    def calcModifier (monster : Monster, stat : String) : Float = {
         var stage = {stat match {
             case "attack" => monster.attackStage
             case "defense" => monster.defenseStage
@@ -131,19 +133,19 @@ abstract class Monster {
         }}
 
         {stage match {
-            case -6 => 25/100
-            case -5 => 28/100
-            case -4 => 33/100
-            case -3 => 40/100
-            case -2 => 50/100
-            case -1 => 66/100
-            case 0 => 100/100
-            case 1 => 150/100
-            case 2 => 200/100
-            case 3 => 250/100
-            case 4 => 300/100
-            case 5 => 350/100
-            case 6 => 400/100
+            case -6 => 25f/100f
+            case -5 => 28f/100f
+            case -4 => 33f/100f
+            case -3 => 40f/100f
+            case -2 => 50f/100f
+            case -1 => 66f/100f
+            case 0 => 100f/100f
+            case 1 => 150f/100f
+            case 2 => 200f/100f
+            case 3 => 250f/100f
+            case 4 => 300f/100f
+            case 5 => 350f/100f
+            case 6 => 400f/100f
         }}
 
     }
@@ -153,9 +155,8 @@ abstract class Monster {
         var otherAttackEff = other.attackBattle * calcModifier(other, "attack")
         var thisDefenseEff = defenseBattle * calcModifier(this, "defense")
 
-        var random = scala.util.Random.nextFloat()*38.0/255.0 + 217.0/255.0
-
-        var damage = ((((2.0/5.0*other.level.toFloat+2.0)*attack.power.toFloat*otherAttackEff.toFloat/thisDefenseEff.toFloat)/50.0+2)*random*attack.attackType.multDamage(other.monsterType)).toInt
+        var random = scala.util.Random.nextFloat()*38f/255f + 217f/255f
+        var damage = ((((2f/5f*other.level.toFloat+2f)*attack.power.toFloat*otherAttackEff.toFloat/thisDefenseEff.toFloat)/50f+2f)*random*attack.attackType.multDamage(other.monsterType)).toInt
 
         takeDamage(damage)
         
@@ -173,6 +174,7 @@ abstract class Monster {
             status.foreach(x => max_duration(x, stat.name))
         } else {
             status = stat :: status
+            println(name + " has the status " + stat.name)
             stat.onAdd(this)
         }
     }
@@ -204,9 +206,9 @@ abstract class Monster {
         DiscusionLabel.changeText(name + " died !")
         alive = false
         var monstersSeenAlive = monstersSeen.filter(x => x.alive && x.name != "Empty")
-        var exp : Float = baseXp.toFloat*level.toFloat/7/monstersSeenAlive.length.toFloat
+        var exp : Float = baseXp.toFloat*level.toFloat/7f/monstersSeenAlive.length.toFloat
         if (!wild) {
-            exp *= 3/2
+            exp *= 3f/2f
         }
         monstersSeenAlive.foreach(x => x.gainXp(exp.toInt))
         owner.changeMonster

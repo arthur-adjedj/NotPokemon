@@ -95,7 +95,9 @@ object Thunder extends Attack {
         "A wicked thunderbolt is dropped on the target to inflict damage."+
         " This may also leave the target with paralysis."
     override def cast(self: Monster, ennemy: Monster): Unit = {
-        if (scala.util.Random.nextFloat() < 0.3f){
+        var random = scala.util.Random.nextFloat()
+        if (random < 0.3f){
+            DiscusionLabel.changeText(ennemy.name + " is now paralysed !")
             ennemy.receiveStatus(new Paralysis)
         }
     }
