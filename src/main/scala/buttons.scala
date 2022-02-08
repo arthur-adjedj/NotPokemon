@@ -10,7 +10,7 @@ abstract class MyButton (imageNam : String) {
     var y : Int = 0
     var width : Int = 0
     var height : Int = 0
-    var image = javax.imageio.ImageIO.read(getClass.getResource(imageName))
+    var image = Utils.loadImage(imageName)
     var visible : Boolean = false
     var poke_font : Font = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("PokemonPixelFont.ttf"))
     poke_font = poke_font.deriveFont(Font.PLAIN,30)
@@ -76,7 +76,7 @@ abstract class CastAttackButton (imageNam : String) extends MyButton (imageNam) 
             imageName = "Buttons/EmptyButton.png"
             text = "Empty Slot"
         }
-        image = javax.imageio.ImageIO.read(getClass.getResource(imageName))
+        image = Utils.loadImage(imageName)
     }
 }
 
@@ -107,7 +107,7 @@ abstract class ChangeMonsterButton (imageNam : String) extends MyButton (imageNa
             imageName = "Buttons/EmptyButton.png"
         }
         text = FirstPlayer.team(n).name
-        image = javax.imageio.ImageIO.read(getClass.getResource(imageName))
+        image = Utils.loadImage(imageName)
     }
 
 }
