@@ -257,6 +257,9 @@ abstract class Monster {
 
 }
 
+
+
+
 class Pikachu extends Monster {
     hpMax = 35
     hp = 35
@@ -273,7 +276,8 @@ class Pikachu extends Monster {
     attacks(0) = QuickAttack
     attacks(1) = DoubleSlap
     attacks(2) = Thunder
-    attacks(3) = EmptyAttack}
+    attacks(3) = EmptyAttack
+}
 
 class Squirtle extends Monster {
     hpMax = 44
@@ -330,6 +334,8 @@ class Charmander extends Monster {
     originalName = "Charmander"
 
     attacks(0) = QuickAttack
+
+    uiYShift = 18
 }
 
 class Rattata extends Monster {
@@ -347,6 +353,7 @@ class Rattata extends Monster {
     originalName = "Rattata"
 
     attacks(0) = QuickAttack
+    uiYShift = 15
 
 }
 
