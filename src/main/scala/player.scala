@@ -16,7 +16,7 @@ class Player {
     def enterBattle : Unit = {
         playing = true
         team.foreach(x => x.enterBattle)
-        currentMonster = team(0)
+        currentMonster = team.filter(x => x.alive)(0)
         currentMonster.enterField
 
         battle.ui.updateImages
@@ -135,10 +135,11 @@ object FirstPlayer extends Player {
 object SecondPlayer extends Player {
     team(0) = new Squirtle
     team(0).owner = this
-    team(0).gainLvl(7)
+    team(0).gainLvl(3)
 
     team(1) = new Pikachu
     team(1).owner = this
+    team(1).gainLvl(3)
     name = "Opponent"
     opponent = FirstPlayer
 
@@ -147,5 +148,22 @@ object SecondPlayer extends Player {
         var l = availableAttacks.length
         castAttack(availableAttacks(scala.util.Random.nextInt(l)))
     }
+}
 
+object ThirdPlayer extends Player {
+    team(0) = new Rattata
+    team(0).owner = this
+    team(0).gainLvl(4)
+
+    team(1) = new Bulbasaur
+    team(1).owner = this
+    team(1).gainLvl(4)
+    name = "Opponent"
+    opponent = FirstPlayer
+
+    override def newTurn : Unit = {
+        super.newTurn
+        var l = availableAttacks.length
+        castAttack(availableAttacks(scala.util.Random.nextInt(l)))
+    }
 }

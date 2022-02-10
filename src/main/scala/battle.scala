@@ -8,6 +8,9 @@ class Battle (p1 : Player, p2 : Player) {
         p1.battle = this
         p2.battle = this
 
+        p1.opponent = p2
+        p2.opponent = p1
+
         p1.enterBattle
         p2.enterBattle
 
