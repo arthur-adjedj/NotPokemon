@@ -420,7 +420,7 @@ object NextPageItemButton extends MyButton ("Buttons/EmptyButton.png") {
     text = "Next"
     var currentPage = 0
     override def isClicked : Unit = {
-        var numberOfPage : Int = FirstPlayer.usableInventory.filter(x => x.name != "Empty").length
+        var numberOfPage : Int = 1 + FirstPlayer.usableInventory.filter(x => x.name != "Empty").length / 4
         currentPage = (currentPage + 1) % numberOfPage
         UseItemButton1.n = 4*currentPage
         UseItemButton2.n = 4*currentPage + 1

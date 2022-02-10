@@ -16,6 +16,7 @@ class Battle (p1 : Player, p2 : Player) {
         p2.enterBattle
 
         ui.updateImages
+        FirstPlayer.updateInventory
     }
 
     def start : Unit = {

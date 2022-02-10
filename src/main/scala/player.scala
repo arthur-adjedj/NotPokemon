@@ -80,9 +80,14 @@ class Player {
 
     def lose : Unit = {
         DiscusionLabel.changeText(name + " just lost")
+        opponent.win
         playing = false
         opponent.playing = false
         FirstPlayer.endTurn
+    }
+
+    def win : Unit = {
+
     }
 }
 
@@ -113,6 +118,9 @@ object FirstPlayer extends Player {
     team(4).owner = this
 
     gainItem(FreshWater, 5)
+    gainItem(MonsterBall, 10)
+    gainItem(SuperMonsterBall, 10)
+    gainItem(UltraMonsterBall, 10)
     gainItem(MonsterBall, 10)
     gainItem(FullRestore, 1)
 
@@ -193,9 +201,11 @@ object SecondPlayer extends Player {
     team(0).owner = this
     team(0).gainLvl(3)
 
+    /*
     team(1) = new Pikachu
     team(1).owner = this
     team(1).gainLvl(3)
+    */
     name = "Opponent"
 
     override def newTurn : Unit = {

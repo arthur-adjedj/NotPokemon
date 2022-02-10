@@ -80,6 +80,50 @@ object MonsterBall extends Item {
     }
 }
 
+object SuperMonsterBall extends Item {
+    name = "Super Monster Ball"
+    needsTarget = false
+    order = 0
+
+    override def usable : Boolean = {
+        FirstPlayer.opponent.name == "Wild" && FirstPlayer.team.filter(x => x.name != "Empty").length != 6 && FirstPlayer.playing
+    }
+
+    override def use : Boolean = {
+        println("You use a SuperMonsterBall")
+        var slot = Utils.findFirstOccurenceArray(FirstPlayer.team, EmptyMonster)
+        FirstPlayer.opponent.currentMonster.owner = FirstPlayer
+        FirstPlayer.team(slot) = FirstPlayer.opponent.currentMonster
+        FirstPlayer.opponent.team(Utils.findFirstOccurenceArray(FirstPlayer.opponent.team, FirstPlayer.opponent.currentMonster)) = EmptyMonster
+        FirstPlayer.opponent.changeMonster
+        amount -= 1
+        true
+    }
+}
+
+object UltraMonsterBall extends Item {
+    name = "Ultra Monster Ball"
+    needsTarget = false
+    order = 0
+
+    override def usable : Boolean = {
+        FirstPlayer.opponent.name == "Wild" && FirstPlayer.team.filter(x => x.name != "Empty").length != 6 && FirstPlayer.playing
+    }
+
+    override def use : Boolean = {
+        println("You use a UltraMonsterBall")
+        var slot = Utils.findFirstOccurenceArray(FirstPlayer.team, EmptyMonster)
+        FirstPlayer.opponent.currentMonster.owner = FirstPlayer
+        FirstPlayer.team(slot) = FirstPlayer.opponent.currentMonster
+        FirstPlayer.opponent.team(Utils.findFirstOccurenceArray(FirstPlayer.opponent.team, FirstPlayer.opponent.currentMonster)) = EmptyMonster
+        FirstPlayer.opponent.changeMonster
+        amount -= 1
+        true
+    }
+}
+
+
+
 
 
 
