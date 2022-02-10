@@ -2,20 +2,39 @@ import java.text.Normalizer
 import java.lang.Math
 
 abstract class Monster {
-    var hpMax : Int = 100
-    var hp : Int = 100
     var xp : Int = 0
     var level : Int = 0
+
+    var baseHpStat : Int = 1
+    var baseAttackStat : Int = 1
+    var baseDefenseStat : Int = 1
+    var baseSpeedStat : Int = 1
+    var hpMax : Int = 100
+    var hp : Int = 100
+
+    var IVHp : Int = scala.util.Random.nextInt(16)
+    var IVAttack : Int = scala.util.Random.nextInt(16)
+    var IVDefense : Int = scala.util.Random.nextInt(16)
+    var IVSpeed : Int = scala.util.Random.nextInt(16)
+
+    var EVHp : Int = 0
+    var EVAttack : Int = 0
+    var EVDefense : Int = 0
+    var EVSpeed : Int = 0
+
+    
 
     var attackStat : Int = 100
     var defenseStat : Int = 100
     var speedStat : Int = 100
+
 
     var attackBattle : Int = 100
     var defenseBattle : Int = 100
     var speedBattle : Int = 100
     var accuracyBattle : Float = 1
     var evasionBattle : Float = 1
+
 
     var alive : Boolean = true
     var wild : Boolean = false
@@ -215,10 +234,14 @@ abstract class Monster {
             exp *= 3f/2f
         }
         monstersSeenAlive.foreach(x => x.gainXp(exp.toInt))
+        monstersSeenAlive.foreach(x => x.EVHp = (x.EVHp + baseHpStat).min(65535))
+        monstersSeenAlive.foreach(x => x.EVAttack = (x.EVAttack + baseAttackStat).min(65535))
+        monstersSeenAlive.foreach(x => x.EVDefense = (x.EVDefense + baseDefenseStat).min(65535))
+        monstersSeenAlive.foreach(x => x.EVSpeed = (x.EVSpeed + baseSpeedStat).min(65535))
         if (owner.team.forall(x => (!x.alive) || (x.name == "Empty"))) {
             owner.lose
         }
-        //owner.changeMonster
+        owner.changeMonster
 
     }
 
@@ -233,11 +256,21 @@ abstract class Monster {
     }
 
     def levelUp : Unit = {
-        if (level != 0) {
-            hpMax += hpMaxPerLevel
-        }
-        hp = hpMax
         level += 1
+
+        var previousHpMax = hpMax
+        hpMax = (((baseHpStat + IVHp) * 2 + (Math.sqrt(EVHp)/4f).toInt) * level)/100 + level + 10
+        if (level == 1) {
+            hp = hpMax
+        } else {
+            heal(hpMax - previousHpMax)
+        }
+        attackStat = (((baseAttackStat + IVAttack) * 2 + (Math.sqrt(EVAttack)/4f).toInt) * level)/100 + 5
+        defenseStat = (((baseDefenseStat + IVDefense) * 2 + (Math.sqrt(EVDefense)/4f).toInt) * level)/100 + 5
+        speedStat = (((baseSpeedStat + IVSpeed) * 2 + (Math.sqrt(EVSpeed)/4f).toInt) * level)/100 + 5
+
+
+
         previousXpStep = nextXpStep
         xpGraph match {
             case "Fast" => nextXpStep = (0.8 * Math.pow(level+1, 3)).toInt
@@ -268,11 +301,10 @@ abstract class Monster {
 
 
 class Pikachu extends Monster {
-    hpMax = 35
-    hp = 35
-    attackStat = 55
-    defenseStat = 40
-    speedStat = 90
+    baseHpStat = 35
+    baseAttackStat = 55
+    baseDefenseStat = 40
+    baseSpeedStat = 90
 
     xpGraph = "Medium Fast"
     baseXp = 112
@@ -287,11 +319,10 @@ class Pikachu extends Monster {
 }
 
 class Squirtle extends Monster {
-    hpMax = 44
-    hp = 44
-    attackStat = 48
-    defenseStat = 65
-    speedStat = 50
+    baseHpStat = 44
+    baseAttackStat = 48
+    baseDefenseStat = 65
+    baseSpeedStat = 50
 
     xpGraph = "Medium Slow"
     baseXp = 63
@@ -309,11 +340,10 @@ class Squirtle extends Monster {
 
 
 class Bulbasaur extends Monster {
-    hpMax = 45
-    hp = 45
-    attackStat = 49
-    defenseStat = 49
-    speedStat = 45
+    baseHpStat = 45
+    baseAttackStat = 49
+    baseDefenseStat = 49
+    baseSpeedStat = 45
 
     xpGraph = "Medium Slow"
     baseXp = 64
@@ -327,11 +357,10 @@ class Bulbasaur extends Monster {
 }
 
 class Charmander extends Monster {
-    hpMax = 39
-    hp = 39
-    attackStat = 52
-    defenseStat = 43
-    speedStat = 65
+    baseHpStat = 39
+    baseAttackStat = 52
+    baseDefenseStat = 43
+    baseSpeedStat = 65
 
     xpGraph = "Medium Slow"
     baseXp = 62
@@ -346,11 +375,10 @@ class Charmander extends Monster {
 }
 
 class Rattata extends Monster {
-    hpMax = 30
-    hp = 30
-    attackStat = 56
-    defenseStat = 35
-    speedStat = 72
+    baseHpStat = 30
+    baseAttackStat = 56
+    baseDefenseStat = 35
+    baseSpeedStat = 72
 
     xpGraph = "Medium Fast"
     baseXp = 51

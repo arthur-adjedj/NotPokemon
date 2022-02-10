@@ -116,6 +116,8 @@ object FirstPlayer extends Player {
     opponent = SecondPlayer
     var hisTurn : Boolean = false
 
+    override def changeMonster : Unit = {}
+
     override def newTurn : Unit = {
         hisTurn = true
         super.newTurn
@@ -133,7 +135,7 @@ object FirstPlayer extends Player {
 object SecondPlayer extends Player {
     team(0) = new Squirtle
     team(0).owner = this
-    team(0).gainLvl(1000)
+    team(0).gainLvl(7)
 
     team(1) = new Pikachu
     team(1).owner = this
