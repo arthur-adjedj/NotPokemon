@@ -104,7 +104,7 @@ abstract class Monster {
                     random = scala.util.Random.nextFloat()
                     if (status.exists(x => x.name == "Confusion") && random <= 0.5) {
                         this.receiveAttack(attack, this)
-                        attack.cast(other, this)
+                        attack.cast(this, this)
                     } else if (random <= attack.accuracy*thisAccuracyEff*otherEvasionEff) {
                         DiscusionLabel.changeText(name + " casts " + attack.name)
                         attack.cast(this, other)
@@ -151,15 +151,18 @@ abstract class Monster {
     }
 
     def receiveAttack (attack : Attack, other : Monster) : Unit = {
-        
-        var otherAttackEff = other.attackBattle * calcModifier(other, "attack")
-        var thisDefenseEff = defenseBattle * calcModifier(this, "defense")
+        var handledDamages = attack.handlesDamages(other, this)
+        if (handledDamages != -1) {
+            takeDamage(handledDamages)
+        } else {
+            var otherAttackEff = other.attackBattle * calcModifier(other, "attack")
+            var thisDefenseEff = defenseBattle * calcModifier(this, "defense")
 
-        var random = scala.util.Random.nextFloat()*38f/255f + 217f/255f
-        var damage = ((((2f/5f*other.level.toFloat+2f)*attack.power.toFloat*otherAttackEff.toFloat/thisDefenseEff.toFloat)/50f+2f)*random*attack.attackType.multDamage(other.monsterType)).toInt
+            var random = scala.util.Random.nextFloat()*38f/255f + 217f/255f
+            var damage = ((((2f/5f*other.level.toFloat+2f)*attack.power.toFloat*otherAttackEff.toFloat/thisDefenseEff.toFloat)/50f+2f)*random*attack.attackType.multDamage(other.monsterType)).toInt
 
-        takeDamage(damage)
-        
+            takeDamage(damage)
+        } 
     }
 
     def receiveStatus (stat : Status) : Unit = {

@@ -7,6 +7,7 @@ abstract class Attack {
     var attackType : Type = Normal
     def nOfHits() : Int = 1
     def cast(self : Monster,ennemy: Monster) : Unit = ()
+    def handlesDamages (self : Monster, ennemy : Monster) : Int = -1
 }
 
 object EmptyAttack extends Attack {
