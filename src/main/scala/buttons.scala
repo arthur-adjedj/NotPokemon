@@ -1,6 +1,7 @@
 import java.io.File
 import java.awt.event.MouseEvent
 import java.awt.{Color,Graphics,BasicStroke,Font}
+import java.util.concurrent.TimeUnit
 
 
 
@@ -9,8 +10,8 @@ abstract class MyButton (imageNam : String) {
     var imageName = imageNam
     var x : Int = 0
     var y : Int = 0
-    var width : Int = 0
-    var height : Int = 0
+    var width : Int = 300
+    var height : Int = 136
     var image = Utils.loadImage(imageName)
     var visible : Boolean = false
     var clickable : Boolean = true
@@ -123,13 +124,45 @@ abstract class ChangeMonsterButton (imageNam : String) extends MyButton (imageNa
 
 }
 
+abstract class UseItemButton (imageNam : String) extends MyButton (imageNam) {
+    var n : Int = 0
+    visible = false
+
+    override def isClicked : Unit = {
+        if (FirstPlayer.useItem(n)) {
+            UseItemButton1.setVisible(false)
+            UseItemButton2.setVisible(false)
+            UseItemButton3.setVisible(false)
+            UseItemButton4.setVisible(false)
+
+            BackButton.setVisible(false)
+            NextPageItemButton.setVisible(false)
+            
+            AttackButton.setVisible(true)
+            BagButton.setVisible(true)
+            MonsterButton.setVisible(true)
+            RunButton.setVisible(true)
+        }        
+    }
+
+    override def update : Unit = {
+        if (FirstPlayer.usableInventory(n).name != "Empty" && FirstPlayer.usableInventory(n).usable) {
+            imageName = "Buttons/BagButton.png"
+            clickable = visible
+        } else {
+            imageName = "Buttons/EmptyButton.png"
+            clickable = false
+        }
+        text = FirstPlayer.usableInventory(n).name + "(" + FirstPlayer.usableInventory(n).amount + ")"
+        image = Utils.loadImage(imageName)
+    }
+}
+
 
 
 object AttackButton extends MyButton ("Buttons/AttackButton.png") {
     x = 3
     y = 405
-    width = 300
-    height = 136
     visible = true
     text = "Attack"
 
@@ -168,19 +201,30 @@ object AttackButton extends MyButton ("Buttons/AttackButton.png") {
 object BagButton extends MyButton ("Buttons/BagButton.png") {
     x = 311
     y = 405
-    width = 300
-    height = 136
     visible = true
     text = "Bag"
 
 
     override def isClicked : Unit = {
         println("Showing the bag")
-        DiscusionLabel.changeText("Your bag is empty !")
+        AttackButton.setVisible(false)
+        BagButton.setVisible(false)
+        MonsterButton.setVisible(false)
+        RunButton.setVisible(false)
+
+        UseItemButton1.setVisible(true)
+        UseItemButton2.setVisible(true)
+        UseItemButton3.setVisible(true)
+        UseItemButton4.setVisible(true)
+        NextPageItemButton.setVisible(true)
+
+        BackButton.x = 3
+        BackButton.y = 693
+        BackButton.setVisible(true)
     }
 
     override def update : Unit = {
-        if (FirstPlayer.currentMonster.alive) {
+        if (FirstPlayer.currentMonster.alive && FirstPlayer.usableInventory.filter(x => x.name != "Empty").length > 0) {
             imageName = originalImageName
             clickable = visible
         } else {
@@ -195,8 +239,6 @@ object BagButton extends MyButton ("Buttons/BagButton.png") {
 object MonsterButton extends MyButton ("Buttons/MonstersButton.png") {
     x = 3
     y = 549
-    width = 300
-    height = 136
     visible = true
     text = "Pokemons"
 
@@ -233,14 +275,14 @@ object MonsterButton extends MyButton ("Buttons/MonstersButton.png") {
 object RunButton extends MyButton ("Buttons/RunButton.png") {
     x = 311
     y = 549
-    width = 300
-    height = 136
     visible = true
     text = "Run"
 
     override def isClicked : Unit = {
         println("Run away from the battle")
-        DiscusionLabel.changeText("For the moment, you cannot run !")
+        DiscusionLabel.changeText("You run, far, really far !")
+        TimeUnit.SECONDS.sleep(1)
+        FirstPlayer.lose
     }
 
     override def update : Unit = {
@@ -256,8 +298,6 @@ object RunButton extends MyButton ("Buttons/RunButton.png") {
 }
 
 object BackButton extends MyButton ("Buttons/AttackButton.png") {
-    width = 300
-    height = 136
     visible = false
     text = "Back"
 
@@ -274,6 +314,12 @@ object BackButton extends MyButton ("Buttons/AttackButton.png") {
         CastAttackButton3.setVisible(false)
         CastAttackButton4.setVisible(false)
 
+        UseItemButton1.setVisible(false)
+        UseItemButton2.setVisible(false)
+        UseItemButton3.setVisible(false)
+        UseItemButton4.setVisible(false)
+
+        NextPageItemButton.setVisible(false)
         setVisible(false)
 
         AttackButton.setVisible(true)
@@ -286,9 +332,6 @@ object BackButton extends MyButton ("Buttons/AttackButton.png") {
 object CastAttackButton1 extends CastAttackButton ("Buttons/WaterButton.png") {
     x = 3
     y = 405
-    width = 300
-    height = 136
-
     n = 0
 
 }
@@ -296,71 +339,108 @@ object CastAttackButton1 extends CastAttackButton ("Buttons/WaterButton.png") {
 object CastAttackButton2 extends CastAttackButton ("Buttons/FireButton.png") {
     x = 311
     y = 405
-    width = 300
-    height = 136
     n = 1
 }
 
 object CastAttackButton3 extends CastAttackButton ("Buttons/GrassButton.png") {
     x = 3
     y = 549
-    width = 300
-    height = 136
     n = 2
 }
 
 object CastAttackButton4 extends CastAttackButton ("Buttons/IceButton.png") {
     x = 311
     y = 549
-    width = 300
-    height = 136
     n = 3
 }
 
 object ChangeMonsterButton1 extends ChangeMonsterButton ("Buttons/ElectricButton.png") {
     x = 3
     y = 405
-    width = 300
-    height = 136
     n = 0
 }
 
 object ChangeMonsterButton2 extends ChangeMonsterButton ("Buttons/EmptyButton.png") {
     x = 311
     y = 405
-    width = 300
-    height = 136
     n = 1
 }
 
 object ChangeMonsterButton3 extends ChangeMonsterButton ("Buttons/EmptyButton.png") {
     x = 3
     y = 549
-    width = 300
-    height = 136
     n = 2
 }
 
 object ChangeMonsterButton4 extends ChangeMonsterButton ("Buttons/EmptyButton.png") {
     x = 311
     y = 549
-    width = 300
-    height = 136
     n = 3
 }
 
 object ChangeMonsterButton5 extends ChangeMonsterButton ("Buttons/EmptyButton.png") {
     x = 3
     y = 693
-    width = 300
-    height = 136
     n = 4
 }
 
 object ChangeMonsterButton6 extends ChangeMonsterButton ("Buttons/EmptyButton.png") {
     x = 311
     y = 693
-    width = 300
-    height = 136
     n = 5
+}
+
+object UseItemButton1 extends UseItemButton ("Buttons/EmptyButton.png") {
+    x = 3
+    y = 405
+    n = 0
+
+}
+
+object UseItemButton2 extends UseItemButton ("Buttons/EmptyButton.png") {
+    x = 311
+    y = 405
+    n = 1
+}
+
+object UseItemButton3 extends UseItemButton ("Buttons/EmptyButton.png") {
+    x = 3
+    y = 549
+    n = 2
+}
+object UseItemButton4 extends UseItemButton ("Buttons/EmptyButton.png") {
+    x = 311
+    y = 549
+    n = 3
+}
+
+object NextPageItemButton extends MyButton ("Buttons/EmptyButton.png") {
+    x = 311
+    y = 693
+    text = "Next"
+    var currentPage = 0
+    override def isClicked : Unit = {
+        var numberOfPage : Int = FirstPlayer.usableInventory.filter(x => x.name != "Empty").length
+        currentPage = (currentPage + 1) % numberOfPage
+        UseItemButton1.n = 4*currentPage
+        UseItemButton2.n = 4*currentPage + 1
+        UseItemButton3.n = 4*currentPage + 2
+        UseItemButton4.n = 4*currentPage + 3
+
+        UseItemButton1.update
+        UseItemButton2.update
+        UseItemButton3.update
+        UseItemButton4.update
+    }
+
+    override def update : Unit = {
+        if (FirstPlayer.usableInventory.filter(x => x.name != "Empty").length > 4) {
+            imageName = "Buttons/AttackButton.png"
+            clickable = visible
+        } else {
+            imageName = "Buttons/EmptyButton.png"
+            clickable = false
+        }
+        image = Utils.loadImage(imageName)
+    }
 }

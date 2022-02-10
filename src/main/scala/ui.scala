@@ -91,13 +91,15 @@ object DiscusionLabel {
 
 class BattleUI (p1 : Player, p2 : Player, battle : Battle) extends JFrame with MouseListener {
     
-    var buttonList : List[MyButton] = List(AttackButton, BagButton, MonsterButton, RunButton, BackButton,
+    var buttonList : List[MyButton] = List(AttackButton, BagButton, MonsterButton, RunButton, BackButton, NextPageItemButton,
                                             CastAttackButton1, CastAttackButton2, CastAttackButton3, CastAttackButton4,
                                             ChangeMonsterButton1, ChangeMonsterButton2, ChangeMonsterButton3, 
-                                            ChangeMonsterButton4, ChangeMonsterButton5, ChangeMonsterButton6)
+                                            ChangeMonsterButton4, ChangeMonsterButton5, ChangeMonsterButton6,
+                                            UseItemButton1, UseItemButton2, UseItemButton3, UseItemButton4)
 
     
     var pane = new DrawPanel(buttonList, p1, p2)
+    var lastMonsterSelected : Monster = EmptyMonster
 
     def initialise : Unit = {
         setSize(614, 828 + 30)

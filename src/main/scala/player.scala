@@ -7,6 +7,8 @@ class Player {
     var opponent : Player = EmptyPlayer
     var battle : Battle = EmptyBattle
 
+    var inventory : Array[Item] = Array.fill(40){EmptyItem}
+
     var currentMonster : Monster = EmptyMonster
     var availableAttacks : Array[Attack] = Array.fill(4){EmptyAttack}
 
@@ -26,9 +28,6 @@ class Player {
     def newTurn : Unit = {
         currentMonster.newTurn
         availableAttacks = currentMonster.attacks.filter(x => x.name != "Empty")
-        
-
-
     }
 
     def endTurn : Unit = {
@@ -83,6 +82,7 @@ class Player {
         DiscusionLabel.changeText(name + " just lost")
         playing = false
         opponent.playing = false
+        FirstPlayer.endTurn
     }
 }
 
@@ -112,11 +112,19 @@ object FirstPlayer extends Player {
     team(4).gainLvl(5)
     team(4).owner = this
 
-    name = "You"
-    opponent = SecondPlayer
-    var hisTurn : Boolean = false
+    gainItem(FreshWater, 5)
+    gainItem(MonsterBall, 10)
+    gainItem(FullRestore, 1)
 
-    override def changeMonster : Unit = {}
+    name = "You"
+    var hisTurn : Boolean = false
+    var usableInventory : Array[Item] = Array.fill(40){EmptyItem}
+
+    override def changeMonster : Unit = {
+        if (team.forall(x => !x.alive || x.name == "Empty")) {
+            lose
+        }
+    }
 
     override def newTurn : Unit = {
         hisTurn = true
@@ -130,6 +138,54 @@ object FirstPlayer extends Player {
         super.endTurn
         hisTurn = false
     }
+
+    def useItem (x : Int) : Boolean = {
+        if (inventory(x).name != "Empty") {
+            if (useItem(usableInventory(x))) {
+                true
+            } else {
+                false
+            }
+        } else {
+            false
+        }
+    }
+
+    def useItem (item : Item) : Boolean = {
+        if (!item.needsTarget) {
+            if (item.use) {
+                updateInventory
+                true
+            } else {
+                false
+            }
+        } else {
+            false
+        }
+    }
+
+    def gainItem (item : Item, amount : Int) : Unit = {
+        def add_amount (o : Item, name : String) : Unit = {
+            if (o.name == name) {
+                o.amount += amount
+            }
+        }
+
+        var exists = inventory.exists(x => x.name == item.name)
+        if (exists) {
+            inventory.foreach(x => add_amount(x, item.name))
+        } else {
+            inventory(inventory.filter(x => x.name != "Empty").length) = item
+            item.amount = amount
+            println("You found " + amount + " " + item.name)
+            updateInventory
+        }
+    }
+
+    def updateInventory : Unit = {
+        inventory = inventory.map(x => if (x.amount == 0) EmptyItem else x).sortWith((x, y) => x.order <= y.order)
+        usableInventory = inventory.map(x => if (x.amount == 0 || !x.usable) EmptyItem else x).sortWith((x, y) => x.order <= y.order)
+    }
 }
 
 object SecondPlayer extends Player {
@@ -141,7 +197,6 @@ object SecondPlayer extends Player {
     team(1).owner = this
     team(1).gainLvl(3)
     name = "Opponent"
-    opponent = FirstPlayer
 
     override def newTurn : Unit = {
         super.newTurn
@@ -159,7 +214,20 @@ object ThirdPlayer extends Player {
     team(1).owner = this
     team(1).gainLvl(4)
     name = "Opponent"
-    opponent = FirstPlayer
+
+    override def newTurn : Unit = {
+        super.newTurn
+        var l = availableAttacks.length
+        castAttack(availableAttacks(scala.util.Random.nextInt(l)))
+    }
+}
+
+object WildPlayer extends Player {
+    team(0) = new Rattata
+    team(0).owner = this
+    team(0).gainLvl(4)
+
+    name = "Wild"
 
     override def newTurn : Unit = {
         super.newTurn

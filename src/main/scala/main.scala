@@ -8,6 +8,10 @@ object MyApp {
     b.initialise
     b.start
 
+    b = new Battle(FirstPlayer, WildPlayer)
+    b.initialise
+    b.start
+
     b = new Battle(FirstPlayer, ThirdPlayer)
     b.initialise
     b.start
