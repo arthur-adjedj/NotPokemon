@@ -62,11 +62,17 @@ class Player {
     }
 
     def changeMonster (n : Int) : Boolean = {
-        if (team(n).alive && team(n).name != "Empty" && team(n) != currentMonster) {
+        if (team(n) == currentMonster && team(n).alive) {
+            DiscusionLabel.changeText(team(n).name + " is already on the battlefield!")
+            true
+        } else if (team(n).alive && team(n).name != "Empty" && team(n) != currentMonster) {
+            var previousMonster = currentMonster
             currentMonster = team(n)
-            currentMonster.enterField
+            currentMonster.enterField 
             battle.ui.updateImages
-            endTurn
+            if (previousMonster.alive) {
+                endTurn
+            }
             true
         } else {
             false
@@ -94,7 +100,7 @@ object FirstPlayer extends Player {
     team(2).gainLvl(5)
     team(2).owner = this
 
-    team(1) = new Bulbasaur
+    /* team(1) = new Bulbasaur
     team(1).gainLvl(5)
     team(1).owner = this
 
@@ -106,6 +112,7 @@ object FirstPlayer extends Player {
     team(4).gainLvl(5)
     team(4).owner = this
 
+    */
 
     name = "You"
     opponent = SecondPlayer
@@ -128,6 +135,7 @@ object FirstPlayer extends Player {
 object SecondPlayer extends Player {
     team(0) = new Squirtle
     team(0).owner = this
+    team(0).gainLvl(1000)
 
     team(1) = new Pikachu
     team(1).owner = this

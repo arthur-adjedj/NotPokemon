@@ -91,7 +91,7 @@ object DiscusionLabel {
 
 class BattleUI (p1 : Player, p2 : Player, battle : Battle) extends JFrame with MouseListener {
     
-    var buttonList : List[MyButton] = List(AttackButton, BagButton, MonsterButton, RunButton,
+    var buttonList : List[MyButton] = List(AttackButton, BagButton, MonsterButton, RunButton, BackButton,
                                             CastAttackButton1, CastAttackButton2, CastAttackButton3, CastAttackButton4,
                                             ChangeMonsterButton1, ChangeMonsterButton2, ChangeMonsterButton3, 
                                             ChangeMonsterButton4, ChangeMonsterButton5, ChangeMonsterButton6)
@@ -217,6 +217,7 @@ class DrawPanel (buttonList : List[MyButton], p1 : Player, p2 : Player) extends 
 
   
     override def paintComponent (g : Graphics) : Unit = {
+        buttonList.foreach(x => x.update)
         super.paintComponent(g)
         g.setFont(poke_font)
         g.drawImage(battleBackgroundImg, 0, 0, null)

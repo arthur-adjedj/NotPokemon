@@ -198,6 +198,7 @@ abstract class Monster {
     def takeDamage (amount : Int) : Unit = {
         hp -= amount
         if (hp <= 0) {
+            hp = 0
             die
         }
     }
@@ -211,7 +212,7 @@ abstract class Monster {
             exp *= 3f/2f
         }
         monstersSeenAlive.foreach(x => x.gainXp(exp.toInt))
-        owner.changeMonster
+        //owner.changeMonster
 
     }
 

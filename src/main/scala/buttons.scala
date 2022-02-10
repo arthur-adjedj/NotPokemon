@@ -5,6 +5,7 @@ import java.awt.{Color,Graphics,BasicStroke,Font}
 
 
 abstract class MyButton (imageNam : String) {
+    var originalImageName = imageNam
     var imageName = imageNam
     var x : Int = 0
     var y : Int = 0
@@ -12,6 +13,7 @@ abstract class MyButton (imageNam : String) {
     var height : Int = 0
     var image = Utils.loadImage(imageName)
     var visible : Boolean = false
+    var clickable : Boolean = true
     var poke_font : Font = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("PokemonPixelFont.ttf"))
     poke_font = poke_font.deriveFont(Font.PLAIN,30)
     var text : String = ""
@@ -30,7 +32,7 @@ abstract class MyButton (imageNam : String) {
     }
 
     def onClick (x_click : Int, y_click : Int) : Boolean = {
-        if (visible && x <= x_click && x_click <= (x + width) && y <= y_click && y_click <= (y + height)) {
+        if (visible && x <= x_click && x_click <= (x + width) && y <= y_click && y_click <= (y + height) && clickable) {
             isClicked
             true
         } else {
@@ -47,7 +49,9 @@ abstract class MyButton (imageNam : String) {
         update
     }
 
-    def update : Unit = {}
+    def update : Unit = {
+        clickable = visible
+    }
 }
 
 abstract class CastAttackButton (imageNam : String) extends MyButton (imageNam) {
@@ -61,6 +65,8 @@ abstract class CastAttackButton (imageNam : String) extends MyButton (imageNam) 
             CastAttackButton3.setVisible(false)
             CastAttackButton4.setVisible(false)
 
+            BackButton.setVisible(false)
+
             AttackButton.setVisible(true)
             BagButton.setVisible(true)
             MonsterButton.setVisible(true)
@@ -72,9 +78,11 @@ abstract class CastAttackButton (imageNam : String) extends MyButton (imageNam) 
         if (FirstPlayer.currentMonster.attacks(n).name != "Empty") {
             imageName = FirstPlayer.currentMonster.attacks(n).attackType.imageButtonName
             text = FirstPlayer.currentMonster.attacks(n).name
+            clickable = visible
         } else {
             imageName = "Buttons/EmptyButton.png"
             text = "Empty Slot"
+            clickable = false
         }
         image = Utils.loadImage(imageName)
     }
@@ -93,6 +101,7 @@ abstract class ChangeMonsterButton (imageNam : String) extends MyButton (imageNa
             ChangeMonsterButton5.setVisible(false)
             ChangeMonsterButton6.setVisible(false)
 
+            
             AttackButton.setVisible(true)
             BagButton.setVisible(true)
             MonsterButton.setVisible(true)
@@ -101,10 +110,12 @@ abstract class ChangeMonsterButton (imageNam : String) extends MyButton (imageNa
     }
 
     override def update : Unit = {
-        if (FirstPlayer.team(n).alive && FirstPlayer.team(n).name != "Empty" && FirstPlayer.team(n) != FirstPlayer.currentMonster) {
+        if (FirstPlayer.team(n).alive && FirstPlayer.team(n).name != "Empty") {
             imageName = FirstPlayer.team(n).monsterType.imageButtonName
+            clickable = visible
         } else {
             imageName = "Buttons/EmptyButton.png"
+            clickable = false
         }
         text = FirstPlayer.team(n).name
         image = Utils.loadImage(imageName)
@@ -135,6 +146,21 @@ object AttackButton extends MyButton ("Buttons/AttackButton.png") {
         CastAttackButton2.setVisible(true)
         CastAttackButton3.setVisible(true)
         CastAttackButton4.setVisible(true)
+
+        BackButton.x = 154
+        BackButton.y = 693
+        BackButton.setVisible(true)
+    }
+
+    override def update : Unit = {
+        if (FirstPlayer.currentMonster.alive) {
+            imageName = originalImageName
+            clickable = visible
+        } else {
+            imageName = "Buttons/EmptyButton.png"
+            clickable = false
+        }
+        image = Utils.loadImage(imageName)
     }
 }
 
@@ -151,6 +177,17 @@ object BagButton extends MyButton ("Buttons/BagButton.png") {
     override def isClicked : Unit = {
         println("Showing the bag")
         DiscusionLabel.changeText("Your bag is empty !")
+    }
+
+    override def update : Unit = {
+        if (FirstPlayer.currentMonster.alive) {
+            imageName = originalImageName
+            clickable = visible
+        } else {
+            imageName = "Buttons/EmptyButton.png"
+            clickable = false
+        }
+        image = Utils.loadImage(imageName)
     }
 }
 
@@ -177,9 +214,19 @@ object MonsterButton extends MyButton ("Buttons/MonstersButton.png") {
         ChangeMonsterButton4.setVisible(true)
         ChangeMonsterButton5.setVisible(true)
         ChangeMonsterButton6.setVisible(true)
-
-
     }
+
+    override def update : Unit = {
+        if (FirstPlayer.team.exists(x => (x != FirstPlayer.currentMonster) && (x.name != "Empty") && (x.alive))) {
+            imageName = originalImageName
+            clickable = visible
+        } else {
+            imageName = "Buttons/EmptyButton.png"
+            clickable = false
+        }
+        image = Utils.loadImage(imageName)
+    }
+
 }
 
 
@@ -194,6 +241,45 @@ object RunButton extends MyButton ("Buttons/RunButton.png") {
     override def isClicked : Unit = {
         println("Run away from the battle")
         DiscusionLabel.changeText("For the moment, you cannot run !")
+    }
+
+    override def update : Unit = {
+        if (FirstPlayer.currentMonster.alive) {
+            imageName = originalImageName
+            clickable = visible
+        } else {
+            imageName = "Buttons/EmptyButton.png"
+            clickable = false
+        }
+        image = Utils.loadImage(imageName)
+    }
+}
+
+object BackButton extends MyButton ("Buttons/AttackButton.png") {
+    width = 300
+    height = 136
+    visible = false
+    text = "Back"
+
+    override def isClicked : Unit = {
+        ChangeMonsterButton1.setVisible(false)
+        ChangeMonsterButton2.setVisible(false)
+        ChangeMonsterButton3.setVisible(false)
+        ChangeMonsterButton4.setVisible(false)
+        ChangeMonsterButton5.setVisible(false)
+        ChangeMonsterButton6.setVisible(false)
+
+        CastAttackButton1.setVisible(false)
+        CastAttackButton2.setVisible(false)
+        CastAttackButton3.setVisible(false)
+        CastAttackButton4.setVisible(false)
+
+        setVisible(false)
+
+        AttackButton.setVisible(true)
+        BagButton.setVisible(true)
+        MonsterButton.setVisible(true)
+        RunButton.setVisible(true)
     }
 }
 
