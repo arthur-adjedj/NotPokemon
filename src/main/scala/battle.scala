@@ -1,4 +1,5 @@
 import java.util.concurrent.TimeUnit
+import java.sql.Time
 
 class Battle (p1 : Player, p2 : Player) {
     var ui : BattleUI = new BattleUI(p1, p2, this)
@@ -28,6 +29,8 @@ class Battle (p1 : Player, p2 : Player) {
                 //TimeUnit.SECONDS.sleep(1)
             }
         }
+        TimeUnit.SECONDS.sleep(1)
+        ui.close
     }
 }
 

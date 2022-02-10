@@ -113,6 +113,10 @@ class BattleUI (p1 : Player, p2 : Player, battle : Battle) extends JFrame with M
         setVisible(true)
 
     }
+
+    def close : Unit = {
+        dispose()
+    }
     
   
 
