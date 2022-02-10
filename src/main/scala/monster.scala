@@ -212,6 +212,9 @@ abstract class Monster {
             exp *= 3f/2f
         }
         monstersSeenAlive.foreach(x => x.gainXp(exp.toInt))
+        if (owner.team.forall(x => (!x.alive) || (x.name == "Empty"))) {
+            owner.lose
+        }
         //owner.changeMonster
 
     }
@@ -361,5 +364,6 @@ class Rattata extends Monster {
 object EmptyMonster extends Monster {
     name = "Empty"
     originalName = "Empty"
+    alive = false
 }
 

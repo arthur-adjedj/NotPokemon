@@ -100,7 +100,7 @@ object FirstPlayer extends Player {
     team(2).gainLvl(5)
     team(2).owner = this
 
-    /* team(1) = new Bulbasaur
+    team(1) = new Bulbasaur
     team(1).gainLvl(5)
     team(1).owner = this
 
@@ -111,8 +111,6 @@ object FirstPlayer extends Player {
     team(4) = new Rattata
     team(4).gainLvl(5)
     team(4).owner = this
-
-    */
 
     name = "You"
     opponent = SecondPlayer
