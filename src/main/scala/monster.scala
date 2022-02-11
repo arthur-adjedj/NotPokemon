@@ -228,7 +228,7 @@ abstract class Monster {
     def die : Unit = {
         DiscussionLabel.changeText(name + " died !")
         alive = false
-        var monstersSeenAlive = monstersSeen.filter(x => x.alive && x.name != "Empty")
+        var monstersSeenAlive = monstersSeen.filter(x => x.alive && x.name != "Empty" && x.level < 100)
         var exp : Float = baseXp.toFloat*level.toFloat/7f/monstersSeenAlive.length.toFloat
         if (!wild) {
             exp *= 3f/2f

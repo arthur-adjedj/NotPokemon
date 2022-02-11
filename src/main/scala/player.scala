@@ -1,5 +1,6 @@
 import java.util.concurrent.TimeUnit
 import java.sql.Time
+import java.lang.Thread
 
 
 class Player {
@@ -251,8 +252,6 @@ object WildPlayer extends Player {
     def changeMonster (captured : Boolean) : Unit = {
         if (captured) {
             DiscussionLabel.changeText("You just captured " + currentMonster.name)
-            //TimeUnit.SECONDS.sleep(1)
-            //DiscussionLabel.changeText("It's working !")
         }
         if (team.exists(x => x.alive && x.name != "Empty")) {
             var alives = team.filter(x => x.alive && x.name != "Empty")

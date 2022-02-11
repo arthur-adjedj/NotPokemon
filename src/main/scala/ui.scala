@@ -9,6 +9,7 @@ import collection.JavaConverters._
 
 import java.util.concurrent.TimeUnit
 import scala.runtime.EmptyMethodCache
+import javax.swing.DebugGraphics
 
 
 abstract class HpBar {
@@ -45,7 +46,7 @@ object DiscussionLabel {
     var text1 : String = "Ceci est un test"
     var text2 : String = "ceci est un second test"
     var battleUi : BattleUI = EmptyBattleUI
-    var charPerLine : Int = 25
+    var charPerLine : Int = 27
     var x : Int = 40
     var y : Int = 330
     var font : Font = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("PokemonPixelFont.ttf"))
@@ -67,20 +68,11 @@ object DiscussionLabel {
         var t1 = ""
         var t2 = ""
         if (s.length < charPerLine) {
-            for (i <- 0 to s.length - 1) {
-                text1 = text1 + s(i)
-                //TimeUnit.MILLISECONDS.sleep(20)
-            }
+            text1 = s
         } else {
             var l = s.substring(0, charPerLine).lastIndexOf(" ")
-            //text1 = s.substring(0, l)
-            //text2 = s.substring(l+1)
-            for (i <- 0 to l-1) {
-                text1 = text1 + s(i)
-            }
-            for (i <- l+1 to s.length - 1) {
-                text2 = text2 + s(i)
-            }
+            text1 = s.substring(0, l)
+            text2 = s.substring(l+1)
         }
         battleUi.refresh
     }
@@ -149,9 +141,7 @@ class BattleUI (p1 : Player, p2 : Player, battle : Battle) extends JFrame with M
     }
 
     def refresh : Unit = {
-        revalidate
-        pane.revalidate
-        pane.repaint(0, 0, 900, 900)
+        pane.refresh
     }
 
     def updateImages : Unit = {
@@ -171,6 +161,7 @@ class DrawPanel (buttonList : List[MyButton], p1 : Player, p2 : Player) extends 
     var yourBarImg = Utils.loadImage("YourBar.png")
     var textBarImg = Utils.loadImage("TextBar.png")
     var poke_font : Font = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("PokemonPixelFont.ttf"))
+
     poke_font = poke_font.deriveFont(Font.PLAIN,30)
 
     object EnnemyBar{
@@ -223,8 +214,8 @@ class DrawPanel (buttonList : List[MyButton], p1 : Player, p2 : Player) extends 
 
   
     override def paintComponent (g : Graphics) : Unit = {
-        buttonList.foreach(x => x.update)
         super.paintComponent(g)
+        buttonList.foreach(x => x.update)
         g.setFont(poke_font)
         g.drawImage(battleBackgroundImg, 0, 0, null)
         g.drawImage(pokemonFrontImg, 370, 35 + p2.currentMonster.uiYShift, null)
@@ -237,13 +228,16 @@ class DrawPanel (buttonList : List[MyButton], p1 : Player, p2 : Player) extends 
         buttonList.foreach(x => x.display(g))
         g.drawImage(textBarImg,0,287,null)
         DiscussionLabel.display(g)
-        println("Refresh !")
-
     }
 
     def updateImages : Unit = {
         pokemonFrontImg = Utils.loadImage(p2.currentMonster.imgNameFront)
         pokemonBackImg = Utils.loadImage(p1.currentMonster.imgNameBack)
+        
+        repaint(0, 0, 900, 900)
+    }
+
+    def refresh : Unit = {
         repaint(0, 0, 900, 900)
     }
 }
