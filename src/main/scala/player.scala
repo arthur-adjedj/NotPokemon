@@ -1,4 +1,5 @@
 import java.util.concurrent.TimeUnit
+import java.sql.Time
 
 
 class Player {
@@ -62,7 +63,7 @@ class Player {
 
     def changeMonster (n : Int) : Boolean = {
         if (team(n) == currentMonster && team(n).alive) {
-            DiscusionLabel.changeText(team(n).name + " is already on the battlefield!")
+            DiscussionLabel.changeText(team(n).name + " is already on the battlefield!")
             true
         } else if (team(n).alive && team(n).name != "Empty" && team(n) != currentMonster) {
             var previousMonster = currentMonster
@@ -79,7 +80,7 @@ class Player {
     }
 
     def lose : Unit = {
-        DiscusionLabel.changeText(name + " just lost")
+        DiscussionLabel.changeText(name + " just lost")
         opponent.win
         playing = false
         opponent.playing = false
@@ -116,6 +117,8 @@ object FirstPlayer extends Player {
     team(4) = new Rattata
     team(4).gainLvl(5)
     team(4).owner = this
+
+    //team(5) = team(4)
 
     gainItem(FreshWater, 5)
     gainItem(MonsterBall, 10)
@@ -244,4 +247,32 @@ object WildPlayer extends Player {
         var l = availableAttacks.length
         castAttack(availableAttacks(scala.util.Random.nextInt(l)))
     }
+
+    def changeMonster (captured : Boolean) : Unit = {
+        if (captured) {
+            DiscussionLabel.changeText("You just captured " + currentMonster.name)
+            //TimeUnit.SECONDS.sleep(1)
+            //DiscussionLabel.changeText("It's working !")
+        }
+        if (team.exists(x => x.alive && x.name != "Empty")) {
+            var alives = team.filter(x => x.alive && x.name != "Empty")
+            var l = alives.length
+            currentMonster = alives(scala.util.Random.nextInt(l))
+            currentMonster.enterField
+            battle.ui.updateImages
+        } else {
+            lose(captured)
+        }
+    }
+
+    def lose (captured : Boolean) : Unit = {
+        if (!captured) {
+            DiscussionLabel.changeText(name + " just lost")
+        }
+        opponent.win
+        playing = false
+        opponent.playing = false
+        FirstPlayer.endTurn
+    }
+
 }

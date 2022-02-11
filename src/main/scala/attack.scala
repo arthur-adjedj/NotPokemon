@@ -98,7 +98,7 @@ object Thunder extends Attack {
     override def cast(self: Monster, ennemy: Monster): Unit = {
         var random = scala.util.Random.nextFloat()
         if (random < 0.3f){
-            DiscusionLabel.changeText(ennemy.name + " is now paralysed !")
+            DiscussionLabel.changeText(ennemy.name + " is now paralysed !")
             ennemy.receiveStatus(new Paralysis)
         }
     }

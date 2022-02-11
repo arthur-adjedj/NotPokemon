@@ -110,13 +110,13 @@ abstract class Monster {
         var thisAccuracyEff = this.accuracyBattle * calcModifier(this, "accuracy")
         var otherEvasionEff = other.evasionBattle * calcModifier(other, "evasion")
         if (status.exists(x => x.name == "Freeze")) {
-            DiscusionLabel.changeText(name + " cannot attack because he's frozen")
+            DiscussionLabel.changeText(name + " cannot attack because he's frozen")
         } else if (status.exists(x => x.name == "Sleep")) {
-            DiscusionLabel.changeText(name + " cannot attack because he's sleeping")
+            DiscussionLabel.changeText(name + " cannot attack because he's sleeping")
         } else if (status.exists(x => x.name == "Paralysis") && scala.util.Random.nextFloat() <= 1f/4f) {
-            DiscusionLabel.changeText(name + " cannot attack because he's paralysed")
+            DiscussionLabel.changeText(name + " cannot attack because he's paralysed")
         } else if (other.status.exists(x => x.name == "Protection")) {
-            DiscusionLabel.changeText(other.name + " is protected")
+            DiscussionLabel.changeText(other.name + " is protected")
         } else {
             for (i <- 1 to attack.nOfHits){
                 if (other.alive) {
@@ -125,16 +125,16 @@ abstract class Monster {
                         this.receiveAttack(attack, this)
                         attack.cast(this, this)
                     } else if (random <= attack.accuracy*thisAccuracyEff*otherEvasionEff) {
-                        DiscusionLabel.changeText(name + " casts " + attack.name)
+                        DiscussionLabel.changeText(name + " casts " + attack.name)
                         attack.cast(this, other)
                         other.receiveAttack(attack, this)
                     } else {
                         if (random <= attack.accuracy) {
-                            DiscusionLabel.changeText(attack.name + " missed")
+                            DiscussionLabel.changeText(attack.name + " missed")
                         } else if (random <= attack.accuracy*thisAccuracyEff) {
-                            DiscusionLabel.changeText(name + " missed his attack")
+                            DiscussionLabel.changeText(name + " missed his attack")
                         } else {
-                            DiscusionLabel.changeText(other.name + " dodged")
+                            DiscussionLabel.changeText(other.name + " dodged")
                         }
                     }
                 }
@@ -226,7 +226,7 @@ abstract class Monster {
     }
 
     def die : Unit = {
-        DiscusionLabel.changeText(name + " died !")
+        DiscussionLabel.changeText(name + " died !")
         alive = false
         var monstersSeenAlive = monstersSeen.filter(x => x.alive && x.name != "Empty")
         var exp : Float = baseXp.toFloat*level.toFloat/7f/monstersSeenAlive.length.toFloat
@@ -279,7 +279,7 @@ abstract class Monster {
             case "Slow" => nextXpStep = (1.25 * Math.pow(level+1, 3)).toInt
         }
         if (level > 1) {
-            DiscusionLabel.changeText(name + " is now level " + level)
+            DiscussionLabel.changeText(name + " is now level " + level)
         }
     }
 

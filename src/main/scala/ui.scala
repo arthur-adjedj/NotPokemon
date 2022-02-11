@@ -41,7 +41,7 @@ abstract class HpBar {
     }
 }
 
-object DiscusionLabel {
+object DiscussionLabel {
     var text1 : String = "Ceci est un test"
     var text2 : String = "ceci est un second test"
     var battleUi : BattleUI = EmptyBattleUI
@@ -70,7 +70,6 @@ object DiscusionLabel {
             for (i <- 0 to s.length - 1) {
                 text1 = text1 + s(i)
                 //TimeUnit.MILLISECONDS.sleep(20)
-                battleUi.refresh
             }
         } else {
             var l = s.substring(0, charPerLine).lastIndexOf(" ")
@@ -78,13 +77,12 @@ object DiscusionLabel {
             //text2 = s.substring(l+1)
             for (i <- 0 to l-1) {
                 text1 = text1 + s(i)
-                battleUi.refresh
             }
             for (i <- l+1 to s.length - 1) {
                 text2 = text2 + s(i)
-                battleUi.refresh
             }
         }
+        battleUi.refresh
     }
 }
 
@@ -111,7 +109,7 @@ class BattleUI (p1 : Player, p2 : Player, battle : Battle) extends JFrame with M
         setContentPane(pane)
 
 
-        setLocation(100, 100)
+        setLocation(1000, 100)
         setVisible(true)
 
     }
@@ -151,6 +149,8 @@ class BattleUI (p1 : Player, p2 : Player, battle : Battle) extends JFrame with M
     }
 
     def refresh : Unit = {
+        revalidate
+        pane.revalidate
         pane.repaint(0, 0, 900, 900)
     }
 
@@ -236,7 +236,8 @@ class DrawPanel (buttonList : List[MyButton], p1 : Player, p2 : Player) extends 
 
         buttonList.foreach(x => x.display(g))
         g.drawImage(textBarImg,0,287,null)
-        DiscusionLabel.display(g)
+        DiscussionLabel.display(g)
+        println("Refresh !")
 
     }
 

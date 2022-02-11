@@ -280,7 +280,7 @@ object RunButton extends MyButton ("Buttons/RunButton.png") {
 
     override def isClicked : Unit = {
         println("Run away from the battle")
-        DiscusionLabel.changeText("You run, far, really far !")
+        DiscussionLabel.changeText("You run, far, really far !")
         TimeUnit.SECONDS.sleep(1)
         FirstPlayer.lose
     }

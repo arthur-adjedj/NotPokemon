@@ -71,10 +71,10 @@ object MonsterBall extends Item {
     override def use : Boolean = {
         println("You use a MonsterBall")
         var slot = Utils.findFirstOccurenceArray(FirstPlayer.team, EmptyMonster)
-        FirstPlayer.opponent.currentMonster.owner = FirstPlayer
-        FirstPlayer.team(slot) = FirstPlayer.opponent.currentMonster
-        FirstPlayer.opponent.team(Utils.findFirstOccurenceArray(FirstPlayer.opponent.team, FirstPlayer.opponent.currentMonster)) = EmptyMonster
-        FirstPlayer.opponent.changeMonster
+        WildPlayer.currentMonster.owner = FirstPlayer
+        FirstPlayer.team(slot) = WildPlayer.currentMonster
+        WildPlayer.team(Utils.findFirstOccurenceArray(WildPlayer.team, WildPlayer.currentMonster)) = EmptyMonster
+        WildPlayer.changeMonster(true)
         amount -= 1
         true
     }
@@ -92,10 +92,10 @@ object SuperMonsterBall extends Item {
     override def use : Boolean = {
         println("You use a SuperMonsterBall")
         var slot = Utils.findFirstOccurenceArray(FirstPlayer.team, EmptyMonster)
-        FirstPlayer.opponent.currentMonster.owner = FirstPlayer
-        FirstPlayer.team(slot) = FirstPlayer.opponent.currentMonster
-        FirstPlayer.opponent.team(Utils.findFirstOccurenceArray(FirstPlayer.opponent.team, FirstPlayer.opponent.currentMonster)) = EmptyMonster
-        FirstPlayer.opponent.changeMonster
+        WildPlayer.currentMonster.owner = FirstPlayer
+        FirstPlayer.team(slot) = WildPlayer.currentMonster
+        WildPlayer.team(Utils.findFirstOccurenceArray(WildPlayer.team, WildPlayer.currentMonster)) = EmptyMonster
+        WildPlayer.changeMonster(true)
         amount -= 1
         true
     }
@@ -113,10 +113,10 @@ object UltraMonsterBall extends Item {
     override def use : Boolean = {
         println("You use a UltraMonsterBall")
         var slot = Utils.findFirstOccurenceArray(FirstPlayer.team, EmptyMonster)
-        FirstPlayer.opponent.currentMonster.owner = FirstPlayer
-        FirstPlayer.team(slot) = FirstPlayer.opponent.currentMonster
-        FirstPlayer.opponent.team(Utils.findFirstOccurenceArray(FirstPlayer.opponent.team, FirstPlayer.opponent.currentMonster)) = EmptyMonster
-        FirstPlayer.opponent.changeMonster
+        WildPlayer.currentMonster.owner = FirstPlayer
+        FirstPlayer.team(slot) = WildPlayer.currentMonster
+        WildPlayer.team(Utils.findFirstOccurenceArray(WildPlayer.team, WildPlayer.currentMonster)) = EmptyMonster
+        WildPlayer.changeMonster(true)
         amount -= 1
         true
     }
