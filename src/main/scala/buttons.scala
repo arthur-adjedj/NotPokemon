@@ -82,7 +82,7 @@ abstract class CastAttackButton (imageNam : String) extends MyButton (imageNam) 
             clickable = visible
         } else {
             imageName = "Buttons/EmptyButton.png"
-            text = "Empty Slot"
+            text = "Empty"
             clickable = false
         }
         image = Utils.loadImage(imageName)
