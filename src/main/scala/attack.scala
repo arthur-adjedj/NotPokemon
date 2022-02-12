@@ -56,7 +56,10 @@ object ThunderWave extends Attack {
     attackType = Electric
     override def toString : String = 
         "The user launches a weak jolt of electricity that paralyzes the target."
-    override def cast(self: Monster, ennemy: Monster): Unit = ()//TODO add Paralysis
+    override def cast(self: Monster, ennemy: Monster): Unit = {
+        DiscussionLabel.changeText(ennemy.name + " is now paralysed !")
+        ennemy.receiveStatus(new Paralysis)
+    }
 }
 
 object Growl extends Attack {
@@ -227,8 +230,57 @@ object VineWhip extends Attack {
 object Growth extends Attack {
     name = "Growth"
     override def toString : String = 
-        "The user’s body grows all at once, raising the Attack stats."
+        "The user's body grows all at once, raising the Attack stats."
     override def cast(self: Monster, ennemy: Monster): Unit = 
         self.attackStage = (6).max(self.attackStage + 1)
 }
 
+object Scratch extends Attack {
+    name = "Scratch"
+    power = 40
+    override def toString : String = 
+        "Hard, pointed, sharp claws rake the target to inflict damage."
+}
+
+object Ember extends Attack {
+    name = "Ember"
+    attackType = Fire
+    override def toString : String = 
+        "The target is attacked with small flames."+
+        " This may also leave the target with a burn."
+    override def cast(self: Monster, ennemy: Monster): Unit = {
+        DiscussionLabel.changeText(ennemy.name + " is now burned !")
+        ennemy.receiveStatus(new Burn)
+    }
+}
+
+object Flamethrower extends Attack {
+    name = "Flamethrower"
+    power = 90
+    attackType = Fire
+    override def toString : String = 
+        "The target is scorched with an intense blast of fire."+
+        " This may also leave the target with a burn."
+    override def cast(self: Monster, ennemy: Monster): Unit = {
+        var random = scala.util.Random.nextFloat()
+        if (random < 0.1f){
+            DiscussionLabel.changeText(ennemy.name + " is now burned !")
+            ennemy.receiveStatus(new Burn)
+        }
+    }
+}
+
+object Crunch extends Attack {
+    name = "Crunch"
+    power = 80
+    override def toString : String = 
+        "The user crunches up the target with sharp fangs."+
+        " This may also lower the target's Defense stat."
+    override def cast(self: Monster, ennemy: Monster): Unit = {
+        var random = scala.util.Random.nextFloat()
+        if (random < 0.2f){
+            DiscussionLabel.changeText(ennemy.name + "'s defense is lowered.")
+            ennemy.defenseStage = (-6).max(ennemy.defenseStage-1)
+        }
+    }
+}

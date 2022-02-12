@@ -310,12 +310,13 @@ class Pikachu extends Monster {
     baseXp = 112
 
     monsterType = Electric
-    name = "Pikachuuuu"
+    name = "Pikachu"
     originalName = "Pikachu"
     attacks(0) = QuickAttack
     attacks(1) = DoubleSlap
-    attacks(2) = Thunder
-    attacks(3) = EmptyAttack
+    attacks(2) = ThunderWave
+    attacks(3) = Thunder
+
 }
 
 class Squirtle extends Monster {
@@ -331,8 +332,10 @@ class Squirtle extends Monster {
     name = "Carapuuuce"
     originalName = "Squirtle"
 
-    attacks(0) = QuickAttack
-    attacks(1) = AquaTail
+    attacks(0) = Tackle
+    attacks(1) = WaterGun
+    attacks(2) = AquaTail
+    attacks(3) = TailWhip
 
     uiYShift = 18
 
@@ -349,10 +352,14 @@ class Bulbasaur extends Monster {
     baseXp = 64
 
     monsterType = Grass
-    name = "Bulbizaare"
+    name = "Bulbizare"
     originalName = "Bulbasaur"
 
-    attacks(0) = QuickAttack
+    attacks(0) = Growl
+    attacks(1) = Tackle
+    attacks(2) = VineWhip
+    attacks(3) = Growth
+
     uiYShift = 23
 }
 
@@ -366,11 +373,13 @@ class Charmander extends Monster {
     baseXp = 62
 
     monsterType = Fire
-    name = "Saalameche"
+    name = "Salameche"
     originalName = "Charmander"
 
-    attacks(0) = QuickAttack
-
+    attacks(0) = Growl
+    attacks(1) = Scratch
+    attacks(2) = Ember
+    attacks(3) = Flamethrower
     uiYShift = 18
 }
 
@@ -387,7 +396,10 @@ class Rattata extends Monster {
     name = "Ratatata"
     originalName = "Rattata"
 
-    attacks(0) = QuickAttack
+    attacks(0) = Tackle
+    attacks(1) = TailWhip
+    attacks(2) = QuickAttack
+    attacks(3) = Crunch
     uiYShift = 15
 
 }
