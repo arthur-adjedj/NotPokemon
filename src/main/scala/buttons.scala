@@ -2,6 +2,7 @@ import java.io.File
 import java.awt.event.MouseEvent
 import java.awt.{Color,Graphics,BasicStroke,Font}
 import java.util.concurrent.TimeUnit
+import javax.swing.{JFrame, JPanel, JLabel}
 
 
 
@@ -52,6 +53,15 @@ abstract class MyButton (imageNam : String) {
 
     def update : Unit = {
         clickable = visible
+    }
+}
+
+class CloseButton (imageNam : String, closeFunction : () => Unit, posX : Int, posY : Int) extends MyButton (imageNam) {
+    x = posX
+    y = posY
+    visible = true
+    override def isClicked : Unit = {
+        closeFunction()
     }
 }
 
@@ -444,3 +454,4 @@ object NextPageItemButton extends MyButton ("Buttons/EmptyButton.png") {
         image = Utils.loadImage(imageName)
     }
 }
+

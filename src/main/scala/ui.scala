@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit
 import scala.runtime.EmptyMethodCache
 import javax.swing.DebugGraphics
 import java.awt.event.MouseMotionListener
+import java.awt.Toolkit
 
 
 abstract class HpBar {
@@ -81,26 +82,32 @@ object DiscussionLabel {
 
 
 class BattleUI (p1 : Player, p2 : Player, battle : Battle) extends JFrame with MouseListener with MouseMotionListener {
-    
-    var buttonList : List[MyButton] = List(AttackButton, BagButton, MonsterButton, RunButton, BackButton, NextPageItemButton,
-                                            CastAttackButton1, CastAttackButton2, CastAttackButton3, CastAttackButton4,
-                                            ChangeMonsterButton1, ChangeMonsterButton2, ChangeMonsterButton3, 
-                                            ChangeMonsterButton4, ChangeMonsterButton5, ChangeMonsterButton6,
-                                            UseItemButton1, UseItemButton2, UseItemButton3, UseItemButton4)
-
-    
-    var pane = new DrawPanel(buttonList, p1, p2, this)
-    var lastMonsterSelected : Monster = EmptyMonster
 
     var posX : Int = 1000
     var posY : Int = 100
 
+    var sizeX : Int = 614
+    var sizeY : Int = 858
+
     var xClick : Int = -1
     var yClick : Int = -1
+
+
+    var closeButton = new CloseButton ("Close.png", close, sizeX - 20, 2)
+
+    var buttonList : List[MyButton] = List(AttackButton, BagButton, MonsterButton, RunButton, BackButton, NextPageItemButton, closeButton,
+                                            CastAttackButton1, CastAttackButton2, CastAttackButton3, CastAttackButton4,
+                                            ChangeMonsterButton1, ChangeMonsterButton2, ChangeMonsterButton3, 
+                                            ChangeMonsterButton4, ChangeMonsterButton5, ChangeMonsterButton6,
+                                            UseItemButton1, UseItemButton2, UseItemButton3, UseItemButton4)
+    
+    var pane = new DrawPanel(buttonList, p1, p2, this)
+    var lastMonsterSelected : Monster = EmptyMonster
+
     
 
     def initialise : Unit = {
-        setSize(614, 828 + 30)
+        setSize(sizeX, sizeY)
         
         addMouseListener(this)
         addMouseMotionListener(this)
@@ -110,13 +117,14 @@ class BattleUI (p1 : Player, p2 : Player, battle : Battle) extends JFrame with M
         setContentPane(pane)
 
 
-        setLocation(1000, 100)
+        setLocation(posX, posY)
         setVisible(true)
 
     }
 
-    def close : Unit = {
+    def close () : Unit = {
         dispose()
+        sys.exit(0)
     }
     
   
@@ -153,8 +161,8 @@ class BattleUI (p1 : Player, p2 : Player, battle : Battle) extends JFrame with M
         } else {
             var movX = xClick - e.getX
             var movY = yClick - e.getY
-            posX -= (movX*1.0).toInt
-            posY -= (movY*1.0).toInt
+            posX = (posX - movX).max(0).min(Toolkit.getDefaultToolkit.getScreenSize.getWidth.toInt-getWidth)
+            posY = (posY - movY).max(0).min(Toolkit.getDefaultToolkit.getScreenSize.getHeight.toInt-getHeight)
             setLocation(posX, posY)
         }
     }
@@ -246,12 +254,11 @@ class DrawPanel (buttonList : List[MyButton], p1 : Player, p2 : Player, ui : Bat
         EnnemyBar.display(g)
         YourBar.display(g)
 
-
-        buttonList.foreach(x => x.display(g))
         g.drawImage(textBarImg,0,287,null)
         DiscussionLabel.display(g)
         g.setColor(Color.BLACK)
         g.fillRect(0, 0, getWidth, 20)
+        buttonList.foreach(x => x.display(g))
     }
 
     def updateImages : Unit = {

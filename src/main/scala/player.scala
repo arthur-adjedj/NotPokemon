@@ -226,7 +226,7 @@ object FirstPlayer extends Player {
         } else {
             inventory(inventory.filter(x => x.name != "Empty").length) = item
             item.amount = amount
-            println("You found " + amount + " " + item.name)
+            //println("You found " + amount + " " + item.name)
             updateInventory
         }
     }
