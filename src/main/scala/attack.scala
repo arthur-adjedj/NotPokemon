@@ -232,7 +232,7 @@ object Growth extends Attack {
     override def toString : String = 
         "The user's body grows all at once, raising the Attack stats."
     override def cast(self: Monster, ennemy: Monster): Unit = 
-        self.attackStage = (6).max(self.attackStage + 1)
+        self.attackStage = (6).min(self.attackStage + 1)
 }
 
 object Scratch extends Attack {
