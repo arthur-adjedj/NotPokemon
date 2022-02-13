@@ -10,6 +10,7 @@ import collection.JavaConverters._
 import java.util.concurrent.TimeUnit
 import scala.runtime.EmptyMethodCache
 import javax.swing.DebugGraphics
+import java.awt.event.MouseMotionListener
 
 
 abstract class HpBar {
@@ -79,7 +80,7 @@ object DiscussionLabel {
 }
 
 
-class BattleUI (p1 : Player, p2 : Player, battle : Battle) extends JFrame with MouseListener {
+class BattleUI (p1 : Player, p2 : Player, battle : Battle) extends JFrame with MouseListener with MouseMotionListener {
     
     var buttonList : List[MyButton] = List(AttackButton, BagButton, MonsterButton, RunButton, BackButton, NextPageItemButton,
                                             CastAttackButton1, CastAttackButton2, CastAttackButton3, CastAttackButton4,
@@ -88,13 +89,21 @@ class BattleUI (p1 : Player, p2 : Player, battle : Battle) extends JFrame with M
                                             UseItemButton1, UseItemButton2, UseItemButton3, UseItemButton4)
 
     
-    var pane = new DrawPanel(buttonList, p1, p2)
+    var pane = new DrawPanel(buttonList, p1, p2, this)
     var lastMonsterSelected : Monster = EmptyMonster
+
+    var posX : Int = 1000
+    var posY : Int = 100
+
+    var xClick : Int = -1
+    var yClick : Int = -1
+    
 
     def initialise : Unit = {
         setSize(614, 828 + 30)
         
         addMouseListener(this)
+        addMouseMotionListener(this)
         setLayout(null)
 
         setUndecorated(true)
@@ -127,18 +136,30 @@ class BattleUI (p1 : Player, p2 : Player, battle : Battle) extends JFrame with M
         updateImages
 
     }
-    def mouseEntered (e : MouseEvent) : Unit = {
-
-    }
-    def mouseExited (e : MouseEvent) : Unit = {
-
-    }
-    def mousePressed (e : MouseEvent) : Unit = {
-
-    }
+    def mouseEntered (e : MouseEvent) : Unit = {}
+    def mouseExited (e : MouseEvent) : Unit = {}
+    def mousePressed (e : MouseEvent) : Unit = {}
     def mouseReleased (e : MouseEvent) : Unit = {
-
+        xClick = -1
+        yClick = -1
     }
+
+    def mouseDragged (e : MouseEvent) : Unit = {
+        if (xClick == -1 && yClick == -1) {
+            if (e.getY < 20) {
+                xClick = e.getX
+                yClick = e.getY
+            }
+        } else {
+            var movX = xClick - e.getX
+            var movY = yClick - e.getY
+            posX -= (movX*1.0).toInt
+            posY -= (movY*1.0).toInt
+            setLocation(posX, posY)
+        }
+    }
+
+    def mouseMoved (e : MouseEvent) : Unit = {}
 
     def refresh : Unit = {
         pane.refresh
@@ -152,7 +173,7 @@ class BattleUI (p1 : Player, p2 : Player, battle : Battle) extends JFrame with M
 
 object EmptyBattleUI extends BattleUI (EmptyPlayer, EmptyPlayer, EmptyBattle) {}
 
-class DrawPanel (buttonList : List[MyButton], p1 : Player, p2 : Player) extends JPanel {
+class DrawPanel (buttonList : List[MyButton], p1 : Player, p2 : Player, ui : BattleUI) extends JPanel {
     var toShow : Boolean = false
     var battleBackgroundImg = Utils.loadImage("BattleBackground.png")
     var pokemonFrontImg = Utils.loadImage("Monsters/EmptyFront.png")
@@ -161,6 +182,7 @@ class DrawPanel (buttonList : List[MyButton], p1 : Player, p2 : Player) extends 
     var yourBarImg = Utils.loadImage("YourBar.png")
     var textBarImg = Utils.loadImage("TextBar.png")
     var poke_font : Font = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("PokemonPixelFont.ttf"))
+
 
     poke_font = poke_font.deriveFont(Font.PLAIN,30)
 
@@ -228,6 +250,8 @@ class DrawPanel (buttonList : List[MyButton], p1 : Player, p2 : Player) extends 
         buttonList.foreach(x => x.display(g))
         g.drawImage(textBarImg,0,287,null)
         DiscussionLabel.display(g)
+        g.setColor(Color.BLACK)
+        g.fillRect(0, 0, getWidth, 20)
     }
 
     def updateImages : Unit = {
@@ -241,5 +265,3 @@ class DrawPanel (buttonList : List[MyButton], p1 : Player, p2 : Player) extends 
         repaint(0, 0, 900, 900)
     }
 }
-
-
