@@ -219,7 +219,7 @@ object SkullBash extends Attack {
 }
 
 object VineWhip extends Attack {
-    name = "Quick Attack"
+    name = "Vine Whip"
     power = 45
     override def toString : String = 
         "The target is struck with slender, whiplike vines to inflict damage."
