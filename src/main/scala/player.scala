@@ -80,6 +80,8 @@ class Player {
         }
     }
 
+    def changeMonster (b : Boolean) : Unit = {}
+
     def lose : Unit = {
         DiscussionLabel.changeText(name + " just lost")
         opponent.win
@@ -104,7 +106,7 @@ abstract class Opponent extends Player {
 abstract class WildOpponent extends Opponent {
     name = "Wild"
 
-    def changeMonster (captured : Boolean) : Unit = {
+    override def changeMonster (captured : Boolean) : Unit = {
         if (captured) {
             DiscussionLabel.changeText("You just captured " + currentMonster.name)
         }
