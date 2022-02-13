@@ -93,6 +93,43 @@ class Player {
     }
 }
 
+abstract class Opponent extends Player {
+    override def newTurn : Unit = {
+        super.newTurn
+        var l = availableAttacks.length
+        castAttack(availableAttacks(scala.util.Random.nextInt(l)))
+    }
+}
+
+abstract class WildOpponent extends Opponent {
+    name = "Wild"
+
+    def changeMonster (captured : Boolean) : Unit = {
+        if (captured) {
+            DiscussionLabel.changeText("You just captured " + currentMonster.name)
+        }
+        if (team.exists(x => x.alive && x.name != "Empty")) {
+            var alives = team.filter(x => x.alive && x.name != "Empty")
+            var l = alives.length
+            currentMonster = alives(scala.util.Random.nextInt(l))
+            currentMonster.enterField
+            battle.ui.updateImages
+        } else {
+            lose(captured)
+        }
+    }
+
+    def lose (captured : Boolean) : Unit = {
+        if (!captured) {
+            DiscussionLabel.changeText(name + " just lost")
+        }
+        opponent.win
+        playing = false
+        opponent.playing = false
+        FirstPlayer.endTurn
+    }
+}
+
 
 object EmptyPlayer extends Player {
 
@@ -198,80 +235,4 @@ object FirstPlayer extends Player {
         inventory = inventory.map(x => if (x.amount == 0) EmptyItem else x).sortWith((x, y) => x.order <= y.order)
         usableInventory = inventory.map(x => if (x.amount == 0 || !x.usable) EmptyItem else x).sortWith((x, y) => x.order <= y.order)
     }
-}
-
-object SecondPlayer extends Player {
-    team(0) = new Squirtle
-    team(0).owner = this
-    team(0).gainLvl(3)
-
-    /*
-    team(1) = new Pikachu
-    team(1).owner = this
-    team(1).gainLvl(3)
-    */
-    name = "Opponent"
-
-    override def newTurn : Unit = {
-        super.newTurn
-        var l = availableAttacks.length
-        castAttack(availableAttacks(scala.util.Random.nextInt(l)))
-    }
-}
-
-object ThirdPlayer extends Player {
-    team(0) = new Rattata
-    team(0).owner = this
-    team(0).gainLvl(4)
-
-    team(1) = new Bulbasaur
-    team(1).owner = this
-    team(1).gainLvl(4)
-    name = "Opponent"
-
-    override def newTurn : Unit = {
-        super.newTurn
-        var l = availableAttacks.length
-        castAttack(availableAttacks(scala.util.Random.nextInt(l)))
-    }
-}
-
-object WildPlayer extends Player {
-    team(0) = new Rattata
-    team(0).owner = this
-    team(0).gainLvl(4)
-
-    name = "Wild"
-
-    override def newTurn : Unit = {
-        super.newTurn
-        var l = availableAttacks.length
-        castAttack(availableAttacks(scala.util.Random.nextInt(l)))
-    }
-
-    def changeMonster (captured : Boolean) : Unit = {
-        if (captured) {
-            DiscussionLabel.changeText("You just captured " + currentMonster.name)
-        }
-        if (team.exists(x => x.alive && x.name != "Empty")) {
-            var alives = team.filter(x => x.alive && x.name != "Empty")
-            var l = alives.length
-            currentMonster = alives(scala.util.Random.nextInt(l))
-            currentMonster.enterField
-            battle.ui.updateImages
-        } else {
-            lose(captured)
-        }
-    }
-
-    def lose (captured : Boolean) : Unit = {
-        if (!captured) {
-            DiscussionLabel.changeText(name + " just lost")
-        }
-        opponent.win
-        playing = false
-        opponent.playing = false
-        FirstPlayer.endTurn
-    }
-
 }
