@@ -265,10 +265,10 @@ class DrawPanel (buttonList : List[MyButton], p1 : Player, p2 : Player, ui : Bat
         pokemonFrontImg = Utils.loadImage(p2.currentMonster.imgNameFront)
         pokemonBackImg = Utils.loadImage(p1.currentMonster.imgNameBack)
         
-        repaint(0, 0, 900, 900)
+        repaint()
     }
 
     def refresh : Unit = {
-        repaint(0, 0, 900, 900)
+        repaint()
     }
 }

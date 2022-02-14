@@ -32,7 +32,7 @@ class Battle (p1 : Player, p2 : Player) {
                 (p1.currentAttack.priority == p2.currentAttack.priority && p1.currentMonster.getSpeed >= p2.currentMonster.getSpeed)) {
                 p1.castAttack(p1.currentAttack)
                 ui.updateImages
-                TimeUnit.SECONDS.sleep(3)
+                TimeUnit.SECONDS.sleep(1)
                 if (monsterP2.alive) {
                     p2.castAttack(p2.currentAttack)
                     ui.updateImages
@@ -40,7 +40,7 @@ class Battle (p1 : Player, p2 : Player) {
             } else {
                 p2.castAttack(p2.currentAttack)
                 ui.updateImages
-                TimeUnit.SECONDS.sleep(3)
+                TimeUnit.SECONDS.sleep(1)
                 if (monsterP1.alive) {
                     p1.castAttack(p1.currentAttack)
                     ui.updateImages
@@ -49,7 +49,7 @@ class Battle (p1 : Player, p2 : Player) {
             p1.currentAttack = EmptyAttack
             p2.currentAttack = EmptyAttack
         }
-        TimeUnit.SECONDS.sleep(3)
+        TimeUnit.SECONDS.sleep(1)
         ui.close
     }
 }

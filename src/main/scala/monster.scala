@@ -83,6 +83,7 @@ abstract class Monster {
         evasionStage = 0
 
         monstersSeen = List()
+        status = List()
     }
 
     def enterField : Unit = {
