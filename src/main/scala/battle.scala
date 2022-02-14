@@ -17,6 +17,7 @@ class Battle (p1 : Player, p2 : Player) {
 
         ui.updateImages
         FirstPlayer.updateInventory
+        DiscussionLabel.changeText("")
     }
 
     def start : Unit = {

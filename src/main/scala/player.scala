@@ -140,12 +140,16 @@ abstract class WildOpponent extends Opponent {
 
     def lose (captured : Boolean) : Unit = {
         if (!captured) {
-            DiscussionLabel.changeText(name + " just lost")
+            DiscussionLabel.changeText(currentMonster.name + " just lost")
         }
         opponent.win
         playing = false
         opponent.playing = false
         FirstPlayer.endTurn
+    }
+
+    override def lose : Unit = {
+        lose(false)
     }
 }
 

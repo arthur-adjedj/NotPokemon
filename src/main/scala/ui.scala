@@ -45,8 +45,8 @@ abstract class HpBar {
 }
 
 object DiscussionLabel {
-    var text1 : String = "Ceci est un test"
-    var text2 : String = "ceci est un second test"
+    var text1 : String = ""
+    var text2 : String = ""
     var battleUi : BattleUI = EmptyBattleUI
     var charPerLine : Int = 27
     var x : Int = 40
