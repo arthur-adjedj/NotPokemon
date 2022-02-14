@@ -69,7 +69,7 @@ abstract class CastAttackButton (imageNam : String) extends MyButton (imageNam) 
     var n : Int = 0
     visible = false
     override def isClicked : Unit = {
-        if (FirstPlayer.castAttack(n)) {
+        if (FirstPlayer.chooseAttack(n)) {
 
             CastAttackButton1.setVisible(false)
             CastAttackButton2.setVisible(false)

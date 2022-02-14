@@ -12,6 +12,7 @@ class Player {
     var inventory : Array[Item] = Array.fill(40){EmptyItem}
 
     var currentMonster : Monster = EmptyMonster
+    var currentAttack : Attack = EmptyAttack
     var availableAttacks : Array[Attack] = Array.fill(4){EmptyAttack}
 
     var playing : Boolean = true
@@ -36,6 +37,20 @@ class Player {
         currentMonster.endTurn
     }
 
+    def chooseAttack (x : Int) : Boolean = {
+        if (currentMonster.attacks(x).name != "Empty") {
+            chooseAttack(currentMonster.attacks(x))
+            true
+        } else {
+            false
+        }
+    }
+
+    def chooseAttack (attack : Attack) : Unit = {
+        currentAttack = attack
+        endTurn
+    }
+
     def castAttack (x : Int) : Boolean = {
         if (currentMonster.attacks(x).name != "Empty") {
             castAttack(currentMonster.attacks(x))
@@ -46,8 +61,10 @@ class Player {
     }
 
     def castAttack (attack : Attack) : Unit = {
-        currentMonster.castAttack(attack, opponent.currentMonster)
-        endTurn
+        if (attack.name != "Empty") {
+            currentMonster.castAttack(attack, opponent.currentMonster)
+            endTurn
+        }
     }
 
     def changeMonster : Unit = {
@@ -99,7 +116,7 @@ abstract class Opponent extends Player {
     override def newTurn : Unit = {
         super.newTurn
         var l = availableAttacks.length
-        castAttack(availableAttacks(scala.util.Random.nextInt(l)))
+        chooseAttack(availableAttacks(scala.util.Random.nextInt(l)))
     }
 }
 

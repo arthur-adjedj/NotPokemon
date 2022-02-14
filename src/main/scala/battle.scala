@@ -21,16 +21,35 @@ class Battle (p1 : Player, p2 : Player) {
 
     def start : Unit = {
         while (p1.playing && p2.playing) {
+            FirstPlayer.updateInventory
             p1.newTurn
             ui.updateImages
-            TimeUnit.SECONDS.sleep(1)
-            if (p2.playing) {
-                p2.newTurn
+            p2.newTurn
+            ui.updateImages
+            var monsterP1 = p1.currentMonster
+            var monsterP2 = p2.currentMonster
+            if (p1.currentAttack.priority > p2.currentAttack.priority || 
+                (p1.currentAttack.priority == p2.currentAttack.priority && p1.currentMonster.getSpeed >= p2.currentMonster.getSpeed)) {
+                p1.castAttack(p1.currentAttack)
                 ui.updateImages
-                FirstPlayer.updateInventory
+                TimeUnit.SECONDS.sleep(3)
+                if (monsterP2.alive) {
+                    p2.castAttack(p2.currentAttack)
+                    ui.updateImages
+                }
+            } else {
+                p2.castAttack(p2.currentAttack)
+                ui.updateImages
+                TimeUnit.SECONDS.sleep(3)
+                if (monsterP1.alive) {
+                    p1.castAttack(p1.currentAttack)
+                    ui.updateImages
+                }
             }
+            p1.currentAttack = EmptyAttack
+            p2.currentAttack = EmptyAttack
         }
-        TimeUnit.SECONDS.sleep(1)
+        TimeUnit.SECONDS.sleep(3)
         ui.close
     }
 }

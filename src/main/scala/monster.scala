@@ -104,6 +104,10 @@ abstract class Monster {
         endTurnStatus
     }
 
+    def getSpeed : Int = {
+        (speedBattle.toFloat * calcModifier(this, "speed")).toInt
+    }
+
 
     def castAttack (attack : Attack, other : Monster) : Unit = {
         var random = scala.util.Random.nextFloat()
