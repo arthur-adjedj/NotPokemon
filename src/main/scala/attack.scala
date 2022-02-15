@@ -67,7 +67,7 @@ object Growl extends Attack {
     power = 40
     override def toString : String = 
         "The user growls in an endearing way, making opposing" +
-        "Pokémon less wary. This lowers their Attack stat."
+        "Monster less wary. This lowers their Attack stat."
     override def cast(self: Monster, ennemy: Monster): Unit = 
         ennemy.attackStage = (-6).max(ennemy.attackStage -1)
 }
@@ -78,7 +78,7 @@ object Swift extends Attack {
     accuracy = Float.PositiveInfinity
     attackType = Normal
     override def toString : String = 
-        "Star-shaped rays are shot at the opposing Pokémon. This attack never misses."    
+        "Star-shaped rays are shot at the opposing Monster. This attack never misses."    
 }
 
 object Agility extends Attack {
@@ -118,7 +118,7 @@ object Tackle extends Attack {
 object TailWhip extends Attack {
     name = "Tail Whip"
     override def toString : String = 
-        "The user wags its tail cutely, making opposing Pokémon less wary and lowering their Defense stat."
+        "The user wags its tail cutely, making opposing Monster less wary and lowering their Defense stat."
     override def cast(self: Monster, ennemy: Monster): Unit = 
         ennemy.defenseStage = (-6).max(ennemy.defenseStage-1)
 }
@@ -135,7 +135,7 @@ object Withdraw extends Attack {
     name = "Withdraw"
     attackType = Water
     override def toString : String = 
-        "The user wags its tail cutely, making opposing Pokémon less wary and lowering their Defense stat."
+        "The user wags its tail cutely, making opposing Monster less wary and lowering their Defense stat."
     override def cast(self: Monster, ennemy: Monster): Unit = 
         self.defenseStage = (6).min(self.defenseStage+1)
     
