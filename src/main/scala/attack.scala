@@ -60,6 +60,7 @@ object ThunderWave extends Attack {
         DiscussionLabel.changeText(ennemy.name + " is now paralysed !")
         ennemy.receiveStatus(new Paralysis)
     }
+    override def handlesDamages(self: Monster, ennemy: Monster): Int = 0
 }
 
 object Growl extends Attack {

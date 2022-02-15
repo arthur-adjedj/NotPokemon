@@ -185,7 +185,7 @@ abstract class Monster {
             var thisDefenseEff = defenseBattle * calcModifier(this, "defense")
 
             var random = scala.util.Random.nextFloat()*38f/255f + 217f/255f
-            var damage = ((((2f/5f*other.level.toFloat+2f)*attack.power.toFloat*otherAttackEff.toFloat/thisDefenseEff.toFloat)/50f+2f)*random*attack.attackType.multDamage(other.monsterType)).toInt
+            var damage = ((((2f/5f*other.level.toFloat+2f)*attack.power.toFloat*otherAttackEff.toFloat/thisDefenseEff.toFloat)/50f+2f)*random*attack.attackType.multDamage(this.monsterType)).toInt
 
             takeDamage(damage)
         } 
@@ -233,7 +233,7 @@ abstract class Monster {
     }
 
     def die : Unit = {
-        DiscussionLabel.changeText(name + " died !")
+        DiscussionLabel.changeText(name + " is KO !")
         alive = false
         var monstersSeenAlive = monstersSeen.filter(x => x.alive && x.name != "Empty" && x.level < 100)
         var exp : Float = baseXp.toFloat*level.toFloat/7f/monstersSeenAlive.length.toFloat

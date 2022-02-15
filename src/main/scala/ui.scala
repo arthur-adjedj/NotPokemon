@@ -116,6 +116,9 @@ class BattleUI (p1 : Player, p2 : Player, battle : Battle) extends JFrame with M
     
 
     def initialise : Unit = {
+        YourBar.p1 = p1
+        EnnemyBar.p2 = p2
+
         setSize(sizeX, sizeY)
         
         addMouseListener(this)
@@ -128,6 +131,7 @@ class BattleUI (p1 : Player, p2 : Player, battle : Battle) extends JFrame with M
 
         setLocation(posX, posY)
         setVisible(true)
+
 
     }
 
@@ -215,6 +219,60 @@ class BattleUI (p1 : Player, p2 : Player, battle : Battle) extends JFrame with M
 
 }
 
+object EnnemyBar{
+    def ennemyBarImg = Utils.loadImage("EnnemyBar.png")
+    var p2 : Player = EmptyPlayer
+    object EnnemyHpBar extends HpBar {
+        x = 112
+        y = 76
+    }
+    def display (g : Graphics) : Unit = {
+        EnnemyHpBar.setRatio(p2.currentMonster.hpRate)
+        EnnemyHpBar.display(g)
+        g.drawImage(ennemyBarImg, 10, 40, null)
+        g.setColor(new Color(68,64,69))
+        g.drawString(p2.currentMonster.name,22,68)
+        g.drawString("Lv:" + p2.currentMonster.level.toString,180,68)
+    }
+}
+
+object YourBar{
+    def yourBarImg = Utils.loadImage("YourBar.png")
+    var p1 : Player = EmptyPlayer
+
+    object YourHpBar extends HpBar {
+        x = 443
+        y = 226
+        hpRate = 0.2f
+    }
+
+    object YourExpBar extends HpBar {
+        x = 402
+        y = 264
+        width = 177
+        height = 8
+        hpRate = 1f
+
+        val color : Color = new Color(250,244,215)
+        override def setColor(g: Graphics): Unit = {
+            g.setColor(color)
+        }
+    }
+
+    def display (g : Graphics) : Unit = {
+        YourHpBar.setRatio(p1.currentMonster.hpRate)
+        YourExpBar.setRatio(p1.currentMonster.xpRate)
+        YourHpBar.display(g)
+        YourExpBar.display(g)
+        g.drawImage(yourBarImg,320, 190, null)
+        g.setColor(new Color(68,64,69))
+        g.drawString(p1.currentMonster.name,355,218)
+        g.drawString("Lv: " + p1.currentMonster.level.toString,513,218)
+        g.drawString(p1.currentMonster.hp + " / "+ p1.currentMonster.hpMax,500,257)
+    }
+}
+
+
 object EmptyBattleUI extends BattleUI (EmptyPlayer, EmptyPlayer, EmptyBattle) {}
 
 class DrawPanel (buttonList : List[MyButton], p1 : Player, p2 : Player, ui : BattleUI) extends JPanel {
@@ -222,8 +280,6 @@ class DrawPanel (buttonList : List[MyButton], p1 : Player, p2 : Player, ui : Bat
     var battleBackgroundImg = Utils.loadImage("BattleBackground.png")
     var pokemonFrontImg = Utils.loadImage("Monsters/EmptyFront.png")
     var pokemonBackImg = Utils.loadImage("Monsters/EmptyBack.png")
-    var ennemyBarImg = Utils.loadImage("EnnemyBar.png")
-    var yourBarImg = Utils.loadImage("YourBar.png")
     var textBarImg = Utils.loadImage("TextBar.png")
     var poke_font : Font = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("PokemonPixelFont.ttf"))
     var underMouse : Descriptable = EmptyDescriptable
@@ -235,53 +291,9 @@ class DrawPanel (buttonList : List[MyButton], p1 : Player, p2 : Player, ui : Bat
 
     poke_font = poke_font.deriveFont(Font.PLAIN,30)
 
-    object EnnemyBar{
-        object EnnemyHpBar extends HpBar {
-            x = 112
-            y = 56
-        }
-        def display (g : Graphics) : Unit = {
-            EnnemyHpBar.setRatio(p2.currentMonster.hpRate)
-            EnnemyHpBar.display(g)
-            g.drawImage(ennemyBarImg, 10, 20, null)
-            g.setColor(new Color(68,64,69))
-            g.drawString(p2.currentMonster.name,22,48)
-            g.drawString("Lv:" + p2.currentMonster.level.toString,180,48)
-        }
-    }
 
-    object YourBar{
-        object YourHpBar extends HpBar {
-            x = 443
-            y = 226
-            hpRate = 0.2f
-        }
 
-        object YourExpBar extends HpBar {
-            x = 402
-            y = 264
-            width = 177
-            height = 8
-            hpRate = 1f
 
-            val color : Color = new Color(250,244,215)
-            override def setColor(g: Graphics): Unit = {
-                g.setColor(color)
-            }
-        }
-
-        def display (g : Graphics) : Unit = {
-            YourHpBar.setRatio(p1.currentMonster.hpRate)
-            YourExpBar.setRatio(p1.currentMonster.xpRate)
-            YourHpBar.display(g)
-            YourExpBar.display(g)
-            g.drawImage(yourBarImg,320, 190, null)
-            g.setColor(new Color(68,64,69))
-            g.drawString(p1.currentMonster.name,355,218)
-            g.drawString("Lv: " + p1.currentMonster.level.toString,513,218)
-            g.drawString(p1.currentMonster.hp + " / "+ p1.currentMonster.hpMax,500,257)
-        }
-    }
 
   
     override def paintComponent (g : Graphics) : Unit = {
