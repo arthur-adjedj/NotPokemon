@@ -95,8 +95,9 @@ class BattleUI (p1 : Player, p2 : Player, battle : Battle) extends JFrame with M
 
 
     var closeButton = new CloseButton ("Close.png", close, sizeX - 20, 2)
+    var helpButton = new HelpButton ("Help.png", help)
 
-    var buttonList : List[MyButton] = List(AttackButton, BagButton, MonsterButton, RunButton, BackButton, NextPageItemButton, closeButton,
+    var buttonList : List[MyButton] = List(AttackButton, BagButton, MonsterButton, RunButton, BackButton, NextPageItemButton, closeButton, helpButton,
                                             CastAttackButton1, CastAttackButton2, CastAttackButton3, CastAttackButton4,
                                             ChangeMonsterButton1, ChangeMonsterButton2, ChangeMonsterButton3, 
                                             ChangeMonsterButton4, ChangeMonsterButton5, ChangeMonsterButton6,
@@ -106,7 +107,8 @@ class BattleUI (p1 : Player, p2 : Player, battle : Battle) extends JFrame with M
                                                 CastAttackButton1, CastAttackButton2, CastAttackButton3, CastAttackButton4,
                                                 ChangeMonsterButton1, ChangeMonsterButton2, ChangeMonsterButton3, 
                                                 ChangeMonsterButton4, ChangeMonsterButton5, ChangeMonsterButton6,
-                                                UseItemButton1, UseItemButton2, UseItemButton3, UseItemButton4)
+                                                UseItemButton1, UseItemButton2, UseItemButton3, UseItemButton4,
+                                                FirstPlayerMonsterDisplayer, OpponentMonsterDisplayer)
     
     var pane = new DrawPanel(buttonList, p1, p2, this)
     var lastMonsterSelected : Monster = EmptyMonster
@@ -131,6 +133,10 @@ class BattleUI (p1 : Player, p2 : Player, battle : Battle) extends JFrame with M
 
     def close () : Unit = {
         dispose()
+    }
+
+    def help () : Unit = {
+        pane.showHelp = !pane.showHelp
     }
 
     def nullPointerException : Unit = {
@@ -192,7 +198,7 @@ class BattleUI (p1 : Player, p2 : Player, battle : Battle) extends JFrame with M
             }
         }
 
-        buttonList.foreach(moveMouseOver)
+        descriptables.foreach(moveMouseOver)
         eventCaught = false
         updateImages
         pane.xMouse = e.getX
@@ -223,6 +229,7 @@ class DrawPanel (buttonList : List[MyButton], p1 : Player, p2 : Player, ui : Bat
     var underMouse : Descriptable = EmptyDescriptable
     var xMouse : Int = 0
     var yMouse : Int = 0
+    var showHelp : Boolean = false
 
 
 
@@ -282,8 +289,11 @@ class DrawPanel (buttonList : List[MyButton], p1 : Player, p2 : Player, ui : Bat
         buttonList.foreach(x => x.update)
         g.setFont(poke_font)
         g.drawImage(battleBackgroundImg, 0, 0, null)
-        g.drawImage(pokemonFrontImg, 370, 35 + p2.currentMonster.uiYShift, null)
-        g.drawImage(pokemonBackImg, 75, 141 + p1.currentMonster.uiYShift, null)
+        //g.drawImage(pokemonFrontImg, 370, 35 + p2.currentMonster.uiYShift, null)
+        //g.drawImage(pokemonBackImg, 75, 141 + p1.currentMonster.uiYShift, null)
+
+        FirstPlayerMonsterDisplayer.display(g)
+        OpponentMonsterDisplayer.display(g)
         
         EnnemyBar.display(g)
         YourBar.display(g)
@@ -293,12 +303,18 @@ class DrawPanel (buttonList : List[MyButton], p1 : Player, p2 : Player, ui : Bat
         g.setColor(Color.BLACK)
         g.fillRect(0, 0, getWidth, 20)
         buttonList.foreach(x => x.display(g))
-        underMouse.onMouseOver(g, xMouse, yMouse, getWidth, getHeight)
+        if (showHelp) {
+            underMouse.onMouseOver(g, xMouse, yMouse, getWidth, getHeight)
+        }
+        
     }
 
     def updateImages : Unit = {
         pokemonFrontImg = Utils.loadImage(p2.currentMonster.imgNameFront)
         pokemonBackImg = Utils.loadImage(p1.currentMonster.imgNameBack)
+
+        FirstPlayerMonsterDisplayer.update
+        OpponentMonsterDisplayer.update
         
         repaint()
     }

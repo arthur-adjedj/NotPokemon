@@ -33,8 +33,8 @@ abstract class MyButton (imageNam : String) extends Object with Descriptable {
         }
     }
 
-    def onClick (x_click : Int, y_click : Int) : Boolean = {
-        if (visible && x <= x_click && x_click <= (x + width) && y <= y_click && y_click <= (y + height) && clickable) {
+    def onClick (xClick : Int, yClick : Int) : Boolean = {
+        if (visible && x <= xClick && xClick <= (x + width) && y <= yClick && yClick <= (y + height) && clickable) {
             isClicked
             true
         } else {
@@ -63,9 +63,22 @@ abstract class MyButton (imageNam : String) extends Object with Descriptable {
 class CloseButton (imageNam : String, closeFunction : () => Unit, posX : Int, posY : Int) extends MyButton (imageNam) {
     x = posX
     y = posY
+    width = 15
+    height = 15
     visible = true
     override def isClicked : Unit = {
         closeFunction()
+    }
+}
+
+class HelpButton (imageNam : String, helpFunction : () => Unit) extends MyButton (imageNam) {
+    x = 0
+    y = 0
+    width = 15
+    height = 15
+    visible = true
+    override def isClicked : Unit = {
+        helpFunction()
     }
 }
 
@@ -213,17 +226,17 @@ abstract class UseItemButton (imageNam : String) extends MyButton (imageNam) {
         }        
     }
 
-    override def onMouseOver (g : Graphics, x : Int, y : Int, width : Int, height : Int) : Unit = {
+    override def onMouseOver (g : Graphics, xMouse : Int, yMouse : Int, widthWindow : Int, heightWindow : Int) : Unit = {
         var metrics = g.getFontMetrics
         var text = FirstPlayer.usableInventory(n).toString
         var (t1, t2, t3) = Utils.cutString(text, 40)
 
-        var xToShow = x
-        var yToShow = y - 10
+        var xToShow = xMouse
+        var yToShow = yMouse - 10
         if (n % 2 == 1) {
-            xToShow = (x - 200).min(width - metrics.stringWidth(t1) - 20).min(width - metrics.stringWidth(t2) - 20)
+            xToShow = (xMouse - 200).min(widthWindow - metrics.stringWidth(t1) - 20).min(widthWindow - metrics.stringWidth(t2) - 20)
         } else {
-            xToShow = (x).min(width - metrics.stringWidth(t1) - 20).min(width - metrics.stringWidth(t2) - 20).max(20)
+            xToShow = (xMouse).min(widthWindow - metrics.stringWidth(t1) - 20).min(widthWindow - metrics.stringWidth(t2) - 20).max(20)
         }
 
         if (t2 != "") {
