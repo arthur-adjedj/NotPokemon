@@ -37,7 +37,7 @@ object FirstPlayerMonsterDisplayer extends MonsterDisplayer ("Empty.png") {
         var metrics = g.getFontMetrics
         var statusString = FirstPlayer.currentMonster.status.map(x => x.name).fold("")((x, y) => x + ", " + y)
         var text = ""
-        
+
         if (statusString != "") {
             text = FirstPlayer.currentMonster.toString + "His status are : " + statusString.substring(1, statusString.length)
         } else {
@@ -76,7 +76,15 @@ object OpponentMonsterDisplayer extends MonsterDisplayer ("Empty.png") {
 
     override def onMouseOver (g : Graphics, xMouse : Int, yMouse : Int, widthWindow : Int, heightWindow : Int) : Unit = {
         var metrics = g.getFontMetrics
-        var text = FirstPlayer.opponent.currentMonster.toString
+        var statusString = FirstPlayer.opponent.currentMonster.status.map(x => x.name).fold("")((x, y) => x + ", " + y)
+        var text = ""
+        
+        if (statusString != "") {
+            text = FirstPlayer.opponent.currentMonster.toString + "His status are : " + statusString.substring(1, statusString.length)
+        } else {
+            text = FirstPlayer.opponent.currentMonster.toString
+        }
+
         var (t1, t2, t3) = Utils.cutString(text, 30)
 
         var xToShow = xMouse
