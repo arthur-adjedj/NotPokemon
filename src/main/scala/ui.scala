@@ -157,7 +157,7 @@ class BattleUI (p1 : Player, p2 : Player, battle : Battle) extends JFrame with M
 
     def mouseDragged (e : MouseEvent) : Unit = {
         if (xClick == -1 && yClick == -1) {
-            if (e.getY < 20) {
+            if (e.getY >= 0 && e.getY < 20 && e.getX >= 0 && e.getX <= getWidth) {
                 xClick = e.getX
                 yClick = e.getY
             }
