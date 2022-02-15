@@ -124,7 +124,10 @@ class BattleUI (p1 : Player, p2 : Player, battle : Battle) extends JFrame with M
 
     def close () : Unit = {
         dispose()
-        //sys.exit(0)
+    }
+
+    def nullPointerException : Unit = {
+        getClass.getResource("")
     }
     
   
