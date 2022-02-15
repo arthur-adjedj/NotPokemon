@@ -287,14 +287,7 @@ class DrawPanel (buttonList : List[MyButton], p1 : Player, p2 : Player, ui : Bat
     var yMouse : Int = 0
     var showHelp : Boolean = false
 
-
-
     poke_font = poke_font.deriveFont(Font.PLAIN,30)
-
-
-
-
-
   
     override def paintComponent (g : Graphics) : Unit = {
         super.paintComponent(g)

@@ -60,6 +60,7 @@ object ThunderWave extends Attack {
     name = "Thunder Wave"
     accuracy = 0.9f
     attackType = Electric
+    priority = -1 //otherwise, ennemy might cast attack in the same turn he's paralysed, this was the quickest workaround
     override def toString : String = 
         "The user launches a weak jolt of electricity that paralyzes the target."
     override def cast(self: Monster, ennemy: Monster): Unit = {
@@ -75,7 +76,7 @@ object Growl extends Attack {
         "The user growls in an endearing way, making opposing" +
         "Monster less wary. This lowers their Attack stat."
     override def cast(self: Monster, ennemy: Monster): Unit = 
-        ennemy.attackStage = (-6).max(ennemy.attackStage -1)
+        ennemy.attackStage = (-6).max(ennemy.attackStage - 1)
 }
 
 object Swift extends Attack {
