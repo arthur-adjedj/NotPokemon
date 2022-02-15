@@ -7,7 +7,13 @@ abstract class Attack {
     var attackType : Type = Normal
     def nOfHits() : Int = 1
     def cast(self : Monster,ennemy: Monster) : Unit = ()
-    def handlesDamages (self : Monster, ennemy : Monster) : Int = -1
+    def handlesDamages (self : Monster, ennemy : Monster) : Int = {
+        if (power == 0) {
+            0
+        } else {
+            -1
+        }
+    }
 }
 
 object EmptyAttack extends Attack {
@@ -60,7 +66,6 @@ object ThunderWave extends Attack {
         DiscussionLabel.changeText(ennemy.name + " is now paralysed !")
         ennemy.receiveStatus(new Paralysis)
     }
-    override def handlesDamages(self: Monster, ennemy: Monster): Int = 0
 }
 
 object Growl extends Attack {
