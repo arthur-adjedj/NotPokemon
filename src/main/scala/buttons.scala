@@ -6,7 +6,7 @@ import javax.swing.{JFrame, JPanel, JLabel}
 
 
 
-abstract class MyButton (imageNam : String) {
+abstract class MyButton (imageNam : String) extends Object with Descriptable {
     var originalImageName = imageNam
     var imageName = imageNam
     var x : Int = 0
@@ -54,6 +54,10 @@ abstract class MyButton (imageNam : String) {
     def update : Unit = {
         clickable = visible
     }
+
+    override def isMouseOver (x_click : Int, y_click : Int) : Boolean = {
+        visible && x <= x_click && x_click <= (x + width) && y <= y_click && y_click <= (y + height) && clickable
+    }
 }
 
 class CloseButton (imageNam : String, closeFunction : () => Unit, posX : Int, posY : Int) extends MyButton (imageNam) {
@@ -97,6 +101,31 @@ abstract class CastAttackButton (imageNam : String) extends MyButton (imageNam) 
         }
         image = Utils.loadImage(imageName)
     }
+
+    override def onMouseOver (g : Graphics, x : Int, y : Int, width : Int, height : Int) : Unit = {
+        var metrics = g.getFontMetrics
+        var text = FirstPlayer.currentMonster.attacks(n).toString
+        var (t1, t2, t3) = Utils.cutString(text, 40)
+
+        var xToShow = x
+        var yToShow = y - 10
+        if (n % 2 == 1) {
+            xToShow = (x - 200).min(width - metrics.stringWidth(t1) - 20).min(width - metrics.stringWidth(t2) - 20)
+        } else {
+            xToShow = (x).min(width - metrics.stringWidth(t1) - 20).min(width - metrics.stringWidth(t2) - 20).max(20)
+        }
+
+        if (t2 != "") {
+            yToShow -= 20
+        } 
+        if (t3 != "") {
+            yToShow -= 20
+        }
+
+        g.drawString(t1, xToShow, yToShow)
+        g.drawString(t2, xToShow, yToShow + 20)
+        g.drawString(t3, xToShow, yToShow + 40)
+    }
 }
 
 abstract class ChangeMonsterButton (imageNam : String) extends MyButton (imageNam) {
@@ -118,6 +147,35 @@ abstract class ChangeMonsterButton (imageNam : String) extends MyButton (imageNa
             MonsterButton.setVisible(true)
             RunButton.setVisible(true)
         }        
+    }
+
+    override def isMouseOver (x_click : Int, y_click : Int) : Boolean = {
+        visible && x <= x_click && x_click <= (x + width) && y <= y_click && y_click <= (y + height) && (FirstPlayer.team(n).name != "Empty") 
+    }
+
+    override def onMouseOver (g : Graphics, x : Int, y : Int, width : Int, height : Int) : Unit = {
+        var metrics = g.getFontMetrics
+        var text = FirstPlayer.team(n).toString
+        var (t1, t2, t3) = Utils.cutString(text, 40)
+
+        var xToShow = x
+        var yToShow = y - 10
+        if (n % 2 == 1) {
+            xToShow = (x - 200).min(width - metrics.stringWidth(t1) - 20).min(width - metrics.stringWidth(t2) - 20)
+        } else {
+            xToShow = (x).min(width - metrics.stringWidth(t1) - 20).min(width - metrics.stringWidth(t2) - 20).max(20)
+        }
+
+        if (t2 != "") {
+            yToShow -= 20
+        } 
+        if (t3 != "") {
+            yToShow -= 20
+        }
+
+        g.drawString(t1, xToShow, yToShow)
+        g.drawString(t2, xToShow, yToShow + 20)
+        g.drawString(t3, xToShow, yToShow + 40)
     }
 
     override def update : Unit = {
@@ -153,6 +211,31 @@ abstract class UseItemButton (imageNam : String) extends MyButton (imageNam) {
             MonsterButton.setVisible(true)
             RunButton.setVisible(true)
         }        
+    }
+
+    override def onMouseOver (g : Graphics, x : Int, y : Int, width : Int, height : Int) : Unit = {
+        var metrics = g.getFontMetrics
+        var text = FirstPlayer.usableInventory(n).toString
+        var (t1, t2, t3) = Utils.cutString(text, 40)
+
+        var xToShow = x
+        var yToShow = y - 10
+        if (n % 2 == 1) {
+            xToShow = (x - 200).min(width - metrics.stringWidth(t1) - 20).min(width - metrics.stringWidth(t2) - 20)
+        } else {
+            xToShow = (x).min(width - metrics.stringWidth(t1) - 20).min(width - metrics.stringWidth(t2) - 20).max(20)
+        }
+
+        if (t2 != "") {
+            yToShow -= 20
+        } 
+        if (t3 != "") {
+            yToShow -= 20
+        }
+
+        g.drawString(t1, xToShow, yToShow)
+        g.drawString(t2, xToShow, yToShow + 20)
+        g.drawString(t3, xToShow, yToShow + 40)
     }
 
     override def update : Unit = {

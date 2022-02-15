@@ -11,7 +11,9 @@ abstract class Item {
     
     var amount : Int = 0
 
-
+    override def toString : String = {
+        name
+    }
 }
 
 object FullRestore extends Item {

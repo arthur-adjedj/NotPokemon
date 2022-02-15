@@ -34,7 +34,7 @@ class Battle (p1 : Player, p2 : Player) {
                 p1.castAttack(p1.currentAttack)
                 ui.updateImages
                 TimeUnit.SECONDS.sleep(1)
-                if (monsterP2.alive) {
+                if (monsterP2.alive && p2.playing) {
                     p2.castAttack(p2.currentAttack)
                     ui.updateImages
                 }
@@ -42,7 +42,7 @@ class Battle (p1 : Player, p2 : Player) {
                 p2.castAttack(p2.currentAttack)
                 ui.updateImages
                 TimeUnit.SECONDS.sleep(1)
-                if (monsterP1.alive) {
+                if (monsterP1.alive && p1.playing) {
                     p1.castAttack(p1.currentAttack)
                     ui.updateImages
                 }

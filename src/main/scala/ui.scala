@@ -65,21 +65,22 @@ object DiscussionLabel {
     }
 
     def changeText (s : String) : Unit = {
-        text1 = ""
-        text2 = ""
-        var t1 = ""
-        var t2 = ""
-        if (s.length < charPerLine) {
-            text1 = s
-        } else {
-            var l = s.substring(0, charPerLine).lastIndexOf(" ")
-            text1 = s.substring(0, l)
-            text2 = s.substring(l+1)
-        }
+        var (t1, t2, t3) = Utils.cutString(s, charPerLine)
+        text1 = t1
+        text2 = t2
         battleUi.refresh
     }
 }
 
+trait Descriptable {
+
+    def onMouseOver (g : Graphics, xMouse : Int, yMouse : Int, width : Int, height : Int) : Unit = {}
+    def isMouseOver (x : Int, y : Int) : Boolean = false
+}
+
+object EmptyDescriptable extends Object with Descriptable {
+    override def isMouseOver (x : Int, y : Int) = true
+}
 
 class BattleUI (p1 : Player, p2 : Player, battle : Battle) extends JFrame with MouseListener with MouseMotionListener {
 
@@ -100,6 +101,12 @@ class BattleUI (p1 : Player, p2 : Player, battle : Battle) extends JFrame with M
                                             ChangeMonsterButton1, ChangeMonsterButton2, ChangeMonsterButton3, 
                                             ChangeMonsterButton4, ChangeMonsterButton5, ChangeMonsterButton6,
                                             UseItemButton1, UseItemButton2, UseItemButton3, UseItemButton4)
+
+    var descriptables : List[Descriptable] = List(AttackButton, BagButton, MonsterButton, RunButton, BackButton, NextPageItemButton,
+                                                CastAttackButton1, CastAttackButton2, CastAttackButton3, CastAttackButton4,
+                                                ChangeMonsterButton1, ChangeMonsterButton2, ChangeMonsterButton3, 
+                                                ChangeMonsterButton4, ChangeMonsterButton5, ChangeMonsterButton6,
+                                                UseItemButton1, UseItemButton2, UseItemButton3, UseItemButton4)
     
     var pane = new DrawPanel(buttonList, p1, p2, this)
     var lastMonsterSelected : Monster = EmptyMonster
@@ -149,19 +156,22 @@ class BattleUI (p1 : Player, p2 : Player, battle : Battle) extends JFrame with M
     }
     def mouseEntered (e : MouseEvent) : Unit = {}
     def mouseExited (e : MouseEvent) : Unit = {}
-    def mousePressed (e : MouseEvent) : Unit = {}
+    def mousePressed (e : MouseEvent) : Unit = {
+        if (xClick == -1 && yClick == -1) {
+            if (e.getY >= 0 && e.getY < 20 && e.getX >= 0 && e.getX <= getWidth) {
+                xClick = e.getX
+                yClick = e.getY
+            }
+        }
+    }
+
     def mouseReleased (e : MouseEvent) : Unit = {
         xClick = -1
         yClick = -1
     }
 
     def mouseDragged (e : MouseEvent) : Unit = {
-        if (xClick == -1 && yClick == -1) {
-            if (e.getY >= 0 && e.getY < 20 && e.getX >= 0 && e.getX <= getWidth) {
-                xClick = e.getX
-                yClick = e.getY
-            }
-        } else {
+        if (xClick != -1 && yClick != -1) {
             var movX = xClick - e.getX
             var movY = yClick - e.getY
             posX = (posX - movX).max(0).min(Toolkit.getDefaultToolkit.getScreenSize.getWidth.toInt-getWidth)
@@ -170,7 +180,24 @@ class BattleUI (p1 : Player, p2 : Player, battle : Battle) extends JFrame with M
         }
     }
 
-    def mouseMoved (e : MouseEvent) : Unit = {}
+    def mouseMoved (e : MouseEvent) : Unit = {
+        pane.underMouse = EmptyDescriptable
+        var eventCaught : Boolean = false
+        def moveMouseOver (b : Descriptable) : Unit = {
+            if (!eventCaught) {
+                if (b.isMouseOver(e.getX, e.getY)) {
+                    eventCaught = true
+                    pane.underMouse = b
+                }
+            }
+        }
+
+        buttonList.foreach(moveMouseOver)
+        eventCaught = false
+        updateImages
+        pane.xMouse = e.getX
+        pane.yMouse = e.getY
+    }
 
     def refresh : Unit = {
         pane.refresh
@@ -193,6 +220,10 @@ class DrawPanel (buttonList : List[MyButton], p1 : Player, p2 : Player, ui : Bat
     var yourBarImg = Utils.loadImage("YourBar.png")
     var textBarImg = Utils.loadImage("TextBar.png")
     var poke_font : Font = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("PokemonPixelFont.ttf"))
+    var underMouse : Descriptable = EmptyDescriptable
+    var xMouse : Int = 0
+    var yMouse : Int = 0
+
 
 
     poke_font = poke_font.deriveFont(Font.PLAIN,30)
@@ -262,6 +293,7 @@ class DrawPanel (buttonList : List[MyButton], p1 : Player, p2 : Player, ui : Bat
         g.setColor(Color.BLACK)
         g.fillRect(0, 0, getWidth, 20)
         buttonList.foreach(x => x.display(g))
+        underMouse.onMouseOver(g, xMouse, yMouse, getWidth, getHeight)
     }
 
     def updateImages : Unit = {

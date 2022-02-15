@@ -43,6 +43,26 @@ object Utils {
         }
     }
 
+    def cutString (s : String, charPerLine : Int) : (String, String, String) = {
+        var text1 = ""
+        var text2 = ""
+        var text3 = ""
+        if (s.length <= charPerLine) {
+            text1 = s
+        } else {
+            var l = s.substring(0, charPerLine).lastIndexOf(" ")
+            text1 = s.substring(0, l)
+            text2 = s.substring(l+1)
+            if (text2.length > charPerLine) {
+                var s = text2
+                l = s.substring(0, charPerLine).lastIndexOf(" ")
+                text2 = s.substring(0, l)
+                text3 = s.substring(l+1)
+            }
+        }
+        (text1, text2, text3)
+    }
+
 
 
 
