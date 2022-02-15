@@ -203,7 +203,7 @@ abstract class Monster {
             status.foreach(x => max_duration(x, stat.name))
         } else {
             status = stat :: status
-            println(name + " has the status " + stat.name)
+            //println(name + " has the status " + stat.name)
             stat.onAdd(this)
         }
     }
@@ -297,7 +297,7 @@ abstract class Monster {
     }
 
     override def toString : String = {
-        name + " is a " + originalName + " monster of type " + typeName
+        name + " is a " + originalName + " monster of type " + typeName + ". "
     }
 
     levelUp

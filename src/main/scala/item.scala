@@ -71,7 +71,7 @@ object MonsterBall extends Item {
     }
 
     override def use : Boolean = {
-        println("You use a MonsterBall")
+        //println("You use a MonsterBall")
         var slot = Utils.findFirstOccurenceArray(FirstPlayer.team, EmptyMonster)
         var opponent = FirstPlayer.opponent
         opponent.currentMonster.owner = FirstPlayer
@@ -93,7 +93,7 @@ object SuperMonsterBall extends Item {
     }
 
     override def use : Boolean = {
-        println("You use a SuperMonsterBall")
+        //println("You use a SuperMonsterBall")
         var slot = Utils.findFirstOccurenceArray(FirstPlayer.team, EmptyMonster)
         var opponent = FirstPlayer.opponent
         opponent.currentMonster.owner = FirstPlayer
@@ -115,7 +115,7 @@ object UltraMonsterBall extends Item {
     }
 
     override def use : Boolean = {
-        println("You use a UltraMonsterBall")
+        //println("You use a UltraMonsterBall")
         var slot = Utils.findFirstOccurenceArray(FirstPlayer.team, EmptyMonster)
         var opponent = FirstPlayer.opponent
         opponent.currentMonster.owner = FirstPlayer
