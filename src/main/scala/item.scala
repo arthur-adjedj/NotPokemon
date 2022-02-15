@@ -77,6 +77,7 @@ object MonsterBall extends Item {
         opponent.currentMonster.owner = FirstPlayer
         FirstPlayer.team(slot) = opponent.currentMonster
         opponent.team(Utils.findFirstOccurenceArray(opponent.team, opponent.currentMonster)) = EmptyMonster
+        FirstPlayer.opponent.playing = false
         opponent.changeMonster(true)
         amount -= 1
         true
@@ -99,6 +100,7 @@ object SuperMonsterBall extends Item {
         opponent.currentMonster.owner = FirstPlayer
         FirstPlayer.team(slot) = opponent.currentMonster
         opponent.team(Utils.findFirstOccurenceArray(opponent.team, opponent.currentMonster)) = EmptyMonster
+        FirstPlayer.opponent.playing = false
         opponent.changeMonster(true)
         amount -= 1
         true
@@ -121,6 +123,7 @@ object UltraMonsterBall extends Item {
         opponent.currentMonster.owner = FirstPlayer
         FirstPlayer.team(slot) = opponent.currentMonster
         opponent.team(Utils.findFirstOccurenceArray(opponent.team, opponent.currentMonster)) = EmptyMonster
+        FirstPlayer.opponent.playing = false
         opponent.changeMonster(true)
         amount -= 1
         true
