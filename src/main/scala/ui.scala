@@ -254,7 +254,7 @@ object YourBar{
         height = 8
         hpRate = 1f
 
-        val color : Color = new Color(250,244,215)
+        val color : Color = new Color(0,244,215)
         override def setColor(g: Graphics): Unit = {
             g.setColor(color)
         }

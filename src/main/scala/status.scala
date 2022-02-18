@@ -12,8 +12,7 @@ abstract class Status {
     }
 }
 
-class NoStatus extends Status {
-}
+class NoStatus extends Status {}
 
 class Paralysis extends Status {
     name = "Paralysis"
