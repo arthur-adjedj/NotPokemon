@@ -252,17 +252,17 @@ abstract class Monster {
 
     }
 
-    def gainXp (amount : Int) : Unit = {
+    def gainXp (amount : Int, toShow : Boolean = true) : Unit = {
         xp += amount
         if (xp >= nextXpStep) {
             var diff = xp - nextXpStep
             xp = nextXpStep
-            levelUp
+            levelUp(toShow)
             gainXp(diff)
         }
     }
 
-    def levelUp : Unit = {
+    def levelUp (toShow : Boolean = true): Unit = {
         level += 1
 
         var previousHpMax = hpMax
@@ -285,14 +285,14 @@ abstract class Monster {
             case "Medium Slow" => nextXpStep = (1.2 * Math.pow(level+1, 3) - 15 * Math.pow(level+1, 2) + 100 * (level+1) - 140).toInt
             case "Slow" => nextXpStep = (1.25 * Math.pow(level+1, 3)).toInt
         }
-        if (level > 1) {
+        if (level > 1 && toShow) {
             DiscussionLabel.changeText(name + " is now level " + level)
         }
     }
 
-    def gainLvl (n : Int) : Unit = {
+    def gainLvl (n : Int, toShow : Boolean = true) : Unit = {
         for (i <- 1 to n) {
-            gainXp(nextXpStep - xp)
+            gainXp(nextXpStep - xp, toShow)
         }
     }
 
@@ -300,7 +300,7 @@ abstract class Monster {
         name + " is a " + originalName + " monster of type " + typeName + ". "
     }
 
-    levelUp
+    levelUp(false)
 
 }
 
