@@ -15,7 +15,7 @@ object Utils {
         }
     }
 
-    def findFirstOccurenceArray (array : Array[Monster], element : Monster) : Int = {
+    def findFirstOccurenceArray [T](array : Array[T], element : T) : Int = {
         var i : Int = 0
         var found : Boolean = false
         while (!found && i < array.length) {
@@ -24,20 +24,6 @@ object Utils {
         }
         if (found) {
             i - 1 
-        } else {
-            -1
-        }
-    }
-
-    def findFirstOccurenceArray (array : Array[Item], element : Item) : Int = {
-        var i : Int = 0
-        var found : Boolean = false
-        while (!found && i < array.length) {
-            found = array(i) == element
-            i += 1
-        }
-        if (found) {
-            i - 1
         } else {
             -1
         }
