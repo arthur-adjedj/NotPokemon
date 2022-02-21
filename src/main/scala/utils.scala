@@ -6,7 +6,7 @@ import javax.swing.DebugGraphics
 
 object Utils {
 
-    var players : List[Player] = List()
+    var playersDisplayers : List[PlayerDisplayer] = List()
 
 
 

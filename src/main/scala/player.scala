@@ -10,7 +10,6 @@ class Player {
     var battle : Battle = EmptyBattle
 
     var displayer : PlayerDisplayer = EmptyPlayerDisplayer
-    Utils.players = this :: Utils.players
 
     var inventory : Array[Item] = Array.fill(40){EmptyItem}
 
