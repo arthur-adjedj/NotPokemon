@@ -324,6 +324,12 @@ object BagButton extends MyButton ("Buttons/BagButton.png") {
         UseItemButton4.setVisible(true)
         NextPageItemButton.setVisible(true)
 
+        NextPageItemButton.currentPage = 0
+        UseItemButton1.n = 4*NextPageItemButton.currentPage
+        UseItemButton2.n = 4*NextPageItemButton.currentPage + 1
+        UseItemButton3.n = 4*NextPageItemButton.currentPage + 2
+        UseItemButton4.n = 4*NextPageItemButton.currentPage + 3
+
         BackButton.x = 3
         BackButton.y = 693
         BackButton.setVisible(true)
