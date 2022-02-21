@@ -69,7 +69,7 @@ object DiscussionLabel {
         var (t1, t2, t3) = Utils.cutString(s, charPerLine)
         text1 = t1
         text2 = t2
-        battleUi.refresh
+        battleUi.pane.repaint()
     }
 }
 
@@ -121,6 +121,8 @@ class BattleUI (p1 : Player, p2 : Player, battle : Battle) extends JFrame with M
         EnnemyBar.p2 = p2
 
         setSize(sizeX, sizeY)
+
+        DiscussionLabel.battleUi = this
         
         addMouseListener(this)
         addMouseMotionListener(this)
@@ -208,10 +210,6 @@ class BattleUI (p1 : Player, p2 : Player, battle : Battle) extends JFrame with M
         updateImages
         pane.xMouse = e.getX
         pane.yMouse = e.getY
-    }
-
-    def refresh : Unit = {
-        pane.refresh
     }
 
     def updateImages : Unit = {
@@ -322,10 +320,6 @@ class DrawPanelBattle (buttonList : List[MyButton], p1 : Player, p2 : Player, ui
         FirstPlayerMonsterDisplayer.update
         OpponentMonsterDisplayer.update
         
-        repaint()
-    }
-
-    def refresh : Unit = {
         repaint()
     }
 }
