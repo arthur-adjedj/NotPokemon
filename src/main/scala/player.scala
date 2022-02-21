@@ -9,6 +9,9 @@ class Player {
     var opponent : Player = EmptyPlayer
     var battle : Battle = EmptyBattle
 
+    var displayer : PlayerDisplayer = EmptyPlayerDisplayer
+    Utils.players = this :: Utils.players
+
     var inventory : Array[Item] = Array.fill(40){EmptyItem}
 
     var currentMonster : Monster = EmptyMonster
@@ -187,6 +190,8 @@ object FirstPlayer extends Player {
     gainItem(UltraMonsterBall, 10)
     gainItem(MonsterBall, 10)
     gainItem(FullRestore, 1)
+
+    displayer = FirstPlayerDisplayer
 
     name = "You"
     var hisTurn : Boolean = false

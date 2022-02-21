@@ -6,6 +6,11 @@ import javax.swing.DebugGraphics
 
 object Utils {
 
+    var players : List[Player] = List()
+
+
+
+
     def loadImage (name : String) : BufferedImage = {
         try {
             javax.imageio.ImageIO.read(getClass.getResource(name))
