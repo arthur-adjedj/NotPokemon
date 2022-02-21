@@ -111,7 +111,7 @@ class BattleUI (p1 : Player, p2 : Player, battle : Battle) extends JFrame with M
                                                 UseItemButton1, UseItemButton2, UseItemButton3, UseItemButton4,
                                                 FirstPlayerMonsterDisplayer, OpponentMonsterDisplayer)
     
-    var pane = new DrawPanel(buttonList, p1, p2, this)
+    var pane = new DrawPanelBattle(buttonList, p1, p2, this)
     var lastMonsterSelected : Monster = EmptyMonster
 
     
@@ -276,7 +276,7 @@ object YourBar{
 
 object EmptyBattleUI extends BattleUI (EmptyPlayer, EmptyPlayer, EmptyBattle) {}
 
-class DrawPanel (buttonList : List[MyButton], p1 : Player, p2 : Player, ui : BattleUI) extends JPanel {
+class DrawPanelBattle (buttonList : List[MyButton], p1 : Player, p2 : Player, ui : BattleUI) extends JPanel {
     var toShow : Boolean = false
     var battleBackgroundImg = Utils.loadImage("BattleBackground.png")
     var pokemonFrontImg = Utils.loadImage("Monsters/EmptyFront.png")
