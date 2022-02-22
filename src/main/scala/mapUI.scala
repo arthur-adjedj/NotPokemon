@@ -6,7 +6,7 @@ import java.io.File
 
 
 class MapUI extends JFrame with KeyListener {
-    var sizeBlock = 5
+    var sizeBlock = 50
 
     var posX = 1000
     var posY = 100
@@ -15,7 +15,7 @@ class MapUI extends JFrame with KeyListener {
 
     var ready : Boolean = false
 
-    var mapDisplayer : MapDisplayer = new MapDisplayer
+    var mapDisplayer : MapDisplayer = new MapDisplayer(this, sizeBlock)
 
     var pane = new DrawPanelMap(mapDisplayer)
 
@@ -24,7 +24,7 @@ class MapUI extends JFrame with KeyListener {
         mapDisplayer.initialise(1, sizeBlock)
         pane.initialise
 
-        FirstPlayer.mapUI = this
+        FirstPlayerDisplayer.mapUI = this
 
         setSize(sizeX, sizeY)
         addKeyListener(this)
@@ -57,11 +57,11 @@ class MapUI extends JFrame with KeyListener {
     def keyTyped (e : KeyEvent) : Unit = {}
 }
 
-object EmptyMapUI
+object EmptyMapUI extends MapUI {}
 
 
 
-class DrawPanelMap (mapDisplayer : MapDisplayer) extends JLabel {
+class DrawPanelMap (mapDisplayer : MapDisplayer) extends JLabel with Repaintable {
 
     var ready : Boolean = false
 
@@ -74,7 +74,7 @@ class DrawPanelMap (mapDisplayer : MapDisplayer) extends JLabel {
         if (ready) {
             super.paintComponent(g)
             mapDisplayer.display(g)
-
+            println("gerre")
         }
     }
 }

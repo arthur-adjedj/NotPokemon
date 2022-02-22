@@ -1,12 +1,12 @@
 import java.awt.Graphics
 
-class MapDisplayer (mapUI : MapUI, sizeBlock : Int){
+class MapDisplayer (mapUI : MapUI, sizeB : Int){
 
     var x : Int = 0
     var y : Int = 0
     var n : Int = 1
 
-    var sizeBlock : Int = 1
+    var sizeBlock : Int = sizeB
 
     var imgName : String = "Maps/1.png"
     var img = Utils.loadImage(imgName)
@@ -24,12 +24,12 @@ class MapDisplayer (mapUI : MapUI, sizeBlock : Int){
     }
 
 
-    def move (moveX : Int, moveY : Int) : Unit = {
+    def changeCoordinates (moveX : Int, moveY : Int) : Unit = {
         x += moveX
         y += moveY
     }
 }
 
-object EmptyMapDisplayer extends MapDisplayer {
+object EmptyMapDisplayer extends MapDisplayer (EmptyMapUI, 0) {
 
 }
