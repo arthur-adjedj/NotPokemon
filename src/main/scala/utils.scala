@@ -71,27 +71,22 @@ class Mover extends Thread {
     def move (moveX : Int, moveY : Int) : Unit = {
         lastMoveX = moveX
         lastMoveY = moveY
-        resume
+        start
     }
 
     override def run : Unit = {
-        interrupt()
-        while (true) {
-            for (i <- 0 to playerdisplayer.mapDisplayer.sizeBlock - 1) {
-                playerdisplayer.changeCoordinates(lastMoveX, lastMoveY)
-                TimeUnit.MILLISECONDS.sleep(100/playerdisplayer.speed)
-                playerdisplayer.mapUI.pane.repaint()
-            }
-            playerdisplayer.isMoving = false
-            interrupt()
+        for (i <- 0 to playerdisplayer.mapDisplayer.sizeBlock - 1) {
+            playerdisplayer.changeCoordinates(lastMoveX, lastMoveY)
+            TimeUnit.MILLISECONDS.sleep(100/playerdisplayer.speed)
+            playerdisplayer.mapUI.pane.repaint()
         }
-        stop()
+        playerdisplayer.isMoving = false
     }
 }
 
 object Repainter extends Thread {
     override def run : Unit = {
-        Utils.repaintables.foreach(x => x.repaint())
+        //Utils.repaintables.foreach(x => x.repaint())
         TimeUnit.MILLISECONDS.sleep(10)
     }
 }

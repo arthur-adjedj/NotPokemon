@@ -8,8 +8,7 @@ class PlayerDisplayer (imgNam : String) {
     var speed : Int = 1
     var whichMap : Int = 0
     var mover : Mover = new Mover
-    mover.playerdisplayer = this
-    mover.start
+
     var imgName : String = imgNam
     var img = Utils.loadImage(imgName)
 
@@ -20,6 +19,8 @@ class PlayerDisplayer (imgNam : String) {
     Utils.playersDisplayers = this :: Utils.playersDisplayers
 
     def move (moveX : Int, moveY : Int) : Unit = {
+        mover = new Mover
+        mover.playerdisplayer = this
         if (!isMoving) {
             isMoving = true
             mover.move(moveX, moveY)
@@ -43,6 +44,7 @@ class PlayerDisplayer (imgNam : String) {
 object FirstPlayerDisplayer extends PlayerDisplayer ("Players/FirstPlayer.png") {
 
     whichMap = 1
+    speed = 10
 }
 
 object EmptyPlayerDisplayer extends PlayerDisplayer ("Empty.png") {}
