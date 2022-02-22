@@ -74,7 +74,6 @@ class DrawPanelMap (mapDisplayer : MapDisplayer) extends JLabel with Repaintable
         if (ready) {
             super.paintComponent(g)
             mapDisplayer.display(g)
-            println("gerre")
         }
     }
 }

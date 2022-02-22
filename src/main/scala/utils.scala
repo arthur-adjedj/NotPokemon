@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit
 object Utils {
 
     var playersDisplayers : List[PlayerDisplayer] = List()
+    Repainter.start
 
 
 
@@ -59,6 +60,7 @@ object Utils {
 }
 
 trait Repaintable {
+    Utils.repaintables = this :: Utils.repaintables
     def repaint() : Unit
 }
 
@@ -76,7 +78,9 @@ class Mover extends Thread {
 
     override def run : Unit = {
         for (i <- 0 to playerdisplayer.mapDisplayer.sizeBlock - 1) {
+            playerdisplayer.mapUI.pane.repaint()
             playerdisplayer.changeCoordinates(lastMoveX, lastMoveY)
+            playerdisplayer.mapUI.pane.repaint()
             TimeUnit.MILLISECONDS.sleep(100/playerdisplayer.speed)
             playerdisplayer.mapUI.pane.repaint()
         }
@@ -86,7 +90,9 @@ class Mover extends Thread {
 
 object Repainter extends Thread {
     override def run : Unit = {
-        //Utils.repaintables.foreach(x => x.repaint())
-        TimeUnit.MILLISECONDS.sleep(10)
+        while (true) {
+            Utils.repaintables.foreach(x => x.repaint())
+            TimeUnit.MILLISECONDS.sleep(10)
+        }
     }
 }
