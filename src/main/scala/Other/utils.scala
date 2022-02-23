@@ -92,7 +92,7 @@ object Repainter extends Thread {
     override def run : Unit = {
         while (true) {
             Utils.repaintables.foreach(x => x.repaint())
-            TimeUnit.MILLISECONDS.sleep(10)
+            TimeUnit.MILLISECONDS.sleep(100/6)
         }
     }
 }

@@ -5,6 +5,10 @@ import java.util.concurrent.TimeUnit
 class PlayerDisplayer (imgNam : String) {
     var x : Int = 0
     var y : Int = 0
+
+    var i : Int = 0
+    var j : Int = 0
+
     var speed : Int = 1
     var whichMap : Int = 0
     var mover : Mover = new Mover
@@ -15,13 +19,14 @@ class PlayerDisplayer (imgNam : String) {
     var mapDisplayer : MapDisplayer = EmptyMapDisplayer
     var mapUI : MapUI = EmptyMapUI
     var isMoving : Boolean = false
+    var canMove : Boolean = true
 
     Utils.playersDisplayers = this :: Utils.playersDisplayers
 
     def move (moveX : Int, moveY : Int) : Unit = {
         mover = new Mover
         mover.playerdisplayer = this
-        if (!isMoving) {
+        if (!isMoving && canMove && mapDisplayer.grid(i+moveX)(j+moveY) == 0) {
             isMoving = true
             mover.move(moveX, moveY)
         }
@@ -36,7 +41,13 @@ class PlayerDisplayer (imgNam : String) {
     def changeCoordinates (moveX : Int, moveY : Int) : Unit = {
         x += moveX
         y += moveY
-        println(x, y)
+        //println(x, y)
+
+        i = x/mapDisplayer.sizeBlock
+        j = y/mapDisplayer.sizeBlock
+    
+        println(i, j)
+
     }
 }
 

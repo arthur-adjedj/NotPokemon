@@ -21,6 +21,8 @@ class MapUI extends JFrame with KeyListener {
 
     def initialise : Unit = {
 
+        mapDisplayer.grid(2)(1) = 1
+
         mapDisplayer.initialise(1, sizeBlock)
         pane.initialise
 

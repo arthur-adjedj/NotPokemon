@@ -6,6 +6,8 @@ class MapDisplayer (mapUI : MapUI, sizeB : Int){
     var y : Int = 0
     var n : Int = 1
 
+    var grid : Array[Array[Int]] = Array.fill(10){Array.fill(10){0}}
+
     var sizeBlock : Int = sizeB
 
     var imgName : String = "Maps/1.png"
@@ -21,6 +23,13 @@ class MapDisplayer (mapUI : MapUI, sizeB : Int){
     def display (g : Graphics) : Unit = {
         g.drawImage(img, x, y, null)
         Utils.playersDisplayers.foreach(p => p.display(g, x, y, n))
+        for (i <- 0 to 9) {
+            for (j <- 0 to 9) {
+                if (grid(i)(j) != 0) {
+                    g.fillRect(i*sizeBlock, j*sizeBlock, sizeBlock, sizeBlock)
+                }
+            }
+        }
     }
 
 
