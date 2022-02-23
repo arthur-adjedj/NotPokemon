@@ -9,6 +9,8 @@ class Player {
     var opponent : Player = EmptyPlayer
     var battle : Battle = EmptyBattle
 
+    var alreadyBeaten : Boolean = false
+
     var displayer : PlayerDisplayer = EmptyPlayerDisplayer
 
     var inventory : Array[Item] = Array.fill(40){EmptyItem}
@@ -119,6 +121,11 @@ abstract class Opponent extends Player {
         super.newTurn
         var l = availableAttacks.length
         chooseAttack(availableAttacks(scala.util.Random.nextInt(l)))
+    }
+
+    override def lose : Unit = {
+        alreadyBeaten = true
+        super.lose
     }
 }
 

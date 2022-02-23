@@ -6,8 +6,8 @@ class PlayerDisplayer (imgNams : Array[String]) {
     var x : Int = 0
     var y : Int = 0
 
-    var i : Int = 0
-    var j : Int = 0
+    var i : Int = -1
+    var j : Int = -1
 
     var speed : Int = 1
     var whichMap : Int = 0
@@ -15,13 +15,15 @@ class PlayerDisplayer (imgNams : Array[String]) {
 
     var imgs = imgNams.map(x => Utils.loadImage(x)) // [Up, Right, Down, Left]
     var img = imgs(0)
+    
+    var player : Player = EmptyPlayer
 
     var mapDisplayer : MapDisplayer = EmptyMapDisplayer
     var mapUI : MapUI = EmptyMapUI
     var isMoving : Boolean = false
     var canMove : Boolean = true
 
-    Utils.playersDisplayers = this :: Utils.playersDisplayers
+    Utils.playerDisplayers = this :: Utils.playerDisplayers
 
     def move (moveX : Int, moveY : Int) : Unit = {
         {(moveX, moveY) match {
@@ -39,6 +41,7 @@ class PlayerDisplayer (imgNams : Array[String]) {
                     mover.playerdisplayer = this
                     isMoving = true
                     mover.move(moveX, moveY)
+                    alignCoordinates
                 }
                 if (mapDisplayer.grid(i+moveX)(j+moveY).interactable) {
                     mapDisplayer.grid(i+moveX)(j+moveY).interact
@@ -46,6 +49,10 @@ class PlayerDisplayer (imgNams : Array[String]) {
             }
             
         }
+    }
+
+    def endMove : Unit = {
+        isMoving = false
     }
 
     def display (g : Graphics, xMap : Int, yMap : Int, n : Int) : Unit = {
@@ -60,15 +67,52 @@ class PlayerDisplayer (imgNams : Array[String]) {
 
         i = x/mapDisplayer.sizeBlock
         j = y/mapDisplayer.sizeBlock
-    
+    }
+
+    def alignCoordinates : Unit = {
+        x = i*mapDisplayer.sizeBlock
+        y = j*mapDisplayer.sizeBlock
     }
 }
 
 
 object FirstPlayerDisplayer extends PlayerDisplayer (Array("Players/FirstPlayerUp.png", "Players/FirstPlayerRight.png", "Players/FirstPlayerDown.png", "Players/FirstPlayerLeft.png")) {
 
+    player = FirstPlayer
+
+    i = 0
+    j = 0
+
     whichMap = 1
-    speed = 100
+    speed = 10
+
+
+    override def endMove : Unit = {
+        super.endMove
+        var sameCase = Utils.playerDisplayers.filter(opp => opp != this && opp.i == i && opp.j == j && !opp.player.alreadyBeaten)
+        for (i <- sameCase.indices) {
+            var b = new Battle(FirstPlayer, sameCase(i).player)
+            b.initialise
+            b.start
+        }
+    }
+
+
+}
+
+object SecondPlayerDisplayer extends PlayerDisplayer (Array("Players/FirstPlayerUp.png", "Players/FirstPlayerRight.png", "Players/FirstPlayerDown.png", "Players/FirstPlayerLeft.png")) {
+    
+    player = SecondPlayer
+
+    whichMap = 1
+    i = 7
+    j = 7
+
+    override def display (g : Graphics, xMap : Int, yMap : Int, n : Int) : Unit = {
+        super.display(g, xMap, yMap, n)
+        println(i, j)
+    }
+
 }
 
 object EmptyPlayerDisplayer extends PlayerDisplayer (Array("Empty.png")) {}

@@ -6,7 +6,7 @@ import java.util.concurrent.TimeUnit
 
 object Utils {
 
-    var playersDisplayers : List[PlayerDisplayer] = List()
+    var playerDisplayers : List[PlayerDisplayer] = List()
     Repainter.start
 
 
@@ -84,7 +84,7 @@ class Mover extends Thread {
             TimeUnit.MILLISECONDS.sleep(100/playerdisplayer.speed)
             playerdisplayer.mapUI.pane.repaint()
         }
-        playerdisplayer.isMoving = false
+        playerdisplayer.endMove
     }
 }
 

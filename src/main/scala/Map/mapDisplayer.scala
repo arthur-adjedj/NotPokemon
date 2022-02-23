@@ -16,6 +16,7 @@ class MapDisplayer (mapUI : MapUI, sizeB : Int) {
     def initialise (nMap : Int, sizeB : Int) : Unit = {
         n = nMap
         FirstPlayerDisplayer.mapDisplayer = this
+        SecondPlayerDisplayer.mapDisplayer = this
     }
     
 
@@ -28,7 +29,7 @@ class MapDisplayer (mapUI : MapUI, sizeB : Int) {
                 grid(i)(j).display(g)
             }
         }
-        Utils.playersDisplayers.foreach(p => p.display(g, x, y, n))
+        Utils.playerDisplayers.foreach(p => p.display(g, x, y, n))
     }
 
 

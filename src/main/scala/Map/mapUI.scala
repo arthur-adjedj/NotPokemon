@@ -34,6 +34,8 @@ class MapUI extends JFrame with KeyListener {
         setUndecorated(true)
         setContentPane(pane)
 
+        Utils.playerDisplayers.foreach(x => x.alignCoordinates)
+
 
         setLocation(posX, posY)
         ready = true
