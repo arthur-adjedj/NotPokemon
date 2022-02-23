@@ -24,11 +24,19 @@ class PlayerDisplayer (imgNam : String) {
     Utils.playersDisplayers = this :: Utils.playersDisplayers
 
     def move (moveX : Int, moveY : Int) : Unit = {
-        mover = new Mover
-        mover.playerdisplayer = this
-        if (!isMoving && canMove && mapDisplayer.grid(i+moveX)(j+moveY) == 0) {
-            isMoving = true
-            mover.move(moveX, moveY)
+        if (!isMoving && canMove) {
+            if (0 <= i+moveX && i+moveX < mapDisplayer.grid.length && 0 <= j+moveY && j+moveY < mapDisplayer.grid(i).length) {
+                if (mapDisplayer.grid(i+moveX)(j+moveY).walkable) {
+                    mover = new Mover
+                    mover.playerdisplayer = this
+                    isMoving = true
+                    mover.move(moveX, moveY)
+                }
+                if (mapDisplayer.grid(i+moveX)(j+moveY).interactable) {
+                    mapDisplayer.grid(i+moveX)(j+moveY).interact
+                }
+            }
+            
         }
     }
 
@@ -41,13 +49,10 @@ class PlayerDisplayer (imgNam : String) {
     def changeCoordinates (moveX : Int, moveY : Int) : Unit = {
         x += moveX
         y += moveY
-        //println(x, y)
 
         i = x/mapDisplayer.sizeBlock
         j = y/mapDisplayer.sizeBlock
     
-        println(i, j)
-
     }
 }
 
@@ -55,7 +60,7 @@ class PlayerDisplayer (imgNam : String) {
 object FirstPlayerDisplayer extends PlayerDisplayer ("Players/FirstPlayer.png") {
 
     whichMap = 1
-    speed = 10
+    speed = 100
 }
 
 object EmptyPlayerDisplayer extends PlayerDisplayer ("Empty.png") {}

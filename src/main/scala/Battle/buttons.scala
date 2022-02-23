@@ -274,7 +274,6 @@ object AttackButton extends MyButton ("Buttons/AttackButton.png") {
 
     override def isClicked : Unit = {
 
-        //println("Showing the attacks")
 
         AttackButton.setVisible(false)
         BagButton.setVisible(false)
@@ -312,7 +311,6 @@ object BagButton extends MyButton ("Buttons/BagButton.png") {
 
 
     override def isClicked : Unit = {
-        //println("Showing the bag")
         AttackButton.setVisible(false)
         BagButton.setVisible(false)
         MonsterButton.setVisible(false)
@@ -355,7 +353,6 @@ object MonsterButton extends MyButton ("Buttons/MonstersButton.png") {
     text = "Pokemons"
 
     override def isClicked : Unit = {
-        //println("Showing the available monsters")
 
         AttackButton.setVisible(false)
         BagButton.setVisible(false)
@@ -391,7 +388,6 @@ object RunButton extends MyButton ("Buttons/RunButton.png") {
     text = "Run"
 
     override def isClicked : Unit = {
-        //println("Run away from the battle")
         DiscussionLabel.changeText("You run, far, really far !")
         TimeUnit.SECONDS.sleep(1)
         FirstPlayer.lose

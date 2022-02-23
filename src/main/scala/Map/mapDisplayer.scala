@@ -1,12 +1,12 @@
 import java.awt.Graphics
 
-class MapDisplayer (mapUI : MapUI, sizeB : Int){
+class MapDisplayer (mapUI : MapUI, sizeB : Int) {
 
     var x : Int = 0
     var y : Int = 0
     var n : Int = 1
 
-    var grid : Array[Array[Int]] = Array.fill(10){Array.fill(10){0}}
+    var grid : Array[Array[Block]] = Array.ofDim[Block](20, 20)
 
     var sizeBlock : Int = sizeB
 
@@ -22,14 +22,13 @@ class MapDisplayer (mapUI : MapUI, sizeB : Int){
 
     def display (g : Graphics) : Unit = {
         g.drawImage(img, x, y, null)
-        Utils.playersDisplayers.foreach(p => p.display(g, x, y, n))
-        for (i <- 0 to 9) {
-            for (j <- 0 to 9) {
-                if (grid(i)(j) != 0) {
-                    g.fillRect(i*sizeBlock, j*sizeBlock, sizeBlock, sizeBlock)
-                }
+        for (i <- grid.indices) {
+            for (j <- grid(i).indices) {
+                grid(i)(j).updateCoordinates(x, y, sizeBlock)
+                grid(i)(j).display(g)
             }
         }
+        Utils.playersDisplayers.foreach(p => p.display(g, x, y, n))
     }
 
 
@@ -41,4 +40,26 @@ class MapDisplayer (mapUI : MapUI, sizeB : Int){
 
 object EmptyMapDisplayer extends MapDisplayer (EmptyMapUI, 0) {
 
+}
+
+class MapDisplayer1 (mapUI : MapUI, sizeB : Int) extends MapDisplayer (mapUI, sizeB) {
+    for (i <- grid.indices) {
+        for (j <- grid(i).indices) {
+            grid(i)(j) = new EmptyBlock(i, j)
+        }
+    }
+    grid(2)(1) = new WallBlock(2, 1)
+    grid(3)(1) = new WallBlock(3, 1)
+    grid(4)(1) = new WallBlock(4, 1)
+    grid(4)(2) = new WallBlock(4, 2)
+    grid(4)(3) = new WallBlock(4, 3)
+    grid(4)(4) = new WallBlock(4, 4)
+    grid(3)(4) = new WallBlock(3, 4)
+    grid(2)(4) = new WallBlock(2, 4)
+
+
+    grid(10)(10) = new GrassBlock(10, 10)
+    grid(11)(11) = new GrassBlock(11, 11)
+    grid(10)(11) = new GrassBlock(10, 11)
+    grid(11)(10) = new GrassBlock(11, 10)
 }

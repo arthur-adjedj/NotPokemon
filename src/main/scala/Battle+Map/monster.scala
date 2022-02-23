@@ -203,7 +203,6 @@ abstract class Monster {
             status.foreach(x => max_duration(x, stat.name))
         } else {
             status = stat :: status
-            //println(name + " has the status " + stat.name)
             stat.onAdd(this)
         }
     }

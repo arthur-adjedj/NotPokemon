@@ -20,12 +20,10 @@ class Paralysis extends Status {
     durationLeft = 3
     override def onAdd (target : Monster) : Unit = {
         target.speedBattle /= 4
-        //println(name + " is set on " + target.name)
     }
 
     override def onDelete (target : Monster) : Unit = {
         target.speedBattle *= 4
-        //println(name + " is removed from " + target.name)
     }
 }
 

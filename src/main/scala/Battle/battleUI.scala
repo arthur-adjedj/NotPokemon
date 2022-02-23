@@ -246,7 +246,7 @@ object YourBar{
 
 object EmptyBattleUI extends BattleUI (EmptyPlayer, EmptyPlayer, EmptyBattle) {}
 
-class DrawPanelBattle (buttonList : List[MyButton], p1 : Player, p2 : Player, ui : BattleUI) extends JPanel {
+class DrawPanelBattle (buttonList : List[MyButton], p1 : Player, p2 : Player, ui : BattleUI) extends JPanel with Repaintable {
     var toShow : Boolean = false
     var battleBackgroundImg = Utils.loadImage("BattleBackground.png")
     var pokemonFrontImg = Utils.loadImage("Monsters/EmptyFront.png")
@@ -265,8 +265,6 @@ class DrawPanelBattle (buttonList : List[MyButton], p1 : Player, p2 : Player, ui
         buttonList.foreach(x => x.update)
         g.setFont(poke_font)
         g.drawImage(battleBackgroundImg, 0, 0, null)
-        //g.drawImage(pokemonFrontImg, 370, 35 + p2.currentMonster.uiYShift, null)
-        //g.drawImage(pokemonBackImg, 75, 141 + p1.currentMonster.uiYShift, null)
 
         FirstPlayerMonsterDisplayer.display(g)
         OpponentMonsterDisplayer.display(g)

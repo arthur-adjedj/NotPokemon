@@ -1,7 +1,7 @@
 import java.util.concurrent.TimeUnit
 import java.sql.Time
 
-class Battle (p1 : Player, p2 : Player) {
+class Battle (p1 : Player, p2 : Player) extends Thread {
     var ui : BattleUI = new BattleUI(p1, p2, this)
     def initialise : Unit = {
         ui.initialise
@@ -20,7 +20,8 @@ class Battle (p1 : Player, p2 : Player) {
         DiscussionLabel.changeText("")
     }
 
-    def start : Unit = {
+    override def run : Unit = {
+        //ui.paintComponents(ui.getGraphics)
         while (p1.playing && p2.playing) {
             FirstPlayer.updateInventory
             p1.newTurn
