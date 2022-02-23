@@ -38,7 +38,7 @@ class WallBlock (iMap : Int, jMap : Int) extends Block (iMap, jMap, "Blocks/Wall
 class GrassBlock (iMap : Int, jMap : Int) extends Block (iMap, jMap, "Blocks/Grass.png") {
     interactable = true
     override def interact : Unit = {
-        if (scala.util.Random.nextFloat() < 0.1 || true) {
+        if (scala.util.Random.nextFloat() < 0.1) {
             FirstPlayerDisplayer.mapUI.listening = false
             var b = new Battle(FirstPlayer, WildPlayer)
             WildPlayer.initialise

@@ -263,7 +263,5 @@ object FirstPlayer extends Player {
         usableInventory = inventory.map(x => if (x.amount == 0 || !x.usable) EmptyItem else x).sortWith((x, y) => x.order <= y.order)
     }
 
-    override def win : Unit = {
-        FirstPlayerDisplayer.mapUI.listening = true
-    }
+    
 }

@@ -53,6 +53,7 @@ class Battle (p1 : Player, p2 : Player) extends Thread {
         }
         TimeUnit.SECONDS.sleep(1)
         ui.close
+        FirstPlayerDisplayer.mapUI.listening = true
     }
 }
 
