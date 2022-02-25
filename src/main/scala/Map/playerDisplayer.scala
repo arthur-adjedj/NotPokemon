@@ -13,16 +13,20 @@ case object  Right extends Direction
 class PlayerDisplayer (imgName : String) {
     var direction : Direction = Down
 
-    //These coordinates need to be considered as the center position at foot level. 
     var x : Int = 0
     var y : Int = 0
 
+    //tile number on the map
     var i : Int = -1
     var j : Int = -1
 
     var speed : Int = 1
     var whichMap : Int = 0
     var mover : Mover = new Mover
+
+    /*tile number of the current sprite used, starting in the upper left corner
+    the sprites are contained in such a way that the orientation depends on ny, and the animation key on nx,
+    see "Players/MainCharacter.png" for example*/
     var nx = 0
     var ny = 0
 
@@ -31,8 +35,6 @@ class PlayerDisplayer (imgName : String) {
     var width = 34
 
 
-
-    //var imgs = imgNams.map(x => Utils.loadImage(x)) // [Up, Right, Down, Left]
     var img = Utils.loadImage(imgName)
     
     var player : Player = EmptyPlayer
@@ -57,6 +59,7 @@ class PlayerDisplayer (imgName : String) {
             null)
     }
 
+    //update the sprite used to render depending on its orientation
     def updateSprite() = {
          direction match {
              case Up => ny = 3
