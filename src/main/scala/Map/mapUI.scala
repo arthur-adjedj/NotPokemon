@@ -6,7 +6,7 @@ import java.io.File
 
 
 class MapUI extends JFrame with KeyListener {
-    var sizeBlock = 64
+    var sizeBlock = 40
 
     var posX = 1000
     var posY = 100
