@@ -112,7 +112,7 @@ object SecondPlayerDisplayer extends PlayerDisplayer (Array("Players/FirstPlayer
 
     override def display (g : Graphics, xMap : Int, yMap : Int, n : Int) : Unit = {
         super.display(g, xMap, yMap, n)
-        println(i, j)
+        Utils.print(i, j)
     }
 
 }

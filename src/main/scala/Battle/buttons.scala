@@ -43,7 +43,7 @@ abstract class MyButton (imageNam : String) extends Object with Descriptable {
   }
 
     def isClicked : Unit = {
-        println("The button is clicked")
+        Utils.print("The button is clicked")
     }
 
     def setVisible(b : Boolean) : Unit = {

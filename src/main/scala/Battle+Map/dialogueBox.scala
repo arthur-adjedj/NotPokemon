@@ -24,7 +24,7 @@ object DiscussionLabel {
     }
 
     def changeText (s : String) : Unit = {
-        println(s)
+        Utils.print(s)
         var (t1, t2, t3) = Utils.cutString(s, charPerLine)
         text1 = t1
         text2 = t2

@@ -52,7 +52,7 @@ class MapUI extends JFrame with KeyListener {
                 case 's' => FirstPlayerDisplayer.move(0, 1)
                 case 'q' => FirstPlayerDisplayer.move(-1, 0)
                 case 'd' => FirstPlayerDisplayer.move(1, 0)
-                case _ => println(e.getKeyChar)
+                case _ => Utils.print(e.getKeyChar)
             }
         }
         pane.repaint()
