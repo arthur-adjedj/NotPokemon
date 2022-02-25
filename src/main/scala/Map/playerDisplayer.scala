@@ -26,6 +26,12 @@ class PlayerDisplayer (imgName : String) {
     var nx = 0
     var ny = 0
 
+    //size of the sprite
+    var height = 50
+    var width = 34
+
+
+
     //var imgs = imgNams.map(x => Utils.loadImage(x)) // [Up, Right, Down, Left]
     var img = Utils.loadImage(imgName)
     
@@ -38,12 +44,17 @@ class PlayerDisplayer (imgName : String) {
 
     Utils.playerDisplayers = this :: Utils.playerDisplayers
 
-    def drawSprite (g : Graphics, xMap : Int, yMap : Int, img : BufferedImage, height : Int, width : Int, nx: Int, ny : Int ) : Unit = {
+    def drawSprite (g : Graphics, xMap : Int, yMap : Int, img : BufferedImage, width : Int, height : Int, nx: Int, ny : Int ) : Unit = {
+        /*shift the sprite on the tile such that its feet are at the right place*/
+        var xshift = x + (mapUI.sizeBlock - width)/2 - xMap
+        var yshift = y + (mapUI.sizeBlock - height) - yMap
+
         g.drawImage(img,
-            x - xMap, y - yMap,
-            x - xMap + height,y - yMap+width,
-            nx*height,ny*width,
-            (nx+1)*height,(ny+1)*width,null)
+            xshift, yshift, /*upper left corner coords on the map*/
+            xshift + width, yshift +  height, /*lower right corner*/
+            nx * width , ny * height,  /*upper left corner coords of the sprite on the tileset*/
+            (nx + 1) * width  ,(ny + 1) * height , /*lower right corner*/
+            null)
     }
 
     def updateSprite() = {
@@ -90,7 +101,7 @@ class PlayerDisplayer (imgName : String) {
     def display (g : Graphics, xMap : Int, yMap : Int, n : Int) : Unit = {
         if (n == whichMap) {
             updateSprite()
-            drawSprite(g,xMap,yMap,img,34,50,nx,ny)
+            drawSprite(g,xMap,yMap,img,width,height,nx,ny)
         }
     }
 
