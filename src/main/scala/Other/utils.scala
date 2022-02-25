@@ -13,7 +13,7 @@ object Utils {
 
     def print[T] (s : T) : Unit = {
         if (debug) {
-            Utils.print(s)
+            println(s)
         }
     }
 
