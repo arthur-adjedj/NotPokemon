@@ -1,8 +1,17 @@
 import java.awt.Graphics
+import java.awt.image.BufferedImage
 import java.util.concurrent.TimeUnit
 
 
-class PlayerDisplayer (imgNams : Array[String]) {
+abstract class Direction
+case object Up extends Direction
+case object Down extends Direction
+case object Left extends Direction
+case object  Right extends Direction
+
+
+class PlayerDisplayer (imgName : String) {
+    var direction : Direction = Down
     var x : Int = 0
     var y : Int = 0
 
@@ -12,9 +21,11 @@ class PlayerDisplayer (imgNams : Array[String]) {
     var speed : Int = 1
     var whichMap : Int = 0
     var mover : Mover = new Mover
+    var nx = 0
+    var ny = 0
 
-    var imgs = imgNams.map(x => Utils.loadImage(x)) // [Up, Right, Down, Left]
-    var img = imgs(0)
+    //var imgs = imgNams.map(x => Utils.loadImage(x)) // [Up, Right, Down, Left]
+    var img = Utils.loadImage(imgName)
     
     var player : Player = EmptyPlayer
 
@@ -25,15 +36,31 @@ class PlayerDisplayer (imgNams : Array[String]) {
 
     Utils.playerDisplayers = this :: Utils.playerDisplayers
 
-    def move (moveX : Int, moveY : Int) : Unit = {
-        if (!isMoving)
-            {(moveX, moveY) match {
-            case (0, 1) => img = imgs(2)
-            case (0, -1) => img = imgs(0)
-            case (-1, 0) => img = imgs(3)
-            case (1, 0) => img = imgs(1)
+    def drawSprite (g : Graphics, xMap : Int, yMap : Int, img : BufferedImage, height : Int, width : Int, nx: Int, ny : Int ) : Unit = {
+        g.drawImage(img,
+            x - xMap, y - yMap,
+            x - xMap + height,y - yMap+width,
+            nx*height,ny*width,
+            (nx+1)*height,(ny+1)*width,null)
+    }
 
-            }
+    def updateSprite() = {
+         direction match {
+             case Up => ny = 3
+             case Down => ny = 0
+             case Right => ny = 2
+            case Left => ny = 1
+         }
+        }
+
+    def move (moveX : Int, moveY : Int) : Unit = {
+        if (!isMoving){
+            direction = (moveX, moveY) match {
+                case (0, 1) => Down
+                case (0, -1) => Up
+                case (-1, 0) => Left
+                case (1, 0) => Right
+                }
         }
 
         if (!isMoving && canMove) {
@@ -59,7 +86,8 @@ class PlayerDisplayer (imgNams : Array[String]) {
 
     def display (g : Graphics, xMap : Int, yMap : Int, n : Int) : Unit = {
         if (n == whichMap) {
-            g.drawImage(img, x - xMap, y - yMap, null)
+            updateSprite()
+            drawSprite(g,xMap,yMap,img,34,50,nx,ny)
         }
     }
 
@@ -78,7 +106,7 @@ class PlayerDisplayer (imgNams : Array[String]) {
 }
 
 
-object FirstPlayerDisplayer extends PlayerDisplayer (Array("Players/FirstPlayerUp.png", "Players/FirstPlayerRight.png", "Players/FirstPlayerDown.png", "Players/FirstPlayerLeft.png")) {
+object FirstPlayerDisplayer extends PlayerDisplayer ("Players/MainCharacter.png") {
 
     player = FirstPlayer
 
@@ -102,8 +130,9 @@ object FirstPlayerDisplayer extends PlayerDisplayer (Array("Players/FirstPlayerU
 
 }
 
-object SecondPlayerDisplayer extends PlayerDisplayer (Array("Players/FirstPlayerUp.png", "Players/FirstPlayerRight.png", "Players/FirstPlayerDown.png", "Players/FirstPlayerLeft.png")) {
-    
+object SecondPlayerDisplayer extends PlayerDisplayer ("Players/MainCharacter.png") {
+    direction = Up
+
     player = SecondPlayer
 
     whichMap = 1
@@ -112,9 +141,8 @@ object SecondPlayerDisplayer extends PlayerDisplayer (Array("Players/FirstPlayer
 
     override def display (g : Graphics, xMap : Int, yMap : Int, n : Int) : Unit = {
         super.display(g, xMap, yMap, n)
-        Utils.print(i, j)
     }
 
 }
 
-object EmptyPlayerDisplayer extends PlayerDisplayer (Array("Empty.png")) {}
+object EmptyPlayerDisplayer extends PlayerDisplayer ("Empty.png") {}
