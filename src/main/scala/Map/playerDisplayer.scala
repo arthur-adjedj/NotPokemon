@@ -26,13 +26,15 @@ class PlayerDisplayer (imgNams : Array[String]) {
     Utils.playerDisplayers = this :: Utils.playerDisplayers
 
     def move (moveX : Int, moveY : Int) : Unit = {
-        {(moveX, moveY) match {
+        if (!isMoving)
+            {(moveX, moveY) match {
             case (0, 1) => img = imgs(2)
             case (0, -1) => img = imgs(0)
             case (-1, 0) => img = imgs(3)
             case (1, 0) => img = imgs(1)
 
-        }}
+            }
+        }
 
         if (!isMoving && canMove) {
             if (0 <= i+moveX && i+moveX < mapDisplayer.grid.length && 0 <= j+moveY && j+moveY < mapDisplayer.grid(i).length) {
