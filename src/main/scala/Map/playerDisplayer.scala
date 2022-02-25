@@ -12,6 +12,8 @@ case object  Right extends Direction
 
 class PlayerDisplayer (imgName : String) {
     var direction : Direction = Down
+
+    //These coordinates need to be considered as the center position at foot level. 
     var x : Int = 0
     var y : Int = 0
 
@@ -55,6 +57,7 @@ class PlayerDisplayer (imgName : String) {
 
     def move (moveX : Int, moveY : Int) : Unit = {
         if (!isMoving){
+            Utils.print(x, y)
             direction = (moveX, moveY) match {
                 case (0, 1) => Down
                 case (0, -1) => Up
@@ -130,7 +133,7 @@ object FirstPlayerDisplayer extends PlayerDisplayer ("Players/MainCharacter.png"
 
 }
 
-object SecondPlayerDisplayer extends PlayerDisplayer ("Players/MainCharacter.png") {
+object SecondPlayerDisplayer extends PlayerDisplayer ("Players/Louis.png") {
     direction = Up
 
     player = SecondPlayer
