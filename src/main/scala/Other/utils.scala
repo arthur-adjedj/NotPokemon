@@ -89,6 +89,9 @@ class Mover extends Thread {
             playerdisplayer.mapUI.pane.repaint()
             TimeUnit.MILLISECONDS.sleep(100/playerdisplayer.speed)
             playerdisplayer.mapUI.pane.repaint()
+            if (i % (playerdisplayer.mapDisplayer.sizeBlock/4) == 0) {
+                playerdisplayer.nx = (playerdisplayer.nx + 1) % 4
+            }
         }
         playerdisplayer.endMove
     }
