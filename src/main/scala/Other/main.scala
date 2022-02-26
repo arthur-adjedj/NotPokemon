@@ -12,8 +12,14 @@ object Debug {
   def main(argv : Array[String]) : Unit = {
     Utils.debug = true
     Utils.print("En cas de problème, rappelons que 1/2 = 0")
-    //Demo.start
     var map = new MapUI
     map.initialise    
+  }
+}
+
+object BattleTests {
+  def main(argv : Array[String]) : Unit = {
+    Utils.debug = true
+    BattleTest.start
   }
 }

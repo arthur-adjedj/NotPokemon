@@ -42,22 +42,22 @@ class PlayerDisplayer (imgName : String) {
     var mapDisplayer : MapDisplayer = EmptyMapDisplayer
     var mapUI : MapUI = EmptyMapUI
     var isMoving : Boolean = false
-    var canMove : Boolean = true
+    //players can't move during dialogues, battles or when the bag/pokédex is open
+    var canInteract : Boolean = true
 
     Utils.playerDisplayers = this :: Utils.playerDisplayers
 
     def move (moveX : Int, moveY : Int) : Unit = {
-        if (!isMoving){
+        if (!isMoving && canInteract) {
             Utils.print(x, y)
+
             direction = (moveX, moveY) match {
                 case (0, 1) => Down
                 case (0, -1) => Up
                 case (-1, 0) => Left
                 case (1, 0) => Right
                 }
-        }
 
-        if (!isMoving && canMove) {
             if (0 <= i+moveX && i+moveX < mapDisplayer.grid.length && 0 <= j+moveY && j+moveY < mapDisplayer.grid(i).length) {
                 if (mapDisplayer.grid(i+moveX)(j+moveY).walkable) {
                     mover = new Mover
@@ -147,7 +147,6 @@ object FirstPlayerDisplayer extends PlayerDisplayer ("Players/MainCharacter.png"
 }
 
 object SecondPlayerDisplayer extends PlayerDisplayer ("Players/Louis.png") {
-    direction = Up
 
     player = SecondPlayer
 

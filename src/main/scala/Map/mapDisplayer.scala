@@ -29,6 +29,8 @@ class MapDisplayer (mapUI : MapUI, sizeB : Int) {
                 grid(i)(j).display(g)
             }
         }
+        //sorts the character rendering order in respect to their depth on screen
+        Utils.playerDisplayers = Utils.playerDisplayers.sortWith((p1,p2) => p1.j < p2.j)
         Utils.playerDisplayers.foreach(p => p.display(g, x, y, n))
     }
 
