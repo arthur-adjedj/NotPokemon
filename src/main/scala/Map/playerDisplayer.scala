@@ -46,29 +46,6 @@ class PlayerDisplayer (imgName : String) {
 
     Utils.playerDisplayers = this :: Utils.playerDisplayers
 
-    def drawSprite (g : Graphics, xMap : Int, yMap : Int, img : BufferedImage, width : Int, height : Int, nx: Int, ny : Int ) : Unit = {
-        /*shift the sprite on the tile such that its feet are at the right place*/
-        var xshift = x + (mapUI.sizeBlock - width)/2 - xMap
-        var yshift = y + (mapUI.sizeBlock - height) - yMap
-
-        g.drawImage(img,
-            xshift, yshift, /*upper left corner coords on the map*/
-            xshift + width, yshift +  height, /*lower right corner*/
-            nx * width , ny * height,  /*upper left corner coords of the sprite on the tileset*/
-            (nx + 1) * width  ,(ny + 1) * height , /*lower right corner*/
-            null)
-    }
-
-    //update the sprite used to render depending on its orientation
-    def updateSprite() = {
-         direction match {
-             case Up => ny = 3
-             case Down => ny = 0
-             case Right => ny = 2
-            case Left => ny = 1
-         }
-        }
-
     def move (moveX : Int, moveY : Int) : Unit = {
         if (!isMoving){
             Utils.print(x, y)
@@ -101,6 +78,28 @@ class PlayerDisplayer (imgName : String) {
         isMoving = false
     }
 
+    def drawSprite (g : Graphics, xMap : Int, yMap : Int, img : BufferedImage, width : Int, height : Int, nx: Int, ny : Int ) : Unit = {
+        /*shift the sprite on the tile such that its feet are at the right place*/
+        var xshift = x + (mapUI.sizeBlock - width)/2 - xMap
+        var yshift = y + (mapUI.sizeBlock - height) - yMap
+
+        g.drawImage(img,
+            xshift, yshift, /*upper left corner coords on the map*/
+            xshift + width, yshift +  height, /*lower right corner*/
+            nx * width , ny * height,  /*upper left corner coords of the sprite on the tileset*/
+            (nx + 1) * width  ,(ny + 1) * height , /*lower right corner*/
+            null)
+    }
+
+    //update the sprite used to render depending on its orientation
+    def updateSprite() = {
+         direction match {
+             case Up => ny = 3
+             case Down => ny = 0
+             case Right => ny = 2
+            case Left => ny = 1
+         }
+        }
     def display (g : Graphics, xMap : Int, yMap : Int, n : Int) : Unit = {
         if (n == whichMap) {
             updateSprite()
