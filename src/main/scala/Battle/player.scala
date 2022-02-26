@@ -85,7 +85,7 @@ class Character {
 
     def changeMonster (n : Int) : Boolean = {
         if (team(n) == currentMonster && team(n).alive) {
-            DiscussionLabel.changeText(team(n).name + " is already on the battlefield!")
+            DiscussionLabel.changeText(team(n).name + " is already on the battlefield !")
             true
         } else if (team(n).alive && team(n).name != "Empty" && team(n) != currentMonster) {
             var previousMonster = currentMonster
@@ -104,7 +104,7 @@ class Character {
     def changeMonster (b : Boolean) : Unit = {}
 
     def lose : Unit = {
-        DiscussionLabel.changeText(name + " just lost")
+        DiscussionLabel.changeText(name + " just lost.")
         opponent.win
         playing = false
         opponent.playing = false
@@ -134,7 +134,7 @@ abstract class WildOpponent extends Opponent {
 
     override def changeMonster (captured : Boolean) : Unit = {
         if (captured) {
-            DiscussionLabel.changeText("You just captured " + currentMonster.name)
+            DiscussionLabel.changeText("You just captured " + currentMonster.name + ".")
         }
         if (team.exists(x => x.alive && x.name != "Empty")) {
             var alives = team.filter(x => x.alive && x.name != "Empty")
@@ -149,7 +149,7 @@ abstract class WildOpponent extends Opponent {
 
     def lose (captured : Boolean) : Unit = {
         if (!captured) {
-            DiscussionLabel.changeText(currentMonster.name + " just lost")
+            DiscussionLabel.changeText(currentMonster.name + " just lost.")
         }
         opponent.win
         playing = false
@@ -169,23 +169,23 @@ object EmptyCharacter extends Character {
 
 object Player extends Character {
     team(0) = new Pikachu
-    team(0).gainLvl(5)
+    team(0).gainLvl(5,false)
     team(0).owner = this
 
     team(2) = new Squirtle
-    team(2).gainLvl(5)
+    team(2).gainLvl(5,false)
     team(2).owner = this
 
     team(1) = new Bulbasaur
-    team(1).gainLvl(5)
+    team(1).gainLvl(5,false)
     team(1).owner = this
 
     team(3) = new Charmander
-    team(3).gainLvl(5)
+    team(3).gainLvl(5,false)
     team(3).owner = this
 
     team(4) = new Rattata
-    team(4).gainLvl(5)
+    team(4).gainLvl(5,false)
     team(4).owner = this
 
     //team(5) = team(4)

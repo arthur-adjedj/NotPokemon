@@ -111,19 +111,26 @@ abstract class Monster {
         (speedBattle.toFloat * calcModifier(this, "speed")).toInt
     }
 
+    //It adds text to explain the effectiveness of the attack
+    def effectivenessText (attack : Attack, other : Monster) : String = {
+        if (attack.attackType.multDamage(other.monsterType) > 1) "It's super effective !" 
+        else if (attack.attackType.multDamage(other.monsterType) < 1) 
+            "It's not very effective..." 
+            else ""  
+    }
 
     def castAttack (attack : Attack, other : Monster) : Unit = {
         var random = scala.util.Random.nextFloat()
         var thisAccuracyEff = this.accuracyBattle * calcModifier(this, "accuracy")
         var otherEvasionEff = other.evasionBattle * calcModifier(other, "evasion")
         if (status.exists(x => x.name == "Freeze")) {
-            DiscussionLabel.changeText(name + " cannot attack because he's frozen")
+            DiscussionLabel.changeText(name + " cannot attack because he's frozen.")
         } else if (status.exists(x => x.name == "Sleep")) {
-            DiscussionLabel.changeText(name + " cannot attack because he's sleeping")
+            DiscussionLabel.changeText(name + " cannot attack because he's sleeping.")
         } else if (status.exists(x => x.name == "Paralysis") && scala.util.Random.nextFloat() <= 1f/4f) {
-            DiscussionLabel.changeText(name + " cannot attack because he's paralysed")
+            DiscussionLabel.changeText(name + " cannot attack because he's paralysed.")
         } else if (other.status.exists(x => x.name == "Protection")) {
-            DiscussionLabel.changeText(other.name + " is protected")
+            DiscussionLabel.changeText(other.name + " is protected.")
         } else {
             for (i <- 1 to attack.nOfHits){
                 if (other.alive) {
@@ -132,16 +139,16 @@ abstract class Monster {
                         this.receiveAttack(attack, this)
                         attack.cast(this, this)
                     } else if (random <= attack.accuracy*thisAccuracyEff*otherEvasionEff) {
-                        DiscussionLabel.changeText(name + " casts " + attack.name)
+                        DiscussionLabel.changeText(name + " casts " + attack.name + ". " + effectivenessText(attack,other))
                         attack.cast(this, other)
                         other.receiveAttack(attack, this)
                     } else {
                         if (random <= attack.accuracy) {
-                            DiscussionLabel.changeText(attack.name + " missed")
+                            DiscussionLabel.changeText(attack.name + " missed.")
                         } else if (random <= attack.accuracy*thisAccuracyEff) {
-                            DiscussionLabel.changeText(name + " missed his attack")
+                            DiscussionLabel.changeText(name + " missed his attack.")
                         } else {
-                            DiscussionLabel.changeText(other.name + " dodged")
+                            DiscussionLabel.changeText(other.name + " dodged.")
                         }
                     }
                 }
@@ -239,7 +246,7 @@ abstract class Monster {
         if (!wild) {
             exp *= 3f/2f
         }
-        monstersSeenAlive.foreach(x => x.gainXp(exp.toInt))
+        monstersSeenAlive.foreach(x => x.gainXp(exp.toInt,true))
         monstersSeenAlive.foreach(x => x.EVHp = (x.EVHp + baseHpStat).min(65535))
         monstersSeenAlive.foreach(x => x.EVAttack = (x.EVAttack + baseAttackStat).min(65535))
         monstersSeenAlive.foreach(x => x.EVDefense = (x.EVDefense + baseDefenseStat).min(65535))
@@ -251,17 +258,17 @@ abstract class Monster {
 
     }
 
-    def gainXp (amount : Int) : Unit = {
+    def gainXp (amount : Int,print : Boolean) : Unit = {
         xp += amount
         if (xp >= nextXpStep) {
             var diff = xp - nextXpStep
             xp = nextXpStep
-            levelUp
-            gainXp(diff)
+            levelUp(print)
+            gainXp(diff,print)
         }
     }
 
-    def levelUp : Unit = {
+    def levelUp(print : Boolean) : Unit = {
         level += 1
 
         var previousHpMax = hpMax
@@ -284,14 +291,14 @@ abstract class Monster {
             case "Medium Slow" => nextXpStep = (1.2 * Math.pow(level+1, 3) - 15 * Math.pow(level+1, 2) + 100 * (level+1) - 140).toInt
             case "Slow" => nextXpStep = (1.25 * Math.pow(level+1, 3)).toInt
         }
-        if (level > 1) {
+        if (level > 1 && print) {
             DiscussionLabel.changeText(name + " is now level " + level)
         }
     }
 
-    def gainLvl (n : Int) : Unit = {
+    def gainLvl (n : Int,print : Boolean) : Unit = {
         for (i <- 1 to n) {
-            gainXp(nextXpStep - xp)
+            gainXp(nextXpStep - xp,print)
         }
     }
 
@@ -299,7 +306,7 @@ abstract class Monster {
         name + " is a " + originalName + " monster of type " + typeName + ". "
     }
 
-    levelUp
+    levelUp(false)
 
 }
 

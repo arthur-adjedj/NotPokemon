@@ -42,15 +42,22 @@ object DiscussionLabel {
 class TextChanger (t1 : String, t2 : String) extends Thread {
     var text1 : String = t1
     var text2 : String = t2
-    var waitTime : Int = 10
+    var waitTime : Int = 50
+    var pauseTime : Int = 400
     override def run : Unit = {
         for (i <- text1.indices) {
             DiscussionLabel.text1 += text1(i)
-            TimeUnit.MILLISECONDS.sleep(waitTime)
+            //TODO account for other end phrase symbols like '!'
+            if (text1(i) == '.') TimeUnit.MILLISECONDS.sleep(pauseTime)
+            else TimeUnit.MILLISECONDS.sleep(waitTime)
+
         }
         for (i <- text2.indices) {
             DiscussionLabel.text2 += text2(i)
-            TimeUnit.MILLISECONDS.sleep(waitTime)
+
+            if (text2(i) == '.') TimeUnit.MILLISECONDS.sleep(pauseTime)
+            else TimeUnit.MILLISECONDS.sleep(waitTime)
+
         }
     }
 }
