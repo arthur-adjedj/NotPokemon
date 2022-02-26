@@ -1,4 +1,4 @@
-object Demo {
+object BattleTest {
     def start : Unit = {
         var b = new Battle(FirstPlayer, SecondPlayer)
         b.initialise
