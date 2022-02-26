@@ -15,8 +15,8 @@ class MapDisplayer (mapUI : MapUI, sizeB : Int) {
 
     def initialise (nMap : Int, sizeB : Int) : Unit = {
         n = nMap
-        FirstPlayerDisplayer.mapDisplayer = this
-        SecondPlayerDisplayer.mapDisplayer = this
+        PlayerDisplayer.mapDisplayer = this
+        SecondCharacterDisplayer.mapDisplayer = this
     }
     
 
@@ -30,8 +30,8 @@ class MapDisplayer (mapUI : MapUI, sizeB : Int) {
             }
         }
         //sorts the character rendering order in respect to their depth on screen
-        Utils.playerDisplayers = Utils.playerDisplayers.sortWith((p1,p2) => p1.j < p2.j)
-        Utils.playerDisplayers.foreach(p => p.display(g, x, y, n))
+        Utils.characterDisplayers = Utils.characterDisplayers.sortWith((p1,p2) => p1.j < p2.j)
+        Utils.characterDisplayers.foreach(p => p.display(g, x, y, n))
     }
 
 

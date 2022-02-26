@@ -25,7 +25,7 @@ class MapUI extends JFrame with KeyListener {
         mapDisplayer.initialise(1, sizeBlock)
         pane.initialise
 
-        FirstPlayerDisplayer.mapUI = this
+        PlayerDisplayer.mapUI = this
 
         setSize(sizeX, sizeY)
         addKeyListener(this)
@@ -34,7 +34,7 @@ class MapUI extends JFrame with KeyListener {
         setUndecorated(true)
         setContentPane(pane)
 
-        Utils.playerDisplayers.foreach(x => x.alignCoordinates)
+        Utils.characterDisplayers.foreach(x => x.alignCoordinates)
 
 
         setLocation(posX, posY)
@@ -48,10 +48,10 @@ class MapUI extends JFrame with KeyListener {
     def keyPressed (e : KeyEvent) : Unit = {
         if (listening) {
             e.getKeyChar match {
-                case 'z' => FirstPlayerDisplayer.move(0, -1)
-                case 's' => FirstPlayerDisplayer.move(0, 1)
-                case 'q' => FirstPlayerDisplayer.move(-1, 0)
-                case 'd' => FirstPlayerDisplayer.move(1, 0)
+                case 'z' => PlayerDisplayer.move(0, -1)
+                case 's' => PlayerDisplayer.move(0, 1)
+                case 'q' => PlayerDisplayer.move(-1, 0)
+                case 'd' => PlayerDisplayer.move(1, 0)
                 case _ => Utils.print(e.getKeyChar)
             }
         }

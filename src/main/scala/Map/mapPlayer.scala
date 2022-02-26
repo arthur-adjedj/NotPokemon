@@ -1,8 +1,8 @@
-class MapPlayer{
+class MapCharacter{
     var name = ""
     var sprites : Array[String] = Array.fill(4)("Empty")
 
-    var battlePlayer : Player = EmptyPlayer
+    var battleCharacter : Character = EmptyCharacter
 
     def dialogue() : Unit = {}
 

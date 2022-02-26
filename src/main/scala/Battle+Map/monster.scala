@@ -63,7 +63,7 @@ abstract class Monster {
     var monsterType : Type = EmptyType
 
     var name : String = ""
-    var owner : Player = EmptyPlayer
+    var owner : Character = EmptyCharacter
 
     def imgNameFront : String = {"Monsters/" + originalName + "Front.png"}
     def imgNameBack : String = {"Monsters/" + originalName + "Back.png"}

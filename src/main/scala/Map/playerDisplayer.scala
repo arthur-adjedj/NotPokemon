@@ -10,7 +10,7 @@ case object Left extends Direction
 case object  Right extends Direction
 
 
-class PlayerDisplayer (imgName : String) {
+class CharacterDisplayer (imgName : String) {
     var direction : Direction = Down
 
     var x : Int = 0
@@ -26,7 +26,7 @@ class PlayerDisplayer (imgName : String) {
 
     /*tile number of the current sprite used, starting in the upper left corner
     the sprites are contained in such a way that the orientation depends on ny, and the animation key on nx,
-    see "Players/MainCharacter.png" for example*/
+    see "Characters/MainCharacter.png" for example*/
     var nx = 0
     var ny = 0
 
@@ -37,15 +37,15 @@ class PlayerDisplayer (imgName : String) {
 
     var img = Utils.loadImage(imgName)
     
-    var player : Player = EmptyPlayer
+    var player : Character = EmptyCharacter
 
     var mapDisplayer : MapDisplayer = EmptyMapDisplayer
     var mapUI : MapUI = EmptyMapUI
     var isMoving : Boolean = false
-    //players can't move during dialogues, battles or when the bag/pokédex is open
+    //player can't move during dialogues, battles or when the bag/pokédex is open
     var canInteract : Boolean = true
 
-    Utils.playerDisplayers = this :: Utils.playerDisplayers
+    Utils.characterDisplayers = this :: Utils.characterDisplayers
 
     def move (moveX : Int, moveY : Int) : Unit = {
         if (!isMoving && canInteract) {
@@ -61,7 +61,7 @@ class PlayerDisplayer (imgName : String) {
             if (0 <= i+moveX && i+moveX < mapDisplayer.grid.length && 0 <= j+moveY && j+moveY < mapDisplayer.grid(i).length) {
                 if (mapDisplayer.grid(i+moveX)(j+moveY).walkable) {
                     mover = new Mover
-                    mover.playerdisplayer = this
+                    mover.characterDisplayer = this
                     isMoving = true
                     mover.move(moveX, moveY)
                     alignCoordinates
@@ -122,9 +122,9 @@ class PlayerDisplayer (imgName : String) {
 }
 
 
-object FirstPlayerDisplayer extends PlayerDisplayer ("Players/MainCharacter.png") {
+object PlayerDisplayer extends CharacterDisplayer ("Characters/MainCharacter.png") {
 
-    player = FirstPlayer
+    player = Player
 
     i = 0
     j = 0
@@ -135,9 +135,9 @@ object FirstPlayerDisplayer extends PlayerDisplayer ("Players/MainCharacter.png"
 
     override def endMove : Unit = {
         super.endMove
-        var sameCase = Utils.playerDisplayers.filter(opp => opp != this && opp.i == i && opp.j == j && !opp.player.alreadyBeaten)
+        var sameCase = Utils.characterDisplayers.filter(opp => opp != this && opp.i == i && opp.j == j && !opp.player.alreadyBeaten)
         for (i <- sameCase.indices) {
-            var b = new Battle(FirstPlayer, sameCase(i).player)
+            var b = new Battle(Player, sameCase(i).player)
             b.initialise
             b.start
         }
@@ -146,9 +146,9 @@ object FirstPlayerDisplayer extends PlayerDisplayer ("Players/MainCharacter.png"
 
 }
 
-object SecondPlayerDisplayer extends PlayerDisplayer ("Players/Louis.png") {
+object SecondCharacterDisplayer extends CharacterDisplayer ("Characters/Louis.png") {
 
-    player = SecondPlayer
+    player = SecondCharacter
 
     whichMap = 1
     i = 7
@@ -160,4 +160,4 @@ object SecondPlayerDisplayer extends PlayerDisplayer ("Players/Louis.png") {
 
 }
 
-object EmptyPlayerDisplayer extends PlayerDisplayer ("Empty.png") {}
+object EmptyCharacterDisplayer extends CharacterDisplayer ("Empty.png") {}

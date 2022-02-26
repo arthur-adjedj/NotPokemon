@@ -22,7 +22,7 @@ object FullRestore extends Item {
     order = 1
 
     override def use : Boolean = {
-        var target = FirstPlayer.currentMonster
+        var target = Player.currentMonster
         if (target.alive && target.hp != target.hpMax) {
             target.heal(target.hpMax)
             target.status = List()
@@ -34,7 +34,7 @@ object FullRestore extends Item {
     }
 
     override def usable : Boolean = {
-        var target = FirstPlayer.currentMonster
+        var target = Player.currentMonster
         target.alive && target.hp != target.hpMax
     }
 }
@@ -45,7 +45,7 @@ object FreshWater extends Item {
     order = 1
 
     override def use : Boolean = {
-        var target = FirstPlayer.currentMonster
+        var target = Player.currentMonster
         if (target.alive && target.hp != target.hpMax) {
             target.heal(30)
             amount -= 1
@@ -56,7 +56,7 @@ object FreshWater extends Item {
     }
 
     override def usable : Boolean = {
-        var target = FirstPlayer.currentMonster
+        var target = Player.currentMonster
         target.alive && target.hp != target.hpMax
     }
 }
@@ -67,17 +67,17 @@ object MonsterBall extends Item {
     order = 0
 
     override def usable : Boolean = {
-        FirstPlayer.opponent.name == "Wild" && FirstPlayer.team.filter(x => x.name != "Empty").length != 6 && FirstPlayer.playing
+        Player.opponent.name == "Wild" && Player.team.filter(x => x.name != "Empty").length != 6 && Player.playing
     }
 
     override def use : Boolean = {
         Utils.print("You use a MonsterBall")
-        var slot = Utils.findFirstOccurenceArray(FirstPlayer.team, EmptyMonster)
-        var opponent = FirstPlayer.opponent
-        opponent.currentMonster.owner = FirstPlayer
-        FirstPlayer.team(slot) = opponent.currentMonster
+        var slot = Utils.findFirstOccurenceArray(Player.team, EmptyMonster)
+        var opponent = Player.opponent
+        opponent.currentMonster.owner = Player
+        Player.team(slot) = opponent.currentMonster
         opponent.team(Utils.findFirstOccurenceArray(opponent.team, opponent.currentMonster)) = EmptyMonster
-        FirstPlayer.opponent.playing = false
+        Player.opponent.playing = false
         opponent.changeMonster(true)
         amount -= 1
         true
@@ -90,17 +90,17 @@ object SuperMonsterBall extends Item {
     order = 0
 
     override def usable : Boolean = {
-        FirstPlayer.opponent.name == "Wild" && FirstPlayer.team.filter(x => x.name != "Empty").length != 6 && FirstPlayer.playing
+        Player.opponent.name == "Wild" && Player.team.filter(x => x.name != "Empty").length != 6 && Player.playing
     }
 
     override def use : Boolean = {
         Utils.print("You use a SuperMonsterBall")
-        var slot = Utils.findFirstOccurenceArray(FirstPlayer.team, EmptyMonster)
-        var opponent = FirstPlayer.opponent
-        opponent.currentMonster.owner = FirstPlayer
-        FirstPlayer.team(slot) = opponent.currentMonster
+        var slot = Utils.findFirstOccurenceArray(Player.team, EmptyMonster)
+        var opponent = Player.opponent
+        opponent.currentMonster.owner = Player
+        Player.team(slot) = opponent.currentMonster
         opponent.team(Utils.findFirstOccurenceArray(opponent.team, opponent.currentMonster)) = EmptyMonster
-        FirstPlayer.opponent.playing = false
+        Player.opponent.playing = false
         opponent.changeMonster(true)
         amount -= 1
         true
@@ -113,17 +113,17 @@ object UltraMonsterBall extends Item {
     order = 0
 
     override def usable : Boolean = {
-        FirstPlayer.opponent.name == "Wild" && FirstPlayer.team.filter(x => x.name != "Empty").length != 6 && FirstPlayer.playing
+        Player.opponent.name == "Wild" && Player.team.filter(x => x.name != "Empty").length != 6 && Player.playing
     }
 
     override def use : Boolean = {
         Utils.print("You use a UltraMonsterBall")
-        var slot = Utils.findFirstOccurenceArray(FirstPlayer.team, EmptyMonster)
-        var opponent = FirstPlayer.opponent
-        opponent.currentMonster.owner = FirstPlayer
-        FirstPlayer.team(slot) = opponent.currentMonster
+        var slot = Utils.findFirstOccurenceArray(Player.team, EmptyMonster)
+        var opponent = Player.opponent
+        opponent.currentMonster.owner = Player
+        Player.team(slot) = opponent.currentMonster
         opponent.team(Utils.findFirstOccurenceArray(opponent.team, opponent.currentMonster)) = EmptyMonster
-        FirstPlayer.opponent.playing = false
+        Player.opponent.playing = false
         opponent.changeMonster(true)
         amount -= 1
         true

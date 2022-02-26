@@ -1,11 +1,11 @@
 import java.util.concurrent.TimeUnit
 import java.sql.Time
 
-class Battle (p1 : Player, p2 : Player) extends Thread {
+class Battle (p1 : Character, p2 : Character) extends Thread {
     var ui : BattleUI = new BattleUI(p1, p2, this)
     def initialise : Unit = {
-        //player can't move or interact on the map during battle
-        FirstPlayerDisplayer.canInteract = false
+        //character can't move or interact on the map during battle
+        PlayerDisplayer.canInteract = false
 
         ui.initialise
 
@@ -19,14 +19,14 @@ class Battle (p1 : Player, p2 : Player) extends Thread {
         p2.enterBattle
 
         ui.updateImages
-        FirstPlayer.updateInventory
+        Player.updateInventory
         DiscussionLabel.changeText("")
     }
 
     override def run : Unit = {
         //ui.paintComponents(ui.getGraphics)
         while (p1.playing && p2.playing) {
-            FirstPlayer.updateInventory
+            Player.updateInventory
             p1.newTurn
             ui.updateImages
             p2.newTurn
@@ -56,11 +56,11 @@ class Battle (p1 : Player, p2 : Player) extends Thread {
         }
         TimeUnit.SECONDS.sleep(1)
         ui.close
-        FirstPlayerDisplayer.canInteract = true
-        FirstPlayerDisplayer.mapUI.listening = true
+        PlayerDisplayer.canInteract = true
+        PlayerDisplayer.mapUI.listening = true
     }
 }
 
-object EmptyBattle extends Battle (EmptyPlayer, EmptyPlayer) {
+object EmptyBattle extends Battle (EmptyCharacter, EmptyCharacter) {
     
 }

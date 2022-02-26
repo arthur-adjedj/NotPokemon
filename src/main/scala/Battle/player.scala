@@ -3,15 +3,15 @@ import java.sql.Time
 import java.lang.Thread
 
 
-class Player {
+class Character {
     var team : Array[Monster] = Array.fill(6){EmptyMonster}
     var name : String = ""
-    var opponent : Player = EmptyPlayer
+    var opponent : Character = EmptyCharacter
     var battle : Battle = EmptyBattle
 
     var alreadyBeaten : Boolean = false
 
-    var displayer : PlayerDisplayer = EmptyPlayerDisplayer
+    var displayer : CharacterDisplayer = EmptyCharacterDisplayer
 
     var inventory : Array[Item] = Array.fill(40){EmptyItem}
 
@@ -108,7 +108,7 @@ class Player {
         opponent.win
         playing = false
         opponent.playing = false
-        FirstPlayer.endTurn
+        Player.endTurn
     }
 
     def win : Unit = {
@@ -116,7 +116,7 @@ class Player {
     }
 }
 
-abstract class Opponent extends Player {
+abstract class Opponent extends Character {
     override def newTurn : Unit = {
         super.newTurn
         var l = availableAttacks.length
@@ -154,7 +154,7 @@ abstract class WildOpponent extends Opponent {
         opponent.win
         playing = false
         opponent.playing = false
-        FirstPlayer.endTurn
+        Player.endTurn
     }
 
     override def lose : Unit = {
@@ -163,11 +163,11 @@ abstract class WildOpponent extends Opponent {
 }
 
 
-object EmptyPlayer extends Player {
+object EmptyCharacter extends Character {
 
 }
 
-object FirstPlayer extends Player {
+object Player extends Character {
     team(0) = new Pikachu
     team(0).gainLvl(5)
     team(0).owner = this
@@ -197,7 +197,7 @@ object FirstPlayer extends Player {
     gainItem(MonsterBall, 10)
     gainItem(FullRestore, 1)
 
-    displayer = FirstPlayerDisplayer
+    displayer = PlayerDisplayer
 
     name = "You"
     var hisTurn : Boolean = false

@@ -86,7 +86,7 @@ abstract class CastAttackButton (imageNam : String) extends MyButton (imageNam) 
     var n : Int = 0
     visible = false
     override def isClicked : Unit = {
-        if (FirstPlayer.chooseAttack(n)) {
+        if (Player.chooseAttack(n)) {
 
             CastAttackButton1.setVisible(false)
             CastAttackButton2.setVisible(false)
@@ -103,9 +103,9 @@ abstract class CastAttackButton (imageNam : String) extends MyButton (imageNam) 
     }
 
     override def update : Unit = {
-        if (FirstPlayer.currentMonster.attacks(n).name != "Empty") {
-            imageName = FirstPlayer.currentMonster.attacks(n).attackType.imageButtonName
-            text = FirstPlayer.currentMonster.attacks(n).name
+        if (Player.currentMonster.attacks(n).name != "Empty") {
+            imageName = Player.currentMonster.attacks(n).attackType.imageButtonName
+            text = Player.currentMonster.attacks(n).name
             clickable = visible
         } else {
             imageName = "Buttons/EmptyButton.png"
@@ -117,7 +117,7 @@ abstract class CastAttackButton (imageNam : String) extends MyButton (imageNam) 
 
     override def onMouseOver (g : Graphics, x : Int, y : Int, width : Int, height : Int) : Unit = {
         var metrics = g.getFontMetrics
-        var text = FirstPlayer.currentMonster.attacks(n).toString
+        var text = Player.currentMonster.attacks(n).toString
         var (t1, t2, t3) = Utils.cutString(text, 40)
 
         var xToShow = x
@@ -146,7 +146,7 @@ abstract class ChangeMonsterButton (imageNam : String) extends MyButton (imageNa
     visible = false
 
     override def isClicked : Unit = {
-        if (FirstPlayer.changeMonster(n)) {
+        if (Player.changeMonster(n)) {
             ChangeMonsterButton1.setVisible(false)
             ChangeMonsterButton2.setVisible(false)
             ChangeMonsterButton3.setVisible(false)
@@ -163,12 +163,12 @@ abstract class ChangeMonsterButton (imageNam : String) extends MyButton (imageNa
     }
 
     override def isMouseOver (x_click : Int, y_click : Int) : Boolean = {
-        visible && x <= x_click && x_click <= (x + width) && y <= y_click && y_click <= (y + height) && (FirstPlayer.team(n).name != "Empty") 
+        visible && x <= x_click && x_click <= (x + width) && y <= y_click && y_click <= (y + height) && (Player.team(n).name != "Empty") 
     }
 
     override def onMouseOver (g : Graphics, x : Int, y : Int, width : Int, height : Int) : Unit = {
         var metrics = g.getFontMetrics
-        var text = FirstPlayer.team(n).toString
+        var text = Player.team(n).toString
         var (t1, t2, t3) = Utils.cutString(text, 40)
 
         var xToShow = x
@@ -192,14 +192,14 @@ abstract class ChangeMonsterButton (imageNam : String) extends MyButton (imageNa
     }
 
     override def update : Unit = {
-        if (FirstPlayer.team(n).alive && FirstPlayer.team(n).name != "Empty") {
-            imageName = FirstPlayer.team(n).monsterType.imageButtonName
+        if (Player.team(n).alive && Player.team(n).name != "Empty") {
+            imageName = Player.team(n).monsterType.imageButtonName
             clickable = visible
         } else {
             imageName = "Buttons/EmptyButton.png"
             clickable = false
         }
-        text = FirstPlayer.team(n).name
+        text = Player.team(n).name
         image = Utils.loadImage(imageName)
     }
 
@@ -210,7 +210,7 @@ abstract class UseItemButton (imageNam : String) extends MyButton (imageNam) {
     visible = false
 
     override def isClicked : Unit = {
-        if (FirstPlayer.useItem(n)) {
+        if (Player.useItem(n)) {
             UseItemButton1.setVisible(false)
             UseItemButton2.setVisible(false)
             UseItemButton3.setVisible(false)
@@ -228,7 +228,7 @@ abstract class UseItemButton (imageNam : String) extends MyButton (imageNam) {
 
     override def onMouseOver (g : Graphics, xMouse : Int, yMouse : Int, widthWindow : Int, heightWindow : Int) : Unit = {
         var metrics = g.getFontMetrics
-        var text = FirstPlayer.usableInventory(n).toString
+        var text = Player.usableInventory(n).toString
         var (t1, t2, t3) = Utils.cutString(text, 40)
 
         var xToShow = xMouse
@@ -252,14 +252,14 @@ abstract class UseItemButton (imageNam : String) extends MyButton (imageNam) {
     }
 
     override def update : Unit = {
-        if (FirstPlayer.usableInventory(n).name != "Empty" && FirstPlayer.usableInventory(n).usable) {
+        if (Player.usableInventory(n).name != "Empty" && Player.usableInventory(n).usable) {
             imageName = "Buttons/BagButton.png"
             clickable = visible
         } else {
             imageName = "Buttons/EmptyButton.png"
             clickable = false
         }
-        text = FirstPlayer.usableInventory(n).name + "(" + FirstPlayer.usableInventory(n).amount + ")"
+        text = Player.usableInventory(n).name + "(" + Player.usableInventory(n).amount + ")"
         image = Utils.loadImage(imageName)
     }
 }
@@ -291,7 +291,7 @@ object AttackButton extends MyButton ("Buttons/AttackButton.png") {
     }
 
     override def update : Unit = {
-        if (FirstPlayer.currentMonster.alive) {
+        if (Player.currentMonster.alive) {
             imageName = originalImageName
             clickable = visible
         } else {
@@ -334,7 +334,7 @@ object BagButton extends MyButton ("Buttons/BagButton.png") {
     }
 
     override def update : Unit = {
-        if (FirstPlayer.currentMonster.alive && FirstPlayer.usableInventory.filter(x => x.name != "Empty").length > 0) {
+        if (Player.currentMonster.alive && Player.usableInventory.filter(x => x.name != "Empty").length > 0) {
             imageName = originalImageName
             clickable = visible
         } else {
@@ -368,7 +368,7 @@ object MonsterButton extends MyButton ("Buttons/MonstersButton.png") {
     }
 
     override def update : Unit = {
-        if (FirstPlayer.team.exists(x => (x != FirstPlayer.currentMonster) && (x.name != "Empty") && (x.alive))) {
+        if (Player.team.exists(x => (x != Player.currentMonster) && (x.name != "Empty") && (x.alive))) {
             imageName = originalImageName
             clickable = visible
         } else {
@@ -390,11 +390,11 @@ object RunButton extends MyButton ("Buttons/RunButton.png") {
     override def isClicked : Unit = {
         DiscussionLabel.changeText("You run, far, really far !")
         TimeUnit.SECONDS.sleep(1)
-        FirstPlayer.lose
+        Player.lose
     }
 
     override def update : Unit = {
-        if (FirstPlayer.currentMonster.alive) {
+        if (Player.currentMonster.alive) {
             imageName = originalImageName
             clickable = visible
         } else {
@@ -528,7 +528,7 @@ object NextPageItemButton extends MyButton ("Buttons/EmptyButton.png") {
     text = "Next"
     var currentPage = 0
     override def isClicked : Unit = {
-        var numberOfPage : Int = 1 + FirstPlayer.usableInventory.filter(x => x.name != "Empty").length / 4
+        var numberOfPage : Int = 1 + Player.usableInventory.filter(x => x.name != "Empty").length / 4
         currentPage = (currentPage + 1) % numberOfPage
         UseItemButton1.n = 4*currentPage
         UseItemButton2.n = 4*currentPage + 1
@@ -542,7 +542,7 @@ object NextPageItemButton extends MyButton ("Buttons/EmptyButton.png") {
     }
 
     override def update : Unit = {
-        if (FirstPlayer.usableInventory.filter(x => x.name != "Empty").length > 4) {
+        if (Player.usableInventory.filter(x => x.name != "Empty").length > 4) {
             imageName = "Buttons/AttackButton.png"
             clickable = visible
         } else {

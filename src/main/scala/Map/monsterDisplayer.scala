@@ -23,25 +23,25 @@ class MonsterDisplayer (imageNam : String) extends Object with Descriptable {
     }
 }
 
-object FirstPlayerMonsterDisplayer extends MonsterDisplayer ("Empty.png") {
+object PlayerMonsterDisplayer extends MonsterDisplayer ("Empty.png") {
     x = 75
     y = 141
     
     override def update : Unit = {
-        imageName = FirstPlayer.currentMonster.imgNameBack
+        imageName = Player.currentMonster.imgNameBack
         image = Utils.loadImage(imageName)
-        y = 141 + FirstPlayer.currentMonster.uiYShift
+        y = 141 + Player.currentMonster.uiYShift
     }
 
     override def onMouseOver (g : Graphics, xMouse : Int, yMouse : Int, widthWindow : Int, heightWindow : Int) : Unit = {
         var metrics = g.getFontMetrics
-        var statusString = FirstPlayer.currentMonster.status.map(x => x.name).fold("")((x, y) => x + ", " + y)
+        var statusString = Player.currentMonster.status.map(x => x.name).fold("")((x, y) => x + ", " + y)
         var text = ""
 
         if (statusString != "") {
-            text = FirstPlayer.currentMonster.toString + "His status are : " + statusString.substring(1, statusString.length)
+            text = Player.currentMonster.toString + "His status are : " + statusString.substring(1, statusString.length)
         } else {
-            text = FirstPlayer.currentMonster.toString
+            text = Player.currentMonster.toString
         }
         var (t1, t2, t3) = Utils.cutString(text, 30)
 
@@ -69,20 +69,20 @@ object OpponentMonsterDisplayer extends MonsterDisplayer ("Empty.png") {
     y = 35
 
     override def update : Unit = {
-        imageName = FirstPlayer.opponent.currentMonster.imgNameFront
+        imageName = Player.opponent.currentMonster.imgNameFront
         image = Utils.loadImage(imageName)
         y = 35
     }
 
     override def onMouseOver (g : Graphics, xMouse : Int, yMouse : Int, widthWindow : Int, heightWindow : Int) : Unit = {
         var metrics = g.getFontMetrics
-        var statusString = FirstPlayer.opponent.currentMonster.status.map(x => x.name).fold("")((x, y) => x + ", " + y)
+        var statusString = Player.opponent.currentMonster.status.map(x => x.name).fold("")((x, y) => x + ", " + y)
         var text = ""
         
         if (statusString != "") {
-            text = FirstPlayer.opponent.currentMonster.toString + "His status are : " + statusString.substring(1, statusString.length)
+            text = Player.opponent.currentMonster.toString + "His status are : " + statusString.substring(1, statusString.length)
         } else {
-            text = FirstPlayer.opponent.currentMonster.toString
+            text = Player.opponent.currentMonster.toString
         }
 
         var (t1, t2, t3) = Utils.cutString(text, 30)

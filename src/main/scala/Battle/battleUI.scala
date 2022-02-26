@@ -55,7 +55,7 @@ object EmptyDescriptable extends Object with Descriptable {
     override def isMouseOver (x : Int, y : Int) = true
 }
 
-class BattleUI (p1 : Player, p2 : Player, battle : Battle) extends JFrame with MouseListener with MouseMotionListener {
+class BattleUI (p1 : Character, p2 : Character, battle : Battle) extends JFrame with MouseListener with MouseMotionListener {
 
     var posX : Int = 1000
     var posY : Int = 100
@@ -81,7 +81,7 @@ class BattleUI (p1 : Player, p2 : Player, battle : Battle) extends JFrame with M
                                                 ChangeMonsterButton1, ChangeMonsterButton2, ChangeMonsterButton3, 
                                                 ChangeMonsterButton4, ChangeMonsterButton5, ChangeMonsterButton6,
                                                 UseItemButton1, UseItemButton2, UseItemButton3, UseItemButton4,
-                                                FirstPlayerMonsterDisplayer, OpponentMonsterDisplayer)
+                                                PlayerMonsterDisplayer, OpponentMonsterDisplayer)
     
     var pane = new DrawPanelBattle(buttonList, p1, p2, this)
     var lastMonsterSelected : Monster = EmptyMonster
@@ -125,7 +125,7 @@ class BattleUI (p1 : Player, p2 : Player, battle : Battle) extends JFrame with M
   
 
     def mouseClicked (e : MouseEvent) : Unit = {
-        if (FirstPlayer.hisTurn) {
+        if (Player.hisTurn) {
             var clickCaught : Boolean = false
             def clickAButton (b : MyButton) : Unit = {
                 if (!clickCaught) {
@@ -192,7 +192,7 @@ class BattleUI (p1 : Player, p2 : Player, battle : Battle) extends JFrame with M
 
 object EnnemyBar{
     def ennemyBarImg = Utils.loadImage("EnnemyBar.png")
-    var p2 : Player = EmptyPlayer
+    var p2 : Character = EmptyCharacter
     object EnnemyHpBar extends HpBar {
         x = 112
         y = 76
@@ -209,7 +209,7 @@ object EnnemyBar{
 
 object YourBar{
     def yourBarImg = Utils.loadImage("YourBar.png")
-    var p1 : Player = EmptyPlayer
+    var p1 : Character = EmptyCharacter
 
     object YourHpBar extends HpBar {
         x = 443
@@ -244,9 +244,9 @@ object YourBar{
 }
 
 
-object EmptyBattleUI extends BattleUI (EmptyPlayer, EmptyPlayer, EmptyBattle) {}
+object EmptyBattleUI extends BattleUI (EmptyCharacter, EmptyCharacter, EmptyBattle) {}
 
-class DrawPanelBattle (buttonList : List[MyButton], p1 : Player, p2 : Player, ui : BattleUI) extends JPanel with Repaintable {
+class DrawPanelBattle (buttonList : List[MyButton], p1 : Character, p2 : Character, ui : BattleUI) extends JPanel with Repaintable {
     var toShow : Boolean = false
     var battleBackgroundImg = Utils.loadImage("BattleBackground.png")
     var pokemonFrontImg = Utils.loadImage("Monsters/EmptyFront.png")
@@ -266,7 +266,7 @@ class DrawPanelBattle (buttonList : List[MyButton], p1 : Player, p2 : Player, ui
         g.setFont(poke_font)
         g.drawImage(battleBackgroundImg, 0, 0, null)
 
-        FirstPlayerMonsterDisplayer.display(g)
+        PlayerMonsterDisplayer.display(g)
         OpponentMonsterDisplayer.display(g)
         
         EnnemyBar.display(g)
@@ -287,7 +287,7 @@ class DrawPanelBattle (buttonList : List[MyButton], p1 : Player, p2 : Player, ui
         pokemonFrontImg = Utils.loadImage(p2.currentMonster.imgNameFront)
         pokemonBackImg = Utils.loadImage(p1.currentMonster.imgNameBack)
 
-        FirstPlayerMonsterDisplayer.update
+        PlayerMonsterDisplayer.update
         OpponentMonsterDisplayer.update
         
         repaint()

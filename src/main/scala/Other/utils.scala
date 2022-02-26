@@ -6,7 +6,7 @@ import java.util.concurrent.TimeUnit
 
 object Utils {
 
-    var playerDisplayers : List[PlayerDisplayer] = List()
+    var characterDisplayers : List[CharacterDisplayer] = List()
     Repainter.start
 
     var debug = false
@@ -73,7 +73,7 @@ trait Repaintable {
 class Mover extends Thread {
     var lastMoveX : Int = 0
     var lastMoveY : Int = 0
-    var playerdisplayer : PlayerDisplayer = EmptyPlayerDisplayer
+    var characterDisplayer : CharacterDisplayer = EmptyCharacterDisplayer
 
     
     def move (moveX : Int, moveY : Int) : Unit = {
@@ -83,17 +83,17 @@ class Mover extends Thread {
     }
 
     override def run : Unit = {
-        for (i <- 0 to playerdisplayer.mapDisplayer.sizeBlock - 1) {
-            playerdisplayer.mapUI.pane.repaint()
-            playerdisplayer.changeCoordinates(lastMoveX, lastMoveY)
-            playerdisplayer.mapUI.pane.repaint()
-            TimeUnit.MILLISECONDS.sleep(100/playerdisplayer.speed)
-            playerdisplayer.mapUI.pane.repaint()
-            if (i % (playerdisplayer.mapDisplayer.sizeBlock/4) == 0) {
-                playerdisplayer.nx = (playerdisplayer.nx + 1) % 4
+        for (i <- 0 to characterDisplayer.mapDisplayer.sizeBlock - 1) {
+            characterDisplayer.mapUI.pane.repaint()
+            characterDisplayer.changeCoordinates(lastMoveX, lastMoveY)
+            characterDisplayer.mapUI.pane.repaint()
+            TimeUnit.MILLISECONDS.sleep(100/characterDisplayer.speed)
+            characterDisplayer.mapUI.pane.repaint()
+            if (i % (characterDisplayer.mapDisplayer.sizeBlock/4) == 0) {
+                characterDisplayer.nx = (characterDisplayer.nx + 1) % 4
             }
         }
-        playerdisplayer.endMove
+        characterDisplayer.endMove
     }
 }
 

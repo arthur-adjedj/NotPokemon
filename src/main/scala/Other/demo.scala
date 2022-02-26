@@ -1,20 +1,20 @@
 object BattleTest {
     def start : Unit = {
-        var b = new Battle(FirstPlayer, SecondPlayer)
+        var b = new Battle(Player, SecondCharacter)
         b.initialise
         b.start
 
-        // b = new Battle(FirstPlayer, WildPlayer)
+        // b = new Battle(Player, WildCharacter)
         // b.initialise
         // b.start
 
-        // b = new Battle(FirstPlayer, ThirdPlayer)
+        // b = new Battle(Player, ThirdCharacter)
         // b.initialise
         // b.start
     }
 }
 
-object SecondPlayer extends Opponent {
+object SecondCharacter extends Opponent {
     team(0) = new Squirtle
     team(0).owner = this
     team(0).gainLvl(3)
@@ -22,7 +22,7 @@ object SecondPlayer extends Opponent {
     name = "Opponent"
 }
 
-object ThirdPlayer extends Opponent {
+object ThirdCharacter extends Opponent {
     team(0) = new Rattata
     team(0).owner = this
     team(0).gainLvl(4)
@@ -33,7 +33,7 @@ object ThirdPlayer extends Opponent {
     name = "Opponent"
 }
 
-object WildPlayer extends WildOpponent {
+object WildCharacter extends WildOpponent {
     team(0) = new Rattata
     team(0).owner = this
     team(0).gainLvl(4)
