@@ -4,6 +4,9 @@ import java.sql.Time
 class Battle (p1 : Player, p2 : Player) extends Thread {
     var ui : BattleUI = new BattleUI(p1, p2, this)
     def initialise : Unit = {
+        //player can't move or interact on the map during battle
+        FirstPlayerDisplayer.canInteract = false
+
         ui.initialise
 
         p1.battle = this
@@ -53,6 +56,7 @@ class Battle (p1 : Player, p2 : Player) extends Thread {
         }
         TimeUnit.SECONDS.sleep(1)
         ui.close
+        FirstPlayerDisplayer.canInteract = true
         FirstPlayerDisplayer.mapUI.listening = true
     }
 }
