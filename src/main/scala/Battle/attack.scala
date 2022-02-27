@@ -20,6 +20,10 @@ object EmptyAttack extends Attack {
     name = "Empty"
 }
 
+object NoneAttack extends Attack {
+    name = "None"
+}
+
 
 object QuickAttack extends Attack {
     name = "Quick Attack"

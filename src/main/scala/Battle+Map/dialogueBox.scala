@@ -3,6 +3,7 @@ import java.awt.font.TextAttribute
 import collection.JavaConverters._
 import java.util.concurrent.TimeUnit
 import org.w3c.dom.Text
+import scala.collection.mutable.Queue
 
 
 object DiscussionLabel {
@@ -24,6 +25,7 @@ object DiscussionLabel {
     font = font.deriveFont(font.getStyle() | Font.BOLD)
     var textChanger : TextChanger = new TextChanger("", "")
     var changingText : Boolean = false
+    var messageQueue : Queue[String] = Queue()
 
 
     def display (g : Graphics) : Unit = {
@@ -37,19 +39,30 @@ object DiscussionLabel {
 
     def changeText (s : String) : Unit = {
         Utils.print(s)
-        var (t1, t2, t3) = Utils.cutString(s, charPerLine)
+        if (!changingText) {
+            changingText = true
+            var (t1, t2, t3) = Utils.cutString(s, charPerLine)
 
-        text1 = ""
-        text2 = ""
+            text1 = ""
+            text2 = ""
 
-        textChanger = new TextChanger(t1, t2)
-        textChanger.run
+            textChanger = new TextChanger(t1, t2)
+            textChanger.start
+        } else {
+            messageQueue.enqueue(s)
+        }
+    }
+
+    def skip : Unit = {
+        textChanger.skip
     }
 }
 
 class TextChanger (t1 : String, t2 : String) extends Thread {
     var text1 : String = t1
     var text2 : String = t2
+
+    var pausing : Boolean = true
     var waitTime : Int = 50
     var pauseTime : Int = 400
     override def run : Unit = {
@@ -66,5 +79,13 @@ class TextChanger (t1 : String, t2 : String) extends Thread {
             else TimeUnit.MILLISECONDS.sleep(waitTime)
 
         }
+        DiscussionLabel.changingText = false
+        if (!DiscussionLabel.messageQueue.isEmpty) {
+            DiscussionLabel.changeText(DiscussionLabel.messageQueue.dequeue)
+        }
+    }
+
+    def skip : Unit = {
+        waitTime = 10
     }
 }

@@ -125,19 +125,21 @@ class BattleUI (p1 : Character, p2 : Character, battle : Battle) extends JFrame 
   
 
     def mouseClicked (e : MouseEvent) : Unit = {
-        if (Player.hisTurn) {
-            var clickCaught : Boolean = false
-            def clickAButton (b : MyButton) : Unit = {
-                if (!clickCaught) {
-                    clickCaught = b.onClick(e.getX, e.getY)
+        if (!DiscussionLabel.changingText && DiscussionLabel.messageQueue.isEmpty) {
+            if (Player.hisTurn) {
+                var clickCaught : Boolean = false
+                def clickAButton (b : MyButton) : Unit = {
+                    if (!clickCaught) {
+                        clickCaught = b.onClick(e.getX, e.getY)
+                    }
                 }
+
+                buttonList.foreach(clickAButton)
+                clickCaught = false
             }
-
-            buttonList.foreach(clickAButton)
-            clickCaught = false
-        }    
-        updateImages
-
+        } else {
+            DiscussionLabel.skip
+        }
     }
     def mouseEntered (e : MouseEvent) : Unit = {}
     def mouseExited (e : MouseEvent) : Unit = {}

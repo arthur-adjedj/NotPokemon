@@ -86,6 +86,7 @@ class Character {
     def changeMonster (n : Int) : Boolean = {
         if (team(n) == currentMonster && team(n).alive) {
             DiscussionLabel.changeText(team(n).name + " is already on the battlefield !")
+            chooseAttack(NoneAttack)
             true
         } else if (team(n).alive && team(n).name != "Empty" && team(n) != currentMonster) {
             var previousMonster = currentMonster
@@ -93,7 +94,7 @@ class Character {
             currentMonster.enterField 
             battle.ui.updateImages
             if (previousMonster.alive) {
-                endTurn
+                chooseAttack(EmptyAttack)
             }
             true
         } else {
@@ -225,6 +226,7 @@ object Player extends Character {
     def useItem (x : Int) : Boolean = {
         if (inventory(x).name != "Empty") {
             if (useItem(usableInventory(x))) {
+                chooseAttack(NoneAttack)
                 true
             } else {
                 false
@@ -238,6 +240,7 @@ object Player extends Character {
         if (!item.needsTarget) {
             if (item.use) {
                 updateInventory
+                chooseAttack(NoneAttack)
                 true
             } else {
                 false

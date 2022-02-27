@@ -389,7 +389,6 @@ object RunButton extends MyButton ("Buttons/RunButton.png") {
 
     override def isClicked : Unit = {
         DiscussionLabel.changeText("You run, far, really far !")
-        TimeUnit.SECONDS.sleep(1)
         Player.lose
     }
 
