@@ -29,24 +29,21 @@ abstract class Block (iMap : Int, jMap : Int, imgNam : String) {
 
 
 }
+//renders a "base block" given a certain orientation with updown and leftright in {-1,0,1}
+class MultiBlock(iMap : Int, jMap : Int, updown : Int, leftright : Int, base : String) extends Block(iMap,jMap,"Maps/Tile.png") {
+    var upDownStr : String = updown match {
+        case (-1) => "Bot"
+        case 1 => "Top"
+        case _ => ""
+    }
+    var leftRightStr : String = leftright match {
+        case (-1) => "Left"
+        case 1 => "Right"
+        case _ => ""
+    }
 
-//TODO refactor so that it isn't that shitty
-class CliffBlockRight (iMap : Int, jMap : Int) extends Block (iMap, jMap, "Blocks/CliffRight.png") {
-    walkable = false
-}
-
-class CliffBlockTop (iMap : Int, jMap : Int) extends Block (iMap, jMap, "Blocks/CliffTop.png") {
-    walkable = false
-}
-class CliffBlockBot (iMap : Int, jMap : Int) extends Block (iMap, jMap, "Blocks/CliffBot.png") {
-    walkable = false
-}
-
-class CliffBlockTopRight (iMap : Int, jMap : Int) extends Block (iMap, jMap, "Blocks/CliffTopRight.png") {
-    walkable = false
-}
-class CliffBlockBotRight (iMap : Int, jMap : Int) extends Block (iMap, jMap, "Blocks/CliffBotRight.png") {
-    walkable = false
+    imgName = "Blocks/" + base + upDownStr + leftRightStr + ".png"
+    img = Utils.loadImage(imgName)
 }
 
 class GrassBlock (iMap : Int, jMap : Int) extends Block (iMap, jMap, "Blocks/Grass.png") {
