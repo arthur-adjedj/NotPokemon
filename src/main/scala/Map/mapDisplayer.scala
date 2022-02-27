@@ -51,18 +51,18 @@ class MapDisplayer1 (mapUI : MapUI, sizeB : Int) extends MapDisplayer (mapUI, si
             grid(i)(j) = new EmptyBlock(i, j)
         }
     }
-    grid(2)(1) = new WallBlock(2, 1)
-    grid(3)(1) = new WallBlock(3, 1)
-    grid(4)(1) = new WallBlock(4, 1)
-    grid(4)(2) = new WallBlock(4, 2)
-    grid(4)(3) = new WallBlock(4, 3)
-    grid(4)(4) = new WallBlock(4, 4)
-    grid(3)(4) = new WallBlock(3, 4)
-    grid(2)(4) = new WallBlock(2, 4)
+    grid(2)(1) = new CliffBlockTop(2, 1)
+    grid(3)(1) = new CliffBlockTop(3, 1)
+    grid(4)(1) = new CliffBlockTopRight(4, 1)
+    grid(4)(2) = new CliffBlockRight(4, 2)
+    grid(4)(3) = new CliffBlockRight(4, 3)
+    grid(4)(4) = new CliffBlockBotRight(4, 4)
+    grid(3)(4) = new CliffBlockBot(3, 4)
+    grid(2)(4) = new CliffBlockBot(2, 4)
 
 
-    grid(10)(10) = new GrassBlock(10, 10)
-    grid(11)(11) = new GrassBlock(11, 11)
-    grid(10)(11) = new GrassBlock(10, 11)
-    grid(11)(10) = new GrassBlock(11, 10)
+    grid(10)(10) = new GrassBlock(0, 2)
+    grid(11)(11) = new GrassBlock(1, 3)
+    grid(10)(11) = new GrassBlock(0, 3)
+    grid(11)(10) = new GrassBlock(1, 2)
 }

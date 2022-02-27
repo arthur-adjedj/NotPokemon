@@ -30,8 +30,22 @@ abstract class Block (iMap : Int, jMap : Int, imgNam : String) {
 
 }
 
+//TODO refactor so that it isn't that shitty
+class CliffBlockRight (iMap : Int, jMap : Int) extends Block (iMap, jMap, "Blocks/CliffRight.png") {
+    walkable = false
+}
 
-class WallBlock (iMap : Int, jMap : Int) extends Block (iMap, jMap, "Blocks/Wall.png") {
+class CliffBlockTop (iMap : Int, jMap : Int) extends Block (iMap, jMap, "Blocks/CliffTop.png") {
+    walkable = false
+}
+class CliffBlockBot (iMap : Int, jMap : Int) extends Block (iMap, jMap, "Blocks/CliffBot.png") {
+    walkable = false
+}
+
+class CliffBlockTopRight (iMap : Int, jMap : Int) extends Block (iMap, jMap, "Blocks/CliffTopRight.png") {
+    walkable = false
+}
+class CliffBlockBotRight (iMap : Int, jMap : Int) extends Block (iMap, jMap, "Blocks/CliffBotRight.png") {
     walkable = false
 }
 
