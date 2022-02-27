@@ -89,6 +89,7 @@ class Character {
             chooseAttack(NoneAttack)
             true
         } else if (team(n).alive && team(n).name != "Empty" && team(n) != currentMonster) {
+            DiscussionLabel.changeText(team(n).name + " enters the battlefield !")
             var previousMonster = currentMonster
             currentMonster = team(n)
             currentMonster.enterField 
