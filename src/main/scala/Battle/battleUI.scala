@@ -251,7 +251,6 @@ class DrawPanelBattle (buttonList : List[MyButton], p1 : Character, p2 : Charact
     var battleBackgroundImg = Utils.loadImage("BattleBackground.png")
     var pokemonFrontImg = Utils.loadImage("Monsters/EmptyFront.png")
     var pokemonBackImg = Utils.loadImage("Monsters/EmptyBack.png")
-    var textBarImg = Utils.loadImage("TextBar.png")
     var poke_font : Font = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("PokemonPixelFont.ttf"))
     var underMouse : Descriptable = EmptyDescriptable
     var xMouse : Int = 0
@@ -272,7 +271,6 @@ class DrawPanelBattle (buttonList : List[MyButton], p1 : Character, p2 : Charact
         EnnemyBar.display(g)
         YourBar.display(g)
 
-        g.drawImage(textBarImg,0,287,null)
         DiscussionLabel.display(g)
         g.setColor(Color.BLACK)
         g.fillRect(0, 0, getWidth, 20)

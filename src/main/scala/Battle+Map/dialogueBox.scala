@@ -12,6 +12,11 @@ object DiscussionLabel {
     var charPerLine : Int = 27
     var x : Int = 40
     var y : Int = 330
+
+    var visible = true
+
+    var textBarImg = Utils.loadImage("TextBar.png")
+    
     var font : Font = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("PokemonPixelFont.ttf"))
     font = font.deriveFont(Font.PLAIN,40)
     val attributes = (collection.Map(TextAttribute.TRACKING -> 0.05)).asJava
@@ -22,9 +27,12 @@ object DiscussionLabel {
 
 
     def display (g : Graphics) : Unit = {
-        g.setFont(font)
-        g.drawString(text1, x, y)
-        g.drawString(text2, x, y+30)
+        if (visible) {
+            g.drawImage(textBarImg,0,287,null)
+            g.setFont(font)
+            g.drawString(text1, x, y)
+            g.drawString(text2, x, y+30)
+        }
     }
 
     def changeText (s : String) : Unit = {
@@ -47,15 +55,14 @@ class TextChanger (t1 : String, t2 : String) extends Thread {
     override def run : Unit = {
         for (i <- text1.indices) {
             DiscussionLabel.text1 += text1(i)
-            //TODO account for other end phrase symbols like '!'
-            if (text1(i) == '.') TimeUnit.MILLISECONDS.sleep(pauseTime)
+            if (List('.','!').contains(text1(i))) TimeUnit.MILLISECONDS.sleep(pauseTime)
             else TimeUnit.MILLISECONDS.sleep(waitTime)
 
         }
         for (i <- text2.indices) {
             DiscussionLabel.text2 += text2(i)
 
-            if (text2(i) == '.') TimeUnit.MILLISECONDS.sleep(pauseTime)
+            if (List('.','!').contains(text2(i))) TimeUnit.MILLISECONDS.sleep(pauseTime)
             else TimeUnit.MILLISECONDS.sleep(waitTime)
 
         }
