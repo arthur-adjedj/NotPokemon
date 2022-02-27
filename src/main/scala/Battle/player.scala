@@ -194,8 +194,8 @@ object Player extends Character {
 
     gainItem(FreshWater, 5)
     gainItem(MonsterBall, 10)
-    gainItem(SuperMonsterBall, 10)
-    gainItem(UltraMonsterBall, 10)
+    gainItem(SuperBall, 10)
+    gainItem(UltraBall, 10)
     gainItem(MonsterBall, 10)
     gainItem(FullRestore, 1)
 

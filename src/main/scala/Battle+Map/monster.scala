@@ -7,6 +7,8 @@ abstract class Monster {
     var xp : Int = 0
     var level : Int = 0
 
+    var catchRate : Int = 45
+
     var baseHpStat : Int = 1
     var baseAttackStat : Int = 1
     var baseDefenseStat : Int = 1
@@ -24,7 +26,6 @@ abstract class Monster {
     var EVDefense : Int = 0
     var EVSpeed : Int = 0
 
-    
 
     var attackStat : Int = 100
     var defenseStat : Int = 100
@@ -312,6 +313,8 @@ abstract class Monster {
 
 
 class Pikachu extends Monster {
+    catchRate = 190
+    
     baseHpStat = 35
     baseAttackStat = 55
     baseDefenseStat = 40
@@ -395,6 +398,8 @@ class Charmander extends Monster {
 }
 
 class Rattata extends Monster {
+    catchRate = 255
+
     baseHpStat = 30
     baseAttackStat = 56
     baseDefenseStat = 35
