@@ -389,6 +389,7 @@ object RunButton extends MyButton ("Buttons/RunButton.png") {
 
     override def isClicked : Unit = {
         DiscussionLabel.changeText("You run, far, really far !")
+        Player.runningAway = true
         Player.lose
     }
 

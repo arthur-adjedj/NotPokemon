@@ -20,6 +20,7 @@ class Character {
     var availableAttacks : Array[Attack] = Array.fill(4){EmptyAttack}
 
     var playing : Boolean = true
+    var runningAway : Boolean = false
 
 
     def enterBattle : Unit = {
@@ -86,7 +87,6 @@ class Character {
     def changeMonster (n : Int) : Boolean = {
         if (team(n) == currentMonster && team(n).alive) {
             DiscussionLabel.changeText(team(n).name + " is already on the battlefield !")
-            chooseAttack(NoneAttack)
             true
         } else if (team(n).alive && team(n).name != "Empty" && team(n) != currentMonster) {
             DiscussionLabel.changeText(team(n).name + " enters the battlefield !")
@@ -106,11 +106,15 @@ class Character {
     def changeMonster (b : Boolean) : Unit = {}
 
     def lose : Unit = {
-        DiscussionLabel.changeText(name + " just lost.")
-        opponent.win
-        playing = false
-        opponent.playing = false
-        Player.endTurn
+        if (playing) {
+            if (!runningAway) {
+                DiscussionLabel.changeText(name + " just lost.")
+            }
+            opponent.win
+            playing = false
+            opponent.playing = false
+            Player.endTurn
+        }
     }
 
     def win : Unit = {
@@ -150,13 +154,16 @@ abstract class WildOpponent extends Opponent {
     }
 
     def lose (captured : Boolean) : Unit = {
-        if (!captured) {
-            DiscussionLabel.changeText(currentMonster.name + " just lost.")
+        if (playing) {
+            if (!captured) {
+                DiscussionLabel.changeText(currentMonster.name + " just lost.")
+            }
+            opponent.win
+            playing = false
+            opponent.playing = false
+            Player.endTurn
         }
-        opponent.win
-        playing = false
-        opponent.playing = false
-        Player.endTurn
+        
     }
 
     override def lose : Unit = {
@@ -227,7 +234,6 @@ object Player extends Character {
     def useItem (x : Int) : Boolean = {
         if (inventory(x).name != "Empty") {
             if (useItem(usableInventory(x))) {
-                chooseAttack(NoneAttack)
                 true
             } else {
                 false
@@ -241,7 +247,6 @@ object Player extends Character {
         if (!item.needsTarget) {
             if (item.use) {
                 updateInventory
-                chooseAttack(NoneAttack)
                 true
             } else {
                 false
