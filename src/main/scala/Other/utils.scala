@@ -90,11 +90,8 @@ class Mover extends Thread {
 
     override def run : Unit = {
         for (i <- 0 to characterDisplayer.mapDisplayer.sizeBlock - 1) {
-            characterDisplayer.mapUI.pane.repaint()
             characterDisplayer.changeCoordinates(lastMoveX, lastMoveY)
-            characterDisplayer.mapUI.pane.repaint()
             TimeUnit.MILLISECONDS.sleep(100/characterDisplayer.speed)
-            characterDisplayer.mapUI.pane.repaint()
             if (i % (characterDisplayer.mapDisplayer.sizeBlock/4) == 0) {
                 characterDisplayer.nx = (characterDisplayer.nx + 1) % 4
             }

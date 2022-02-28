@@ -40,7 +40,6 @@ class CharacterDisplayer (imgName : String) {
     var player : Character = EmptyCharacter
 
     var mapDisplayer : MapDisplayer = EmptyMapDisplayer
-    var mapUI : MapUI = EmptyMapUI
     var isMoving : Boolean = false
     //player can't move during dialogues, battles or when the bag/pokédex is open
     var canInteract : Boolean = true
@@ -79,8 +78,8 @@ class CharacterDisplayer (imgName : String) {
 
     def drawSprite (g : Graphics, xMap : Int, yMap : Int, img : BufferedImage, width : Int, height : Int, nx: Int, ny : Int ) : Unit = {
         /*shift the sprite on the tile such that its feet are at the right place*/
-        var xshift = x + (mapUI.sizeBlock - width)/2 - xMap
-        var yshift = y + (mapUI.sizeBlock - height) - yMap
+        var xshift = x + (Utils.frame.sizeBlock - width)/2 - xMap
+        var yshift = y + (Utils.frame.sizeBlock - height) - yMap
 
         g.drawImage(img,
             xshift, yshift, /*upper left corner coords on the map*/

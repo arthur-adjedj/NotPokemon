@@ -54,7 +54,7 @@ class GrassBlock (iMap : Int, jMap : Int) extends Block (iMap, jMap, "Blocks/Gra
     interactable = true
     override def interact : Unit = {
         if (scala.util.Random.nextFloat() < 0.1) {
-            PlayerDisplayer.mapUI.listening = false
+            Utils.frame.listening = false
             WildCharacter.initialise
             Utils.frame.startBattle(Player, WildCharacter)
         }
