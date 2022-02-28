@@ -247,6 +247,7 @@ object Player extends Character {
         if (!item.needsTarget) {
             if (item.use) {
                 updateInventory
+                endTurn
                 true
             } else {
                 false
