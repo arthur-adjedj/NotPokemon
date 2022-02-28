@@ -21,6 +21,8 @@ object Utils {
 
 
     def loadImage (name : String) : BufferedImage = {
+        // if the image doesn't load, it returns a wrong image but doesn't crash
+        // sometimes, it's the JVM's fault
         try {
             javax.imageio.ImageIO.read(getClass.getResource(name))
         }
@@ -77,6 +79,7 @@ trait Repaintable {
 }
 
 class Mover extends Thread {
+    // used to move the image of a character
     var lastMoveX : Int = 0
     var lastMoveY : Int = 0
     var characterDisplayer : CharacterDisplayer = EmptyCharacterDisplayer
