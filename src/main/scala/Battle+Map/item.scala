@@ -7,7 +7,7 @@ abstract class Item {
     var needsTarget : Boolean = false
     var order : Int = 0 // For sorting the inventory
 
-    def use : Boolean = {amount -= 1; true}
+    def use : Boolean = {amount -= 1; true} // when there is no need to choose a target
     def use (target : Monster) : Boolean = {amount -= 1; true}
 
     def usable : Boolean = {true}
@@ -30,7 +30,7 @@ object FullRestore extends Item {
             target.heal(target.hpMax)
             target.status = List()
             amount -= 1
-            true
+            true // tells the button that the item is used
         } else {
             false
         }
@@ -52,7 +52,7 @@ object FreshWater extends Item {
         if (target.alive) {
             target.heal(30)
             amount -= 1
-            true
+            true // tells the button that the item is used
         } else {
             false
         }
@@ -73,7 +73,7 @@ class Ball extends Item {
     order = 0
 
     override def usable : Boolean = {
-         Player.team.filter(x => x.name != "Empty").length != 6 && Player.playing
+        Player.team.filter(x => x.name != "Empty").length != 6 && Player.playing
     }
 
     def catchProbability : Float = {
@@ -100,7 +100,7 @@ class Ball extends Item {
             }
         }
         amount -= 1
-        true
+        true // tells the button that the item is used
     }
 }
 

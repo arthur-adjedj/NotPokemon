@@ -19,8 +19,9 @@ abstract class Block (iMap : Int, jMap : Int, imgNam : String) {
     }
 
     def updateCoordinates (xMap : Int, yMap : Int, sizeBlock : Int) : Unit = {
-        x = xMap + i*sizeBlock
-        y = yMap + j*sizeBlock
+        // when the map is moving
+        x = i*sizeBlock - xMap
+        y = j*sizeBlock - yMap
     }
     
     def interact : Unit = {
@@ -54,7 +55,7 @@ class GrassBlock (iMap : Int, jMap : Int) extends Block (iMap, jMap, "Blocks/Gra
     interactable = true
     override def interact : Unit = {
         if (scala.util.Random.nextFloat() < 0.1) {
-            Utils.frame.listening = false
+            Utils.frame.listeningToKeyboard = false
             WildCharacter.initialise
             Utils.frame.startBattle(Player, WildCharacter)
         }

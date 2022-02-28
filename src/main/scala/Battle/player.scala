@@ -44,7 +44,7 @@ class Character {
     def chooseAttack (x : Int) : Boolean = {
         if (currentMonster.attacks(x).name != "Empty") {
             chooseAttack(currentMonster.attacks(x))
-            true
+            true // tells the button that the attack is casted
         } else {
             false
         }
@@ -58,7 +58,7 @@ class Character {
     def castAttack (x : Int) : Boolean = {
         if (currentMonster.attacks(x).name != "Empty") {
             castAttack(currentMonster.attacks(x))
-            true
+            true // tells the button that the attack is casted
         } else {
             false
         }
@@ -72,6 +72,7 @@ class Character {
     }
 
     def changeMonster : Unit = {
+        // if every member of the team is KO, then lose else choose a random monster
         if (team.exists(x => x.alive && x.name != "Empty")) {
             var alives = team.filter(x => x.alive && x.name != "Empty")
             var l = alives.length
@@ -85,16 +86,16 @@ class Character {
     def changeMonster (n : Int) : Boolean = {
         if (team(n) == currentMonster && team(n).alive) {
             DiscussionLabel.changeText(team(n).name + " is already on the battlefield !")
-            true
+            true // tells the button that the action succeeded
         } else if (team(n).alive && team(n).name != "Empty" && team(n) != currentMonster) {
             DiscussionLabel.changeText(team(n).name + " enters the battlefield !")
             var previousMonster = currentMonster
             currentMonster = team(n)
             currentMonster.enterField 
             if (previousMonster.alive) {
-                chooseAttack(EmptyAttack)
+                endTurn
             }
-            true
+            true // tells the button that the action succeeded
         } else {
             false
         }
@@ -136,6 +137,7 @@ abstract class WildOpponent extends Opponent {
     name = "Wild"
 
     override def changeMonster (captured : Boolean) : Unit = {
+        // if the monster is captured it displays a different message
         if (captured) {
             DiscussionLabel.changeText("You just captured " + currentMonster.name + ".")
         }
@@ -193,8 +195,6 @@ object Player extends Character {
     team(4).gainLvl(5,false)
     team(4).owner = this
 
-    //team(5) = team(4)
-
     gainItem(FreshWater, 5)
     gainItem(MonsterBall, 10)
     gainItem(SuperBall, 10)
@@ -205,8 +205,8 @@ object Player extends Character {
     displayer = PlayerDisplayer
 
     name = "You"
-    var hisTurn : Boolean = false
-    var usableInventory : Array[Item] = Array.fill(40){EmptyItem}
+    var hisTurn : Boolean = false // used for looping and waiting for the action of the player
+    var usableInventory : Array[Item] = Array.fill(40){EmptyItem} // the inventory that is displayed
 
     override def changeMonster : Unit = {
         if (team.forall(x => !x.alive || x.name == "Empty")) {
@@ -230,7 +230,7 @@ object Player extends Character {
     def useItem (x : Int) : Boolean = {
         if (inventory(x).name != "Empty") {
             if (useItem(usableInventory(x))) {
-                true
+                true // tells the button that the item is used
             } else {
                 false
             }
@@ -244,7 +244,7 @@ object Player extends Character {
             if (item.use) {
                 updateInventory
                 endTurn
-                true
+                true // tells the button that the item is used
             } else {
                 false
             }

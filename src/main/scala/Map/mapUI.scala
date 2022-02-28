@@ -19,6 +19,8 @@ class DrawPanelMap (mapDisplayer : MapDisplayer) extends MyPanel with Repaintabl
         if (ready) {
             super.paintComponent(g)
             mapDisplayer.display(g)
+            g.setColor(Color.BLACK)
+            g.fillRect(0, 0, getWidth, 20)
         }
     }
 }

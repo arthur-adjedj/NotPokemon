@@ -3,8 +3,8 @@ import java.awt.Graphics
 class MapDisplayer (frame : UI) {
 
     var x : Int = 0
-    var y : Int = 0
-    var n : Int = 1
+    var y : Int = -25
+    var n : Int = 1 // when there will be several maps
 
     var grid : Array[Array[Block]] = Array.ofDim[Block](20, 20)
 

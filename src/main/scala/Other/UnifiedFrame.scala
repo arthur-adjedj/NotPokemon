@@ -32,6 +32,8 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
     var closeButton = new CloseButton ("Close.png", close, sizeX - 20, 2)
     var helpButton = new HelpButton ("Help.png", help)
 
+
+    // cannot create the list and adding buttons during their creation because of a weird behaviour with 'object'
     var buttonList : List[MyButton] = List(AttackButton, BagButton, MonsterButton, RunButton, BackButton, NextPageItemButton, closeButton, helpButton,
                                             CastAttackButton1, CastAttackButton2, CastAttackButton3, CastAttackButton4,
                                             ChangeMonsterButton1, ChangeMonsterButton2, ChangeMonsterButton3, 
@@ -49,7 +51,7 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
     var battlePane : DrawPanelBattle = new DrawPanelBattle(buttonList, EmptyCharacter, EmptyCharacter)
     var mapPane : DrawPanelMap = new DrawPanelMap(mapDisplayer)
     var currentPane : MyPanel = mapPane.asInstanceOf[MyPanel]
-    var listening : Boolean = true
+    var listeningToKeyboard : Boolean = true
 
     def initialise : Unit = {
 
@@ -166,7 +168,7 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
     def keyReleased (e : KeyEvent) : Unit = {}
 
     def keyPressed (e : KeyEvent) : Unit = {
-        if (listening) {
+        if (listeningToKeyboard) {
             e.getKeyChar match {
                 case 'z' => PlayerDisplayer.move(0, -1)
                 case 's' => PlayerDisplayer.move(0, 1)
@@ -189,10 +191,5 @@ class MyPanel extends JPanel with Repaintable {
     var showHelp : Boolean = false
 
     def initialise : Unit = {}
-
-    override def paintComponent (g : Graphics) : Unit = {
-        Utils.print(scala.util.Random.nextFloat)
-        super.paintComponent(g)
-    }
 }
 

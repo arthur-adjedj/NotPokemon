@@ -7,7 +7,7 @@ abstract class Direction
 case object Up extends Direction
 case object Down extends Direction
 case object Left extends Direction
-case object  Right extends Direction
+case object Right extends Direction
 
 
 class CharacterDisplayer (imgName : String) {
@@ -92,9 +92,9 @@ class CharacterDisplayer (imgName : String) {
     //update the sprite used to render depending on its orientation
     def updateSprite() = {
          direction match {
-             case Up => ny = 3
-             case Down => ny = 0
-             case Right => ny = 2
+            case Up => ny = 3
+            case Down => ny = 0
+            case Right => ny = 2
             case Left => ny = 1
          }
         }
@@ -134,9 +134,11 @@ object PlayerDisplayer extends CharacterDisplayer ("Characters/MainCharacter.png
 
     override def endMove : Unit = {
         super.endMove
-        var sameCase = Utils.characterDisplayers.filter(opp => opp != this && opp.i == i && opp.j == j && !opp.player.alreadyBeaten)
-        for (i <- sameCase.indices) {
-            Utils.frame.startBattle(Player, sameCase(i).player)
+
+        // if there is another player in the same box, then fight him
+        var sameBox = Utils.characterDisplayers.filter(opp => opp != this && opp.i == i && opp.j == j && !opp.player.alreadyBeaten)
+        if (!sameBox.isEmpty) {
+            Utils.frame.startBattle(Player, sameBox(0).player)
         }
     }
 

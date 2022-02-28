@@ -36,13 +36,14 @@ abstract class MyButton (imageNam : String) extends Object with Descriptable {
     def onClick (xClick : Int, yClick : Int) : Boolean = {
         if (visible && x <= xClick && xClick <= (x + width) && y <= yClick && yClick <= (y + height) && clickable) {
             isClicked
-            true
+            true // tells the listener that the button is clicked
         } else {
             false
         }
   }
 
     def isClicked : Unit = {
+        // function called when the button is clicked
         Utils.print("The button is clicked")
     }
 

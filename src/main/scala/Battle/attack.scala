@@ -5,9 +5,9 @@ abstract class Attack {
     var priority : Int = 0
     var accuracy : Float = 1
     var attackType : Type = Normal
-    def nOfHits() : Int = 1
-    def cast(self : Monster,ennemy: Monster) : Unit = ()
-    def handlesDamages (self : Monster, ennemy : Monster) : Int = {
+    def nOfHits() : Int = 1 
+    def cast(self : Monster,ennemy: Monster) : Unit = () // this function is called everytime an attack is casted
+    def handlesDamages (self : Monster, ennemy : Monster) : Int = { // if the function returns -1, the basic formula is used
         if (power == 0) {
             0
         } else {

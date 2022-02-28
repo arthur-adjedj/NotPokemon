@@ -37,6 +37,7 @@ object DiscussionLabel {
     }
 
     def changeText (s : String) : Unit = {
+        // if the text is changing then queue the message for later else write it
         Utils.print(s)
         if (!changingText) {
             changingText = true
@@ -89,7 +90,7 @@ class TextChanger (t1 : String, t2 : String, t3 : String) extends Thread {
                 if (List('.','!').contains(text3(i))) TimeUnit.MILLISECONDS.sleep(pauseTime)
                 else TimeUnit.MILLISECONDS.sleep(waitTime)
 
-        }
+            }
 
         }
 

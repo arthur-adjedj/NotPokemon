@@ -114,13 +114,19 @@ abstract class Monster {
 
     //It adds text to explain the effectiveness of the attack
     def effectivenessText (attack : Attack, other : Monster) : String = {
-        if (attack.attackType.multDamage(other.monsterType) > 1) "It's super effective !" 
-        else if (attack.attackType.multDamage(other.monsterType) < 1) 
-            "It's not very effective..." 
-            else ""  
+        if (attack.handlesDamages(this, other) == -1) {
+            if (attack.attackType.multDamage(other.monsterType) > 1) "It's super effective !" 
+            else if (attack.attackType.multDamage(other.monsterType) < 1) 
+                "It's not very effective..." 
+                else ""
+        } else {
+            ""
+        }
     }
 
+
     def castAttack (attack : Attack, other : Monster) : Unit = {
+        // checks the misses and the status of both monster and cast the attack when possible 
         var random = scala.util.Random.nextFloat()
         var thisAccuracyEff = this.accuracyBattle * calcModifier(this, "accuracy")
         var otherEvasionEff = other.evasionBattle * calcModifier(other, "evasion")
@@ -165,6 +171,7 @@ abstract class Monster {
     }
 
     def calcModifier (monster : Monster, stat : String) : Float = {
+        // calculates the modifier due to a stage
         var stage = {stat match {
             case "attack" => monster.attackStage
             case "defense" => monster.defenseStage
@@ -192,6 +199,7 @@ abstract class Monster {
     }
 
     def receiveAttack (attack : Attack, other : Monster) : Unit = {
+        // if the attack doesn't handle the damages, the basic formula is used
         var handledDamages = attack.handlesDamages(other, this)
         if (handledDamages != -1) {
             takeDamage(handledDamages)
@@ -207,6 +215,7 @@ abstract class Monster {
     }
 
     def receiveStatus (stat : Status) : Unit = {
+        // if the status is already applyied, then reset its timer
         def max_duration (s : Status, name : String) : Unit = {
             if (s.name == name) {
                 s.durationLeft = s.duration
@@ -249,6 +258,8 @@ abstract class Monster {
     def die : Unit = {
         DiscussionLabel.changeText(name + " is KO !")
         alive = false
+
+        //calculate this xp given to all the opponents seen
         var monstersSeenAlive = monstersSeen.filter(x => x.alive && x.name != "Empty" && x.level < 100)
         var exp : Float = baseXp.toFloat*level.toFloat/7f/monstersSeenAlive.length.toFloat
         if (!wild) {
@@ -259,20 +270,20 @@ abstract class Monster {
         monstersSeenAlive.foreach(x => x.EVAttack = (x.EVAttack + baseAttackStat).min(65535))
         monstersSeenAlive.foreach(x => x.EVDefense = (x.EVDefense + baseDefenseStat).min(65535))
         monstersSeenAlive.foreach(x => x.EVSpeed = (x.EVSpeed + baseSpeedStat).min(65535))
-        if (owner.team.forall(x => (!x.alive) || (x.name == "Empty"))) {
-            owner.lose
-        }
+
         owner.changeMonster
 
     }
 
     def gainXp (amount : Int,print : Boolean) : Unit = {
-        xp += amount
-        if (xp >= nextXpStep) {
-            var diff = xp - nextXpStep
-            xp = nextXpStep
-            levelUp(print)
-            gainXp(diff,print)
+        if (level < 100) {
+            xp += amount
+            if (xp >= nextXpStep) {
+                var diff = xp - nextXpStep
+                xp = nextXpStep
+                levelUp(print)
+                gainXp(diff,print)
+            }
         }
     }
 

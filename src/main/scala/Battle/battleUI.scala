@@ -98,9 +98,6 @@ object YourBar{
     }
 }
 
-
-// object EmptyBattleUI extends BattleUI (EmptyCharacter, EmptyCharacter, EmptyBattle) {}
-
 class DrawPanelBattle (buttonList : List[MyButton], p1 : Character, p2 : Character) extends MyPanel with Repaintable {
     var battleBackgroundImg = Utils.loadImage("BattleBackground.png")
     var pokemonFrontImg = Utils.loadImage("Monsters/EmptyFront.png")

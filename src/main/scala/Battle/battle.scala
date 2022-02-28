@@ -20,6 +20,7 @@ class Battle (p1 : Character, p2 : Character) extends Thread {
     }
 
     override def run : Unit = {
+        // while both players are able to play, they choose an attack and cast it
         while (p1.playing && p2.playing) {
             Player.updateInventory
             p1.newTurn
@@ -46,7 +47,7 @@ class Battle (p1 : Character, p2 : Character) extends Thread {
         Utils.waitDiscussionLabel
         Utils.frame.backToMap
         PlayerDisplayer.canInteract = true
-        Utils.frame.listening = true
+        Utils.frame.listeningToKeyboard = true
     }
 }
 
