@@ -64,7 +64,6 @@ class CharacterDisplayer (imgName : String) {
                     mover.characterDisplayer = this
                     isMoving = true
                     mover.move(moveX, moveY)
-                    alignCoordinates
                 }
                 if (mapDisplayer.grid(i+moveX)(j+moveY).interactable) {
                     mapDisplayer.grid(i+moveX)(j+moveY).interact
@@ -100,6 +99,7 @@ class CharacterDisplayer (imgName : String) {
             case Left => ny = 1
          }
         }
+
     def display (g : Graphics, xMap : Int, yMap : Int, n : Int) : Unit = {
         if (n == whichMap) {
             updateSprite()
@@ -137,9 +137,7 @@ object PlayerDisplayer extends CharacterDisplayer ("Characters/MainCharacter.png
         super.endMove
         var sameCase = Utils.characterDisplayers.filter(opp => opp != this && opp.i == i && opp.j == j && !opp.player.alreadyBeaten)
         for (i <- sameCase.indices) {
-            var b = new Battle(Player, sameCase(i).player)
-            b.initialise
-            b.start
+            Utils.frame.startBattle(Player, sameCase(i).player)
         }
     }
 
@@ -155,6 +153,7 @@ object SecondCharacterDisplayer extends CharacterDisplayer ("Characters/Louis.pn
     j = 7
 
     override def display (g : Graphics, xMap : Int, yMap : Int, n : Int) : Unit = {
+        alignCoordinates
         super.display(g, xMap, yMap, n)
     }
 

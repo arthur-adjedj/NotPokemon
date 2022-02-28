@@ -15,7 +15,7 @@ class MapUI extends JFrame with KeyListener {
 
     var ready : Boolean = false
 
-    var mapDisplayer : MapDisplayer = new MapDisplayer1(this, sizeBlock)
+    var mapDisplayer : MapDisplayer = new MapDisplayer1 (new UI)
 
     var pane = new DrawPanelMap(mapDisplayer)
     var listening : Boolean = true
@@ -55,7 +55,6 @@ class MapUI extends JFrame with KeyListener {
                 case _ => Utils.print(e.getKeyChar)
             }
         }
-        pane.repaint()
         
     }
 
@@ -66,11 +65,11 @@ object EmptyMapUI extends MapUI {}
 
 
 
-class DrawPanelMap (mapDisplayer : MapDisplayer) extends JLabel with Repaintable {
+class DrawPanelMap (mapDisplayer : MapDisplayer) extends MyPanel with Repaintable {
 
     var ready : Boolean = false
 
-    def initialise : Unit = {
+    override def initialise : Unit = {
         ready = true
     }
 

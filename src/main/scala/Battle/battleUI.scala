@@ -45,152 +45,139 @@ abstract class HpBar {
 }
 
 
-trait Descriptable {
+// class BattleUI (p1 : Character, p2 : Character, battle : Battle) extends JFrame with MouseListener with MouseMotionListener {
 
-    def onMouseOver (g : Graphics, xMouse : Int, yMouse : Int, width : Int, height : Int) : Unit = {}
-    def isMouseOver (x : Int, y : Int) : Boolean = false
-}
+//     var posX : Int = 1000
+//     var posY : Int = 100
 
-object EmptyDescriptable extends Object with Descriptable {
-    override def isMouseOver (x : Int, y : Int) = true
-}
+//     var sizeX : Int = 614
+//     var sizeY : Int = 858
 
-class BattleUI (p1 : Character, p2 : Character, battle : Battle) extends JFrame with MouseListener with MouseMotionListener {
+//     var xClick : Int = -1
+//     var yClick : Int = -1
 
-    var posX : Int = 1000
-    var posY : Int = 100
+//     var closeButton = new CloseButton ("Close.png", close, sizeX - 20, 2)
+//     var helpButton = new HelpButton ("Help.png", help)
 
-    var sizeX : Int = 614
-    var sizeY : Int = 858
+//     var buttonList : List[MyButton] = List(AttackButton, BagButton, MonsterButton, RunButton, BackButton, NextPageItemButton, closeButton, helpButton,
+//                                             CastAttackButton1, CastAttackButton2, CastAttackButton3, CastAttackButton4,
+//                                             ChangeMonsterButton1, ChangeMonsterButton2, ChangeMonsterButton3, 
+//                                             ChangeMonsterButton4, ChangeMonsterButton5, ChangeMonsterButton6,
+//                                             UseItemButton1, UseItemButton2, UseItemButton3, UseItemButton4)
 
-    var xClick : Int = -1
-    var yClick : Int = -1
-
-
-    var closeButton = new CloseButton ("Close.png", close, sizeX - 20, 2)
-    var helpButton = new HelpButton ("Help.png", help)
-
-    var buttonList : List[MyButton] = List(AttackButton, BagButton, MonsterButton, RunButton, BackButton, NextPageItemButton, closeButton, helpButton,
-                                            CastAttackButton1, CastAttackButton2, CastAttackButton3, CastAttackButton4,
-                                            ChangeMonsterButton1, ChangeMonsterButton2, ChangeMonsterButton3, 
-                                            ChangeMonsterButton4, ChangeMonsterButton5, ChangeMonsterButton6,
-                                            UseItemButton1, UseItemButton2, UseItemButton3, UseItemButton4)
-
-    var descriptables : List[Descriptable] = List(AttackButton, BagButton, MonsterButton, RunButton, BackButton, NextPageItemButton,
-                                                CastAttackButton1, CastAttackButton2, CastAttackButton3, CastAttackButton4,
-                                                ChangeMonsterButton1, ChangeMonsterButton2, ChangeMonsterButton3, 
-                                                ChangeMonsterButton4, ChangeMonsterButton5, ChangeMonsterButton6,
-                                                UseItemButton1, UseItemButton2, UseItemButton3, UseItemButton4,
-                                                PlayerMonsterDisplayer, OpponentMonsterDisplayer)
+//     var descriptables : List[Descriptable] = List(AttackButton, BagButton, MonsterButton, RunButton, BackButton, NextPageItemButton,
+//                                                 CastAttackButton1, CastAttackButton2, CastAttackButton3, CastAttackButton4,
+//                                                 ChangeMonsterButton1, ChangeMonsterButton2, ChangeMonsterButton3, 
+//                                                 ChangeMonsterButton4, ChangeMonsterButton5, ChangeMonsterButton6,
+//                                                 UseItemButton1, UseItemButton2, UseItemButton3, UseItemButton4,
+//                                                 PlayerMonsterDisplayer, OpponentMonsterDisplayer)
     
-    var pane = new DrawPanelBattle(buttonList, p1, p2, this)
-    var lastMonsterSelected : Monster = EmptyMonster
+//     var pane = new DrawPanelBattle(buttonList, p1, p2)
+//     var lastMonsterSelected : Monster = EmptyMonster
 
     
 
-    def initialise : Unit = {
-        YourBar.p1 = p1
-        EnnemyBar.p2 = p2
+//     def initialise : Unit = {
+//         YourBar.p1 = p1
+//         EnnemyBar.p2 = p2
 
-        setSize(sizeX, sizeY)
-
-        DiscussionLabel.battleUi = this
+//         setSize(sizeX, sizeY)
         
-        addMouseListener(this)
-        addMouseMotionListener(this)
-        setLayout(null)
+//         addMouseListener(this)
+//         addMouseMotionListener(this)
+//         setLayout(null)
 
-        setUndecorated(true)
-        setContentPane(pane)
-
-
-        setLocation(posX, posY)
-        setVisible(true)
+//         setUndecorated(true)
+//         setContentPane(pane)
 
 
-    }
+//         setLocation(posX, posY)
+//         setVisible(true)
 
-    def close () : Unit = {
-        dispose()
-    }
 
-    def help () : Unit = {
-        pane.showHelp = !pane.showHelp
-    }
+//     }
 
-    def nullPointerException : Unit = {
-        getClass.getResource("")
-    }
+//     def close () : Unit = {
+//         dispose()
+//     }
+
+//     def help () : Unit = {
+//         pane.showHelp = !pane.showHelp
+//     }
+
+//     def nullPointerException : Unit = {
+//         getClass.getResource("")
+//     }
     
   
 
-    def mouseClicked (e : MouseEvent) : Unit = {
-        if (!DiscussionLabel.changingText && DiscussionLabel.messageQueue.isEmpty) {
-            if (Player.hisTurn) {
-                var clickCaught : Boolean = false
-                def clickAButton (b : MyButton) : Unit = {
-                    if (!clickCaught) {
-                        clickCaught = b.onClick(e.getX, e.getY)
-                    }
-                }
+//     def mouseClicked (e : MouseEvent) : Unit = {
+//         if (!DiscussionLabel.changingText && DiscussionLabel.messageQueue.isEmpty) {
+//             if (Player.hisTurn) {
+//                 var clickCaught : Boolean = false
+//                 def clickAButton (b : MyButton) : Unit = {
+//                     if (!clickCaught) {
+//                         clickCaught = b.onClick(e.getX, e.getY)
+//                     }
+//                 }
 
-                buttonList.foreach(clickAButton)
-                clickCaught = false
-            }
-        } else {
-            DiscussionLabel.skip
-        }
-    }
-    def mouseEntered (e : MouseEvent) : Unit = {}
-    def mouseExited (e : MouseEvent) : Unit = {}
-    def mousePressed (e : MouseEvent) : Unit = {
-        if (xClick == -1 && yClick == -1) {
-            if (e.getY >= 0 && e.getY < 20 && e.getX >= 0 && e.getX <= getWidth) {
-                xClick = e.getX
-                yClick = e.getY
-            }
-        }
-    }
+//                 buttonList.foreach(clickAButton)
+//                 clickCaught = false
+//             }
+//         } else {
+//             DiscussionLabel.skip
+//         }
+//     }
+//     def mouseEntered (e : MouseEvent) : Unit = {}
+//     def mouseExited (e : MouseEvent) : Unit = {}
+//     def mousePressed (e : MouseEvent) : Unit = {
+//         if (xClick == -1 && yClick == -1) {
+//             if (e.getY >= 0 && e.getY < 20 && e.getX >= 0 && e.getX <= getWidth) {
+//                 xClick = e.getX
+//                 yClick = e.getY
+//             }
+//         }
+//     }
 
-    def mouseReleased (e : MouseEvent) : Unit = {
-        xClick = -1
-        yClick = -1
-    }
+//     def mouseReleased (e : MouseEvent) : Unit = {
+//         xClick = -1
+//         yClick = -1
+//     }
 
-    def mouseDragged (e : MouseEvent) : Unit = {
-        if (xClick != -1 && yClick != -1) {
-            var movX = xClick - e.getX
-            var movY = yClick - e.getY
-            posX = (posX - movX).max(0).min(Toolkit.getDefaultToolkit.getScreenSize.getWidth.toInt-getWidth)
-            posY = (posY - movY).max(0).min(Toolkit.getDefaultToolkit.getScreenSize.getHeight.toInt-getHeight)
-            setLocation(posX, posY)
-        }
-    }
+//     def mouseDragged (e : MouseEvent) : Unit = {
+//         if (xClick != -1 && yClick != -1) {
+//             var movX = xClick - e.getX
+//             var movY = yClick - e.getY
+//             posX = (posX - movX).max(0).min(Toolkit.getDefaultToolkit.getScreenSize.getWidth.toInt-getWidth)
+//             posY = (posY - movY).max(0).min(Toolkit.getDefaultToolkit.getScreenSize.getHeight.toInt-getHeight)
+//             setLocation(posX, posY)
+//         }
+//     }
 
-    def mouseMoved (e : MouseEvent) : Unit = {
-        pane.underMouse = EmptyDescriptable
-        var eventCaught : Boolean = false
-        def moveMouseOver (b : Descriptable) : Unit = {
-            if (!eventCaught) {
-                if (b.isMouseOver(e.getX, e.getY)) {
-                    eventCaught = true
-                    pane.underMouse = b
-                }
-            }
-        }
+//     def mouseMoved (e : MouseEvent) : Unit = {
+//         pane.underMouse = EmptyDescriptable
+//         var eventCaught : Boolean = false
+//         def moveMouseOver (b : Descriptable) : Unit = {
+//             if (!eventCaught) {
+//                 if (b.isMouseOver(e.getX, e.getY)) {
+//                     eventCaught = true
+//                     pane.underMouse = b
+//                 }
+//             }
+//         }
 
-        descriptables.foreach(moveMouseOver)
-        eventCaught = false
-        updateImages
-        pane.xMouse = e.getX
-        pane.yMouse = e.getY
-    }
+//         descriptables.foreach(x => moveMouseOver(x))
+//         eventCaught = false
+//         updateImages
+//         pane.xMouse = e.getX
+//         pane.yMouse = e.getY
+//     }
 
-    def updateImages : Unit = {
-        pane.updateImages
-    }
+//     def updateImages : Unit = {
+//         pane.updateImages
+//     }
 
-}
+// }
 
 object EnnemyBar{
     def ennemyBarImg = Utils.loadImage("EnnemyBar.png")
@@ -246,18 +233,13 @@ object YourBar{
 }
 
 
-object EmptyBattleUI extends BattleUI (EmptyCharacter, EmptyCharacter, EmptyBattle) {}
+// object EmptyBattleUI extends BattleUI (EmptyCharacter, EmptyCharacter, EmptyBattle) {}
 
-class DrawPanelBattle (buttonList : List[MyButton], p1 : Character, p2 : Character, ui : BattleUI) extends JPanel with Repaintable {
-    var toShow : Boolean = false
+class DrawPanelBattle (buttonList : List[MyButton], p1 : Character, p2 : Character) extends MyPanel with Repaintable {
     var battleBackgroundImg = Utils.loadImage("BattleBackground.png")
     var pokemonFrontImg = Utils.loadImage("Monsters/EmptyFront.png")
     var pokemonBackImg = Utils.loadImage("Monsters/EmptyBack.png")
     var poke_font : Font = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("PokemonPixelFont.ttf"))
-    var underMouse : Descriptable = EmptyDescriptable
-    var xMouse : Int = 0
-    var yMouse : Int = 0
-    var showHelp : Boolean = false
 
     poke_font = poke_font.deriveFont(Font.PLAIN,30)
   
@@ -266,6 +248,9 @@ class DrawPanelBattle (buttonList : List[MyButton], p1 : Character, p2 : Charact
         buttonList.foreach(x => x.update)
         g.setFont(poke_font)
         g.drawImage(battleBackgroundImg, 0, 0, null)
+
+        PlayerMonsterDisplayer.update
+        OpponentMonsterDisplayer.update
 
         PlayerMonsterDisplayer.display(g)
         OpponentMonsterDisplayer.display(g)
@@ -283,13 +268,4 @@ class DrawPanelBattle (buttonList : List[MyButton], p1 : Character, p2 : Charact
         
     }
 
-    def updateImages : Unit = {
-        pokemonFrontImg = Utils.loadImage(p2.currentMonster.imgNameFront)
-        pokemonBackImg = Utils.loadImage(p1.currentMonster.imgNameBack)
-
-        PlayerMonsterDisplayer.update
-        OpponentMonsterDisplayer.update
-        
-        repaint()
-    }
 }

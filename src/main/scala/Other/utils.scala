@@ -7,6 +7,8 @@ import java.util.concurrent.TimeUnit
 object Utils {
 
     var characterDisplayers : List[CharacterDisplayer] = List()
+    var repaintables : List[Repaintable] = List()
+    var frame : UI = EmptyUI
     Repainter.start
 
     var debug = false
@@ -61,8 +63,6 @@ object Utils {
         (text1, text2, text3)
     }
 
-    var repaintables : List[Repaintable] = List()
-
     def waitDiscussionLabel : Unit = {
         while (!DiscussionLabel.messageQueue.isEmpty || DiscussionLabel.changingText) {
             TimeUnit.MILLISECONDS.sleep(10)    
@@ -110,4 +110,14 @@ object Repainter extends Thread {
             TimeUnit.MILLISECONDS.sleep(100/6)
         }
     }
+}
+
+trait Descriptable {
+
+    def onMouseOver (g : Graphics, xMouse : Int, yMouse : Int, width : Int, height : Int) : Unit = {}
+    def isMouseOver (x : Int, y : Int) : Boolean = false
+}
+
+object EmptyDescriptable extends Object with Descriptable {
+    override def isMouseOver (x : Int, y : Int) = true
 }

@@ -1,6 +1,6 @@
 import java.awt.Graphics
 
-class MapDisplayer (mapUI : MapUI, sizeB : Int) {
+class MapDisplayer (frame : UI) {
 
     var x : Int = 0
     var y : Int = 0
@@ -8,15 +8,18 @@ class MapDisplayer (mapUI : MapUI, sizeB : Int) {
 
     var grid : Array[Array[Block]] = Array.ofDim[Block](20, 20)
 
-    var sizeBlock : Int = sizeB
+    var ui : UI = frame
+    var sizeBlock : Int = 0
 
     var imgName : String = "Maps/1.png"
     var img = Utils.loadImage(imgName)
+
 
     def initialise (nMap : Int, sizeB : Int) : Unit = {
         n = nMap
         PlayerDisplayer.mapDisplayer = this
         SecondCharacterDisplayer.mapDisplayer = this
+        sizeBlock = ui.sizeBlock
     }
     
 
@@ -41,11 +44,11 @@ class MapDisplayer (mapUI : MapUI, sizeB : Int) {
     }
 }
 
-object EmptyMapDisplayer extends MapDisplayer (EmptyMapUI, 0) {
+object EmptyMapDisplayer extends MapDisplayer (EmptyUI) {
 
 }
 
-class MapDisplayer1 (mapUI : MapUI, sizeB : Int) extends MapDisplayer (mapUI, sizeB) {
+class MapDisplayer1 (frame : UI) extends MapDisplayer (frame : UI) {
     for (i <- grid.indices) {
         for (j <- grid(i).indices) {
             grid(i)(j) = new EmptyBlock(i, j)

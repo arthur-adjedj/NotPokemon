@@ -25,11 +25,10 @@ class Character {
 
     def enterBattle : Unit = {
         playing = true
+        runningAway = false
         team.foreach(x => x.enterBattle)
         currentMonster = team.filter(x => x.alive)(0)
         currentMonster.enterField
-
-        battle.ui.updateImages
 
     }
 
@@ -78,7 +77,6 @@ class Character {
             var l = alives.length
             currentMonster = alives(scala.util.Random.nextInt(l))
             currentMonster.enterField
-            battle.ui.updateImages
         } else {
             lose
         }
@@ -93,7 +91,6 @@ class Character {
             var previousMonster = currentMonster
             currentMonster = team(n)
             currentMonster.enterField 
-            battle.ui.updateImages
             if (previousMonster.alive) {
                 chooseAttack(EmptyAttack)
             }
@@ -147,7 +144,6 @@ abstract class WildOpponent extends Opponent {
             var l = alives.length
             currentMonster = alives(scala.util.Random.nextInt(l))
             currentMonster.enterField
-            battle.ui.updateImages
         } else {
             lose(captured)
         }

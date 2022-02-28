@@ -9,7 +9,6 @@ import scala.collection.mutable.Queue
 object DiscussionLabel {
     var text1 : String = ""
     var text2 : String = ""
-    var battleUi : BattleUI = EmptyBattleUI
     var charPerLine : Int = 27
     var x : Int = 40
     var y : Int = 330

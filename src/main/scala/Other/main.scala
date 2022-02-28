@@ -3,8 +3,10 @@ import java.util.concurrent.TimeUnit
 object Release {
   def main(argv : Array[String]) : Unit = {
     Utils.debug = false
-    var map = new MapUI
-    map.initialise    
+    var frame = new UI
+    Utils.frame = frame
+    frame.initialise
+    frame.initialiseMap
   }
 }
 
@@ -12,12 +14,14 @@ object Debug {
   def main(argv : Array[String]) : Unit = {
     Utils.debug = true
     Utils.print("En cas de problème, rappelons que 1/2 = 0")
-    var map = new MapUI
-    map.initialise    
+    var frame = new UI
+    Utils.frame = frame
+    frame.initialise
+    frame.initialiseMap 
   }
 }
 
-object BattleTests {
+object Tests {
   def main(argv : Array[String]) : Unit = {
     Utils.debug = true
     BattleTest.start
