@@ -63,6 +63,12 @@ object Utils {
 
     var repaintables : List[Repaintable] = List()
 
+    def waitDiscussionLabel : Unit = {
+        while (!DiscussionLabel.messageQueue.isEmpty || DiscussionLabel.changingText) {
+            TimeUnit.MILLISECONDS.sleep(10)    
+        }
+    }
+
 }
 
 trait Repaintable {

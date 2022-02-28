@@ -140,7 +140,14 @@ abstract class Monster {
                         this.receiveAttack(attack, this)
                         attack.cast(this, this)
                     } else if (random <= attack.accuracy*thisAccuracyEff*otherEvasionEff) {
-                        DiscussionLabel.changeText(name + " casts " + attack.name + ". " + effectivenessText(attack,other))
+                        if (other.owner.runningAway) {
+                            DiscussionLabel.changeText("Before you go, " + name + " casts " + attack.name + ". " + effectivenessText(attack,other))
+                        } else {
+                            DiscussionLabel.changeText(name + " casts " + attack.name + ". " + effectivenessText(attack,other))
+                        }
+
+                        Utils.waitDiscussionLabel
+                        
                         attack.cast(this, other)
                         other.receiveAttack(attack, this)
                     } else {

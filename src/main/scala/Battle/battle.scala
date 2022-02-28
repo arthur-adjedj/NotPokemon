@@ -56,9 +56,7 @@ class Battle (p1 : Character, p2 : Character) extends Thread {
                 p2.currentAttack = NoneAttack
             }
         }
-        while (!DiscussionLabel.messageQueue.isEmpty || DiscussionLabel.changingText) {
-            TimeUnit.MILLISECONDS.sleep(10)    
-        }
+        Utils.waitDiscussionLabel
         ui.close
         PlayerDisplayer.canInteract = true
         PlayerDisplayer.mapUI.listening = true
