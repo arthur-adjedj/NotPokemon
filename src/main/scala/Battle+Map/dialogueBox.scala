@@ -23,7 +23,7 @@ object DiscussionLabel {
     val attributes = (collection.Map(TextAttribute.TRACKING -> 0.05)).asJava
     font = font.deriveFont(attributes)
     font = font.deriveFont(font.getStyle() | Font.BOLD)
-    var textChanger : TextChanger = new TextChanger("", "")
+    var textChanger : TextChanger = new TextChanger("", "", "")
     var changingText : Boolean = false
     var messageQueue : Queue[String] = Queue()
 
@@ -46,7 +46,7 @@ object DiscussionLabel {
             text1 = ""
             text2 = ""
 
-            textChanger = new TextChanger(t1, t2)
+            textChanger = new TextChanger(t1, t2, t3)
             textChanger.start
         } else {
             messageQueue.enqueue(s)
@@ -58,9 +58,10 @@ object DiscussionLabel {
     }
 }
 
-class TextChanger (t1 : String, t2 : String) extends Thread {
+class TextChanger (t1 : String, t2 : String, t3 : String) extends Thread {
     var text1 : String = t1
     var text2 : String = t2
+    var text3 : String = t3
 
     var pausing : Boolean = true
     var waitTime : Int = 50
@@ -79,6 +80,21 @@ class TextChanger (t1 : String, t2 : String) extends Thread {
             else TimeUnit.MILLISECONDS.sleep(waitTime)
 
         }
+
+        if (text3.length != 0) {
+            DiscussionLabel.text1 = DiscussionLabel.text2
+            DiscussionLabel.text2 = ""
+            for (i <- text3.indices) {
+                DiscussionLabel.text2 += text3(i)
+
+                if (List('.','!').contains(text3(i))) TimeUnit.MILLISECONDS.sleep(pauseTime)
+                else TimeUnit.MILLISECONDS.sleep(waitTime)
+
+        }
+
+        }
+
+
         DiscussionLabel.changingText = false
         if (!DiscussionLabel.messageQueue.isEmpty) {
             DiscussionLabel.changeText(DiscussionLabel.messageQueue.dequeue)
