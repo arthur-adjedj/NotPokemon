@@ -16,6 +16,7 @@ class MapDisplayer (frame : UI) {
     var img = Utils.loadImage(imgName)
 
 
+
     def initialise (nMap : Int, sizeB : Int) : Unit = {
         n = nMap
         PlayerDisplayer.mapDisplayer = this
@@ -24,6 +25,14 @@ class MapDisplayer (frame : UI) {
         for (i <- 0 to sizeMap - 1) {
             for (j <- 0 to sizeMap - 1) {
                 grid(i)(j).initialise(i, j)
+            }
+        }
+    }
+
+    def update : Unit = {
+        for (i <- 0 to sizeMap - 1) {
+            for (j <- 0 to sizeMap - 1) {
+                grid(i)(j).updateCoordinatesOnMap(i, j)
             }
         }
     }

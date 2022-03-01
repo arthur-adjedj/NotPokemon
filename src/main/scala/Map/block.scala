@@ -25,6 +25,12 @@ abstract class Block (imgNam : String) {
     def display (g : Graphics) : Unit = {
         g.drawImage(img, x, y, null)
     }
+    
+    def updateCoordinatesOnMap (iMap : Int, jMap : Int) : Unit = {
+        walkable = originalWalkable
+        i = iMap
+        j = jMap
+    }
 
     def updateCoordinates (xMap : Int, yMap : Int, sizeBlock : Int) : Unit = {
         // when the map is moving
