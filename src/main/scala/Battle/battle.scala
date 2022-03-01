@@ -44,7 +44,7 @@ class Battle (p1 : Character, p2 : Character) extends Thread {
             p1.currentAttack = EmptyAttack
             p2.currentAttack = EmptyAttack
         }
-        Utils.waitDiscussionLabel
+        Utils.waitDiscussionLabel(true)
         Utils.frame.backToMap
         PlayerDisplayer.canInteract = true
         Utils.frame.listeningToKeyboard = true

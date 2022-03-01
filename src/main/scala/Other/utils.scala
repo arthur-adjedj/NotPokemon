@@ -66,8 +66,15 @@ object Utils {
     }
 
     def waitDiscussionLabel : Unit = {
+        waitDiscussionLabel(false)
+    }
+
+    def waitDiscussionLabel (waitLonger : Boolean): Unit = {
         while (!DiscussionLabel.messageQueue.isEmpty || DiscussionLabel.changingText) {
             TimeUnit.MILLISECONDS.sleep(10)    
+        }
+        if (waitLonger) {
+            TimeUnit.MILLISECONDS.sleep(200)
         }
     }
 
