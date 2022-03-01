@@ -94,8 +94,17 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
     }
 
     def backToMap : Unit = {
+        if (Player.team.forall(x => !x.alive)) {
+            loseTheGame
+        }
+
         currentPane = mapPane.asInstanceOf[MyPanel]
         setContentPane(currentPane)
+    }
+
+    def loseTheGame : Unit = {
+        Utils.print("You lost the game")
+        close
     }
 
     def close () : Unit = {
@@ -177,6 +186,7 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
                 case 'q' => PlayerDisplayer.move(-1, 0)
                 case 'd' => PlayerDisplayer.move(1, 0)
                 case 'e' => PlayerDisplayer.interactExplicitly
+                case 'n' => PlayerDisplayer.noClip = !PlayerDisplayer.noClip
                 case _ => Utils.print(e.getKeyChar)
             }
         }        

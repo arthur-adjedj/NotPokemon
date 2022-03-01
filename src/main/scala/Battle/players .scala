@@ -7,7 +7,7 @@ object SecondCharacter extends Opponent {
 
     override def lose : Unit = {
         super.lose
-        Utils.frame.mapPane.mapDisplayer.grid(10)(6) = new EmptyBlock(10, 6)
+        Utils.frame.mapPane.mapDisplayer.grid(10)(6) = new EmptyBlock
     }
 
     override def printLosingMessage : Unit = {

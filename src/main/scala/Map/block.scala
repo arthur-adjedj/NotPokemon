@@ -2,18 +2,25 @@ import java.awt.Graphics
 import java.util.concurrent.TimeUnit
 
 
-abstract class Block (iMap : Int, jMap : Int, imgNam : String) {
+abstract class Block (imgNam : String) {
     var x : Int = 0
     var y : Int = 0
-    var i : Int = iMap
-    var j : Int = jMap
+    var i : Int = 0
+    var j : Int = 0
 
     var imgName : String = imgNam
     var img = Utils.loadImage(imgName)
 
+    var originalWalkable : Boolean = true
     var walkable : Boolean = true
     var interactable : Boolean = false
     var slippery : Boolean = false
+
+    def initialise (iMap : Int, jMap : Int) : Unit = {
+        walkable = originalWalkable
+        i = iMap
+        j = jMap
+    }
 
     def display (g : Graphics) : Unit = {
         g.drawImage(img, x, y, null)
@@ -33,7 +40,7 @@ abstract class Block (iMap : Int, jMap : Int, imgNam : String) {
 
 }
 //renders a "base block" given a certain orientation with updown and leftright in {-1,0,1}
-class MultiBlock(iMap : Int, jMap : Int, updown : Int, leftright : Int, base : String) extends Block(iMap,jMap,"Maps/Tile.png") {
+class MultiBlock(updown : Int, leftright : Int, base : String) extends Block("Maps/Tile.png") {
     var upDownStr : String = updown match {
         case (-1) => "Bot"
         case 1 => "Top"
@@ -49,15 +56,15 @@ class MultiBlock(iMap : Int, jMap : Int, updown : Int, leftright : Int, base : S
     img = Utils.loadImage(imgName)
 }
 
-class RockBlock (iMap : Int, jMap : Int) extends Block(iMap, jMap, "Blocks/Rock.png") {
-    walkable = false
+class RockBlock extends Block("Blocks/Rock.png") {
+    originalWalkable = false
 }
 
-class MultiCliff(iMap : Int, jMap : Int, updown : Int, leftright : Int) extends MultiBlock(iMap, jMap, updown, leftright, "Cliff") {
-    walkable = false
+class MultiCliff(updown : Int, leftright : Int) extends MultiBlock(updown, leftright, "Cliff") {
+    originalWalkable = false
 }
 
-class GrassBlock (iMap : Int, jMap : Int) extends Block (iMap, jMap, "Blocks/Grass.png") {
+class GrassBlock extends Block ("Blocks/Grass.png") {
     interactable = true
     override def onWalk (player : CharacterDisplayer) : Unit = {
         if (player.player.name == "You") {
@@ -70,10 +77,10 @@ class GrassBlock (iMap : Int, jMap : Int) extends Block (iMap, jMap, "Blocks/Gra
     }
 }
 
-class IceBlock (iMap : Int, jMap : Int) extends Block (iMap, jMap, "Blocks/Ice.png") {
+class IceBlock extends Block ("Blocks/Ice.png") {
     slippery = true
 }
 
-class EmptyBlock (iMap : Int, jMap : Int) extends Block (iMap, jMap, "Empty.png") {
+class EmptyBlock extends Block ("Empty.png") {
     override def display (g : Graphics) : Unit = {}
 }

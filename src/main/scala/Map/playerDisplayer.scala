@@ -24,6 +24,9 @@ class CharacterDisplayer (imgName : String) {
     var whichMap : Int = 0
     var mover : Mover = new Mover
 
+    // when noClip is true, the player can travel everywhere ignoring the walls and the interactions
+    var noClip : Boolean = false
+
     /*tile number of the current sprite used, starting in the upper left corner
     the sprites are contained in such a way that the orientation depends on ny, and the animation key on nx,
     see "Characters/MainCharacter.png" for example*/
@@ -73,8 +76,8 @@ class CharacterDisplayer (imgName : String) {
                 }
 
             if (0 <= i+moveX && i+moveX < mapDisplayer.grid.length && 0 <= j+moveY && j+moveY < mapDisplayer.grid(i).length) {
-                if (mapDisplayer.grid(i+moveX)(j+moveY).walkable) {
-                    mapDisplayer.grid(i)(j).walkable = true
+                if (mapDisplayer.grid(i+moveX)(j+moveY).walkable || noClip) {
+                    mapDisplayer.grid(i)(j).walkable = mapDisplayer.grid(i)(j).originalWalkable
                     mover = new Mover
                     mover.characterDisplayer = this
                     isMoving = true
@@ -91,13 +94,13 @@ class CharacterDisplayer (imgName : String) {
     }
 
     def endMove : Unit = {
-        if (hasMoved) {
+        if (hasMoved && !noClip) {
             mapDisplayer.grid(i)(j).onWalk(this)
         }
 
         isMoving = false
         mapDisplayer.grid(i)(j).walkable = false
-        if (mapDisplayer.grid(i)(j).slippery) {
+        if (mapDisplayer.grid(i)(j).slippery && !noClip) {
             sliding = true
             move(lastMoveX, lastMoveY)
         } else {
@@ -151,7 +154,7 @@ class CharacterDisplayer (imgName : String) {
     def interactExplicitly : Unit = {
         var iInteracted : Int = i
         var jInteracted : Int = j
-        
+
         {direction match {
             case Up => jInteracted -= 1
             case Down => jInteracted += 1

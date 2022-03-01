@@ -6,7 +6,8 @@ class MapDisplayer (frame : UI) {
     var y : Int = -25
     var n : Int = 1 // when there will be several maps
 
-    var grid : Array[Array[Block]] = Array.ofDim[Block](20, 20)
+    var sizeMap : Int = 20
+    var grid : Array[Array[Block]] = Array.ofDim[Block](sizeMap, sizeMap)
 
     var ui : UI = frame
     var sizeBlock : Int = 0
@@ -20,6 +21,11 @@ class MapDisplayer (frame : UI) {
         PlayerDisplayer.mapDisplayer = this
         SecondCharacterDisplayer.mapDisplayer = this
         sizeBlock = ui.sizeBlock
+        for (i <- 0 to sizeMap - 1) {
+            for (j <- 0 to sizeMap - 1) {
+                grid(i)(j).initialise(i, j)
+            }
+        }
     }
     
 
@@ -51,53 +57,53 @@ object EmptyMapDisplayer extends MapDisplayer (EmptyUI) {
 class MapDisplayer1 (frame : UI) extends MapDisplayer (frame : UI) {
     for (i <- grid.indices) {
         for (j <- grid(i).indices) {
-            grid(i)(j) = new EmptyBlock(i, j)
+            grid(i)(j) = new EmptyBlock
         }
     }
-    grid(2)(1) = new MultiCliff(2, 1, 1, 0)
-    grid(3)(1) = new MultiCliff(3, 1, 1, 0)
-    grid(4)(1) = new MultiCliff(4, 1, 1, 1)
-    grid(4)(2) = new MultiCliff(4, 2, 0, 1)
-    grid(4)(3) = new MultiCliff(4, 3, 0, 1)
-    grid(4)(4) = new MultiCliff(4, 4, -1, 1)
-    grid(3)(4) = new MultiCliff(3, 4, -1, 0)
-    grid(2)(4) = new MultiCliff(2, 4, -1, 0)
+    grid(2)(1) = new MultiCliff(1, 0)
+    grid(3)(1) = new MultiCliff(1, 0)
+    grid(4)(1) = new MultiCliff(1, 1)
+    grid(4)(2) = new MultiCliff(0, 1)
+    grid(4)(3) = new MultiCliff(0, 1)
+    grid(4)(4) = new MultiCliff(-1, 1)
+    grid(3)(4) = new MultiCliff(-1, 0)
+    grid(2)(4) = new MultiCliff(-1, 0)
 
-    grid(0)(2) = new GrassBlock(0, 2)
-    grid(1)(3) = new GrassBlock(1, 3)
-    grid(0)(3) = new GrassBlock(0, 3)
-    grid(1)(2) = new GrassBlock(1, 2)
+    grid(0)(2) = new GrassBlock
+    grid(1)(3) = new GrassBlock
+    grid(0)(3) = new GrassBlock
+    grid(1)(2) = new GrassBlock
 
     for (i <- 7 to 13) {
         for (j <- 7 to 13) {
-            grid(i)(j) = new IceBlock(i, j)
+            grid(i)(j) = new IceBlock
         }
     }
     for (i <- 7 to 13) {
-        grid(i)(6) = new MultiCliff(i, 6, -1, 0)
-        grid(i)(14) = new MultiCliff(i, 14, 1, 0)
+        grid(i)(6) = new MultiCliff(-1, 0)
+        grid(i)(14) = new MultiCliff(1, 0)
 
-        grid(6)(i) = new MultiCliff(6, i, 0, 1)
-        grid(14)(i) = new MultiCliff(14, i, 0, -1)
+        grid(6)(i) = new MultiCliff(0, 1)
+        grid(14)(i) = new MultiCliff(0, -1)
     }
-    grid(7)(6) = new EmptyBlock(7, 6)
-    grid(10)(10) = new EmptyBlock(10, 10)
-    grid(11)(10) = new EmptyBlock(11, 10)
-    grid(10)(11) = new EmptyBlock(10, 11)
+    grid(7)(6) = new EmptyBlock
+    grid(10)(10) = new EmptyBlock
+    grid(11)(10) = new EmptyBlock
+    grid(10)(11) = new EmptyBlock
 
 
-    grid(13)(13) = new RockBlock(13, 13)
-    grid(12)(8) = new RockBlock(12, 8)
-    grid(8)(9) = new RockBlock(8, 9)
-    grid(9)(7) = new RockBlock(9, 7)
-    grid(13)(8) = new RockBlock(13, 8)
-    grid(11)(10) = new RockBlock(11, 10)
-    grid(11)(11) = new RockBlock(11, 11)
-    grid(11)(12) = new RockBlock(11, 12)
-    grid(10)(12) = new RockBlock(10, 12)
-    grid(9)(12) = new RockBlock(9, 12)
-    grid(9)(11) = new RockBlock(9, 11)
-    grid(9)(10) = new RockBlock(9, 10)
+    grid(13)(13) = new RockBlock
+    grid(12)(8) = new RockBlock
+    grid(8)(9) = new RockBlock
+    grid(9)(7) = new RockBlock
+    grid(13)(8) = new RockBlock
+    grid(11)(10) = new RockBlock
+    grid(11)(11) = new RockBlock
+    grid(11)(12) = new RockBlock
+    grid(10)(12) = new RockBlock
+    grid(9)(12) = new RockBlock
+    grid(9)(11) = new RockBlock
+    grid(9)(10) = new RockBlock
 
 
 }
