@@ -48,6 +48,10 @@ class MultiBlock(iMap : Int, jMap : Int, updown : Int, leftright : Int, base : S
     img = Utils.loadImage(imgName)
 }
 
+class RockBlock (iMap : Int, jMap : Int) extends Block(iMap, jMap, "Blocks/Rock.png") {
+    walkable = false
+}
+
 class MultiCliff(iMap : Int, jMap : Int, updown : Int, leftright : Int) extends MultiBlock(iMap, jMap, updown, leftright, "Cliff") {
     walkable = false
 }
