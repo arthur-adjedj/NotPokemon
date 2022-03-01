@@ -4,6 +4,11 @@ object SecondCharacter extends Opponent {
     team(0).gainLvl(3,false)
 
     name = "Opponent"
+
+    override def lose : Unit = {
+        super.lose
+        Utils.frame.mapPane.mapDisplayer.grid(10)(6) = new EmptyBlock(10, 6)
+    }
 }
 
 object ThirdCharacter extends Opponent {
