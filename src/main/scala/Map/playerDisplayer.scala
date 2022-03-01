@@ -44,10 +44,16 @@ class CharacterDisplayer (imgName : String) {
     //player can't move during dialogues, battles or when the bag/pokédex is open
     var canInteract : Boolean = true
 
+    var lastMoveX : Int = 0
+    var lastMoveY : Int = 0
+    var sliding : Boolean = false
+
     Utils.characterDisplayers = this :: Utils.characterDisplayers
 
     def move (moveX : Int, moveY : Int) : Unit = {
         if (!isMoving && canInteract) {
+            lastMoveX = moveX
+            lastMoveY = moveY
             Utils.print(x, y)
 
             direction = (moveX, moveY) match {
@@ -63,10 +69,14 @@ class CharacterDisplayer (imgName : String) {
                     mover.characterDisplayer = this
                     isMoving = true
                     mover.move(moveX, moveY)
+                } else {
+                    sliding = false
                 }
                 if (mapDisplayer.grid(i+moveX)(j+moveY).interactable) {
-                    mapDisplayer.grid(i+moveX)(j+moveY).interact
+                    mapDisplayer.grid(i+moveX)(j+moveY).interact(this)
                 }
+            } else {
+                sliding = false
             }
             
         }
@@ -74,6 +84,12 @@ class CharacterDisplayer (imgName : String) {
 
     def endMove : Unit = {
         isMoving = false
+        if (mapDisplayer.grid(i)(j).slippery) {
+            sliding = true
+            move(lastMoveX, lastMoveY)
+        } else {
+            sliding = false
+        }
     }
 
     def drawSprite (g : Graphics, xMap : Int, yMap : Int, img : BufferedImage, width : Int, height : Int, nx: Int, ny : Int ) : Unit = {
@@ -150,8 +166,8 @@ object SecondCharacterDisplayer extends CharacterDisplayer ("Characters/Louis.pn
     player = SecondCharacter
 
     whichMap = 1
-    i = 7
-    j = 7
+    i = 3
+    j = 2
 
     override def display (g : Graphics, xMap : Int, yMap : Int, n : Int) : Unit = {
         alignCoordinates

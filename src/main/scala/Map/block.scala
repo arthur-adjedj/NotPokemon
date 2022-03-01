@@ -13,6 +13,7 @@ abstract class Block (iMap : Int, jMap : Int, imgNam : String) {
 
     var walkable : Boolean = true
     var interactable : Boolean = false
+    var slippery : Boolean = false
 
     def display (g : Graphics) : Unit = {
         g.drawImage(img, x, y, null)
@@ -24,7 +25,7 @@ abstract class Block (iMap : Int, jMap : Int, imgNam : String) {
         y = j*sizeBlock - yMap
     }
     
-    def interact : Unit = {
+    def interact (player : CharacterDisplayer) : Unit = {
 
     }
 
@@ -53,13 +54,19 @@ class MultiCliff(iMap : Int, jMap : Int, updown : Int, leftright : Int) extends 
 
 class GrassBlock (iMap : Int, jMap : Int) extends Block (iMap, jMap, "Blocks/Grass.png") {
     interactable = true
-    override def interact : Unit = {
-        if (scala.util.Random.nextFloat() < 0.1) {
-            Utils.frame.listeningToKeyboard = false
-            WildCharacter.initialise
-            Utils.frame.startBattle(Player, WildCharacter)
+    override def interact (player : CharacterDisplayer) : Unit = {
+        if (player.player.name == "You") {
+            if (scala.util.Random.nextFloat() < 0.1) {
+                Utils.frame.listeningToKeyboard = false
+                WildCharacter.initialise
+                Utils.frame.startBattle(Player, WildCharacter)
+            }
         }
     }
+}
+
+class IceBlock (iMap : Int, jMap : Int) extends Block (iMap, jMap, "Blocks/Ice.png") {
+    slippery = true
 }
 
 class EmptyBlock (iMap : Int, jMap : Int) extends Block (iMap, jMap, "Empty.png") {

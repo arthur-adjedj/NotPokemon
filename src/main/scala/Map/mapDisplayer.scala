@@ -67,4 +67,8 @@ class MapDisplayer1 (frame : UI) extends MapDisplayer (frame : UI) {
     grid(1)(3) = new GrassBlock(1, 3)
     grid(0)(3) = new GrassBlock(0, 3)
     grid(1)(2) = new GrassBlock(1, 2)
+
+    grid(5)(5) = new IceBlock(5, 5)
+    grid(5)(6) = new IceBlock(5, 6)
+    grid(5)(7) = new IceBlock(5, 7)
 }
