@@ -53,6 +53,10 @@ object DiscussionLabel {
         }
     }
 
+    def changeText (s : List[String]) : Unit = {
+        s.foreach(x => changeText(x))
+    }
+
     def skip : Unit = {
         textChanger.skip
     }
