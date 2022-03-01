@@ -66,7 +66,6 @@ class CharacterDisplayer (imgName : String) {
         if (!isMoving && canInteract) {
             lastMoveX = moveX
             lastMoveY = moveY
-            Utils.print(x, y)
 
             direction = (moveX, moveY) match {
                 case (0, 1) => Down
@@ -94,6 +93,7 @@ class CharacterDisplayer (imgName : String) {
     }
 
     def endMove : Unit = {
+        Utils.print(x, y)
         if (hasMoved && !noClip) {
             mapDisplayer.grid(i)(j).onWalk(this)
         }
