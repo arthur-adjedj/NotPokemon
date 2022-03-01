@@ -50,6 +50,10 @@ class CharacterDisplayer (imgName : String) {
 
     Utils.characterDisplayers = this :: Utils.characterDisplayers
 
+    def initialise : Unit = {
+        mapDisplayer.grid(i)(j).walkable = false
+    }
+
     def move (moveX : Int, moveY : Int) : Unit = {
         if (!isMoving && canInteract) {
             lastMoveX = moveX
@@ -65,6 +69,7 @@ class CharacterDisplayer (imgName : String) {
 
             if (0 <= i+moveX && i+moveX < mapDisplayer.grid.length && 0 <= j+moveY && j+moveY < mapDisplayer.grid(i).length) {
                 if (mapDisplayer.grid(i+moveX)(j+moveY).walkable) {
+                    mapDisplayer.grid(i)(j).walkable = true
                     mover = new Mover
                     mover.characterDisplayer = this
                     isMoving = true
@@ -84,6 +89,7 @@ class CharacterDisplayer (imgName : String) {
 
     def endMove : Unit = {
         isMoving = false
+        mapDisplayer.grid(i)(j).walkable = false
         if (mapDisplayer.grid(i)(j).slippery) {
             sliding = true
             move(lastMoveX, lastMoveY)
@@ -169,6 +175,7 @@ object SecondCharacterDisplayer extends CharacterDisplayer ("Characters/Louis.pn
     i = 10
     j = 11
 
+
     override def display (g : Graphics, xMap : Int, yMap : Int, n : Int) : Unit = {
         alignCoordinates
         super.display(g, xMap, yMap, n)
@@ -176,4 +183,6 @@ object SecondCharacterDisplayer extends CharacterDisplayer ("Characters/Louis.pn
 
 }
 
-object EmptyCharacterDisplayer extends CharacterDisplayer ("Empty.png") {}
+object EmptyCharacterDisplayer extends CharacterDisplayer ("Empty.png") {
+    override def initialise : Unit = {}
+}

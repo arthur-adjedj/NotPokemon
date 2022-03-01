@@ -89,6 +89,8 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
         currentPane = mapPane.asInstanceOf[MyPanel]
         currentPane.initialise
         setContentPane(currentPane)
+
+        Utils.characterDisplayers.foreach(x => x.initialise)
     }
 
     def backToMap : Unit = {
