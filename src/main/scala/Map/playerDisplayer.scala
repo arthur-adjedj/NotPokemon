@@ -154,17 +154,6 @@ object PlayerDisplayer extends CharacterDisplayer ("Characters/MainCharacter.png
     speed = 10
 
 
-    override def endMove : Unit = {
-        super.endMove
-
-        // if there is another player in the same box, then fight him
-        var sameBox = Utils.characterDisplayers.filter(opp => opp != this && opp.i == i && opp.j == j && !opp.player.alreadyBeaten && opp.whichMap == this.whichMap)
-        if (!sameBox.isEmpty) {
-            Utils.frame.startBattle(Player, sameBox(0).player)
-        }
-    }
-
-
 }
 
 object SecondCharacterDisplayer extends CharacterDisplayer ("Characters/Louis.png") {
