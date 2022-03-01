@@ -98,6 +98,8 @@ class TextChanger (t1 : String, t2 : String, t3 : String) extends Thread {
 
         }
 
+        TimeUnit.MILLISECONDS.sleep(100)
+
 
         DiscussionLabel.changingText = false
         if (!DiscussionLabel.messageQueue.isEmpty) {
@@ -107,5 +109,6 @@ class TextChanger (t1 : String, t2 : String, t3 : String) extends Thread {
 
     def skip : Unit = {
         waitTime = 10
+        pauseTime = 80
     }
 }
