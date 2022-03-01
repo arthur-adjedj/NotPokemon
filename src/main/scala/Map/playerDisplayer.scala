@@ -46,6 +46,10 @@ class CharacterDisplayer (imgName : String) {
 
     var lastMoveX : Int = 0
     var lastMoveY : Int = 0
+
+    // true iff the last move succeeded (no wall, no border...)
+    var hasMoved : Boolean = false
+
     var sliding : Boolean = false
 
     Utils.characterDisplayers = this :: Utils.characterDisplayers
@@ -55,6 +59,7 @@ class CharacterDisplayer (imgName : String) {
     }
 
     def move (moveX : Int, moveY : Int) : Unit = {
+        hasMoved = false
         if (!isMoving && canInteract) {
             lastMoveX = moveX
             lastMoveY = moveY
@@ -74,11 +79,9 @@ class CharacterDisplayer (imgName : String) {
                     mover.characterDisplayer = this
                     isMoving = true
                     mover.move(moveX, moveY)
+                    hasMoved = true
                 } else {
                     sliding = false
-                }
-                if (mapDisplayer.grid(i+moveX)(j+moveY).interactable) {
-                    mapDisplayer.grid(i+moveX)(j+moveY).interact(this)
                 }
             } else {
                 sliding = false
@@ -88,6 +91,10 @@ class CharacterDisplayer (imgName : String) {
     }
 
     def endMove : Unit = {
+        if (hasMoved) {
+            mapDisplayer.grid(i)(j).onWalk(this)
+        }
+
         isMoving = false
         mapDisplayer.grid(i)(j).walkable = false
         if (mapDisplayer.grid(i)(j).slippery) {
@@ -139,6 +146,20 @@ class CharacterDisplayer (imgName : String) {
     def alignCoordinates : Unit = {
         x = i*mapDisplayer.sizeBlock
         y = j*mapDisplayer.sizeBlock
+    }
+
+    def interactExplicitly : Unit = {
+        var iInteracted : Int = i
+        var jInteracted : Int = j
+        
+        {direction match {
+            case Up => jInteracted -= 1
+            case Down => jInteracted += 1
+            case Left => iInteracted -= 1
+            case Right => iInteracted += 1
+        }}
+        mapDisplayer.grid(i)(j).interact(this)
+        Utils.characterDisplayers.foreach(x => if (x.i == iInteracted && x.j == jInteracted && x.whichMap == whichMap && !(x.player.alreadyBeaten)) Utils.frame.startBattle(this.player, x.player))
     }
 }
 

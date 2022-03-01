@@ -25,9 +25,10 @@ abstract class Block (iMap : Int, jMap : Int, imgNam : String) {
         y = j*sizeBlock - yMap
     }
     
-    def interact (player : CharacterDisplayer) : Unit = {
+    def interact (player : CharacterDisplayer) : Unit = {}
 
-    }
+    def onWalk (player : CharacterDisplayer) : Unit = {}
+
 
 
 }
@@ -58,7 +59,7 @@ class MultiCliff(iMap : Int, jMap : Int, updown : Int, leftright : Int) extends 
 
 class GrassBlock (iMap : Int, jMap : Int) extends Block (iMap, jMap, "Blocks/Grass.png") {
     interactable = true
-    override def interact (player : CharacterDisplayer) : Unit = {
+    override def onWalk (player : CharacterDisplayer) : Unit = {
         if (player.player.name == "You") {
             if (scala.util.Random.nextFloat() < 0.1) {
                 Utils.frame.listeningToKeyboard = false

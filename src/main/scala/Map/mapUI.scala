@@ -6,8 +6,9 @@ import java.io.File
 
 
 
-class DrawPanelMap (mapDisplayer : MapDisplayer) extends MyPanel with Repaintable {
+class DrawPanelMap (mapDisplaye : MapDisplayer) extends MyPanel with Repaintable {
 
+    var mapDisplayer : MapDisplayer = mapDisplaye
     var ready : Boolean = false
 
     override def initialise : Unit = {

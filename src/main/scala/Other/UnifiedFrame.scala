@@ -176,6 +176,7 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
                 case 's' => PlayerDisplayer.move(0, 1)
                 case 'q' => PlayerDisplayer.move(-1, 0)
                 case 'd' => PlayerDisplayer.move(1, 0)
+                case 'e' => PlayerDisplayer.interactExplicitly
                 case _ => Utils.print(e.getKeyChar)
             }
         }        
