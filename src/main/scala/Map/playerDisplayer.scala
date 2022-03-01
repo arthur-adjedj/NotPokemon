@@ -152,7 +152,7 @@ object PlayerDisplayer extends CharacterDisplayer ("Characters/MainCharacter.png
         super.endMove
 
         // if there is another player in the same box, then fight him
-        var sameBox = Utils.characterDisplayers.filter(opp => opp != this && opp.i == i && opp.j == j && !opp.player.alreadyBeaten)
+        var sameBox = Utils.characterDisplayers.filter(opp => opp != this && opp.i == i && opp.j == j && !opp.player.alreadyBeaten && opp.whichMap == this.whichMap)
         if (!sameBox.isEmpty) {
             Utils.frame.startBattle(Player, sameBox(0).player)
         }
@@ -166,8 +166,8 @@ object SecondCharacterDisplayer extends CharacterDisplayer ("Characters/Louis.pn
     player = SecondCharacter
 
     whichMap = 1
-    i = 3
-    j = 2
+    i = 10
+    j = 11
 
     override def display (g : Graphics, xMap : Int, yMap : Int, n : Int) : Unit = {
         alignCoordinates

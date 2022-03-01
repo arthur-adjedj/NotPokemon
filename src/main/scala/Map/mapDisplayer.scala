@@ -68,7 +68,36 @@ class MapDisplayer1 (frame : UI) extends MapDisplayer (frame : UI) {
     grid(0)(3) = new GrassBlock(0, 3)
     grid(1)(2) = new GrassBlock(1, 2)
 
-    grid(5)(5) = new IceBlock(5, 5)
-    grid(5)(6) = new IceBlock(5, 6)
-    grid(5)(7) = new IceBlock(5, 7)
+    for (i <- 7 to 13) {
+        for (j <- 7 to 13) {
+            grid(i)(j) = new IceBlock(i, j)
+        }
+    }
+    for (i <- 7 to 13) {
+        grid(i)(6) = new MultiCliff(i, 6, -1, 0)
+        grid(i)(14) = new MultiCliff(i, 14, 1, 0)
+
+        grid(6)(i) = new MultiCliff(6, i, 0, 1)
+        grid(14)(i) = new MultiCliff(14, i, 0, -1)
+    }
+    grid(7)(6) = new EmptyBlock(7, 6)
+    grid(10)(10) = new EmptyBlock(10, 10)
+    grid(11)(10) = new EmptyBlock(11, 10)
+    grid(10)(11) = new EmptyBlock(10, 11)
+
+
+    grid(13)(13) = new RockBlock(13, 13)
+    grid(12)(8) = new RockBlock(12, 8)
+    grid(8)(9) = new RockBlock(8, 9)
+    grid(9)(7) = new RockBlock(9, 7)
+    grid(13)(8) = new RockBlock(13, 8)
+    grid(11)(10) = new RockBlock(11, 10)
+    grid(11)(11) = new RockBlock(11, 11)
+    grid(11)(12) = new RockBlock(11, 12)
+    grid(10)(12) = new RockBlock(10, 12)
+    grid(9)(12) = new RockBlock(9, 12)
+    grid(9)(11) = new RockBlock(9, 11)
+    grid(9)(10) = new RockBlock(9, 10)
+
+
 }
