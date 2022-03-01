@@ -9,6 +9,10 @@ object SecondCharacter extends Opponent {
         super.lose
         Utils.frame.mapPane.mapDisplayer.grid(10)(6) = new EmptyBlock(10, 6)
     }
+
+    override def printLosingMessage : Unit = {
+        DiscussionLabel.changeText(List("How did you beat me ?", "Anyway ! I'm opening the door so you can exit the maze !", "Do not thank me for that !"))
+    }
 }
 
 object ThirdCharacter extends Opponent {

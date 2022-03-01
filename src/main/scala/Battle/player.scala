@@ -106,13 +106,17 @@ class Character {
     def lose : Unit = {
         if (playing) {
             if (!runningAway) {
-                DiscussionLabel.changeText(name + " just lost.")
+                printLosingMessage
             }
             opponent.win
             playing = false
             opponent.playing = false
             Player.endTurn
         }
+    }
+
+    def printLosingMessage : Unit = {
+        DiscussionLabel.changeText(name + " just lost.")
     }
 
     def win : Unit = {
