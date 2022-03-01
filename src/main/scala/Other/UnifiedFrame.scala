@@ -189,6 +189,7 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
                 case 'n' => if (Utils.debug) PlayerDisplayer.noClip = !PlayerDisplayer.noClip
                 case _ => Utils.print(e.getKeyChar)
             }
+            PlayerDisplayer.mapDisplayer.update
         }        
     }
 

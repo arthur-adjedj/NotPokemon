@@ -61,6 +61,10 @@ class CharacterDisplayer (imgName : String) {
         mapDisplayer.grid(i)(j).walkable = false
     }
 
+    def update : Unit = {
+        mapDisplayer.grid(i)(j).walkable = false
+    }
+
     def move (moveX : Int, moveY : Int) : Unit = {
         hasMoved = false
         if (!isMoving && canInteract) {

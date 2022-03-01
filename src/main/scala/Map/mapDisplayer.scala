@@ -35,6 +35,7 @@ class MapDisplayer (frame : UI) {
                 grid(i)(j).updateCoordinatesOnMap(i, j)
             }
         }
+        Utils.characterDisplayers.foreach(x => if (x.whichMap == PlayerDisplayer.whichMap) x.update)
     }
     
 
