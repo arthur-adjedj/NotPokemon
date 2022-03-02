@@ -13,7 +13,6 @@ abstract class Block (imgNam : String) {
 
     var originalWalkable : Boolean = true
     var walkable : Boolean = true
-    var interactable : Boolean = false
     var slippery : Boolean = false
 
     def initialise (iMap : Int, jMap : Int) : Unit = {
@@ -71,7 +70,6 @@ class MultiCliff(updown : Int, leftright : Int) extends MultiBlock(updown, leftr
 }
 
 class GrassBlock extends Block ("Blocks/Grass.png") {
-    interactable = true
     override def onWalk (player : CharacterDisplayer) : Unit = {
         if (player.player.name == "You") {
             if (scala.util.Random.nextFloat() < 0.1) {
@@ -85,6 +83,15 @@ class GrassBlock extends Block ("Blocks/Grass.png") {
 
 class IceBlock extends Block ("Blocks/Ice.png") {
     slippery = true
+}
+
+class HealBlock extends Block ("Blocks/Heal.png") {
+    originalWalkable = false
+
+    override def interact (c : CharacterDisplayer) : Unit = {
+        c.player.team.foreach(x => x.heal(x.hpMax))
+    }
+
 }
 
 class EmptyBlock extends Block ("Empty.png") {

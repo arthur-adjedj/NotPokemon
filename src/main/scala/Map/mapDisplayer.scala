@@ -115,5 +115,7 @@ class MapDisplayer1 (frame : UI) extends MapDisplayer (frame : UI) {
     grid(9)(11) = new RockBlock
     grid(9)(10) = new RockBlock
 
+    grid(10)(3) = new HealBlock
+
 
 }
