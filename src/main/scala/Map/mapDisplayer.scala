@@ -23,6 +23,7 @@ class MapDisplayer (frame : UI) {
     def initialise (sizeB : Int) : Unit = {
         PlayerDisplayer.mapDisplayer = this
         SecondCharacterDisplayer.mapDisplayer = this
+        SecondPlayerDisplayer.mapDisplayer = this
         sizeBlock = ui.sizeBlock
         for (i <- 0 to sizeMap - 1) {
             for (j <- 0 to sizeMap - 1) {

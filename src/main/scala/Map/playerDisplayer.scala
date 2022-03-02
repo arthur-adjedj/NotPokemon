@@ -58,7 +58,9 @@ class CharacterDisplayer (imgName : String) {
     Utils.characterDisplayers = this :: Utils.characterDisplayers
 
     def initialise : Unit = {
+        //mapDisplayer = Utils.frame.mapDisplayer
         mapDisplayer.grid(i)(j).walkable = false
+        alignCoordinates
     }
 
     def update : Unit = {
@@ -80,7 +82,7 @@ class CharacterDisplayer (imgName : String) {
 
             if (0 <= i+moveX && i+moveX < mapDisplayer.grid.length && 0 <= j+moveY && j+moveY < mapDisplayer.grid(i).length) {
                 if (mapDisplayer.grid(i+moveX)(j+moveY).walkable || noClip) {
-                    mapDisplayer.grid(i)(j).walkable = mapDisplayer.grid(i)(j).originalWalkable
+
                     mover = new Mover
                     mover.characterDisplayer = this
                     isMoving = true
@@ -97,10 +99,9 @@ class CharacterDisplayer (imgName : String) {
     }
 
     def endMove : Unit = {
-        Utils.print(x, y)
-        if (hasMoved && !noClip) {
-            mapDisplayer.grid(i)(j).onWalk(this)
-        }
+        Utils.print(i, j, " ", x, y)
+        mapDisplayer.grid(i)(j).onWalk(this)
+        mapDisplayer.grid(i-lastMoveX)(j-lastMoveY).walkable = mapDisplayer.grid(i)(j).originalWalkable
 
         isMoving = false
         mapDisplayer.grid(i)(j).walkable = false
@@ -184,6 +185,19 @@ object PlayerDisplayer extends CharacterDisplayer ("Characters/MainCharacter.png
 
 }
 
+object SecondPlayerDisplayer extends CharacterDisplayer ("Characters/MainCharacter.png") {
+
+    player = ThirdCharacter
+
+    i = 0
+    j = 0
+
+    whichMap = 1
+    speed = 10
+
+
+}
+
 object SecondCharacterDisplayer extends CharacterDisplayer ("Characters/Louis.png") {
 
     player = SecondCharacter
@@ -194,12 +208,8 @@ object SecondCharacterDisplayer extends CharacterDisplayer ("Characters/Louis.pn
     j = 11
 
 
-    override def display (g : Graphics, xMap : Int, yMap : Int, n : Int) : Unit = {
-        alignCoordinates
-        super.display(g, xMap, yMap, n)
-    }
-
 }
+
 
 object EmptyCharacterDisplayer extends CharacterDisplayer ("Empty.png") {
     override def initialise : Unit = {}
