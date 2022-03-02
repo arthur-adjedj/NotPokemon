@@ -4,7 +4,10 @@ class MapDisplayer (frame : UI) {
 
     var x : Int = 0
     var y : Int = -25
-    var n : Int = 1 // when there will be several maps
+    var n : Int = -1 // when there will be several maps
+
+    var iStart : Int = 0
+    var jStart : Int = 0
 
     var sizeMap : Int = 20
     var grid : Array[Array[Block]] = Array.ofDim[Block](sizeMap, sizeMap)
@@ -17,8 +20,7 @@ class MapDisplayer (frame : UI) {
 
 
 
-    def initialise (nMap : Int, sizeB : Int) : Unit = {
-        n = nMap
+    def initialise (sizeB : Int) : Unit = {
         PlayerDisplayer.mapDisplayer = this
         SecondCharacterDisplayer.mapDisplayer = this
         sizeBlock = ui.sizeBlock
@@ -65,6 +67,11 @@ object EmptyMapDisplayer extends MapDisplayer (EmptyUI) {
 }
 
 class MapDisplayer1 (frame : UI) extends MapDisplayer (frame : UI) {
+
+    n = 1
+    iStart = 14
+    jStart = 2
+
     for (i <- grid.indices) {
         for (j <- grid(i).indices) {
             grid(i)(j) = new EmptyBlock

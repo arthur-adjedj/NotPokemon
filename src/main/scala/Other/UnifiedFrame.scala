@@ -85,12 +85,21 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
     }
 
     def initialiseMap : Unit = {
-        mapDisplayer.initialise(1, sizeBlock)
+        mapDisplayer.initialise(sizeBlock)
         currentPane = mapPane.asInstanceOf[MyPanel]
         currentPane.initialise
         setContentPane(currentPane)
+        PlayerDisplayer.i = mapDisplayer.iStart
+        PlayerDisplayer.j = mapDisplayer.jStart
+        PlayerDisplayer.alignCoordinates
+        PlayerDisplayer.whichMap = mapDisplayer.n
 
         Utils.characterDisplayers.foreach(x => x.initialise)
+    }
+
+    def changeMap (map : MapDisplayer) : Unit = {
+        mapDisplayer = map
+        initialiseMap
     }
 
     def backToMap : Unit = {
