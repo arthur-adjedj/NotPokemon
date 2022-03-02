@@ -188,6 +188,7 @@ object SecondCharacterDisplayer extends CharacterDisplayer ("Characters/Louis.pn
 
     player = SecondCharacter
 
+    direction = Up
     whichMap = 1
     i = 10
     j = 11
