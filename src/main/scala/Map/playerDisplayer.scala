@@ -165,7 +165,7 @@ class CharacterDisplayer (imgName : String) {
             case Left => iInteracted -= 1
             case Right => iInteracted += 1
         }}
-        mapDisplayer.grid(i)(j).interact(this)
+        mapDisplayer.grid(iInteracted)(jInteracted).interact(this)
         Utils.characterDisplayers.foreach(x => if (x.i == iInteracted && x.j == jInteracted && x.whichMap == whichMap && !(x.player.alreadyBeaten)) Utils.frame.startBattle(this.player, x.player))
     }
 }
