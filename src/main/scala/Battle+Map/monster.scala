@@ -245,6 +245,9 @@ abstract class Monster {
         if (hp > hpMax) {
             hp = hpMax
         }
+        if (hp > 0) {
+            alive = true
+        }
     }
 
     def takeDamage (amount : Int) : Unit = {
