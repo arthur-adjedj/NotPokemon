@@ -3,12 +3,12 @@ import java.io.File
 import javax.swing.{JFrame, JPanel, JLabel}
 import java.awt.image.BufferedImage
 
-class MonsterDisplayer (imageNam : String) extends Object with Descriptable {
+class MonsterDisplayer (imageName_ : String) extends Object with Descriptable {
     var x : Int = 0
     var y : Int = 0
     var width : Int = 164
     var height : Int = 164
-    var imageName : String = imageNam
+    var imageName : String = imageName_
     var image : BufferedImage = Utils.loadImage(imageName)
 
 

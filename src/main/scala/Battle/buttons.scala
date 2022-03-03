@@ -6,9 +6,9 @@ import javax.swing.{JFrame, JPanel, JLabel}
 
 
 
-abstract class MyButton (imageNam : String) extends Object with Descriptable {
-    var originalImageName = imageNam
-    var imageName = imageNam
+abstract class MyButton (imageName_ : String) extends Object with Descriptable {
+    var originalImageName = imageName_
+    var imageName = imageName_
     var x : Int = 0
     var y : Int = 0
     var width : Int = 300
@@ -61,7 +61,7 @@ abstract class MyButton (imageNam : String) extends Object with Descriptable {
     }
 }
 
-class CloseButton (imageNam : String, closeFunction : () => Unit, posX : Int, posY : Int) extends MyButton (imageNam) {
+class CloseButton (imageName_ : String, closeFunction : () => Unit, posX : Int, posY : Int) extends MyButton (imageName_) {
     x = posX
     y = posY
     width = 15
@@ -72,7 +72,7 @@ class CloseButton (imageNam : String, closeFunction : () => Unit, posX : Int, po
     }
 }
 
-class HelpButton (imageNam : String, helpFunction : () => Unit) extends MyButton (imageNam) {
+class HelpButton (imageName_ : String, helpFunction : () => Unit) extends MyButton (imageName_) {
     x = 0
     y = 0
     width = 15
@@ -83,7 +83,7 @@ class HelpButton (imageNam : String, helpFunction : () => Unit) extends MyButton
     }
 }
 
-abstract class CastAttackButton (imageNam : String) extends MyButton (imageNam) {
+abstract class CastAttackButton (imageName_ : String) extends MyButton (imageName_) {
     var n : Int = 0
     visible = false
     override def isClicked : Unit = {
@@ -142,7 +142,7 @@ abstract class CastAttackButton (imageNam : String) extends MyButton (imageNam) 
     }
 }
 
-abstract class ChangeMonsterButton (imageNam : String) extends MyButton (imageNam) {
+abstract class ChangeMonsterButton (imageName_ : String) extends MyButton (imageName_) {
     var n : Int = 0
     visible = false
 
@@ -206,7 +206,7 @@ abstract class ChangeMonsterButton (imageNam : String) extends MyButton (imageNa
 
 }
 
-abstract class UseItemButton (imageNam : String) extends MyButton (imageNam) {
+abstract class UseItemButton (imageName_ : String) extends MyButton (imageName_) {
     var n : Int = 0
     visible = false
 
