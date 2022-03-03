@@ -247,6 +247,9 @@ abstract class Monster {
         }
         if (hp > 0) {
             alive = true
+            if (owner != null) {
+                owner.alreadyBeaten = false
+            }
         }
     }
 
