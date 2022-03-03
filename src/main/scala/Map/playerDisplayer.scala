@@ -1,6 +1,7 @@
 import java.awt.Graphics
 import java.awt.image.BufferedImage
 import java.util.concurrent.TimeUnit
+import scala.collection.mutable.Queue
 
 
 abstract class Direction
@@ -55,6 +56,10 @@ class CharacterDisplayer (imgName : String) {
 
     var sliding : Boolean = false
 
+    var usableMapInventory : Queue[MapItem] = Queue()
+    var notUsableMapInventy : Queue[MapItem] = Queue()
+    var currentItem : MapItem = EmptyMapItem
+
     Utils.characterDisplayers = this :: Utils.characterDisplayers
 
     def initialise : Unit = {
@@ -99,7 +104,7 @@ class CharacterDisplayer (imgName : String) {
     }
 
     def endMove : Unit = {
-        Utils.print(i, j, " ", x, y)
+        //Utils.print(i, j, " ", x, y)
         mapDisplayer.grid(i)(j).onWalk(this)
         mapDisplayer.grid(i-lastMoveX)(j-lastMoveY).walkable = mapDisplayer.grid(i)(j).originalWalkable
 
@@ -167,6 +172,30 @@ class CharacterDisplayer (imgName : String) {
             case Right => iInteracted += 1
         }}
         mapDisplayer.grid(iInteracted)(jInteracted).interact(this)
+    }
+
+    def getMapItem (item : MapItem) : Unit = {
+        if (item.usable) {
+            if (usableMapInventory.forall(x => x.id != item.id)) {
+                usableMapInventory.enqueue(item)
+            }
+        } else {
+            if (notUsableMapInventy.forall(x => x.id != item.id)) {
+                notUsableMapInventy.enqueue(item)
+            }
+        }
+    }
+
+    def changeCurrentItem : Unit = {
+        if (!usableMapInventory.isEmpty) {
+            var item = usableMapInventory.dequeue
+            usableMapInventory.enqueue(currentItem)
+            currentItem.onUnselect(this)
+            currentItem = item
+            currentItem.onSelect(this)
+
+            Utils.print(player.name + " is using " + item.name)
+        }
     }
 }
 

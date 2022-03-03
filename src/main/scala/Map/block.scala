@@ -2,13 +2,13 @@ import java.awt.Graphics
 import java.util.concurrent.TimeUnit
 
 
-abstract class Block (imgNam : String) {
+abstract class Block (imageName_ : String) {
     var x : Int = 0
     var y : Int = 0
     var i : Int = 0
     var j : Int = 0
 
-    var imgName : String = imgNam
+    var imgName : String = imageName_
     var img = Utils.loadImage(imgName)
 
     var originalWalkable : Boolean = true
@@ -96,4 +96,53 @@ class HealBlock extends Block ("Blocks/Heal.png") {
 
 class EmptyBlock extends Block ("Empty.png") {
     override def display (g : Graphics) : Unit = {}
+}
+
+class Door (idKey_ : Int) extends Block ("Blocks/ClosedDoor.png") {
+    originalWalkable = false
+    var otherImgName = "Blocks/OpenDoor.png"
+    var unlocked : Boolean = false
+    var idKey : Int = idKey_
+
+    override def interact (c : CharacterDisplayer) : Unit = {
+        if (unlocked) {
+            originalWalkable = !originalWalkable
+            var temp = otherImgName
+            otherImgName = imgName
+            imgName = temp
+            img = Utils.loadImage(imgName)
+        } else if (idKey == -1 || c.notUsableMapInventy.exists(x => x.id == idKey)) {
+            unlocked = true
+            Utils.print("You unlocked the door")
+            interact(c)
+        } else {
+            Utils.print("The door is locked !")
+        }
+    }
+}
+
+class MapItemBlock (item_ : MapItem) extends Block ("Empty.png") {
+    var item : MapItem = item_
+    var taken : Boolean = false
+    originalWalkable = false
+
+    override def initialise (iMap : Int, jMap : Int) : Unit = {
+        super.initialise(iMap, jMap)
+        imgName = item.imgName
+        img = Utils.loadImage(imgName)
+    }
+
+    override def interact (c : CharacterDisplayer) : Unit = {
+        if (!taken) {
+            taken = true
+            c.getMapItem(item)
+            originalWalkable = true
+        }
+    }
+
+    override def display (g : Graphics) : Unit = {
+        if (!taken) {
+            super.display(g)
+        }
+    }
 }
