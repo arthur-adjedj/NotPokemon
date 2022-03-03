@@ -74,6 +74,7 @@ class CharacterDisplayer (imgName : String) {
 
     def move (moveX : Int, moveY : Int) : Unit = {
         hasMoved = false
+        var uTurn = (moveX + lastMoveX, moveY + lastMoveY) == (0, 0)
         if (!isMoving && canInteract) {
             lastMoveX = moveX
             lastMoveY = moveY
@@ -85,7 +86,7 @@ class CharacterDisplayer (imgName : String) {
                 case (1, 0) => Right
                 }
 
-            if (0 <= i+moveX && i+moveX < mapDisplayer.grid.length && 0 <= j+moveY && j+moveY < mapDisplayer.grid(i).length) {
+            if (0 <= i+moveX && i+moveX < mapDisplayer.grid.length && 0 <= j+moveY && j+moveY < mapDisplayer.grid(i).length && !uTurn) {
                 if (mapDisplayer.grid(i+moveX)(j+moveY).walkable || noClip) {
 
                     mover = new Mover
