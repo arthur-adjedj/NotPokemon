@@ -201,6 +201,7 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
                 case 'l' => SecondPlayerDisplayer.move(1, 0)
 
                 case 'e' => PlayerDisplayer.interactExplicitly
+                case 'o' => SecondPlayerDisplayer.interactExplicitly
                 case 'n' => if (Utils.debug) PlayerDisplayer.noClip = !PlayerDisplayer.noClip
                 case _ => Utils.print(e.getKeyChar)
             }

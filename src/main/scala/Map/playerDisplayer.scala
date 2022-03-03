@@ -167,7 +167,6 @@ class CharacterDisplayer (imgName : String) {
             case Right => iInteracted += 1
         }}
         mapDisplayer.grid(iInteracted)(jInteracted).interact(this)
-        Utils.characterDisplayers.foreach(x => if (x.i == iInteracted && x.j == jInteracted && x.whichMap == whichMap && !(x.player.alreadyBeaten)) Utils.frame.startBattle(this.player, x.player))
     }
 }
 
@@ -181,6 +180,21 @@ object PlayerDisplayer extends CharacterDisplayer ("Characters/MainCharacter.png
 
     whichMap = 1
     speed = 10
+
+    override def interactExplicitly : Unit = {
+        var iInteracted : Int = i
+        var jInteracted : Int = j
+
+        {direction match {
+            case Up => jInteracted -= 1
+            case Down => jInteracted += 1
+            case Left => iInteracted -= 1
+            case Right => iInteracted += 1
+        }}
+        mapDisplayer.grid(iInteracted)(jInteracted).interact(this)
+        Utils.characterDisplayers.foreach(x => if (x.i == iInteracted && x.j == jInteracted && x.whichMap == whichMap && !(x.player.alreadyBeaten)) Utils.frame.startBattle(player, x.player))
+
+    }
 
 
 }
