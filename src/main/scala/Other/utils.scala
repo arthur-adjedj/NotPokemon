@@ -4,12 +4,16 @@ import java.awt.{Color,Graphics,BasicStroke,Font}
 import java.awt.image.BufferedImage
 import java.util.concurrent.TimeUnit
 
+import java.lang.Math
+
 object Utils {
 
     var characterDisplayers : List[CharacterDisplayer] = List()
     var repaintables : List[Repaintable] = List()
+    var updatable : List[Updatable] = List()
     var frame : UI = EmptyUI
     Repainter.start
+    Updater.start
 
     var debug = false
 
@@ -78,11 +82,35 @@ object Utils {
         }
     }
 
+    def distance (i1 : Int, j1 : Int, i2 : Int, j2 : Int) : Double = {
+        Math.sqrt(Math.pow(i2-i1, 2) + Math.pow(j2-j1, 2))
+    }
+
+    def bestMove (iCurrent : Int, jCurrent : Int, iGoal : Int, jGoal : Int) : (Int, Int) = {
+        if (iCurrent > iGoal) {
+            (-1, 0)
+        } else if (iCurrent < iGoal) {
+            (1, 0)
+        } else if (jCurrent > jGoal) {
+            (0, -1)
+        } else if (jCurrent < jGoal) {
+            (0, 1)
+        } else {
+            (0, 0)
+        }
+
+    }
+
 }
 
 trait Repaintable {
     Utils.repaintables = this :: Utils.repaintables
     def repaint() : Unit
+}
+
+trait Updatable {
+    Utils.updatable = this :: Utils.updatable
+    def update : Unit
 }
 
 class Mover extends Thread {
@@ -116,6 +144,16 @@ object Repainter extends Thread {
     override def run : Unit = {
         while (true) {
             Utils.repaintables.foreach(x => x.repaint())
+            TimeUnit.MILLISECONDS.sleep(100/6)
+        }
+    }
+}
+
+object Updater extends Thread {
+    override def run : Unit = {
+        while (true) {
+            Utils.updatable.foreach(x => x.update)
+            Utils.print(Utils.updatable)
             TimeUnit.MILLISECONDS.sleep(100/6)
         }
     }

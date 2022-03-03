@@ -11,7 +11,7 @@ case object Left extends Direction
 case object Right extends Direction
 
 
-class CharacterDisplayer (imgName : String) {
+class CharacterDisplayer (imgName : String) extends Object with Updatable {
     var direction : Direction = Down
 
     var x : Int = 0
@@ -200,6 +200,28 @@ class CharacterDisplayer (imgName : String) {
     }
 }
 
+abstract class OpponentDisplayer (imageName_ : String) extends CharacterDisplayer(imageName_) {
+    var blocksIntercepted : List[(Int, Int)] = List()
+    
+    override def update : Unit = {
+        super.update
+        if (!player.alreadyBeaten) {
+            for (k <- blocksIntercepted.indices) {
+                var (iInterception, jInterception) = blocksIntercepted(k)
+                var c = PlayerDisplayer
+                if (c.i == iInterception && c.j == jInterception && c.whichMap == whichMap) {
+                    while (Utils.distance(i, j, c.i, c.j) > 1) {
+                        var (iBest, jBest) = Utils.bestMove(i, j, c.i, c.j)
+                        move(iBest, jBest)
+                    }
+                    Utils.frame.startBattle(c.player, player)
+
+                }
+            }
+        }
+        
+    }
+}
 
 object PlayerDisplayer extends CharacterDisplayer ("Characters/MainCharacter.png") {
 
@@ -229,9 +251,12 @@ object PlayerDisplayer extends CharacterDisplayer ("Characters/MainCharacter.png
 
 }
 
-object SecondPlayerDisplayer extends CharacterDisplayer ("Characters/MainCharacter.png") {
+object SecondPlayerDisplayer extends OpponentDisplayer ("Characters/MainCharacter.png") {
 
+
+    blocksIntercepted = List((1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (6, 0))
     player = ThirdCharacter
+    speed = 1
 
     i = 0
     j = 0
@@ -257,4 +282,5 @@ object SecondCharacterDisplayer extends CharacterDisplayer ("Characters/Louis.pn
 
 object EmptyCharacterDisplayer extends CharacterDisplayer ("Empty.png") {
     override def initialise : Unit = {}
+    override def update : Unit = {}
 }

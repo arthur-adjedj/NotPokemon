@@ -224,5 +224,10 @@ class MyPanel extends JPanel with Repaintable {
     var showHelp : Boolean = false
 
     def initialise : Unit = {}
+
+    override def paintComponent (g : Graphics) : Unit = {
+        super.paintComponent(g)
+        Utils.print(scala.util.Random.nextFloat())
+    }
 }
 
