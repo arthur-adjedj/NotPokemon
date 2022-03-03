@@ -123,12 +123,14 @@ class MapDisplayer1 (frame : UI) extends MapDisplayer (frame : UI) {
     grid(9)(11) = new RockBlock
     grid(9)(10) = new RockBlock
 
-    grid(10)(3) = new HealBlock
+    grid(10)(1) = new HealBlock
 
-    grid(10)(5) = new MapItemBlock(new Bike)
+    grid(10)(3) = new MapItemBlock(new Bike)
     
     grid(3)(12) = new Door(1)
     grid(1)(12) = new MapItemBlock(new Key(1))
+
+    grid(10)(6) = new Door(2)
     
 
 
