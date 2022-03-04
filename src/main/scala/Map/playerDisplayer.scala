@@ -201,6 +201,7 @@ class CharacterDisplayer (imgName : String) extends Object with Updatable {
 }
 
 abstract class OpponentDisplayer (imageName_ : String) extends CharacterDisplayer(imageName_) {
+    //TODO remplacer par distance d'interception
     var blocksIntercepted : List[(Int, Int)] = List()
     var intercepting : Boolean = false
     
@@ -253,6 +254,7 @@ object PlayerDisplayer extends CharacterDisplayer ("Characters/MainCharacter.png
 object SecondPlayerDisplayer extends OpponentDisplayer ("Characters/MainCharacter.png") {
 
     direction = Right
+    
     blocksIntercepted = List((1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (6, 0))
     player = ThirdCharacter
     speed = 1
