@@ -117,6 +117,8 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
             loseTheGame
         }
 
+        currentState = "Map"
+        DiscussionLabel.visible = false
         currentPane = mapPane.asInstanceOf[MyPanel]
         setContentPane(currentPane)
     }

@@ -106,6 +106,7 @@ class TextChanger (t1 : String, t2 : String, t3 : String) extends Thread {
         if (!DiscussionLabel.messageQueue.isEmpty) {
             DiscussionLabel.changeText(DiscussionLabel.messageQueue.dequeue)
         } else {
+            Utils.print("here")
             DiscussionLabel.visible = Utils.frame.currentState == "Battle"
         }
     }
