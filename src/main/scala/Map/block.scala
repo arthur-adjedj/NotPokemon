@@ -113,10 +113,10 @@ class Door (idKey_ : Int) extends Block ("Blocks/ClosedDoor.png") {
             img = Utils.loadImage(imgName)
         } else if (idKey == -1 || c.notUsableMapInventy.exists(x => x.id == idKey)) {
             unlocked = true
-            Utils.print("You unlocked the door")
+            DiscussionLabel.changeText("You unlocked the door !")
             interact(c)
         } else {
-            Utils.print("The door is locked !")
+            DiscussionLabel.changeText("The door is locked !")
         }
     }
 }

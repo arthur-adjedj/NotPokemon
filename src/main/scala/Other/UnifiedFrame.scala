@@ -51,6 +51,7 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
     var battlePane : DrawPanelBattle = new DrawPanelBattle(buttonList, EmptyCharacter, EmptyCharacter)
     var mapPane : DrawPanelMap = new DrawPanelMap(mapDisplayer)
     var currentPane : MyPanel = mapPane.asInstanceOf[MyPanel]
+    var currentState : String = ""
     var listeningToKeyboard : Boolean = true
 
     def initialise : Unit = {
@@ -73,6 +74,9 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
     }
 
     def startBattle (p1 : Character, p2 : Character) : Unit = {
+        currentState = "Battle"
+        DiscussionLabel.visible = true
+
         var b = new Battle(p1, p2)
         YourBar.p1 = p1
         EnnemyBar.p2 = p2
@@ -87,6 +91,10 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
     }
 
     def initialiseMap : Unit = {
+        currentState = "Map"
+        DiscussionLabel.visible = false
+
+        
         mapDisplayer.initialise(sizeBlock)
         currentPane = mapPane.asInstanceOf[MyPanel]
         currentPane.initialise
@@ -191,24 +199,29 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
 
     def keyPressed (e : KeyEvent) : Unit = {
         if (listeningToKeyboard) {
-            e.getKeyChar match {
-                case 'z' => PlayerDisplayer.move(0, -1)
-                case 's' => PlayerDisplayer.move(0, 1)
-                case 'q' => PlayerDisplayer.move(-1, 0)
-                case 'd' => PlayerDisplayer.move(1, 0)
+            if (!DiscussionLabel.changingText && DiscussionLabel.messageQueue.isEmpty) {
+                e.getKeyChar match {
+                    case 'z' => PlayerDisplayer.move(0, -1)
+                    case 's' => PlayerDisplayer.move(0, 1)
+                    case 'q' => PlayerDisplayer.move(-1, 0)
+                    case 'd' => PlayerDisplayer.move(1, 0)
 
-                case 'i' => SecondPlayerDisplayer.move(0, -1)
-                case 'k' => SecondPlayerDisplayer.move(0, 1)
-                case 'j' => SecondPlayerDisplayer.move(-1, 0)
-                case 'l' => SecondPlayerDisplayer.move(1, 0)
+                    case 'i' => SecondPlayerDisplayer.move(0, -1)
+                    case 'k' => SecondPlayerDisplayer.move(0, 1)
+                    case 'j' => SecondPlayerDisplayer.move(-1, 0)
+                    case 'l' => SecondPlayerDisplayer.move(1, 0)
 
-                case 'e' => PlayerDisplayer.interactExplicitly
-                case 'o' => SecondPlayerDisplayer.interactExplicitly
+                    case 'e' => PlayerDisplayer.interactExplicitly
+                    case 'o' => SecondPlayerDisplayer.interactExplicitly
 
-                case 'a' => PlayerDisplayer.changeCurrentItem
+                    case 'a' => PlayerDisplayer.changeCurrentItem
 
-                case 'n' => if (Utils.debug) PlayerDisplayer.noClip = !PlayerDisplayer.noClip
-                case _ => Utils.print(e.getKeyChar)
+                    case 'n' => if (Utils.debug) PlayerDisplayer.noClip = !PlayerDisplayer.noClip
+                    case 'w' => DiscussionLabel.changeText(List("This is a long text so the Discussion Label takes some time !", "Did it work correctly ?"))
+                    case _ => Utils.print(e.getKeyChar)
+                }
+            } else {
+                DiscussionLabel.skip
             }
             PlayerDisplayer.mapDisplayer.update
         }        

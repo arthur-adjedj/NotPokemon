@@ -39,6 +39,7 @@ object DiscussionLabel {
     def changeText (s : String) : Unit = {
         // if the text is changing then queue the message for later else write it
         Utils.print(s)
+        visible = true
         if (!changingText) {
             changingText = true
             var (t1, t2, t3) = Utils.cutString(s, charPerLine)
@@ -104,6 +105,8 @@ class TextChanger (t1 : String, t2 : String, t3 : String) extends Thread {
         DiscussionLabel.changingText = false
         if (!DiscussionLabel.messageQueue.isEmpty) {
             DiscussionLabel.changeText(DiscussionLabel.messageQueue.dequeue)
+        } else {
+            DiscussionLabel.visible = Utils.frame.currentState == "Battle"
         }
     }
 
