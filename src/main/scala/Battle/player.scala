@@ -19,7 +19,7 @@ class Character {
     var currentAttack : Attack = EmptyAttack
     var availableAttacks : Array[Attack] = Array.fill(4){EmptyAttack}
 
-    var playing : Boolean = true
+    var playing : Boolean = false
     var runningAway : Boolean = false
 
 
