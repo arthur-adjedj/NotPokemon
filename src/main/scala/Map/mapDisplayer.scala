@@ -10,7 +10,7 @@ class MapDisplayer (frame : UI) {
     var jStart : Int = 0
 
     var sizeMap : Int = 20
-    var grid : Array[Array[Block]] = Array.ofDim[Block](sizeMap, sizeMap)
+    var grid : Array[Array[Block]] = Array.fill(sizeMap)(Array.fill(sizeMap)(new EmptyBlock))
 
     var ui : UI = frame
     var sizeBlock : Int = 0
@@ -72,12 +72,7 @@ class MapDisplayer1 (frame : UI) extends MapDisplayer (frame : UI) {
     n = 1
     iStart = 14
     jStart = 2
-
-    for (i <- grid.indices) {
-        for (j <- grid(i).indices) {
-            grid(i)(j) = new EmptyBlock
-        }
-    }
+    
     grid(2)(1) = new MultiCliff(1, 0)
     grid(3)(1) = new MultiCliff(1, 0)
     grid(4)(1) = new MultiCliff(1, 1)
