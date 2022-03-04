@@ -252,7 +252,7 @@ object PlayerDisplayer extends CharacterDisplayer ("Characters/MainCharacter.png
 
 object SecondPlayerDisplayer extends OpponentDisplayer ("Characters/MainCharacter.png") {
 
-
+    direction = Right
     blocksIntercepted = List((1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (6, 0))
     player = ThirdCharacter
     speed = 1
