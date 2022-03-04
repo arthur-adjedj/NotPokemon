@@ -18,8 +18,8 @@ class CharacterDisplayer (imgName : String) extends Object with Updatable {
     var y : Int = 0
 
     //tile number on the map
-    var i : Int = -1
-    var j : Int = -1
+    var i : Int = 0
+    var j : Int = 0
 
     var speed : Int = 1
     var whichMap : Int = 0
