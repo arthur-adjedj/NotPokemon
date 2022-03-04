@@ -395,7 +395,7 @@ object RunButton extends MyButton ("Buttons/RunButton.png") {
     }
 
     override def update : Unit = {
-        if (Player.currentMonster.alive) {
+        if (Player.currentMonster.alive && Player.opponent.name == "Wild") {
             imageName = originalImageName
             clickable = visible
         } else {
