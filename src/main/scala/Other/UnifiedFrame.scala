@@ -55,6 +55,8 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
 
     def initialise : Unit = {
 
+        Utils.start
+
         setSize(sizeX, sizeY)
 
         addMouseListener(this)
@@ -227,7 +229,7 @@ class MyPanel extends JPanel with Repaintable {
 
     override def paintComponent (g : Graphics) : Unit = {
         super.paintComponent(g)
-        Utils.print(scala.util.Random.nextFloat())
+        //Utils.print(scala.util.Random.nextFloat())
     }
 }
 

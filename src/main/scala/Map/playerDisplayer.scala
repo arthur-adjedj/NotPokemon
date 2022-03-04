@@ -202,19 +202,18 @@ class CharacterDisplayer (imgName : String) extends Object with Updatable {
 
 abstract class OpponentDisplayer (imageName_ : String) extends CharacterDisplayer(imageName_) {
     var blocksIntercepted : List[(Int, Int)] = List()
+    var intercepting : Boolean = false
     
     override def update : Unit = {
         super.update
-        if (!player.alreadyBeaten) {
+        if (!player.alreadyBeaten && !intercepting) {
             for (k <- blocksIntercepted.indices) {
                 var (iInterception, jInterception) = blocksIntercepted(k)
                 var c = PlayerDisplayer
                 if (c.i == iInterception && c.j == jInterception && c.whichMap == whichMap) {
-                    while (Utils.distance(i, j, c.i, c.j) > 1) {
-                        var (iBest, jBest) = Utils.bestMove(i, j, c.i, c.j)
-                        move(iBest, jBest)
-                    }
-                    Utils.frame.startBattle(c.player, player)
+                    intercepting = true
+                    c.canInteract = false
+                    new MoverToBattle(c.i, c.j, this).start
 
                 }
             }

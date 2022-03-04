@@ -12,10 +12,13 @@ object Utils {
     var repaintables : List[Repaintable] = List()
     var updatable : List[Updatable] = List()
     var frame : UI = EmptyUI
-    Repainter.start
-    Updater.start
 
     var debug = false
+
+    def start : Unit = {
+        Repainter.start
+        Updater.start
+    }
 
     def print[T] (s : T) : Unit = {
         if (debug) {
@@ -140,6 +143,22 @@ class Mover extends Thread {
     }
 }
 
+class MoverToBattle (i : Int, j : Int, c : CharacterDisplayer) extends Thread {
+    // be careful to have a cleared path to avoid softlock
+    var iTarget : Int = i
+    var jTarget : Int = j
+    var characterDisplayer : CharacterDisplayer = c
+
+    override def run : Unit = {
+        while (Utils.distance(characterDisplayer.i, characterDisplayer.j, iTarget, jTarget) > 1) {
+            var (i, j) = Utils.bestMove(characterDisplayer.i, characterDisplayer.j, iTarget, jTarget)
+            characterDisplayer.move(i, j)
+        }
+        Utils.frame.startBattle(Player, characterDisplayer.player)
+
+    }
+}
+
 object Repainter extends Thread {
     override def run : Unit = {
         while (true) {
@@ -153,7 +172,7 @@ object Updater extends Thread {
     override def run : Unit = {
         while (true) {
             Utils.updatable.foreach(x => x.update)
-            Utils.print(Utils.updatable)
+            //Utils.print(Utils.updatable)
             TimeUnit.MILLISECONDS.sleep(100/6)
         }
     }
