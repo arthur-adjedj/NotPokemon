@@ -10,7 +10,7 @@ class MapDisplayer (frame : UI) {
     var jStart : Int = 0
 
     var sizeMap : Int = 20
-    var grid : Array[Array[Block]] = Array.fill(sizeMap)(Array.fill(sizeMap)(new EmptyBlock))
+    var grid : Array[Array[List[Block]]] = Array.fill(sizeMap)(Array.fill(sizeMap)(List(new EmptyBlock)))
 
     var ui : UI = frame
     var sizeBlock : Int = 0
@@ -27,7 +27,7 @@ class MapDisplayer (frame : UI) {
         sizeBlock = ui.sizeBlock
         for (i <- 0 to sizeMap - 1) {
             for (j <- 0 to sizeMap - 1) {
-                grid(i)(j).initialise(i, j)
+                grid(i)(j) foreach (b => b.initialise(i, j))
             }
         }
     }
@@ -35,7 +35,7 @@ class MapDisplayer (frame : UI) {
     def update : Unit = {
         for (i <- 0 to sizeMap - 1) {
             for (j <- 0 to sizeMap - 1) {
-                grid(i)(j).updateCoordinatesOnMap(i, j)
+                grid(i)(j) foreach (b => b.updateCoordinatesOnMap(i, j))
             }
         }
         Utils.characterDisplayers.foreach(x => if (x.whichMap == PlayerDisplayer.whichMap) x.update)
@@ -47,8 +47,8 @@ class MapDisplayer (frame : UI) {
         g.drawImage(img, x, y, null)
         for (i <- grid.indices) {
             for (j <- grid(i).indices) {
-                grid(i)(j).updateCoordinates(x, y, sizeBlock)
-                grid(i)(j).display(g)
+                grid(i)(j) foreach (b => b.updateCoordinates(x, y, sizeBlock))
+                grid(i)(j) foreach (b => b.display(g))
             }
         }
         //sorts the character rendering order in respect to their depth on screen
@@ -73,59 +73,55 @@ class MapDisplayer1 (frame : UI) extends MapDisplayer (frame : UI) {
     iStart = 14
     jStart = 2
     
-    grid(2)(1) = new MultiCliff(1, 0)
-    grid(3)(1) = new MultiCliff(1, 0)
-    grid(4)(1) = new MultiCliff(1, 1)
-    grid(4)(2) = new MultiCliff(0, 1)
-    grid(4)(3) = new MultiCliff(0, 1)
-    grid(4)(4) = new MultiCliff(-1, 1)
-    grid(3)(4) = new MultiCliff(-1, 0)
-    grid(2)(4) = new MultiCliff(-1, 0)
+    grid(2)(1) = List(new MultiCliff(1, 0))
+    grid(3)(1) = List(new MultiCliff(1, 0))
+    grid(4)(1) = List(new MultiCliff(1, 1))
+    grid(4)(2) = List(new MultiCliff(0, 1))
+    grid(4)(3) = List(new MultiCliff(0, 1))
+    grid(4)(4) = List(new MultiCliff(-1, 1))
+    grid(3)(4) = List(new MultiCliff(-1, 0))
+    grid(2)(4) = List(new MultiCliff(-1, 0))
 
-    grid(0)(2) = new GrassBlock
-    grid(1)(3) = new GrassBlock
-    grid(0)(3) = new GrassBlock
-    grid(1)(2) = new GrassBlock
+    grid(0)(2) = List(new GrassBlock)
+    grid(1)(3) = List(new GrassBlock)
+    grid(0)(3) = List(new GrassBlock)
+    grid(1)(2) = List(new GrassBlock)
 
     for (i <- 7 to 13) {
         for (j <- 7 to 13) {
-            grid(i)(j) = new IceBlock
+            grid(i)(j) = List(new IceBlock)
         }
     }
     for (i <- 7 to 13) {
-        grid(i)(6) = new MultiCliff(-1, 0)
-        grid(i)(14) = new MultiCliff(1, 0)
+        grid(i)(6) = List(new MultiCliff(-1, 0))
+        grid(i)(14) = List(new MultiCliff(1, 0))
 
-        grid(6)(i) = new MultiCliff(0, 1)
-        grid(14)(i) = new MultiCliff(0, -1)
+        grid(6)(i) = List(new MultiCliff(0, 1))
+        grid(14)(i) = List(new MultiCliff(0, -1))
     }
-    grid(7)(6) = new EmptyBlock
-    grid(10)(10) = new EmptyBlock
-    grid(11)(10) = new EmptyBlock
-    grid(10)(11) = new EmptyBlock
+    grid(7)(6) = List(new EmptyBlock)
 
+    grid(13)(13) = List(new IceBlock,new RockBlock)
+    grid(12)(8) = List(new IceBlock,new RockBlock)
+    grid(8)(9) = List(new IceBlock,new RockBlock)
+    grid(9)(7) = List(new IceBlock,new RockBlock)
+    grid(13)(8) = List(new IceBlock,new RockBlock)
+    grid(11)(10) = List(new IceBlock,new RockBlock)
+    grid(11)(11) = List(new IceBlock,new RockBlock)
+    grid(11)(12) = List(new IceBlock,new RockBlock)
+    grid(10)(12) = List(new IceBlock,new RockBlock)
+    grid(9)(12) = List(new IceBlock,new RockBlock)
+    grid(9)(11) = List(new IceBlock,new RockBlock)
+    grid(9)(10) = List(new IceBlock,new RockBlock)
 
-    grid(13)(13) = new RockBlock
-    grid(12)(8) = new RockBlock
-    grid(8)(9) = new RockBlock
-    grid(9)(7) = new RockBlock
-    grid(13)(8) = new RockBlock
-    grid(11)(10) = new RockBlock
-    grid(11)(11) = new RockBlock
-    grid(11)(12) = new RockBlock
-    grid(10)(12) = new RockBlock
-    grid(9)(12) = new RockBlock
-    grid(9)(11) = new RockBlock
-    grid(9)(10) = new RockBlock
+    grid(10)(1) = List(new HealBlock)
 
-    grid(10)(1) = new HealBlock
-
-    grid(10)(3) = new MapItemBlock(new Bike)
+    grid(10)(3) = List(new MapItemBlock(new Bike))
     
-    grid(3)(12) = new Door(1)
-    grid(1)(12) = new MapItemBlock(new Key(1))
+    grid(3)(12) = List(new Door(1))
+    grid(1)(12) = List(new MapItemBlock(new Key(1)))
 
-    grid(10)(6) = new Door(2)
+    grid(10)(6) = List(new Door(2))
     
 
 

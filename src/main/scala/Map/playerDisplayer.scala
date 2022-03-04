@@ -64,12 +64,12 @@ class CharacterDisplayer (imgName : String) extends Object with Updatable {
 
     def initialise : Unit = {
         //mapDisplayer = Utils.frame.mapDisplayer
-        mapDisplayer.grid(i)(j).walkable = false
+        mapDisplayer.grid(i)(j) foreach (b => b.walkable = false)
         alignCoordinates
     }
 
     def update : Unit = {
-        mapDisplayer.grid(i)(j).walkable = false
+        mapDisplayer.grid(i)(j) foreach (b => b.walkable = false)
     }
 
     def move (moveX : Int, moveY : Int) : Unit = {
@@ -87,7 +87,7 @@ class CharacterDisplayer (imgName : String) extends Object with Updatable {
                 }
 
             if (0 <= i+moveX && i+moveX < mapDisplayer.grid.length && 0 <= j+moveY && j+moveY < mapDisplayer.grid(i).length && !uTurn) {
-                if (mapDisplayer.grid(i+moveX)(j+moveY).walkable || noClip) {
+                if (mapDisplayer.grid(i+moveX)(j+moveY).forall(b => b.walkable) || noClip) {
 
                     mover = new Mover
                     mover.characterDisplayer = this
@@ -106,12 +106,12 @@ class CharacterDisplayer (imgName : String) extends Object with Updatable {
 
     def endMove : Unit = {
         //Utils.print(i, j, " ", x, y)
-        mapDisplayer.grid(i)(j).onWalk(this)
-        mapDisplayer.grid(i-lastMoveX)(j-lastMoveY).walkable = mapDisplayer.grid(i)(j).originalWalkable
+        mapDisplayer.grid(i)(j) foreach (b => b.onWalk(this))
+        mapDisplayer.grid(i-lastMoveX)(j-lastMoveY) foreach (b => b.walkable = mapDisplayer.grid(i)(j).head.originalWalkable)
 
         isMoving = false
-        mapDisplayer.grid(i)(j).walkable = false
-        if (mapDisplayer.grid(i)(j).slippery && !noClip) {
+        mapDisplayer.grid(i)(j) foreach (b => b.walkable = false)
+        if (mapDisplayer.grid(i)(j).exists(b => b.slippery) && !noClip) {
             sliding = true
             move(lastMoveX, lastMoveY)
         } else {
@@ -172,7 +172,7 @@ class CharacterDisplayer (imgName : String) extends Object with Updatable {
             case Left => iInteracted -= 1
             case Right => iInteracted += 1
         }}
-        mapDisplayer.grid(iInteracted)(jInteracted).interact(this)
+        mapDisplayer.grid(iInteracted)(jInteracted) foreach (b => b.interact(this))
     }
 
     def getMapItem (item : MapItem) : Unit = {
@@ -242,7 +242,7 @@ object PlayerDisplayer extends CharacterDisplayer ("Characters/MainCharacter.png
             case Left => iInteracted -= 1
             case Right => iInteracted += 1
         }}
-        mapDisplayer.grid(iInteracted)(jInteracted).interact(this)
+        mapDisplayer.grid(iInteracted)(jInteracted) foreach (b => b.interact(this))
         Utils.characterDisplayers.foreach(x => if (x.i == iInteracted && x.j == jInteracted && x.whichMap == whichMap && !(x.player.alreadyBeaten)) Utils.frame.startBattle(player, x.player))
 
     }
