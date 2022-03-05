@@ -202,24 +202,39 @@ class CharacterDisplayer (imgName : String) extends Object with Updatable {
 
 abstract class OpponentDisplayer (imageName_ : String) extends CharacterDisplayer(imageName_) {
     //TODO remplacer par distance d'interception
-    var blocksIntercepted : List[(Int, Int)] = List()
+    var interceptLength : Int = 0
     var intercepting : Boolean = false
+
+    def interceptsPlayer : Boolean = direction match {
+        case Up => 
+            i == PlayerDisplayer.i && 
+            PlayerDisplayer.j <= j &&
+            j - interceptLength <= PlayerDisplayer.j
+        case Down =>             
+            i == PlayerDisplayer.i && 
+            j <= PlayerDisplayer.j &&
+            PlayerDisplayer.j <= j + interceptLength
+        case Right => 
+            j == PlayerDisplayer.j && 
+            i <= PlayerDisplayer.i &&
+            PlayerDisplayer.i <= i + interceptLength
+        case Left => 
+            j == PlayerDisplayer.j && 
+            PlayerDisplayer.i <= i &&
+            i - interceptLength <= PlayerDisplayer.i         
+    }
     
     override def update : Unit = {
         super.update
-        if (!player.alreadyBeaten && !intercepting) {
-            for (k <- blocksIntercepted.indices) {
-                var (iInterception, jInterception) = blocksIntercepted(k)
-                var c = PlayerDisplayer
-                if (c.i == iInterception && c.j == jInterception && c.whichMap == whichMap) {
-                    intercepting = true
-                    c.canInteract = false
-                    new MoverToBattle(c.i, c.j, this).start
-
-                }
+        Utils.print(interceptsPlayer)
+        if (!player.alreadyBeaten && !intercepting && interceptsPlayer) {
+            var c = PlayerDisplayer
+            if (c.whichMap == whichMap) {
+                intercepting = true
+                c.canInteract = false
+                new MoverToBattle(c.i, c.j, this).start
             }
-        }
-        
+        }  
     }
 }
 
@@ -227,8 +242,8 @@ object PlayerDisplayer extends CharacterDisplayer ("Characters/MainCharacter.png
 
     player = Player
 
-    i = 0
-    j = 0
+    i = -1
+    j = -1
 
     whichMap = 1
     speed = 10
@@ -255,7 +270,7 @@ object SecondPlayerDisplayer extends OpponentDisplayer ("Characters/MainCharacte
 
     direction = Right
     
-    blocksIntercepted = List((1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (6, 0))
+    interceptLength = 6
     player = ThirdCharacter
     speed = 1
 
