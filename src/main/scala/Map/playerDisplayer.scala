@@ -201,7 +201,6 @@ class CharacterDisplayer (imgName : String) extends Object with Updatable {
 }
 
 abstract class OpponentDisplayer (imageName_ : String) extends CharacterDisplayer(imageName_) {
-    //TODO remplacer par distance d'interception
     var interceptLength : Int = 0
     var intercepting : Boolean = false
 
