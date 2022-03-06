@@ -93,13 +93,17 @@ class MapDisplayer1 (frame : UI) extends MapDisplayer (frame : UI) {
         }
     }
     for (i <- 7 to 13) {
-        grid(i)(6) = List(new MultiCliff(-1, 0))
-        grid(i)(14) = List(new MultiCliff(1, 0))
+        grid(i)(6) = List(new IceBlock,new MultiCliff(1, 0))
+        grid(i)(14) = List(new IceBlock,new MultiCliff(-1, 0))
 
-        grid(6)(i) = List(new MultiCliff(0, 1))
-        grid(14)(i) = List(new MultiCliff(0, -1))
+        grid(6)(i) = List(new IceBlock,new MultiCliff(0,-1))
+        grid(14)(i) = List(new IceBlock,new MultiCliff(0, 1))
     }
-    grid(7)(6) = List(new EmptyBlock)
+    grid(6)(6) = List(new IceBlock,new MultiCliff(1,-1))
+    grid(14)(14) = List(new IceBlock,new MultiCliff(-1,1))
+    grid(14)(6) = List(new IceBlock,new MultiCliff(1,1))
+    grid(6)(14) = List(new IceBlock,new MultiCliff(-1,-1))
+    grid(7)(6) = List(new IceBlock)
 
     grid(13)(13) = List(new IceBlock,new RockBlock)
     grid(12)(8) = List(new IceBlock,new RockBlock)
