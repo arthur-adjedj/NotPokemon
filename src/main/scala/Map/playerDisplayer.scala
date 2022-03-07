@@ -241,8 +241,8 @@ object PlayerDisplayer extends CharacterDisplayer ("Characters/MainCharacter.png
 
     player = Player
 
-    i = -1
-    j = -1
+    i = 0
+    j = 0
 
     whichMap = 1
     speed = 10
