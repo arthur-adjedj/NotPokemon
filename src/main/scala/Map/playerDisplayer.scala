@@ -267,13 +267,13 @@ object PlayerDisplayer extends CharacterDisplayer ("Characters/MainCharacter.png
 
 object SecondPlayerDisplayer extends OpponentDisplayer ("Characters/MainCharacter.png") {
 
-    direction = Right
+    direction = Left
     
     interceptLength = 6
     player = ThirdCharacter
     speed = 1
 
-    i = 0
+    i = 5
     j = 0
 
     whichMap = 1
