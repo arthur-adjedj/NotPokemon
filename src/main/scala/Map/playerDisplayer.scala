@@ -105,7 +105,6 @@ class CharacterDisplayer (imgName : String) extends Object with Updatable {
     }
 
     def endMove : Unit = {
-        //Utils.print(i, j, " ", x, y)
         mapDisplayer.grid(i)(j) foreach (b => b.onWalk(this))
         mapDisplayer.grid(i-lastMoveX)(j-lastMoveY) foreach (b => b.walkable = mapDisplayer.grid(i)(j).head.originalWalkable)
 
@@ -225,7 +224,6 @@ abstract class OpponentDisplayer (imageName_ : String) extends CharacterDisplaye
     
     override def update : Unit = {
         super.update
-        Utils.print(interceptsPlayer)
         if (!player.alreadyBeaten && !intercepting && interceptsPlayer) {
             var c = PlayerDisplayer
             if (c.whichMap == whichMap) {
@@ -273,7 +271,7 @@ object SecondPlayerDisplayer extends OpponentDisplayer ("Characters/MainCharacte
     player = ThirdCharacter
     speed = 1
 
-    i = 5
+    i = 8
     j = 0
 
     whichMap = 1
