@@ -150,7 +150,7 @@ class MoverToBattle (i : Int, j : Int, c : CharacterDisplayer) extends Thread {
     var characterDisplayer : CharacterDisplayer = c
 
     override def run : Unit = {
-        while (Utils.distance(characterDisplayer.i, characterDisplayer.j, iTarget, jTarget) > 1) {
+        while (Utils.distance(characterDisplayer.i, characterDisplayer.j, iTarget, jTarget) > 1 || characterDisplayer.isMoving) {
             var (i, j) = Utils.bestMove(characterDisplayer.i, characterDisplayer.j, iTarget, jTarget)
             characterDisplayer.move(i, j)
         }
