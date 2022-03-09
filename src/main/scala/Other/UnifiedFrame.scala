@@ -202,7 +202,7 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
     def keyPressed (e : KeyEvent) : Unit = {
         if (listeningToKeyboard) {
             if (!DiscussionLabel.changingText && DiscussionLabel.messageQueue.isEmpty) {
-                e.getKeyChar match {
+                e.getKeyChar.toLower match {
                     case 'z' => PlayerDisplayer.move(0, -1)
                     case 's' => PlayerDisplayer.move(0, 1)
                     case 'q' => PlayerDisplayer.move(-1, 0)
