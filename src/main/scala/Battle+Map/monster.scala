@@ -66,6 +66,9 @@ abstract class Monster {
     var name : String = ""
     var owner : Character = EmptyCharacter
 
+    var wasSeen : Boolean = false
+    var wasCaught : Boolean = false
+
     def imgNameFront : String = {"Monsters/" + originalName + "Front.png"}
     def imgNameBack : String = {"Monsters/" + originalName + "Back.png"}
     var uiYShift : Int = 0
