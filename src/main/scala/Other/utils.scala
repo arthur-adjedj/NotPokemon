@@ -198,6 +198,7 @@ trait Descriptable {
 
     def onMouseOver (g : Graphics, xMouse : Int, yMouse : Int, width : Int, height : Int) : Unit = {}
     def isMouseOver (x : Int, y : Int) : Boolean = false
+    var context : String = "All"
 }
 
 object EmptyDescriptable extends Object with Descriptable {

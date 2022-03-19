@@ -16,7 +16,7 @@ abstract class MyButton (imageName_ : String) extends Object with Descriptable {
     var height : Int = 136
     var image = Utils.loadImage(imageName)
     var visible : Boolean = false
-    var context : String = "" // the value of Utils.frame.currentState to decide if we display
+    context = "" // the value of Utils.frame.currentState to decide if we display
     var clickable : Boolean = true
     var poke_font : Font = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("PokemonPixelFont.ttf"))
     poke_font = poke_font.deriveFont(Font.PLAIN,30)
