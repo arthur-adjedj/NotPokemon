@@ -1,20 +1,19 @@
 import java.awt.Graphics
 
 
-object Pokedex {
-    var backgroundImgName = ""
+class DrawPokedexPanel extends MyPanel {
+    ready = true
+
+    var backgroundImgName = "/Pokedex/Background.png"
     var backgroundImg = Utils.loadImage(backgroundImgName)
 
     var pokeList : List[Monster] = List()
-    var nbPokes = pokeList.length
-}
-
-class DrawPokedexPanel extends MyPanel {
 
     //image to draw when the pokémon was never caught nor seen
-    var unknownPokémon = Utils.loadImage("")
+    var unknownPokemon = Utils.loadImage("")
 
-    var pokémonArray : Array[Monster] = Array.empty
+    var pokemonArray : Array[Monster] = Array.empty
+    def nbPokes = pokeList.length
 
     //position in the array of the currently displayed monster
     var currentMonster : Int = 0
@@ -26,15 +25,15 @@ class DrawPokedexPanel extends MyPanel {
     var evasion = 0
     var weight = 0
     var height_ = 0
-    var description = ""
+    var description = "this is a test"
 
 
-    def drawPokémon(g : Graphics) = {
-        var pokémonToDisplay = pokémonArray(currentMonster)
-        if (pokémonToDisplay.wasSeen) {
-            g.drawImage(Utils.loadImage(pokémonToDisplay.imgNameFront),0,0,null)
+    def drawPokemon(g : Graphics) = {
+        var pokemonToDisplay = pokemonArray(currentMonster)
+        if (pokemonToDisplay.wasSeen) {
+            g.drawImage(Utils.loadImage(pokemonToDisplay.imgNameFront),0,0,null)
         } else {
-            g.drawImage(unknownPokémon,0,0,null)
+            g.drawImage(unknownPokemon,0,0,null)
         }
     }
 
@@ -42,7 +41,10 @@ class DrawPokedexPanel extends MyPanel {
 
     }
 
-    def display(g : Graphics) =
-        drawPokémon(g)
+    def display(g : Graphics) = {
+        g.drawImage(backgroundImg,0,20,null)
+        drawPokemon(g)
+        drawText(g)
+    }
 
 }
