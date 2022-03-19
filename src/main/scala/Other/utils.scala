@@ -27,6 +27,11 @@ object Utils {
 
     var debug = false
 
+    // some strategies
+    var aggroStrat = Strategy(1, 0, 0, 0, 0)
+    var tempoStrat = Strategy(1, 1, 1, 0, 0)
+    var controlStrat = Strategy(1, 1, 1, 0, 1)
+
     def start : Unit = {
         Repainter.start
         Updater.start
@@ -115,7 +120,6 @@ object Utils {
         }
 
     }
-
 }
 
 trait Repaintable {

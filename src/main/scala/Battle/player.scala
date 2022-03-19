@@ -76,8 +76,10 @@ class Character {
         if (team.exists(x => x.alive && x.name != "Empty")) {
             var alives = team.filter(x => x.alive && x.name != "Empty")
             var l = alives.length
+            var previousMonster = currentMonster
             currentMonster = alives(scala.util.Random.nextInt(l))
             currentMonster.enterField
+            previousMonster.leaveField
         } else {
             lose
         }
@@ -91,7 +93,8 @@ class Character {
             DiscussionLabel.changeText(team(n).name + " enters the battlefield !")
             var previousMonster = currentMonster
             currentMonster = team(n)
-            currentMonster.enterField 
+            currentMonster.enterField
+            previousMonster.leaveField
             if (previousMonster.alive) {
                 endTurn
             }
@@ -99,6 +102,10 @@ class Character {
         } else {
             false
         }
+    }
+
+    def changeMonster (monster : Monster) : Boolean = {
+        changeMonster(Utils.findFirstOccurenceArray(team, monster))
     }
 
     def changeMonster (b : Boolean) : Unit = {}
@@ -124,11 +131,11 @@ class Character {
     }
 }
 
-abstract class Opponent extends Character {
+abstract class Opponent extends Character with Intelligence {
     override def newTurn : Unit = {
         super.newTurn
         var l = availableAttacks.length
-        chooseAttack(availableAttacks(scala.util.Random.nextInt(l)))
+        chooseAction
     }
 
     override def lose : Unit = {
@@ -146,10 +153,7 @@ abstract class WildOpponent extends Opponent {
             DiscussionLabel.changeText("You just captured " + currentMonster.name + ".")
         }
         if (team.exists(x => x.alive && x.name != "Empty")) {
-            var alives = team.filter(x => x.alive && x.name != "Empty")
-            var l = alives.length
-            currentMonster = alives(scala.util.Random.nextInt(l))
-            currentMonster.enterField
+            super.changeMonster
         } else {
             lose(captured)
         }

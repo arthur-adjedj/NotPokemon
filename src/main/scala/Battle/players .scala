@@ -24,6 +24,8 @@ object ThirdCharacter extends Opponent {
     team(1) = new Bulbasaur
     team(1).owner = this
     team(1).gainLvl(4,false)
+
+    strat = Utils.controlStrat
     name = "Opponent"
 }
 
