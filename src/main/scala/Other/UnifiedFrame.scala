@@ -229,11 +229,11 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
 
                     case 'a' => PlayerDisplayer.changeCurrentItem
 
-                    case '1' => backToBattle
-                    case '2' => backToMap
-                    case '3' => backToPokedex
+                    case '1' => if (Utils.debug) backToBattle
+                    case '2' => if (Utils.debug) backToMap
+                    case '3' => if (Utils.debug) backToPokedex
 
-                    // For debugging
+                    // For debugging purposes
                     case 'n' => if (Utils.debug) PlayerDisplayer.noClip = !PlayerDisplayer.noClip
                     case _ => Utils.print(e.getKeyChar.toInt)
                 }
