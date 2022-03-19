@@ -69,6 +69,13 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
         b.initialise
         b.start
         setVisible(true)
+    }
+
+    def backToBattle : Unit = {
+        currentState = "Battle"
+        DiscussionLabel.visible = true
+        currentPane = battlePane.asInstanceOf[MyPanel]
+        setContentPane(currentPane)
 
     }
 
@@ -200,8 +207,10 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
 
                     case 'a' => PlayerDisplayer.changeCurrentItem
 
+                    // For debugging
                     case 'n' => if (Utils.debug) PlayerDisplayer.noClip = !PlayerDisplayer.noClip
                     case 'w' => DiscussionLabel.changeText(List("This is a long text so the Discussion Label takes some time !", "Did it work correctly ?"))
+                    case 'x' => if (currentState == "Battle") backToMap else backToBattle
                     case _ => Utils.print(e.getKeyChar)
                 }
             } else {
