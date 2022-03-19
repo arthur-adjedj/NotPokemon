@@ -1,8 +1,8 @@
 import java.awt.Graphics
 
 
+
 class DrawPokedexPanel extends MyPanel {
-    ready = true
 
     var backgroundImgName = "/Pokedex/Background.png"
     var backgroundImg = Utils.loadImage(backgroundImgName)
@@ -12,7 +12,7 @@ class DrawPokedexPanel extends MyPanel {
     //image to draw when the pokémon was never caught nor seen
     var unknownPokemon = Utils.loadImage("")
 
-    var pokemonArray : Array[Monster] = Array.empty
+    var pokemonArray : Array[Monster] = Array(EmptyMonster)
     def nbPokes = pokeList.length
 
     //position in the array of the currently displayed monster

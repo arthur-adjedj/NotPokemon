@@ -47,7 +47,6 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
         addMouseMotionListener(this)
         addKeyListener(this)
         setLayout(null)
-        pokedexPane.initialise 
         setUndecorated(true)
         setContentPane(currentPane)
 
@@ -119,19 +118,21 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
         currentState = "Pokedex"
         DiscussionLabel.visible = false
 
-        currentPane = pokedexPane
+        currentPane = pokedexPane.asInstanceOf[MyPanel]
         currentPane.initialise
         setContentPane(currentPane)
+        setVisible(true)
     }
 
     def backToPokedex : Unit = {
         if (pokedexPane.ready) {
-            Utils.print("switching to pokedex")
             currentState = "Pokedex"
             DiscussionLabel.visible = false
 
-            currentPane = pokedexPane
+            currentPane = pokedexPane.asInstanceOf[MyPanel]
             setContentPane(currentPane)
+        } else {
+            initialisePokedex
         }
     }
 
@@ -263,6 +264,7 @@ class MyPanel extends JPanel with Repaintable {
 
     override def paintComponent (g : Graphics) : Unit = {
         super.paintComponent(g)
+        //Utils.print(scala.util.Random.nextFloat)
     }
 
 
