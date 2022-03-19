@@ -69,7 +69,7 @@ class CharacterDisplayer (imgName : String) extends Object with Updatable {
     }
 
     def update : Unit = {
-        mapDisplayer.grid(i)(j) foreach (b => b.walkable = false)
+        mapDisplayer.grid(i)(j).foreach (b => b.walkable = false)
     }
 
     def move (moveX : Int, moveY : Int) : Unit = {
