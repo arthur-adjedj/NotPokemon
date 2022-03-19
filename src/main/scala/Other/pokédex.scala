@@ -1,3 +1,4 @@
+import java.awt.Graphics
 
 
 object Pokédex {
@@ -10,7 +11,13 @@ object Pokédex {
 
 class DrawPokédexPanel extends MyPanel {
 
-    var currentMonster = Utils.loadImage("Empty.png")
+    //image to draw when the pokémon was never caught nor seen
+    var unknownPokémon = Utils.loadImage("")
+
+    var pokémonArray : Array[Monster] = Array.empty
+
+    //position in the array of the currently displayed monster
+    var currentMonster : Int = 0
 
     var number = 0
     var type_ = Normal
@@ -21,5 +28,21 @@ class DrawPokédexPanel extends MyPanel {
     var height_ = 0
     var description = ""
 
+
+    def drawPokémon(g : Graphics) = {
+        var pokémonToDisplay = pokémonArray(currentMonster)
+        if (pokémonToDisplay.wasSeen) {
+            g.drawImage(Utils.loadImage(pokémonToDisplay.imgNameFront),0,0,null)
+        } else {
+            g.drawImage(unknownPokémon,0,0,null)
+        }
+    }
+
+    def drawText(g : Graphics) = {
+
+    }
+
+    def display(g : Graphics) =
+        drawPokémon(g)
 
 }
