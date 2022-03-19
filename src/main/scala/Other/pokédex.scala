@@ -41,7 +41,9 @@ class DrawPokedexPanel extends MyPanel {
 
     }
 
-    def display(g : Graphics) = {
+    override def paintComponent(g : Graphics) = {
+        Utils.print("painting")
+        super.paintComponent(g)
         g.drawImage(backgroundImg,0,20,null)
         drawPokemon(g)
         drawText(g)

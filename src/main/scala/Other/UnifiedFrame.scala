@@ -47,7 +47,7 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
         addMouseMotionListener(this)
         addKeyListener(this)
         setLayout(null)
-
+        pokedexPane.initialise 
         setUndecorated(true)
         setContentPane(currentPane)
 
@@ -126,6 +126,7 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
 
     def backToPokedex : Unit = {
         if (pokedexPane.ready) {
+            Utils.print("switching to pokedex")
             currentState = "Pokedex"
             DiscussionLabel.visible = false
 
