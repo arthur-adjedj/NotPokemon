@@ -16,6 +16,7 @@ abstract class MyButton (imageName_ : String) extends Object with Descriptable {
     var height : Int = 136
     var image = Utils.loadImage(imageName)
     var visible : Boolean = false
+    var alwaysVisible : Boolean = false
     context = "" // the value of Utils.frame.currentState to decide if we display
     var clickable : Boolean = true
     var poke_font : Font = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("PokemonPixelFont.ttf"))
@@ -24,7 +25,7 @@ abstract class MyButton (imageName_ : String) extends Object with Descriptable {
     var xtext  = 0
     var ytext = 0
     def display (g : Graphics) : Unit = {
-        if (visible && (context == Utils.frame.currentState || context == "All")) {
+        if (visible && (context == Utils.frame.currentState || context == "All") || alwaysVisible) {
             g.setFont(poke_font)
             var metrics = g.getFontMetrics(poke_font);
             // Coordonées du texte
@@ -36,7 +37,7 @@ abstract class MyButton (imageName_ : String) extends Object with Descriptable {
     }
 
     def onClick (xClick : Int, yClick : Int) : Boolean = {
-        if (visible && x <= xClick && xClick <= (x + width) && y <= yClick && yClick <= (y + height) && clickable) {
+        if ((visible && clickable || alwaysVisible) && x <= xClick && xClick <= (x + width) && y <= yClick && yClick <= (y + height)) {
             isClicked
             true // tells the listener that the button is clicked
         } else {
@@ -80,7 +81,7 @@ object CloseButton extends MyButton ("Close.png") {
     y = 2
     width = 15
     height = 15
-    visible = true
+    alwaysVisible = true
     override def isClicked : Unit = {
         Utils.frame.close
     }
@@ -92,7 +93,7 @@ object HelpButton extends MyButton ("Help.png") {
     y = 0
     width = 15
     height = 15
-    visible = true
+    alwaysVisible = true
     override def isClicked : Unit = {
         Utils.frame.help
     }
