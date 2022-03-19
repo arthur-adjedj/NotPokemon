@@ -7,6 +7,7 @@ import javax.swing.{JFrame, JPanel, JLabel}
 
 
 abstract class MyButton (imageName_ : String) extends Object with Descriptable {
+
     var originalImageName = imageName_
     var imageName = imageName_
     var x : Int = 0
@@ -15,6 +16,8 @@ abstract class MyButton (imageName_ : String) extends Object with Descriptable {
     var height : Int = 136
     var image = Utils.loadImage(imageName)
     var visible : Boolean = false
+    var alwaysVisible : Boolean = false
+    context = "" // the value of Utils.frame.currentState to decide if we display
     var clickable : Boolean = true
     var poke_font : Font = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("PokemonPixelFont.ttf"))
     poke_font = poke_font.deriveFont(Font.PLAIN,30)
@@ -22,7 +25,7 @@ abstract class MyButton (imageName_ : String) extends Object with Descriptable {
     var xtext  = 0
     var ytext = 0
     def display (g : Graphics) : Unit = {
-        if (visible) {
+        if (visible && (context == Utils.frame.currentState || context == "All") || alwaysVisible) {
             g.setFont(poke_font)
             var metrics = g.getFontMetrics(poke_font);
             // Coordonées du texte
@@ -34,13 +37,13 @@ abstract class MyButton (imageName_ : String) extends Object with Descriptable {
     }
 
     def onClick (xClick : Int, yClick : Int) : Boolean = {
-        if (visible && x <= xClick && xClick <= (x + width) && y <= yClick && yClick <= (y + height) && clickable) {
+        if ((visible && clickable || alwaysVisible) && x <= xClick && xClick <= (x + width) && y <= yClick && yClick <= (y + height)) {
             isClicked
             true // tells the listener that the button is clicked
         } else {
             false
         }
-  }
+    }
 
     def isClicked : Unit = {
         // function called when the button is clicked
@@ -61,45 +64,48 @@ abstract class MyButton (imageName_ : String) extends Object with Descriptable {
     }
 }
 
-class CloseButton (imageName_ : String, closeFunction : () => Unit, posX : Int, posY : Int) extends MyButton (imageName_) {
-    x = posX
-    y = posY
-    width = 15
-    height = 15
-    visible = true
-    override def isClicked : Unit = {
-        closeFunction()
+abstract class BattleButton (imageName_ : String) extends MyButton(imageName_) {
+    context = "Battle"
+    def resetOnMainMenu : Unit = {
+        Utils.buttonList.foreach(x => x.setVisible(false))
+        AttackButton.setVisible(true)
+        BagButton.setVisible(true)
+        MonsterButton.setVisible(true)
+        RunButton.setVisible(true)
     }
 }
 
-class HelpButton (imageName_ : String, helpFunction : () => Unit) extends MyButton (imageName_) {
+object CloseButton extends MyButton ("Close.png") {
+    context = "All"
+    x = 594
+    y = 2
+    width = 15
+    height = 15
+    alwaysVisible = true
+    override def isClicked : Unit = {
+        Utils.frame.close
+    }
+}
+
+object HelpButton extends MyButton ("Help.png") {
+    context = "All"
     x = 0
     y = 0
     width = 15
     height = 15
-    visible = true
+    alwaysVisible = true
     override def isClicked : Unit = {
-        helpFunction()
+        Utils.frame.help
     }
 }
 
-abstract class CastAttackButton (imageName_ : String) extends MyButton (imageName_) {
-    var n : Int = 0
-    visible = false
+class CastAttackButton (n_ : Int) extends BattleButton ("Buttons/EmptyButton.png") {
+    var n : Int = n_
+    x = 3 + 308*(n%2)
+    y = 405 + 144*(n/2)
     override def isClicked : Unit = {
         if (Player.chooseAttack(n)) {
-
-            CastAttackButton1.setVisible(false)
-            CastAttackButton2.setVisible(false)
-            CastAttackButton3.setVisible(false)
-            CastAttackButton4.setVisible(false)
-
-            BackButton.setVisible(false)
-
-            AttackButton.setVisible(true)
-            BagButton.setVisible(true)
-            MonsterButton.setVisible(true)
-            RunButton.setVisible(true)
+            resetOnMainMenu
         }
     }
 
@@ -142,24 +148,14 @@ abstract class CastAttackButton (imageName_ : String) extends MyButton (imageNam
     }
 }
 
-abstract class ChangeMonsterButton (imageName_ : String) extends MyButton (imageName_) {
-    var n : Int = 0
-    visible = false
+class ChangeMonsterButton (n_ : Int) extends BattleButton ("Buttons/EmptyButton.png") {
+    var n : Int = n_
+    x = 3 + 308*(n%2)
+    y = 405 + 144*(n/2)
 
     override def isClicked : Unit = {
         if (Player.changeMonster(n)) {
-            ChangeMonsterButton1.setVisible(false)
-            ChangeMonsterButton2.setVisible(false)
-            ChangeMonsterButton3.setVisible(false)
-            ChangeMonsterButton4.setVisible(false)
-            ChangeMonsterButton5.setVisible(false)
-            ChangeMonsterButton6.setVisible(false)
-
-            
-            AttackButton.setVisible(true)
-            BagButton.setVisible(true)
-            MonsterButton.setVisible(true)
-            RunButton.setVisible(true)
+            resetOnMainMenu
         }        
     }
 
@@ -206,24 +202,15 @@ abstract class ChangeMonsterButton (imageName_ : String) extends MyButton (image
 
 }
 
-abstract class UseItemButton (imageName_ : String) extends MyButton (imageName_) {
-    var n : Int = 0
-    visible = false
+class UseItemButton (n_ : Int) extends BattleButton ("Buttons/EmptyButton.png") {
+    var n : Int = n_
+    var indexOfObject : Int = 0
+    x = 3 + 308*(n%2)
+    y = 405 + 144*(n/2)
 
     override def isClicked : Unit = {
-        if (Player.useItem(n)) {
-            UseItemButton1.setVisible(false)
-            UseItemButton2.setVisible(false)
-            UseItemButton3.setVisible(false)
-            UseItemButton4.setVisible(false)
-
-            BackButton.setVisible(false)
-            NextPageItemButton.setVisible(false)
-            
-            AttackButton.setVisible(true)
-            BagButton.setVisible(true)
-            MonsterButton.setVisible(true)
-            RunButton.setVisible(true)
+        if (Player.useItem(indexOfObject)) {
+            resetOnMainMenu
         }        
     }
 
@@ -253,21 +240,22 @@ abstract class UseItemButton (imageName_ : String) extends MyButton (imageName_)
     }
 
     override def update : Unit = {
-        if (Player.usableInventory(n).name != "Empty" && Player.usableInventory(n).usable) {
+        indexOfObject = 4*NextPageItemButton.currentPage + n
+        if (Player.usableInventory(indexOfObject).name != "Empty" && Player.usableInventory(indexOfObject).usable) {
             imageName = "Buttons/BagButton.png"
             clickable = visible
         } else {
             imageName = "Buttons/EmptyButton.png"
             clickable = false
         }
-        text = Player.usableInventory(n).name + "(" + Player.usableInventory(n).amount + ")"
+        text = Player.usableInventory(indexOfObject).name + "(" + Player.usableInventory(indexOfObject).amount + ")"
         image = Utils.loadImage(imageName)
     }
 }
 
 
 
-object AttackButton extends MyButton ("Buttons/AttackButton.png") {
+object AttackButton extends BattleButton ("Buttons/AttackButton.png") {
     x = 3
     y = 405
     visible = true
@@ -281,10 +269,7 @@ object AttackButton extends MyButton ("Buttons/AttackButton.png") {
         MonsterButton.setVisible(false)
         RunButton.setVisible(false)
 
-        CastAttackButton1.setVisible(true)
-        CastAttackButton2.setVisible(true)
-        CastAttackButton3.setVisible(true)
-        CastAttackButton4.setVisible(true)
+        Utils.castAttackButtonList.foreach(x => x.setVisible(true))
 
         BackButton.x = 154
         BackButton.y = 693
@@ -304,7 +289,7 @@ object AttackButton extends MyButton ("Buttons/AttackButton.png") {
 }
 
 
-object BagButton extends MyButton ("Buttons/BagButton.png") {
+object BagButton extends BattleButton ("Buttons/BagButton.png") {
     x = 311
     y = 405
     visible = true
@@ -317,17 +302,10 @@ object BagButton extends MyButton ("Buttons/BagButton.png") {
         MonsterButton.setVisible(false)
         RunButton.setVisible(false)
 
-        UseItemButton1.setVisible(true)
-        UseItemButton2.setVisible(true)
-        UseItemButton3.setVisible(true)
-        UseItemButton4.setVisible(true)
+        Utils.useItemButtonList.foreach(x => x.setVisible(true))
         NextPageItemButton.setVisible(true)
 
         NextPageItemButton.currentPage = 0
-        UseItemButton1.n = 4*NextPageItemButton.currentPage
-        UseItemButton2.n = 4*NextPageItemButton.currentPage + 1
-        UseItemButton3.n = 4*NextPageItemButton.currentPage + 2
-        UseItemButton4.n = 4*NextPageItemButton.currentPage + 3
 
         BackButton.x = 3
         BackButton.y = 693
@@ -347,7 +325,7 @@ object BagButton extends MyButton ("Buttons/BagButton.png") {
 }
 
 
-object MonsterButton extends MyButton ("Buttons/MonstersButton.png") {
+object MonsterButton extends BattleButton ("Buttons/MonstersButton.png") {
     x = 3
     y = 549
     visible = true
@@ -360,12 +338,7 @@ object MonsterButton extends MyButton ("Buttons/MonstersButton.png") {
         MonsterButton.setVisible(false)
         RunButton.setVisible(false)
 
-        ChangeMonsterButton1.setVisible(true)
-        ChangeMonsterButton2.setVisible(true)
-        ChangeMonsterButton3.setVisible(true)
-        ChangeMonsterButton4.setVisible(true)
-        ChangeMonsterButton5.setVisible(true)
-        ChangeMonsterButton6.setVisible(true)
+        Utils.changeMonsterButtonList.foreach(x => x.setVisible(true))
     }
 
     override def update : Unit = {
@@ -382,7 +355,7 @@ object MonsterButton extends MyButton ("Buttons/MonstersButton.png") {
 }
 
 
-object RunButton extends MyButton ("Buttons/RunButton.png") {
+object RunButton extends BattleButton ("Buttons/RunButton.png") {
     x = 311
     y = 549
     visible = true
@@ -406,124 +379,16 @@ object RunButton extends MyButton ("Buttons/RunButton.png") {
     }
 }
 
-object BackButton extends MyButton ("Buttons/AttackButton.png") {
+object BackButton extends BattleButton ("Buttons/AttackButton.png") {
     visible = false
     text = "Back"
 
     override def isClicked : Unit = {
-        ChangeMonsterButton1.setVisible(false)
-        ChangeMonsterButton2.setVisible(false)
-        ChangeMonsterButton3.setVisible(false)
-        ChangeMonsterButton4.setVisible(false)
-        ChangeMonsterButton5.setVisible(false)
-        ChangeMonsterButton6.setVisible(false)
-
-        CastAttackButton1.setVisible(false)
-        CastAttackButton2.setVisible(false)
-        CastAttackButton3.setVisible(false)
-        CastAttackButton4.setVisible(false)
-
-        UseItemButton1.setVisible(false)
-        UseItemButton2.setVisible(false)
-        UseItemButton3.setVisible(false)
-        UseItemButton4.setVisible(false)
-
-        NextPageItemButton.setVisible(false)
-        setVisible(false)
-
-        AttackButton.setVisible(true)
-        BagButton.setVisible(true)
-        MonsterButton.setVisible(true)
-        RunButton.setVisible(true)
+       resetOnMainMenu
     }
 }
 
-object CastAttackButton1 extends CastAttackButton ("Buttons/WaterButton.png") {
-    x = 3
-    y = 405
-    n = 0
-
-}
-
-object CastAttackButton2 extends CastAttackButton ("Buttons/FireButton.png") {
-    x = 311
-    y = 405
-    n = 1
-}
-
-object CastAttackButton3 extends CastAttackButton ("Buttons/GrassButton.png") {
-    x = 3
-    y = 549
-    n = 2
-}
-
-object CastAttackButton4 extends CastAttackButton ("Buttons/IceButton.png") {
-    x = 311
-    y = 549
-    n = 3
-}
-
-object ChangeMonsterButton1 extends ChangeMonsterButton ("Buttons/ElectricButton.png") {
-    x = 3
-    y = 405
-    n = 0
-}
-
-object ChangeMonsterButton2 extends ChangeMonsterButton ("Buttons/EmptyButton.png") {
-    x = 311
-    y = 405
-    n = 1
-}
-
-object ChangeMonsterButton3 extends ChangeMonsterButton ("Buttons/EmptyButton.png") {
-    x = 3
-    y = 549
-    n = 2
-}
-
-object ChangeMonsterButton4 extends ChangeMonsterButton ("Buttons/EmptyButton.png") {
-    x = 311
-    y = 549
-    n = 3
-}
-
-object ChangeMonsterButton5 extends ChangeMonsterButton ("Buttons/EmptyButton.png") {
-    x = 3
-    y = 693
-    n = 4
-}
-
-object ChangeMonsterButton6 extends ChangeMonsterButton ("Buttons/EmptyButton.png") {
-    x = 311
-    y = 693
-    n = 5
-}
-
-object UseItemButton1 extends UseItemButton ("Buttons/EmptyButton.png") {
-    x = 3
-    y = 405
-    n = 0
-
-}
-
-object UseItemButton2 extends UseItemButton ("Buttons/EmptyButton.png") {
-    x = 311
-    y = 405
-    n = 1
-}
-
-object UseItemButton3 extends UseItemButton ("Buttons/EmptyButton.png") {
-    x = 3
-    y = 549
-    n = 2
-}
-object UseItemButton4 extends UseItemButton ("Buttons/EmptyButton.png") {
-    x = 311
-    y = 549
-    n = 3
-}
-
-object NextPageItemButton extends MyButton ("Buttons/EmptyButton.png") {
+object NextPageItemButton extends BattleButton ("Buttons/EmptyButton.png") {
     x = 311
     y = 693
     text = "Next"
@@ -531,15 +396,6 @@ object NextPageItemButton extends MyButton ("Buttons/EmptyButton.png") {
     override def isClicked : Unit = {
         var numberOfPage : Int = 1 + Player.usableInventory.filter(x => x.name != "Empty").length / 4
         currentPage = (currentPage + 1) % numberOfPage
-        UseItemButton1.n = 4*currentPage
-        UseItemButton2.n = 4*currentPage + 1
-        UseItemButton3.n = 4*currentPage + 2
-        UseItemButton4.n = 4*currentPage + 3
-
-        UseItemButton1.update
-        UseItemButton2.update
-        UseItemButton3.update
-        UseItemButton4.update
     }
 
     override def update : Unit = {

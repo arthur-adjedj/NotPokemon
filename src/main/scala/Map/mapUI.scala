@@ -6,23 +6,17 @@ import java.io.File
 
 
 
-class DrawPanelMap (mapDisplaye : MapDisplayer) extends MyPanel with Repaintable {
+class DrawPanelMap (mapDisplayer_ : MapDisplayer) extends MyPanel with Repaintable {
 
-    var mapDisplayer : MapDisplayer = mapDisplaye
-    var ready : Boolean = false
-
-    override def initialise : Unit = {
-        ready = true
-    }
+    var mapDisplayer : MapDisplayer = mapDisplayer_
 
 
     override def paintComponent (g : Graphics) : Unit = {
         if (ready) {
             super.paintComponent(g)
             mapDisplayer.display(g)
-            g.setColor(Color.BLACK)
-            g.fillRect(0, 0, getWidth, 20)
             DiscussionLabel.display(g)
+            endPaintComponent(g)
         }
     }
 }

@@ -3,7 +3,10 @@
 abstract class MapItem {
     var id : Int = -1
     var name : String = "Nothing"
+
+    // to know if we can select this item or not
     var usable : Boolean = true
+    
     def imgName : String = "Items/" + name + ".png"
     def onSelect (p : CharacterDisplayer) : Unit = {}
     def onUnselect (p : CharacterDisplayer) : Unit = {}

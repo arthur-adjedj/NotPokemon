@@ -10,6 +10,7 @@ class MonsterDisplayer (imageName_ : String) extends Object with Descriptable {
     var height : Int = 164
     var imageName : String = imageName_
     var image : BufferedImage = Utils.loadImage(imageName)
+    context = "Battle"
 
 
     def display (g : Graphics) : Unit = {
@@ -19,7 +20,7 @@ class MonsterDisplayer (imageName_ : String) extends Object with Descriptable {
     def update : Unit = {}
 
     override def isMouseOver (xClick : Int, yClick : Int) : Boolean = {
-        x <= xClick && xClick <= (x + width) && y <= yClick && yClick <= (y + height)
+        context == Utils.frame.currentState && x <= xClick && xClick <= (x + width) && y <= yClick && yClick <= (y + height)
     }
 }
 

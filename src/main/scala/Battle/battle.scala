@@ -47,7 +47,7 @@ class Battle (p1 : Character, p2 : Character) extends Thread {
         Utils.waitDiscussionLabel(true)
         Utils.frame.backToMap
         PlayerDisplayer.canInteract = true
-        Utils.frame.listeningToKeyboard = true
+        Utils.frame.battlePane.ready = false
     }
 }
 
