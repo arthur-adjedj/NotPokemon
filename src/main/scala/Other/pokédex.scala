@@ -1,14 +1,14 @@
 
 
-object Pokédex {
+object Pokedex {
     var backgroundImgName = ""
     var backgroundImg = Utils.loadImage(backgroundImgName)
 
     var pokeList : List[Monster] = List()
-    var nbPokés = pokeList.length
+    var nbPokes = pokeList.length
 }
 
-class DrawPokédexPanel extends MyPanel {
+class DrawPokedexPanel extends MyPanel {
 
     var currentMonster = Utils.loadImage("Empty.png")
 

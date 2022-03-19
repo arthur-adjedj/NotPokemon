@@ -32,6 +32,7 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
 
     var battlePane : DrawPanelBattle = new DrawPanelBattle(EmptyCharacter, EmptyCharacter)
     var mapPane : DrawPanelMap = new DrawPanelMap(mapDisplayer)
+    var pokedexPane : DrawPokedexPanel = new DrawPokedexPanel
     var currentPane : MyPanel = mapPane.asInstanceOf[MyPanel]
     var currentState : String = ""
     var listeningToKeyboard : Boolean = true
@@ -72,11 +73,12 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
     }
 
     def backToBattle : Unit = {
-        currentState = "Battle"
-        DiscussionLabel.visible = true
-        currentPane = battlePane.asInstanceOf[MyPanel]
-        setContentPane(currentPane)
-
+        if (battlePane.ready) {
+            currentState = "Battle"
+            DiscussionLabel.visible = true
+            currentPane = battlePane.asInstanceOf[MyPanel]
+            setContentPane(currentPane)
+        }
     }
 
     def initialiseMap : Unit = {
@@ -102,14 +104,34 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
     }
 
     def backToMap : Unit = {
-        if (Player.team.forall(x => !x.alive)) {
-            loseTheGame
+        if (mapPane.ready) {
+            if (Player.team.forall(x => !x.alive)) {
+                loseTheGame
+            }
+            currentState = "Map"
+            DiscussionLabel.visible = false
+            currentPane = mapPane.asInstanceOf[MyPanel]
+            setContentPane(currentPane)
         }
+    }
 
-        currentState = "Map"
+    def initialisePokedex : Unit = {
+        currentState = "Pokedex"
         DiscussionLabel.visible = false
-        currentPane = mapPane.asInstanceOf[MyPanel]
+
+        currentPane = pokedexPane
+        currentPane.initialise
         setContentPane(currentPane)
+    }
+
+    def backToPokedex : Unit = {
+        if (pokedexPane.ready) {
+            currentState = "Pokedex"
+            DiscussionLabel.visible = false
+
+            currentPane = pokedexPane
+            setContentPane(currentPane)
+        }
     }
 
     def loseTheGame : Unit = {
@@ -207,11 +229,13 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
 
                     case 'a' => PlayerDisplayer.changeCurrentItem
 
+                    case '1' => backToBattle
+                    case '2' => backToMap
+                    case '3' => backToPokedex
+
                     // For debugging
                     case 'n' => if (Utils.debug) PlayerDisplayer.noClip = !PlayerDisplayer.noClip
-                    case 'w' => DiscussionLabel.changeText(List("This is a long text so the Discussion Label takes some time !", "Did it work correctly ?"))
-                    case 'x' => if (currentState == "Battle") backToMap else backToBattle
-                    case _ => Utils.print(e.getKeyChar)
+                    case _ => Utils.print(e.getKeyChar.toInt)
                 }
             } else {
                 DiscussionLabel.skip
@@ -230,8 +254,11 @@ class MyPanel extends JPanel with Repaintable {
     var yMouse : Int = -1
     var underMouse : Descriptable = EmptyDescriptable
     var showHelp : Boolean = false
+    var ready : Boolean = false
 
-    def initialise : Unit = {}
+    def initialise : Unit = {
+        ready = true
+    }
 
     override def paintComponent (g : Graphics) : Unit = {
         super.paintComponent(g)
