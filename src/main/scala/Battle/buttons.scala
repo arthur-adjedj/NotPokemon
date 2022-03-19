@@ -7,6 +7,7 @@ import javax.swing.{JFrame, JPanel, JLabel}
 
 
 abstract class MyButton (imageName_ : String) extends Object with Descriptable {
+
     var originalImageName = imageName_
     var imageName = imageName_
     var x : Int = 0
@@ -15,6 +16,7 @@ abstract class MyButton (imageName_ : String) extends Object with Descriptable {
     var height : Int = 136
     var image = Utils.loadImage(imageName)
     var visible : Boolean = false
+    var context : String = "" // the value of Utils.frame.currentState to decide if we display
     var clickable : Boolean = true
     var poke_font : Font = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("PokemonPixelFont.ttf"))
     poke_font = poke_font.deriveFont(Font.PLAIN,30)
@@ -22,7 +24,7 @@ abstract class MyButton (imageName_ : String) extends Object with Descriptable {
     var xtext  = 0
     var ytext = 0
     def display (g : Graphics) : Unit = {
-        if (visible) {
+        if (visible && (context == Utils.frame.currentState || context == "All")) {
             g.setFont(poke_font)
             var metrics = g.getFontMetrics(poke_font);
             // Coordonées du texte
@@ -61,29 +63,35 @@ abstract class MyButton (imageName_ : String) extends Object with Descriptable {
     }
 }
 
-class CloseButton (imageName_ : String, closeFunction : () => Unit, posX : Int, posY : Int) extends MyButton (imageName_) {
-    x = posX
-    y = posY
+abstract class BattleButton (imageName_ : String) extends MyButton(imageName_) {
+    context = "Battle"
+}
+
+object CloseButton extends MyButton ("Close.png") {
+    context = "All"
+    x = 594
+    y = 2
     width = 15
     height = 15
     visible = true
     override def isClicked : Unit = {
-        closeFunction()
+        Utils.frame.close
     }
 }
 
-class HelpButton (imageName_ : String, helpFunction : () => Unit) extends MyButton (imageName_) {
+object HelpButton extends MyButton ("Help.png") {
+    context = "All"
     x = 0
     y = 0
     width = 15
     height = 15
     visible = true
     override def isClicked : Unit = {
-        helpFunction()
+        Utils.frame.help
     }
 }
 
-abstract class CastAttackButton (imageName_ : String) extends MyButton (imageName_) {
+abstract class CastAttackButton (imageName_ : String) extends BattleButton (imageName_) {
     var n : Int = 0
     visible = false
     override def isClicked : Unit = {
@@ -142,7 +150,7 @@ abstract class CastAttackButton (imageName_ : String) extends MyButton (imageNam
     }
 }
 
-abstract class ChangeMonsterButton (imageName_ : String) extends MyButton (imageName_) {
+abstract class ChangeMonsterButton (imageName_ : String) extends BattleButton (imageName_) {
     var n : Int = 0
     visible = false
 
@@ -206,7 +214,7 @@ abstract class ChangeMonsterButton (imageName_ : String) extends MyButton (image
 
 }
 
-abstract class UseItemButton (imageName_ : String) extends MyButton (imageName_) {
+abstract class UseItemButton (imageName_ : String) extends BattleButton (imageName_) {
     var n : Int = 0
     visible = false
 
@@ -267,7 +275,7 @@ abstract class UseItemButton (imageName_ : String) extends MyButton (imageName_)
 
 
 
-object AttackButton extends MyButton ("Buttons/AttackButton.png") {
+object AttackButton extends BattleButton ("Buttons/AttackButton.png") {
     x = 3
     y = 405
     visible = true
@@ -304,7 +312,7 @@ object AttackButton extends MyButton ("Buttons/AttackButton.png") {
 }
 
 
-object BagButton extends MyButton ("Buttons/BagButton.png") {
+object BagButton extends BattleButton ("Buttons/BagButton.png") {
     x = 311
     y = 405
     visible = true
@@ -347,7 +355,7 @@ object BagButton extends MyButton ("Buttons/BagButton.png") {
 }
 
 
-object MonsterButton extends MyButton ("Buttons/MonstersButton.png") {
+object MonsterButton extends BattleButton ("Buttons/MonstersButton.png") {
     x = 3
     y = 549
     visible = true
@@ -382,7 +390,7 @@ object MonsterButton extends MyButton ("Buttons/MonstersButton.png") {
 }
 
 
-object RunButton extends MyButton ("Buttons/RunButton.png") {
+object RunButton extends BattleButton ("Buttons/RunButton.png") {
     x = 311
     y = 549
     visible = true
@@ -406,7 +414,7 @@ object RunButton extends MyButton ("Buttons/RunButton.png") {
     }
 }
 
-object BackButton extends MyButton ("Buttons/AttackButton.png") {
+object BackButton extends BattleButton ("Buttons/AttackButton.png") {
     visible = false
     text = "Back"
 
@@ -523,7 +531,7 @@ object UseItemButton4 extends UseItemButton ("Buttons/EmptyButton.png") {
     n = 3
 }
 
-object NextPageItemButton extends MyButton ("Buttons/EmptyButton.png") {
+object NextPageItemButton extends BattleButton ("Buttons/EmptyButton.png") {
     x = 311
     y = 693
     text = "Next"
