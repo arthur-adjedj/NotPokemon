@@ -98,7 +98,7 @@ object YourBar{
     }
 }
 
-class DrawPanelBattle (buttonList : List[MyButton], p1 : Character, p2 : Character) extends MyPanel with Repaintable {
+class DrawPanelBattle (p1 : Character, p2 : Character) extends MyPanel with Repaintable {
     var battleBackgroundImg = Utils.loadImage("BattleBackground.png")
     var pokemonFrontImg = Utils.loadImage("Monsters/EmptyFront.png")
     var pokemonBackImg = Utils.loadImage("Monsters/EmptyBack.png")
@@ -108,7 +108,7 @@ class DrawPanelBattle (buttonList : List[MyButton], p1 : Character, p2 : Charact
   
     override def paintComponent (g : Graphics) : Unit = {
         super.paintComponent(g)
-        buttonList.foreach(x => x.update)
+        
         g.setFont(poke_font)
         g.drawImage(battleBackgroundImg, 0, 0, null)
 
@@ -122,12 +122,7 @@ class DrawPanelBattle (buttonList : List[MyButton], p1 : Character, p2 : Charact
         YourBar.display(g)
 
         DiscussionLabel.display(g)
-        g.setColor(Color.BLACK)
-        g.fillRect(0, 0, getWidth, 20)
-        buttonList.foreach(x => x.display(g))
-        if (showHelp) {
-            underMouse.onMouseOver(g, xMouse, yMouse, getWidth, getHeight)
-        }
+        endPaintComponent(g)
         
     }
 

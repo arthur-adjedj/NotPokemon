@@ -29,26 +29,8 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
     var xClick : Int = -1
     var yClick : Int = -1
 
-    var closeButton = new CloseButton ("Close.png", close, sizeX - 20, 2)
-    var helpButton = new HelpButton ("Help.png", help)
 
-
-    // cannot create the list and adding buttons during their creation because of a weird behaviour with 'object'
-    var buttonList : List[MyButton] = List(AttackButton, BagButton, MonsterButton, RunButton, BackButton, NextPageItemButton, closeButton, helpButton,
-                                            CastAttackButton1, CastAttackButton2, CastAttackButton3, CastAttackButton4,
-                                            ChangeMonsterButton1, ChangeMonsterButton2, ChangeMonsterButton3, 
-                                            ChangeMonsterButton4, ChangeMonsterButton5, ChangeMonsterButton6,
-                                            UseItemButton1, UseItemButton2, UseItemButton3, UseItemButton4)
-
-    var descriptables : List[Descriptable] = List(AttackButton, BagButton, MonsterButton, RunButton, BackButton, NextPageItemButton,
-                                                CastAttackButton1, CastAttackButton2, CastAttackButton3, CastAttackButton4,
-                                                ChangeMonsterButton1, ChangeMonsterButton2, ChangeMonsterButton3, 
-                                                ChangeMonsterButton4, ChangeMonsterButton5, ChangeMonsterButton6,
-                                                UseItemButton1, UseItemButton2, UseItemButton3, UseItemButton4,
-                                                PlayerMonsterDisplayer, OpponentMonsterDisplayer)
-
-
-    var battlePane : DrawPanelBattle = new DrawPanelBattle(buttonList, EmptyCharacter, EmptyCharacter)
+    var battlePane : DrawPanelBattle = new DrawPanelBattle(EmptyCharacter, EmptyCharacter)
     var mapPane : DrawPanelMap = new DrawPanelMap(mapDisplayer)
     var currentPane : MyPanel = mapPane.asInstanceOf[MyPanel]
     var currentState : String = ""
@@ -80,7 +62,7 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
         var b = new Battle(p1, p2)
         YourBar.p1 = p1
         EnnemyBar.p2 = p2
-        battlePane = new DrawPanelBattle(buttonList, p1, p2)
+        battlePane = new DrawPanelBattle(p1, p2)
         currentPane = battlePane.asInstanceOf[MyPanel]
         currentPane.initialise
         setContentPane(currentPane)
@@ -138,7 +120,7 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
 
     def mouseClicked (e : MouseEvent) : Unit = {
         if (!DiscussionLabel.changingText && DiscussionLabel.messageQueue.isEmpty) {
-            if (Player.hisTurn) {
+            if (Player.hisTurn || Utils.frame.currentState != "Battle") {
                 var clickCaught : Boolean = false
                 def clickAButton (b : MyButton) : Unit = {
                     if (!clickCaught) {
@@ -146,7 +128,7 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
                     }
                 }
 
-                buttonList.foreach(clickAButton)
+                Utils.buttonList.foreach(clickAButton)
                 clickCaught = false
             }
         } else {
@@ -191,7 +173,7 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
             }
         }
 
-        descriptables.foreach(moveMouseOver)
+        Utils.descriptables.foreach(moveMouseOver)
         eventCaught = false
         currentPane.xMouse = e.getX
         currentPane.yMouse = e.getY
@@ -244,7 +226,21 @@ class MyPanel extends JPanel with Repaintable {
 
     override def paintComponent (g : Graphics) : Unit = {
         super.paintComponent(g)
-        //Utils.print(scala.util.Random.nextFloat())
+    }
+
+
+    def endPaintComponent(g : Graphics) : Unit = {
+        // at the end of PaintComponent, like super.paintComponent at the beggining
+        g.setColor(Color.BLACK)
+        g.fillRect(0, 0, getWidth, 20)
+        CloseButton.display(g)
+        HelpButton.display(g)
+        Utils.buttonList.foreach(x => x.update)
+        Utils.buttonList.foreach(x => x.display(g))
+
+        if (showHelp) {
+            underMouse.onMouseOver(g, xMouse, yMouse, getWidth, getHeight)
+        }
     }
 }
 

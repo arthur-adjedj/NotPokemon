@@ -8,10 +8,26 @@ import java.lang.Math
 
 object Utils {
 
+    // some global variables
+
     var characterDisplayers : List[CharacterDisplayer] = List()
     var repaintables : List[Repaintable] = List()
     var updatable : List[Updatable] = List()
     var frame : UI = EmptyUI
+
+    // cannot create the list and adding buttons during their creation because of a weird behaviour with 'object'
+    var buttonList : List[MyButton] = List(AttackButton, BagButton, MonsterButton, RunButton, BackButton, NextPageItemButton, CloseButton, HelpButton,
+                                            CastAttackButton1, CastAttackButton2, CastAttackButton3, CastAttackButton4,
+                                            ChangeMonsterButton1, ChangeMonsterButton2, ChangeMonsterButton3, 
+                                            ChangeMonsterButton4, ChangeMonsterButton5, ChangeMonsterButton6,
+                                            UseItemButton1, UseItemButton2, UseItemButton3, UseItemButton4)
+
+    var descriptables : List[Descriptable] = List(AttackButton, BagButton, MonsterButton, RunButton, BackButton, NextPageItemButton,
+                                                CastAttackButton1, CastAttackButton2, CastAttackButton3, CastAttackButton4,
+                                                ChangeMonsterButton1, ChangeMonsterButton2, ChangeMonsterButton3, 
+                                                ChangeMonsterButton4, ChangeMonsterButton5, ChangeMonsterButton6,
+                                                UseItemButton1, UseItemButton2, UseItemButton3, UseItemButton4,
+                                                PlayerMonsterDisplayer, OpponentMonsterDisplayer)
 
     var debug = false
 
