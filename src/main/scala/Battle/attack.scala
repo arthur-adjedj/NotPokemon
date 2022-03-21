@@ -1,10 +1,14 @@
-abstract class Attack {
+abstract class Attack extends Object with ScoreForStrategy {
     var name : String = ""
+    var action : String = "attack" // To notify the IA that there can be a buff/debuff/status
     var power : Int = 0
     var critChance : Float = 0
     var priority : Int = 0
     var accuracy : Float = 1
     var attackType : Type = Normal
+    def scoreForStrategy (self : Monster, ennemy : Monster) : Int = {
+        (power*attackType.multDamage(ennemy.monsterType)*Math.pow(2, self.getStage("attack")) - ennemy.getStage("defense")).toInt
+    }
     def nOfHits() : Int = 1 
     def cast(self : Monster,ennemy: Monster) : Unit = () // this function is called everytime an attack is casted
     def handlesDamages (self : Monster, ennemy : Monster) : Int = { // if the function returns -1, the basic formula is used
@@ -12,6 +16,56 @@ abstract class Attack {
             0
         } else {
             -1
+        }
+    }
+}
+
+abstract class BuffAttack extends Attack {
+    action = "buff"
+    var stat : String = ""
+    var proba : Float = 1
+    var amount : Int = 1
+    override def scoreForStrategy (self : Monster, ennemy : Monster) : Int = {
+        super.scoreForStrategy(self, ennemy) + (40*(6 - self.getStage(stat)).min(amount)*proba).toInt
+    }
+
+    override def cast (self : Monster, ennemy : Monster) : Unit = {
+        if (scala.util.Random.nextFloat() < proba) {
+            DiscussionLabel.changeText(ennemy.name + "'s " + stat + " has increased.")
+            self.changeStage(stat, amount)
+        }
+    }
+}
+
+abstract class DebuffAttack extends Attack {
+    action = "debuff"
+    var stat : String = ""
+    var proba : Float = 1
+    var amount : Int = 1
+    override def scoreForStrategy (self : Monster, ennemy : Monster) : Int = {
+        super.scoreForStrategy(self, ennemy) + (40*(ennemy.getStage(stat) + 6).min(-amount)*proba*amount*(-1)).toInt
+    }
+
+    override def cast (self : Monster, ennemy : Monster) : Unit = {
+        if (scala.util.Random.nextFloat() < proba) {
+            DiscussionLabel.changeText(ennemy.name + "'s " + stat + " is lowered.")
+            ennemy.changeStage(stat, -amount)
+        }
+    }
+}
+
+abstract class StatusAttack extends Attack {
+    action = "status"
+    var status : Status = new NoStatus
+    var proba : Float = 1
+
+    override def scoreForStrategy (self : Monster, ennemy : Monster) : Int = {
+        (super.scoreForStrategy(self, ennemy) + 50*proba).toInt
+    }
+
+    override def cast (self : Monster, ennemy : Monster) : Unit = {
+        if (scala.util.Random.nextFloat() < proba) {
+            ennemy.receiveStatus(status.copy)
         }
     }
 }
@@ -56,47 +110,51 @@ object ThunderShock extends Attack {
         "inflict damage. This may also leave the target with paralysis."
 }
 
-object ThunderWave extends Attack {
+object ThunderWave extends StatusAttack {
+    status = new Paralysis
     name = "Thunder Wave"
+
     accuracy = 0.9f
     attackType = Electric
     override def toString : String = 
         "The user launches a weak jolt of electricity that paralyzes the target."
-    override def cast(self: Monster, ennemy: Monster): Unit = {
-        DiscussionLabel.changeText(ennemy.name + " is now paralysed !")
-        ennemy.receiveStatus(new Paralysis)
-    }
 }
 
-object Growl extends Attack {
+object Growl extends DebuffAttack {
+    stat = "attack"
+
     name = "Growl"
     power = 40
     override def toString : String = 
         "The user growls in an endearing way, making opposing" +
         "Monster less wary. This lowers their Attack stat."
-    override def cast(self: Monster, ennemy: Monster): Unit = 
-        ennemy.attackStage = (-6).max(ennemy.attackStage - 1)
 }
 
 object Swift extends Attack {
     name = "Swift"
     power = 40
-    accuracy = Float.PositiveInfinity
+    accuracy = Float.PositiveInfinity // this attack cannot missed and cannot be dodged
     attackType = Normal
     override def toString : String = 
         "Star-shaped rays are shot at the opposing Monster. This attack never misses."    
 }
 
-object Agility extends Attack {
+object Agility extends BuffAttack {
+    stat = "speed"
+    amount = 2
+
     name = "Agility"
-    accuracy = Float.PositiveInfinity
+    accuracy = Float.PositiveInfinity // this attack cannot missed and cannot be dodged
     override def toString : String = 
         "The user relaxes and lightens its body to move faster. This sharply raises the Speed stat."
     override def cast(self: Monster, ennemy: Monster): Unit = 
         self.speedStage = (6).min(self.speedStage + 2)
 }
 
-object Thunder extends Attack {
+object Thunder extends StatusAttack {
+    status = new Paralysis
+    proba = 0.3f
+
     name = "Thunder"
     power = 110
     accuracy= 0.7f
@@ -104,13 +162,6 @@ object Thunder extends Attack {
     override def toString : String = 
         "A wicked thunderbolt is dropped on the target to inflict damage."+
         " This may also leave the target with paralysis."
-    override def cast(self: Monster, ennemy: Monster): Unit = {
-        var random = scala.util.Random.nextFloat()
-        if (random < 0.3f){
-            DiscussionLabel.changeText(ennemy.name + " is now paralysed !")
-            ennemy.receiveStatus(new Paralysis)
-        }
-    }
 }
 
 object Tackle extends Attack {
@@ -121,12 +172,12 @@ object Tackle extends Attack {
         "and slams into the target with its whole body."
 }
 
-object TailWhip extends Attack {
+object TailWhip extends DebuffAttack {
+    stat = "defense"
+
     name = "Tail Whip"
     override def toString : String = 
         "The user wags its tail cutely, making opposing Monster less wary and lowering their Defense stat."
-    override def cast(self: Monster, ennemy: Monster): Unit = 
-        ennemy.defenseStage = (-6).max(ennemy.defenseStage-1)
 }
 
 object WaterGun extends Attack {
@@ -137,48 +188,42 @@ object WaterGun extends Attack {
         "The target is blasted with a forceful shot of water."
 }
 
-object Withdraw extends Attack {
+object Withdraw extends BuffAttack {
+    stat = "defense"
+
     name = "Withdraw"
     attackType = Water
     override def toString : String = 
         "The user wags its tail cutely, making opposing Monster less wary and lowering their Defense stat."
-    override def cast(self: Monster, ennemy: Monster): Unit = 
-        self.defenseStage = (6).min(self.defenseStage+1)
-    
 }
 
-object RapidSpin extends Attack {
+object RapidSpin extends BuffAttack {
+    stat = "speed"
+
     name = "Rapid Spin"
     power = 50
     override def toString : String = 
         "A spin attack that can also eliminate such moves as Bind, Wrap, Leech Seed, and Spikes."
-    override def cast(self: Monster, ennemy: Monster): Unit = 
-        self.speedStage = (6).min(self.speedStage+1)
     
 }
 
-object WaterPulse extends Attack {
+object WaterPulse extends StatusAttack {
+    status = new Confusion
+    proba = 0.2f
+
     name = "Water Pulse"
     power = 60
     attackType = Water
     override def toString : String = 
         "The user attacks the target with a pulsing blast of water. This may also confuse the target."
-    override def cast(self: Monster, ennemy: Monster): Unit = {
-        if (scala.util.Random.nextFloat() < 0.2f){
-            ennemy.receiveStatus(new Confusion) 
-       }
-    }
     
 }
 
-object Protect extends Attack {
+object Protect extends StatusAttack {
+    status = new Protection
     name = "Protect"
     override def toString : String = 
         "Enables the user to evade all attacks. Its chance of failing rises if it is used in succession."
-    override def cast(self: Monster, ennemy: Monster): Unit = {
-            ennemy.receiveStatus(new Protection) 
-       
-    }
 }
 
 object AquaTail extends Attack {
@@ -190,22 +235,23 @@ object AquaTail extends Attack {
         "The user attacks by swinging its tail as if it were a vicious wave in a raging storm."
 }
 
-object ShellSmash extends Attack {
+object ShellSmash extends DebuffAttack {
+    stat = "defense"
+
     name = "Shell Smash"
     override def toString : String = 
         "A spin attack that can also eliminate such moves as Bind, Wrap, Leech Seed, and Spikes."
-    override def cast(self: Monster, ennemy: Monster): Unit = 
-        ennemy.defenseStage = (-6).max(ennemy.defenseStage-1)
 }
 
-object IronDefense extends Attack {
+object IronDefense extends BuffAttack {
+    stat = "defense"
+    amount = 2
+
+
     name = "Iron Defense"
     override def toString : String = 
         "The user hardens its body’s surface like iron, sharply raising its Defense stat."
-    override def cast(self: Monster, ennemy: Monster): Unit = 
-        self.defenseStage = (6).min(self.defenseStage+2)    
 }
-
 object HydroPump extends Attack {
     name = "Hydro Pump"
     power = 110
@@ -215,7 +261,9 @@ object HydroPump extends Attack {
         "The target is blasted by a huge volume of water launched under great pressure."
 }
 
-object SkullBash extends Attack {
+object SkullBash extends BuffAttack {
+    stat = "defense" 
+
     name = "Skull Bash"
     power = 130
     override def toString : String = 
@@ -248,7 +296,9 @@ object Scratch extends Attack {
         "Hard, pointed, sharp claws rake the target to inflict damage."
 }
 
-object Ember extends Attack {
+object Ember extends StatusAttack {
+    status = new Burn
+
     name = "Ember"
     attackType = Fire
     override def toString : String = 
@@ -260,23 +310,23 @@ object Ember extends Attack {
     }
 }
 
-object Flamethrower extends Attack {
+object Flamethrower extends StatusAttack {
+    status = new Burn
+    proba = 0.1f
+
     name = "Flamethrower"
     power = 90
     attackType = Fire
     override def toString : String = 
         "The target is scorched with an intense blast of fire."+
         " This may also leave the target with a burn."
-    override def cast(self: Monster, ennemy: Monster): Unit = {
-        var random = scala.util.Random.nextFloat()
-        if (random < 0.1f){
-            DiscussionLabel.changeText(ennemy.name + " is now burned !")
-            ennemy.receiveStatus(new Burn)
-        }
-    }
+
 }
 
-object Crunch extends Attack {
+object Crunch extends DebuffAttack {
+    stat = "defense"
+    proba = 0.2f
+
     name = "Crunch"
     power = 80
     override def toString : String = 

@@ -6,7 +6,7 @@ import java.io.File
 
 
 
-class DrawPanelMap (mapDisplayer_ : MapDisplayer) extends MyPanel with Repaintable {
+class DrawPanelMap (mapDisplayer_ : MapDisplayer) extends MyPanel {
 
     var mapDisplayer : MapDisplayer = mapDisplayer_
 

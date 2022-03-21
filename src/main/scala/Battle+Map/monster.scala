@@ -3,7 +3,7 @@ import java.lang.Math
 import javax.management.Descriptor
 import java.awt.image.BufferedImage
 
-abstract class Monster {
+abstract class Monster extends Object with ScoreForStrategy {
     var xp : Int = 0
     var level : Int = 0
 
@@ -37,6 +37,13 @@ abstract class Monster {
     var speedBattle : Int = 100
     var accuracyBattle : Float = 1
     var evasionBattle : Float = 1
+
+    // For the strategy
+    var turnsOnField : Int = 0
+    def scoreForStrategy (self : Monster, ennemy : Monster) : Int = {
+        50*(Math.pow(2, attackStage + defenseStage + speedStage / 2)*hpRate*monsterType.multDamage(ennemy.monsterType)*Math.pow(2, -turnsOnField)).toInt
+    }
+    var action = "monster"
 
 
     var alive : Boolean = true
@@ -88,6 +95,8 @@ abstract class Monster {
         accuracyStage = 0
         evasionStage = 0
 
+        turnsOnField = 0
+
         monstersSeen = List()
         status = List()
     }
@@ -95,6 +104,11 @@ abstract class Monster {
     def enterField : Unit = {
         newMonsterSeen(owner.opponent.currentMonster)
         owner.opponent.currentMonster.newMonsterSeen(this)
+        turnsOnField = 0
+    }
+
+    def leaveField : Unit = {
+        turnsOnField = 0
     }
 
     def newMonsterSeen (other : Monster) : Unit = {
@@ -104,7 +118,7 @@ abstract class Monster {
     }
 
     def newTurn : Unit = {
-
+        turnsOnField += 1
     }
 
     def endTurn : Unit = {
@@ -173,15 +187,31 @@ abstract class Monster {
         }
     }
 
+    def getStage (stat : String) : Int = {
+        stat match {
+            case "attack" => attackStage
+            case "defense" => defenseStage
+            case "speed" => speedStage
+            case "accuracy" => accuracyStage
+            case "evasion" => evasionStage
+            case _ => Utils.print(stat + " stat is unreachable"); 0
+        }
+    }
+
+    def changeStage (stat : String, amount : Int) : Unit = {
+        stat match {
+            case "attack" => attackStage = (attackStage + amount).max(-6).min(6)
+            case "defense" => defenseStage = (defenseStage + amount).max(-6).min(6)
+            case "speed" => speedStage = (speedStage + amount).max(-6).min(6)
+            case "accuracy" => accuracyStage = (accuracyStage + amount).max(-6).min(6)
+            case "evasion" => evasionStage = (evasionStage + amount).max(-6).min(6)
+            case _ => Utils.print(stat + " stat is unreachable")
+        }
+    }
+
     def calcModifier (monster : Monster, stat : String) : Float = {
         // calculates the modifier due to a stage
-        var stage = {stat match {
-            case "attack" => monster.attackStage
-            case "defense" => monster.defenseStage
-            case "speed" => monster.speedStage
-            case "accuracy" => monster.accuracyStage
-            case "evasion" => monster.evasionStage
-        }}
+        var stage = monster.getStage(stat)
 
         {stage match {
             case -6 => 25f/100f
@@ -239,7 +269,7 @@ abstract class Monster {
     }
 
     def endTurnStatus : Unit = {
-        status.foreach(x => x.onEndTurn(this))
+        status.foreach(x => x.onEndTurn)
         status = status.filter(x => x.durationLeft != 0)
     }
 
