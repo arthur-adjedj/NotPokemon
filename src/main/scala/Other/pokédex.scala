@@ -10,7 +10,7 @@ class DrawPokedexPanel extends MyPanel {
     var pokeList : List[Monster] = List()
 
     //image to draw when the pokémon was never caught nor seen
-    var unknownPokemon = Utils.loadImage("")
+    var unknownPokemon = Utils.loadImage("Pokedex/UnknownMonster.png")
 
     var pokemonArray : Array[Monster] = Array(EmptyMonster)
     def nbPokes = pokeList.length
@@ -30,10 +30,11 @@ class DrawPokedexPanel extends MyPanel {
 
     def drawPokemon(g : Graphics) = {
         var pokemonToDisplay = pokemonArray(currentMonster)
+
         if (pokemonToDisplay.wasSeen) {
-            g.drawImage(Utils.loadImage(pokemonToDisplay.imgNameFront),0,0,null)
+            g.drawImage(Utils.loadImage(pokemonToDisplay.imgNameFront),53,170,null)
         } else {
-            g.drawImage(unknownPokemon,0,0,null)
+            g.drawImage(unknownPokemon,53,170,null)
         }
     }
 
@@ -42,7 +43,6 @@ class DrawPokedexPanel extends MyPanel {
     }
 
     override def paintComponent(g : Graphics) = {
-        Utils.print("painting")
         super.paintComponent(g)
         g.drawImage(backgroundImg,0,20,null)
         drawPokemon(g)
