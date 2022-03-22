@@ -47,6 +47,7 @@ class DrawPokedexPanel extends MyPanel {
         g.drawImage(backgroundImg,0,20,null)
         drawPokemon(g)
         drawText(g)
+        endPaintComponent(g)
     }
 
 }
