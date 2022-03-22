@@ -140,6 +140,8 @@ class Mover extends Thread {
 
     
     def move (moveX : Int, moveY : Int) : Unit = {
+        characterDisplayer.i += moveX
+        characterDisplayer.j += moveY
         lastMoveX = moveX
         lastMoveY = moveY
         start

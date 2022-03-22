@@ -152,8 +152,6 @@ class CharacterDisplayer (imgName : String) extends Object with Updatable {
         x += moveX
         y += moveY
 
-        i = x/mapDisplayer.sizeBlock
-        j = y/mapDisplayer.sizeBlock
     }
 
     def alignCoordinates : Unit = {
