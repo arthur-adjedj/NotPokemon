@@ -39,7 +39,7 @@ trait Intelligence {
         var allActionsScore = List.concat(classicAttacksScore, buffAttacksScore, debuffAttacksScore, statusAttacksScore, availableTeamScore)
 
         var sumScores = allActionsScore.fold(0)((x, y) => x + y)
-        var random = scala.util.Random.nextInt(sumScores)
+        var random = scala.util.Random.nextInt(sumScores - 1) + 1 // to avoid 0
 
         for (i <- 0 until allActions.length) {
             Utils.print(allActions(i).name, allActionsScore(i))
@@ -47,11 +47,13 @@ trait Intelligence {
 
         // we choose a random action to do
         var i = -1
+        Utils.print(random)
         while (random > 0) {
             i += 1
             random -= allActionsScore(i)
         }
         var actionToDo = allActions(i)
+        Utils.print(actionToDo.name)
         actionToDo.action match {
             case "monster" => changeMonster(actionToDo.asInstanceOf[Monster])
             case _ => chooseAttack(actionToDo.asInstanceOf[Attack])
