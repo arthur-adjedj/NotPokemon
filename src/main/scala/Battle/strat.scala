@@ -3,6 +3,7 @@ case class Strategy (attack : Int, buff : Int, debuff : Int, status : Int, swap 
 trait ScoreForStrategy {
     def scoreForStrategy (self : Monster, ennemy : Monster) : Int
     var action : String
+    var name : String
 }
 
 
@@ -16,6 +17,7 @@ trait Intelligence {
     def chooseAttack (attack : Attack) : Unit
 
     def chooseAction : Unit = {
+        // we divide our actions and multiply by the right scalar depending on the strat
         var classicAttacks = availableAttacks.filter(x => x.action == "attack")
         var classicAttacksScore = classicAttacks.map(x => x.scoreForStrategy(currentMonster, opponent.currentMonster)*strat.attack)
 
@@ -40,9 +42,10 @@ trait Intelligence {
         var random = scala.util.Random.nextInt(sumScores)
 
         for (i <- 0 until allActions.length) {
-            Utils.print(allActions(i), allActionsScore(i))
+            Utils.print(allActions(i).name, allActionsScore(i))
         }
 
+        // we choose a random action to do
         var i = -1
         while (random > 0) {
             i += 1
