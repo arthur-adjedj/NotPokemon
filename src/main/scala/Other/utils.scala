@@ -69,24 +69,16 @@ object Utils {
         }
     }
 
-    def cutString (s : String, charPerLine : Int) : (String, String, String) = {
-        var text1 = ""
-        var text2 = ""
-        var text3 = ""
+    def cutString (s : String, charPerLine : Int) : List[String] = {
         if (s.length <= charPerLine) {
-            text1 = s
+            List(s)
         } else {
             var l = s.substring(0, charPerLine).lastIndexOf(" ")
-            text1 = s.substring(0, l)
-            text2 = s.substring(l+1)
-            if (text2.length > charPerLine) {
-                var s = text2
-                l = s.substring(0, charPerLine).lastIndexOf(" ")
-                text2 = s.substring(0, l)
-                text3 = s.substring(l+1)
-            }
+            var text1 = s.substring(0, l)
+            var text2 = s.substring(l+1)
+            text1 :: cutString(text2, charPerLine)
+            
         }
-        (text1, text2, text3)
     }
 
     def waitDiscussionLabel : Unit = {

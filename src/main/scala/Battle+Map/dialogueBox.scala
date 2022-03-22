@@ -22,7 +22,7 @@ object DiscussionLabel {
     val attributes = (collection.Map(TextAttribute.TRACKING -> 0.05)).asJava
     font = font.deriveFont(attributes)
     font = font.deriveFont(font.getStyle() | Font.BOLD)
-    var textChanger : TextChanger = new TextChanger("", "", "")
+    var textChanger : TextChanger = new TextChanger(List())
     var changingText : Boolean = false
     var messageQueue : Queue[String] = Queue()
 
@@ -42,12 +42,12 @@ object DiscussionLabel {
         visible = true
         if (!changingText) {
             changingText = true
-            var (t1, t2, t3) = Utils.cutString(s, charPerLine)
+            var liString = Utils.cutString(s, charPerLine)
 
             text1 = ""
             text2 = ""
 
-            textChanger = new TextChanger(t1, t2, t3)
+            textChanger = new TextChanger(liString)
             textChanger.start
         } else {
             messageQueue.enqueue(s)
@@ -63,41 +63,14 @@ object DiscussionLabel {
     }
 }
 
-class TextChanger (t1 : String, t2 : String, t3 : String) extends Thread {
-    var text1 : String = t1
-    var text2 : String = t2
-    var text3 : String = t3
+class TextChanger (liString_ : List[String]) extends Thread {
+    var liString : List[String] = liString_
 
     var pausing : Boolean = true
     var waitTime : Int = 50
     var pauseTime : Int = 400
     override def run : Unit = {
-        for (i <- text1.indices) {
-            DiscussionLabel.text1 += text1(i)
-            if (List('.','!').contains(text1(i))) TimeUnit.MILLISECONDS.sleep(pauseTime)
-            else TimeUnit.MILLISECONDS.sleep(waitTime)
-
-        }
-        for (i <- text2.indices) {
-            DiscussionLabel.text2 += text2(i)
-
-            if (List('.','!').contains(text2(i))) TimeUnit.MILLISECONDS.sleep(pauseTime)
-            else TimeUnit.MILLISECONDS.sleep(waitTime)
-
-        }
-
-        if (text3.length != 0) {
-            DiscussionLabel.text1 = DiscussionLabel.text2
-            DiscussionLabel.text2 = ""
-            for (i <- text3.indices) {
-                DiscussionLabel.text2 += text3(i)
-
-                if (List('.','!').contains(text3(i))) TimeUnit.MILLISECONDS.sleep(pauseTime)
-                else TimeUnit.MILLISECONDS.sleep(waitTime)
-
-            }
-
-        }
+        (0 until liString.length).foreach(x => showText(x))
 
         TimeUnit.MILLISECONDS.sleep(100)
 
@@ -107,6 +80,30 @@ class TextChanger (t1 : String, t2 : String, t3 : String) extends Thread {
             DiscussionLabel.changeText(DiscussionLabel.messageQueue.dequeue)
         } else {
             DiscussionLabel.visible = Utils.frame.currentState == "Battle"
+        }
+    }
+
+    def showText(n : Int) : Unit = {
+        if (n < 2) {
+            for (i <- liString(n).indices) {
+                if (n == 0) {
+                    DiscussionLabel.text1 += liString(n)(i)
+                } else {
+                    DiscussionLabel.text2 += liString(n)(i)
+                }
+                if (List('.','!').contains(liString(n)(i))) TimeUnit.MILLISECONDS.sleep(pauseTime)
+                else TimeUnit.MILLISECONDS.sleep(waitTime)
+            }
+        } else {
+            DiscussionLabel.text1 = DiscussionLabel.text2
+            DiscussionLabel.text2 = ""
+            for (i <- liString(n).indices) {
+                DiscussionLabel.text2 += liString(n)(i)
+
+                if (List('.','!').contains(liString(n)(i))) TimeUnit.MILLISECONDS.sleep(pauseTime)
+                else TimeUnit.MILLISECONDS.sleep(waitTime)
+
+            }
         }
     }
 

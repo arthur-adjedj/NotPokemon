@@ -125,26 +125,15 @@ class CastAttackButton (n_ : Int) extends BattleButton ("Buttons/EmptyButton.png
     override def onMouseOver (g : Graphics, x : Int, y : Int, width : Int, height : Int) : Unit = {
         var metrics = g.getFontMetrics
         var text = Player.currentMonster.attacks(n).toString
-        var (t1, t2, t3) = Utils.cutString(text, 40)
+        var liString = Utils.cutString(text, 30)
 
-        var xToShow = x
-        var yToShow = y - 10
-        if (n % 2 == 1) {
-            xToShow = (x - 200).min(width - metrics.stringWidth(t1) - 20).min(width - metrics.stringWidth(t2) - 20)
-        } else {
-            xToShow = (x).min(width - metrics.stringWidth(t1) - 20).min(width - metrics.stringWidth(t2) - 20).max(20)
-        }
+        var xToShow = x.max(20)
+        var yToShow = y - 10 - 20*liString.length
 
-        if (t2 != "") {
-            yToShow -= 20
-        } 
-        if (t3 != "") {
-            yToShow -= 20
-        }
+        
+        (0 until liString.length).foreach(x => xToShow = xToShow.min(width - metrics.stringWidth(liString(x)) - 20))
 
-        g.drawString(t1, xToShow, yToShow)
-        g.drawString(t2, xToShow, yToShow + 20)
-        g.drawString(t3, xToShow, yToShow + 40)
+        (0 until liString.length).foreach(x => g.drawString(liString(x), xToShow, yToShow + 20*x))
     }
 }
 
@@ -166,26 +155,15 @@ class ChangeMonsterButton (n_ : Int) extends BattleButton ("Buttons/EmptyButton.
     override def onMouseOver (g : Graphics, x : Int, y : Int, width : Int, height : Int) : Unit = {
         var metrics = g.getFontMetrics
         var text = Player.team(n).toString
-        var (t1, t2, t3) = Utils.cutString(text, 40)
+        var liString = Utils.cutString(text, 30)
 
-        var xToShow = x
-        var yToShow = y - 10
-        if (n % 2 == 1) {
-            xToShow = (x - 200).min(width - metrics.stringWidth(t1) - 20).min(width - metrics.stringWidth(t2) - 20)
-        } else {
-            xToShow = (x).min(width - metrics.stringWidth(t1) - 20).min(width - metrics.stringWidth(t2) - 20).max(20)
-        }
+        var xToShow = x.max(20)
+        var yToShow = y - 10 - 20*liString.length
 
-        if (t2 != "") {
-            yToShow -= 20
-        } 
-        if (t3 != "") {
-            yToShow -= 20
-        }
+        
+        (0 until liString.length).foreach(x => xToShow = xToShow.min(width - metrics.stringWidth(liString(x)) - 20))
 
-        g.drawString(t1, xToShow, yToShow)
-        g.drawString(t2, xToShow, yToShow + 20)
-        g.drawString(t3, xToShow, yToShow + 40)
+        (0 until liString.length).foreach(x => g.drawString(liString(x), xToShow, yToShow + 20*x))
     }
 
     override def update : Unit = {
@@ -217,26 +195,17 @@ class UseItemButton (n_ : Int) extends BattleButton ("Buttons/EmptyButton.png") 
     override def onMouseOver (g : Graphics, xMouse : Int, yMouse : Int, widthWindow : Int, heightWindow : Int) : Unit = {
         var metrics = g.getFontMetrics
         var text = Player.usableInventory(n).toString
-        var (t1, t2, t3) = Utils.cutString(text, 40)
 
-        var xToShow = xMouse
-        var yToShow = yMouse - 10
-        if (n % 2 == 1) {
-            xToShow = (xMouse - 200).min(widthWindow - metrics.stringWidth(t1) - 20).min(widthWindow - metrics.stringWidth(t2) - 20)
-        } else {
-            xToShow = (xMouse).min(widthWindow - metrics.stringWidth(t1) - 20).min(widthWindow - metrics.stringWidth(t2) - 20).max(20)
-        }
 
-        if (t2 != "") {
-            yToShow -= 20
-        } 
-        if (t3 != "") {
-            yToShow -= 20
-        }
+        var liString = Utils.cutString(text, 30)
 
-        g.drawString(t1, xToShow, yToShow)
-        g.drawString(t2, xToShow, yToShow + 20)
-        g.drawString(t3, xToShow, yToShow + 40)
+        var xToShow = xMouse.max(20)
+        var yToShow = yMouse - 10 - 20*liString.length
+
+        
+        (0 until liString.length).foreach(x => xToShow = xToShow.min(widthWindow - metrics.stringWidth(liString(x)) - 20))
+
+        (0 until liString.length).foreach(x => g.drawString(liString(x), xToShow, yToShow + 20*x))
     }
 
     override def update : Unit = {

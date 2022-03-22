@@ -44,23 +44,14 @@ object PlayerMonsterDisplayer extends MonsterDisplayer ("Empty.png") {
         } else {
             text = Player.currentMonster.toString
         }
-        var (t1, t2, t3) = Utils.cutString(text, 30)
+        
+        var liString = Utils.cutString(text, 30)
 
-        var xToShow = xMouse
-        var yToShow = yMouse - 10
-
-        xToShow = (xMouse).min(widthWindow - metrics.stringWidth(t1) - 20).min(widthWindow - metrics.stringWidth(t2) - 20).max(20)
-
-        if (t2 != "") {
-            yToShow -= 20
-        } 
-        if (t3 != "") {
-            yToShow -= 20
-        }
-
-        g.drawString(t1, xToShow, yToShow)
-        g.drawString(t2, xToShow, yToShow + 20)
-        g.drawString(t3, xToShow, yToShow + 40)
+        var xToShow = (xMouse).max(20) 
+        var yToShow = yMouse - 10 - 20*liString.length
+ 
+        (0 until liString.length).foreach(x => xToShow = xToShow.min(widthWindow - metrics.stringWidth(liString(x)) - 20))
+        (0 until liString.length).foreach(x => g.drawString(liString(x), xToShow, yToShow + 20*x))
 
     }
 }
@@ -86,23 +77,13 @@ object OpponentMonsterDisplayer extends MonsterDisplayer ("Empty.png") {
             text = Player.opponent.currentMonster.toString
         }
 
-        var (t1, t2, t3) = Utils.cutString(text, 30)
+        var liString = Utils.cutString(text, 30)
 
-        var xToShow = xMouse
-        var yToShow = yMouse - 10
+        var xToShow = (xMouse).max(20) 
+        var yToShow = yMouse - 10 - 20*liString.length
 
-        xToShow = (xMouse).min(widthWindow - metrics.stringWidth(t1) - 20).min(widthWindow - metrics.stringWidth(t2) - 20).max(20)
-
-        if (t2 != "") {
-            yToShow -= 20
-        } 
-        if (t3 != "") {
-            yToShow -= 20
-        }
-
-        g.drawString(t1, xToShow, yToShow)
-        g.drawString(t2, xToShow, yToShow + 20)
-        g.drawString(t3, xToShow, yToShow + 40)
+        (0 until liString.length).foreach(x => xToShow = xToShow.min(widthWindow - metrics.stringWidth(liString(x)) - 20))
+        (0 until liString.length).foreach(x => g.drawString(liString(x), xToShow, yToShow + 20*x))
 
     }
 }
