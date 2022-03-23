@@ -160,16 +160,18 @@ class CharacterDisplayer (imgName : String) extends Object with Updatable {
     }
 
     def interactExplicitly : Unit = {
-        var iInteracted : Int = i
-        var jInteracted : Int = j
+        if (canInteract) {
+            var iInteracted : Int = i
+            var jInteracted : Int = j
 
-        {direction match {
-            case Up => jInteracted -= 1
-            case Down => jInteracted += 1
-            case Left => iInteracted -= 1
-            case Right => iInteracted += 1
-        }}
-        mapDisplayer.grid(iInteracted)(jInteracted) foreach (b => b.interact(this))
+            direction match {
+                case Up => jInteracted -= 1
+                case Down => jInteracted += 1
+                case Left => iInteracted -= 1
+                case Right => iInteracted += 1
+            }
+            mapDisplayer.grid(iInteracted)(jInteracted) foreach (b => b.interact(this))
+        }
     }
 
     def getMapItem (item : MapItem) : Unit = {

@@ -73,7 +73,7 @@ class GrassBlock extends Block ("Blocks/Grass.png") {
     override def onWalk (player : CharacterDisplayer) : Unit = {
         if (player.player.name == "You") {
             if (scala.util.Random.nextFloat() < 0.1) {
-                Utils.frame.listeningToKeyboard = false
+                PlayerDisplayer.canInteract = false
                 WildCharacter.initialise
                 Utils.frame.startBattle(Player, WildCharacter)
             }
