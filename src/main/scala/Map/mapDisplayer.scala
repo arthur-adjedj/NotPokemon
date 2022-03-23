@@ -20,7 +20,7 @@ class MapDisplayer (frame : UI) {
 
 
 
-    def initialise (sizeB : Int) : Unit = {
+    def initialise (sizeB : Int, i : Int = -1, j : Int = -1) : Unit = {
         PlayerDisplayer.mapDisplayer = this
         SecondCharacterDisplayer.mapDisplayer = this
         SecondPlayerDisplayer.mapDisplayer = this
@@ -30,6 +30,23 @@ class MapDisplayer (frame : UI) {
                 grid(i)(j) foreach (b => b.initialise(i, j))
             }
         }
+        if (i == -1 && j == -1) {
+            PlayerDisplayer.i = iStart
+            PlayerDisplayer.j = jStart
+        } else {
+            PlayerDisplayer.i = i
+            PlayerDisplayer.j = j
+        }
+        PlayerDisplayer.alignCoordinates
+        PlayerDisplayer.whichMap = n
+
+        if (Utils.mapDisplayers(n-1) != EmptyMapDisplayer) {
+            Utils.mapDisplayers(n-1) = this
+        }
+
+        // we set this coordinates of the map so the player is in the middle of its box
+        x = PlayerDisplayer.x - PlayerDisplayer.leftBox - (((PlayerDisplayer.rightBox - PlayerDisplayer.leftBox)/2)/sizeBlock)*sizeBlock
+        y = PlayerDisplayer.y - PlayerDisplayer.topBox - (((PlayerDisplayer.botBox - PlayerDisplayer.topBox)/2)/sizeBlock)*sizeBlock 
     }
 
     def update : Unit = {
@@ -44,7 +61,7 @@ class MapDisplayer (frame : UI) {
 
 
     def display (g : Graphics) : Unit = {
-        g.drawImage(img, 0, 0, null)
+        g.drawImage(img, -x%sizeBlock - sizeBlock, -y%sizeBlock - sizeBlock, null)
         for (i <- grid.indices) {
             for (j <- grid(i).indices) {
                 grid(i)(j) foreach (b => b.updateCoordinates(x, y, sizeBlock))
@@ -126,7 +143,15 @@ class MapDisplayer1 (frame : UI) extends MapDisplayer (frame : UI) {
     grid(1)(12) = List(new MapItemBlock(new Key(1)))
 
     grid(10)(6) = List(new Door(2))
-    
 
 
+    grid(18)(10) = List(new Portal(2))
+}
+
+class MapDisplayer2(frame : UI) extends MapDisplayer(frame : UI) {
+    n = 2
+    iStart = 0
+    jStart = 0
+
+    grid(3)(3) = List(new Portal(1))
 }

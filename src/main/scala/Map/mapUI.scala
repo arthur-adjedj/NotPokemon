@@ -6,9 +6,13 @@ import java.io.File
 
 
 
-class DrawPanelMap (mapDisplayer_ : MapDisplayer) extends MyPanel {
+class DrawPanelMap extends MyPanel {
 
-    var mapDisplayer : MapDisplayer = mapDisplayer_
+    var mapDisplayer : MapDisplayer = EmptyMapDisplayer
+
+    def changeMap(map : MapDisplayer) : Unit = {
+        mapDisplayer = map
+    }
 
 
     override def paintComponent (g : Graphics) : Unit = {

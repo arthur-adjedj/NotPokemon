@@ -146,3 +146,21 @@ class MapItemBlock (item_ : MapItem) extends Block ("Empty.png") {
         }
     }
 }
+
+
+class Portal (n_ : Int) extends Block ("Empty.png") {
+    var n = n_
+    originalWalkable = false
+
+    override def interact (c : CharacterDisplayer) : Unit = {
+        if (Utils.mapDisplayers(n-1) != EmptyMapDisplayer) {
+            Utils.frame.changeMap(Utils.mapDisplayers(n-1))
+        } else {
+            Utils.mapDisplayers(n-1) = n match {
+                case 1 => new MapDisplayer1(Utils.frame)
+                case 2 => new MapDisplayer2(Utils.frame)
+            } 
+            interact(c)
+       }
+    }
+}

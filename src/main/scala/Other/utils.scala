@@ -25,6 +25,8 @@ object Utils {
 
     var descriptables : List[Descriptable] = List.concat(List(PlayerMonsterDisplayer, OpponentMonsterDisplayer), buttonList)
 
+    var mapDisplayers : Array[MapDisplayer] = Array.fill(2){EmptyMapDisplayer}
+
     var debug = false
 
     // some strategies

@@ -18,7 +18,7 @@ import java.awt.Toolkit
 class UI extends JFrame with MouseListener with MouseMotionListener with KeyListener {
 
     var sizeBlock = 40
-    var mapDisplayer : MapDisplayer = new MapDisplayer1 (this)
+    var mapDisplayer : MapDisplayer = new MapDisplayer2 (this)
 
     var posX : Int = 1000
     var posY : Int = 100
@@ -31,7 +31,7 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
 
 
     var battlePane : DrawPanelBattle = new DrawPanelBattle(EmptyCharacter, EmptyCharacter)
-    var mapPane : DrawPanelMap = new DrawPanelMap(mapDisplayer)
+    var mapPane : DrawPanelMap = new DrawPanelMap
     var pokedexPane : DrawPokedexPanel = new DrawPokedexPanel
     var currentPane : MyPanel = mapPane.asInstanceOf[MyPanel]
     var currentState : String = ""
@@ -80,19 +80,18 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
         }
     }
 
-    def initialiseMap : Unit = {
+    def initialiseMap : Unit = initialiseMap(-1, -1)
+
+    def initialiseMap (i : Int, j : Int): Unit = {
         currentState = "Map"
         DiscussionLabel.visible = false
 
         
-        mapDisplayer.initialise(sizeBlock)
+        mapDisplayer.initialise(sizeBlock, i, j)
+        mapPane.changeMap(mapDisplayer)
         currentPane = mapPane.asInstanceOf[MyPanel]
         currentPane.initialise
         setContentPane(currentPane)
-        PlayerDisplayer.i = mapDisplayer.iStart
-        PlayerDisplayer.j = mapDisplayer.jStart
-        PlayerDisplayer.alignCoordinates
-        PlayerDisplayer.whichMap = mapDisplayer.n
 
         Utils.characterDisplayers.foreach(x => x.initialise)
     }
