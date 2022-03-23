@@ -249,6 +249,11 @@ object PlayerDisplayer extends CharacterDisplayer ("Characters/MainCharacter.png
     whichMap = 1
     speed = 10
 
+    var topBox : Int = 120
+    var botBox : Int = 280
+    var leftBox : Int = 80
+    var rightBox : Int = 280
+
     override def interactExplicitly : Unit = {
         var iInteracted : Int = i
         var jInteracted : Int = j
@@ -261,7 +266,26 @@ object PlayerDisplayer extends CharacterDisplayer ("Characters/MainCharacter.png
         }}
         mapDisplayer.grid(iInteracted)(jInteracted) foreach (b => b.interact(this))
         Utils.characterDisplayers.foreach(x => if (x.i == iInteracted && x.j == jInteracted && x.whichMap == whichMap && !(x.player.alreadyBeaten)) Utils.frame.startBattle(player, x.player))
+    }
 
+    override def changeCoordinates (moveX : Int, moveY : Int) : Unit = {
+        var xMap = mapDisplayer.x
+        var yMap = mapDisplayer.y
+        if ((x + moveX - xMap < leftBox && moveX < 0) || (x + moveX - xMap > rightBox && moveX > 0)) {
+            mapDisplayer.x += moveX
+        }
+
+        if ((y + moveY - yMap < topBox && moveY < 0) || (y + moveY - yMap > botBox && moveY > 0)) {
+            mapDisplayer.y += moveY
+        }
+        super.changeCoordinates(moveX, moveY)
+    }
+
+    override def display (g : Graphics, xMap : Int, yMap : Int, n : Int) : Unit = {
+        if (Utils.debug) {
+            g.drawRect(leftBox, topBox, rightBox - leftBox + mapDisplayer.sizeBlock, botBox - topBox + mapDisplayer.sizeBlock)
+        }
+        super.display(g, xMap, yMap, n)
     }
 
 

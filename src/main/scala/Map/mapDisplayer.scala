@@ -44,7 +44,7 @@ class MapDisplayer (frame : UI) {
 
 
     def display (g : Graphics) : Unit = {
-        g.drawImage(img, x, y, null)
+        g.drawImage(img, 0, 0, null)
         for (i <- grid.indices) {
             for (j <- grid(i).indices) {
                 grid(i)(j) foreach (b => b.updateCoordinates(x, y, sizeBlock))
@@ -70,8 +70,8 @@ object EmptyMapDisplayer extends MapDisplayer (EmptyUI) {
 class MapDisplayer1 (frame : UI) extends MapDisplayer (frame : UI) {
 
     n = 1
-    iStart = 14
-    jStart = 2
+    iStart = 7
+    jStart = 4
     
     grid(2)(1) = List(new MultiCliff(1, 0))
     grid(3)(1) = List(new MultiCliff(1, 0))
