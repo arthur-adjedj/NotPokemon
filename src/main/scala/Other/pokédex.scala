@@ -35,9 +35,9 @@ class DrawPokedexPanel extends MyPanel {
     //TODO grey out the icon when pokémon is seen but not caught
     def drawPokemon(g : Graphics) = {
         if (currentPokemon.wasSeen) {
-            g.drawImage(Utils.loadImage(currentPokemon.imgNameFront),53,170,null)
+            g.drawImage(Utils.loadImage(currentPokemon.imgNameFront),45,170,null)
         } else {
-            g.drawImage(unknownPokemon,53,170,null)
+            g.drawImage(unknownPokemon,45,170,null)
         }
     }
 
@@ -49,17 +49,27 @@ class DrawPokedexPanel extends MyPanel {
             List("Height : " + currentPokemon.height, "Weight : " + currentPokemon.weight)
         } else 
             List("Height : ???","Weight : ???")
-        var description = "" //TODO add desc and split it in lines
+        var description = Utils.cutString(currentPokemon.description,40) //TODO add desc and split it in lines
 
         g.setFont(poke_font)
+
         g.setColor(Color.WHITE)
         g.drawString("Pokedex",(614 - metrics.stringWidth(name)) / 2, 55)
+
         g.setColor(new Color(68,64,69))
         //draws the name of the pokémon
         g.drawString(name,40 + (200 - metrics.stringWidth(name)) / 2 , 113) // the name is horizontally centered inside the box
+
         //as well as his height/weight 
         g.drawString(characteristics(0),40,422)
         g.drawString(characteristics(1),40,454)
+
+        //draws the pokémon description
+        var shift : Int = 75
+        var nOfLines : Int = 0
+        description foreach (x => { g.drawString(x,40,530 + shift*nOfLines); nOfLines += 1 } )
+
+
     }
 
     def nbToDisplay(n : Int) : String = {
