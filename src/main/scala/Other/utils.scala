@@ -15,13 +15,20 @@ object Utils {
     var updatable : List[Updatable] = List()
     var frame : UI = EmptyUI
 
+    // we need to define those buttons here because we may need them in descriptables
     var castAttackButtonList : List[CastAttackButton] = (0 to 3).map(x => new CastAttackButton(x)).toList
     var useItemButtonList : List[UseItemButton] = (0 to 3).map(x => new UseItemButton(x)).toList
     var changeMonsterButtonList : List[ChangeMonsterButton] = (0 to 5).map(x => new ChangeMonsterButton(x)).toList
 
-    // cannot create the list and adding buttons during their creation because of a weird behaviour with 'object'
-    var buttonList : List[MyButton] = List.concat(List(AttackButton, BagButton, MonsterButton, RunButton, BackButton, NextPageItemButton, CloseButton, HelpButton),
+    var battleButtons : List[BattleButton] = List.concat(List(AttackButton, BagButton, MonsterButton, RunButton, BackButton, NextPageItemButton),
                                     castAttackButtonList, useItemButtonList, changeMonsterButtonList)
+
+    var choosePokemonPokedexButtonList : List[ChoosePokemonPokedexButton] = (0 to 9).map(x => new ChoosePokemonPokedexButton(x)).toList
+    var moveListPokedexButtonList : List[MoveListPokedexButton] = List(new MoveListPokedexButton(-1), new MoveListPokedexButton(1))
+    var pokedexButtons : List[PokedexButton] = List.concat(choosePokemonPokedexButtonList, moveListPokedexButtonList)
+
+    // cannot create the list and adding buttons during their creation because of a weird behaviour with 'object'
+    var buttonList : List[MyButton] = List.concat(List(CloseButton, HelpButton), battleButtons, pokedexButtons)
 
     var descriptables : List[Descriptable] = List.concat(List(PlayerMonsterDisplayer, OpponentMonsterDisplayer), buttonList)
 

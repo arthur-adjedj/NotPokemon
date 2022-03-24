@@ -64,6 +64,16 @@ abstract class MyButton (imageName_ : String) extends Object with Descriptable {
     }
 }
 
+abstract class InvisibleButton extends MyButton("Empty.png") {
+    visible = true
+    var showOnDebug : Boolean = false
+    override def display (g : Graphics) : Unit = {
+        if (Utils.debug && showOnDebug && (context == Utils.frame.currentState || context == "All")) {
+            g.drawRect(x, y, width, height)
+        }
+    }
+}
+
 abstract class BattleButton (imageName_ : String) extends MyButton(imageName_) {
     context = "Battle"
     def resetOnMainMenu : Unit = {
@@ -73,6 +83,10 @@ abstract class BattleButton (imageName_ : String) extends MyButton(imageName_) {
         MonsterButton.setVisible(true)
         RunButton.setVisible(true)
     }
+}
+
+abstract class PokedexButton extends InvisibleButton {
+    context = "Pokedex"
 }
 
 object CloseButton extends MyButton ("Close.png") {
@@ -222,7 +236,36 @@ class UseItemButton (n_ : Int) extends BattleButton ("Buttons/EmptyButton.png") 
     }
 }
 
+class ChoosePokemonPokedexButton (n_ : Int) extends PokedexButton {
+    var n : Int = n_
+    x = 322
+    y = 82 + 38*n
+    width = 231
+    height = 39
+    showOnDebug = false
 
+    override def isClicked : Unit = {
+        if (Utils.frame.pokedexPane.ready) {
+            Utils.frame.pokedexPane.changeCurrentPokemon(n)
+        }
+    }
+}
+
+class MoveListPokedexButton (n_ : Int) extends PokedexButton {
+    var n : Int = n_
+    x = 561
+    y = 256 + n * 179 
+    //y = 435 // for -1 it's 77
+    width = 49
+    height = 36
+    showOnDebug = true
+
+    override def isClicked : Unit = {
+        if (Utils.frame.pokedexPane.ready) {
+            Utils.frame.pokedexPane.moveList(n)
+        }
+    }
+}
 
 object AttackButton extends BattleButton ("Buttons/AttackButton.png") {
     x = 3
@@ -378,4 +421,3 @@ object NextPageItemButton extends BattleButton ("Buttons/EmptyButton.png") {
         image = Utils.loadImage(imageName)
     }
 }
-

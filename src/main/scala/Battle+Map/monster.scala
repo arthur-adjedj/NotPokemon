@@ -393,7 +393,7 @@ class Pikachu extends Monster {
     attacks(2) = ThunderWave
     attacks(3) = Thunder
 
-    "Whenever PIKACHU comes across something new, it blasts it with a jolt of electricity. If you come across a blackened berry, it's evidence that this POKéMON mistook the intensity of its charge."
+    description = "Whenever PIKACHU comes across something new, it blasts it with a jolt of electricity. If you come across a blackened berry, it's evidence that this POKEMON mistook the intensity of its charge."
 
 }
 

@@ -21,21 +21,26 @@ class DrawPokedexPanel extends MyPanel {
                                                new Squirtle,
                                                new Charmander,
                                                new Pikachu,
-                                               new Rattata)
+                                               new Rattata,
+                                               new Charmander)
 
     pokemonArray(0).wasSeen = true
     pokemonArray(2).wasSeen = true
     pokemonArray(3).wasSeen = true
     pokemonArray(3).wasCaught = true
+
+    pokemonArray(pokemonArray.size-1).wasSeen = true
     //position in the array of the currently displayed monster
     var currentPokemonIndex : Int = 0
-    def currentPokemon = pokemonArray(currentPokemonIndex)
+    var topIndexList : Int = 0
+    var currentPokemon = pokemonArray(currentPokemonIndex)
+    var currentPokemonImage = Utils.loadImage(currentPokemon.imgNameFront)
 
 
     //TODO grey out the icon when pokémon is seen but not caught
     def drawPokemon(g : Graphics) = {
         if (currentPokemon.wasSeen) {
-            g.drawImage(Utils.loadImage(currentPokemon.imgNameFront),45,170,null)
+            g.drawImage(currentPokemonImage,45,170,null)
         } else {
             g.drawImage(unknownPokemon,45,170,null)
         }
@@ -49,7 +54,7 @@ class DrawPokedexPanel extends MyPanel {
             List("Height : " + currentPokemon.height, "Weight : " + currentPokemon.weight)
         } else 
             List("Height : ???","Weight : ???")
-        var description = Utils.cutString(currentPokemon.description,40) //TODO add desc and split it in lines
+        var description = if (currentPokemon.wasSeen) Utils.cutString(currentPokemon.description,40) else List("...") //TODO add desc and split it in lines
 
         g.setFont(poke_font)
 
@@ -82,15 +87,32 @@ class DrawPokedexPanel extends MyPanel {
         return n.toString()
     }
 
+    def changeCurrentPokemon (n : Int) : Unit = {
+        currentPokemonIndex = topIndexList + n
+        currentPokemon = pokemonArray(currentPokemonIndex)
+        currentPokemonImage = Utils.loadImage(currentPokemon.imgNameFront)
+    }
+
+    def moveList (i : Int) : Unit = {
+        if (0 <= topIndexList + i && topIndexList + i + 9 < pokemonArray.size) {
+            topIndexList += i
+        }
+        if (currentPokemonIndex < topIndexList) {
+            changeCurrentPokemon(0)
+        } else if (currentPokemonIndex > topIndexList + 9) {
+            changeCurrentPokemon(9)
+        }
+    }
+
 
     //TODO add caught/seen icons next to names
     def drawList(g : Graphics) {
         var yshift : Int = 38 //vertical shift between each line
         for (i <- 0 to 9) {
-            if (currentPokemonIndex + i < pokemonArray.size) {
-                var text = nbToDisplay(currentPokemonIndex + i + 1) + " " + (
-                    if (! pokemonArray(currentPokemonIndex + i).wasSeen) "----------"
-                    else pokemonArray(currentPokemonIndex + i).name
+            if (topIndexList + i < pokemonArray.size) {
+                var text = nbToDisplay(topIndexList + i + 1) + " " + (
+                    if (! pokemonArray(topIndexList + i).wasSeen) "----------"
+                    else pokemonArray(topIndexList + i).name
                     )
                 g.drawString(text,328,115 + i*yshift)
             }
@@ -103,6 +125,7 @@ class DrawPokedexPanel extends MyPanel {
         drawPokemon(g)
         drawText(g)
         drawList(g)
+        Utils.buttonList.foreach(x => x.display(g))
         endPaintComponent(g)
     }
 
