@@ -73,13 +73,18 @@ abstract class Monster extends Object with ScoreForStrategy {
     var name : String = ""
     var owner : Character = EmptyCharacter
 
+    //these values are put as strings because their values can greatly vary between pokemons, 
+    //from grams to tons and from cm to tens of meters
+    var height : String = "0 m"
+    var weight : String = "0 kg"
     var wasSeen : Boolean = false
     var wasCaught : Boolean = false
+    var description : String = "Lorem Ipsum"
 
     def imgNameFront : String = {"Monsters/" + originalName + "Front.png"}
     def imgNameBack : String = {"Monsters/" + originalName + "Back.png"}
     var uiYShift : Int = 0
-    var originalName : String = ""
+    var originalName : String = name
     def typeName : String = {monsterType.name}
 
     def enterBattle : Unit = {
@@ -388,6 +393,8 @@ class Pikachu extends Monster {
     attacks(2) = ThunderWave
     attacks(3) = Thunder
 
+    "Whenever PIKACHU comes across something new, it blasts it with a jolt of electricity. If you come across a blackened berry, it's evidence that this POKéMON mistook the intensity of its charge."
+
 }
 
 class Squirtle extends Monster {
@@ -474,6 +481,8 @@ class Rattata extends Monster {
     attacks(2) = QuickAttack
     attacks(3) = Crunch
     uiYShift = 15
+
+    description = ""
 
 }
 
