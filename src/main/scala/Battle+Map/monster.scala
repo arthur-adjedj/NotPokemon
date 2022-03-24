@@ -417,6 +417,8 @@ class Squirtle extends Monster {
 
     uiYShift = 18
 
+    description = "Its shell is not just for protection. Its rounded shape and the grooves on its surface minimize resistance in water, enabling SQUIRTLE to swim at high speeds."
+
 }
 
 
@@ -439,6 +441,8 @@ class Bulbasaur extends Monster {
     attacks(3) = Growth
 
     uiYShift = 23
+
+    description =  "BULBASAUR can be seen napping in bright sunlight. There is a seed on its back. By soaking up the sun's rays, the seed grows progressively larger."
 }
 
 class Charmander extends Monster {
@@ -459,6 +463,8 @@ class Charmander extends Monster {
     attacks(2) = Ember
     attacks(3) = Flamethrower
     uiYShift = 18
+
+    description = "The flame that burns at the tip of its tail is an indication of its emotions. The flame wavers when CHARMANDER is happy, and blazes when it is enraged."
 }
 
 class Rattata extends Monster {
@@ -482,7 +488,7 @@ class Rattata extends Monster {
     attacks(3) = Crunch
     uiYShift = 15
 
-    description = ""
+    description = "RATTATA is cautious in the extreme. Even while it is asleep, it constantly listens by moving its ears around. It is not picky about where it lives - it will make its nest anywhere."
 
 }
 
