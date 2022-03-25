@@ -216,36 +216,17 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
         if (listeningToKeyboard) {
             if (!DiscussionLabel.changingText && DiscussionLabel.messageQueue.isEmpty) {
                 e.getKeyChar.toLower match {
-                    case 'z' => PlayerDisplayer.move(0, -1)
-                    case 's' => PlayerDisplayer.move(0, 1)
-                    case 'q' => PlayerDisplayer.move(-1, 0)
-                    case 'd' => PlayerDisplayer.move(1, 0)
-
-                    case 'i' => SecondPlayerDisplayer.move(0, -1)
-                    case 'k' => SecondPlayerDisplayer.move(0, 1)
-                    case 'j' => SecondPlayerDisplayer.move(-1, 0)
-                    case 'l' => SecondPlayerDisplayer.move(1, 0)
-
-                    case 'e' => PlayerDisplayer.interactExplicitly
-                    case 'o' => SecondPlayerDisplayer.interactExplicitly
-
-                    case 'a' => PlayerDisplayer.changeCurrentItem
-
+                    
+                    // For debugging purposes                    
                     case '1' => if (Utils.debug) backToBattle
                     case '2' => if (Utils.debug) backToMap
                     case '3' => if (Utils.debug) backToPokedex
-
-                    case '4' => if (Utils.debug && pokedexPane.ready) pokedexPane.discoverAll 
-
-                    // For debugging purposes
-                    case 'w' => if (Utils.debug) DiscussionLabel.changeText("This is a very long message ! It is supposed to be displayed on several lines ! I hope it will work correctly ! And of course it works correctly !")
-                    case 'n' => if (Utils.debug) PlayerDisplayer.noClip = !PlayerDisplayer.noClip
-                    case _ => Utils.print(e.getKeyChar.toInt)
+                    case '4' => if (Utils.debug) DiscussionLabel.changeText("This is a very long message ! It is supposed to be displayed on several lines ! I hope it will work correctly ! And of course it works correctly !")
+                    case _ => currentPane.onKeyPressed(e)
                 }
             } else {
                 DiscussionLabel.skip
             }
-            PlayerDisplayer.mapDisplayer.update
         }        
     }
 
@@ -290,5 +271,7 @@ class MyPanel extends JPanel with Repaintable {
             underMouse.onMouseOver(g, xMouse, yMouse, getWidth, getHeight)
         }
     }
+
+    def onKeyPressed (e : KeyEvent) : Unit = {}
 }
 

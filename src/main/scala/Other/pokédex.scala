@@ -1,5 +1,5 @@
 import java.awt.{Color,Graphics,Font}
-
+import java.awt.event._
 
 
 class DrawPokedexPanel extends MyPanel {
@@ -170,6 +170,13 @@ class DrawPokedexPanel extends MyPanel {
                     )
                 g.drawString(text,328,115 + i*yshift)
             }
+        }
+    }
+
+    override def onKeyPressed (e : KeyEvent) : Unit = {
+        e.getKeyChar.toLower match {
+            case '4' => if (Utils.debug) discoverAll
+            case _ => 
         }
     }
 
