@@ -217,6 +217,8 @@ class Wartortle extends Monster {
     attacks(2) = WaterGun
 
     description = "Often hides in water to stalk unwary prey. For swimming fast, it moves its ears to maintain balance."
+    uiYShift = -2
+
 }
 
 class Blastoise extends Monster {
