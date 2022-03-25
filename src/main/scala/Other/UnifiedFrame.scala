@@ -235,10 +235,7 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
                     case '2' => if (Utils.debug) backToMap
                     case '3' => if (Utils.debug) backToPokedex
 
-                    case '4' => if (Utils.debug) mapDisplayer.x -= sizeBlock
-                    case '6' => if (Utils.debug) mapDisplayer.x += sizeBlock
-                    case '8' => if (Utils.debug) mapDisplayer.y -= sizeBlock
-                    case '5' => if (Utils.debug) mapDisplayer.y += sizeBlock
+                    case '4' => if (Utils.debug && pokedexPane.ready) pokedexPane.discoverAll 
 
                     // For debugging purposes
                     case 'w' => if (Utils.debug) DiscussionLabel.changeText("This is a very long message ! It is supposed to be displayed on several lines ! I hope it will work correctly ! And of course it works correctly !")

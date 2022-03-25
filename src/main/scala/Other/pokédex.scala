@@ -87,6 +87,10 @@ class DrawPokedexPanel extends MyPanel {
     var currentPokemonImage = Utils.loadImage(currentPokemon.imgNameFront)
 
 
+    def discoverAll : Unit = {
+        pokemonArray.foreach(x => x.wasSeen = true)
+    }
+
     //TODO grey out the icon when pokémon is seen but not caught
     def drawPokemon(g : Graphics) = {
         if (currentPokemon.wasSeen) {
