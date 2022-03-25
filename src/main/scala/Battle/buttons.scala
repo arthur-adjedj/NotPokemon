@@ -65,6 +65,7 @@ abstract class MyButton (imageName_ : String) extends Object with Descriptable {
 }
 
 abstract class InvisibleButton extends MyButton("Empty.png") {
+    alwaysVisible = true
     visible = true
     var showOnDebug : Boolean = false
     override def display (g : Graphics) : Unit = {
