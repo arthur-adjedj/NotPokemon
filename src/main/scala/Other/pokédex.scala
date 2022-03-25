@@ -135,10 +135,21 @@ class DrawPokedexPanel extends MyPanel {
     }
 
     def changeCurrentPokemon (n : Int) : Unit = {
-        currentPokemonIndex = topIndexList + n
-        currentPokemon = pokemonArray(currentPokemonIndex)
-        currentPokemonImage = Utils.loadImage(currentPokemon.imgNameFront)
+        if (0 <= topIndexList + n && topIndexList + n < pokemonArray.size) {
+            currentPokemonIndex = topIndexList + n
+            currentPokemon = pokemonArray(currentPokemonIndex)
+            currentPokemonImage = Utils.loadImage(currentPokemon.imgNameFront)
+            if (currentPokemonIndex < topIndexList) {
+                topIndexList = currentPokemonIndex
+            }
+            if (currentPokemonIndex > topIndexList + 9) {
+                topIndexList = currentPokemonIndex - 9
+            }
+        }
+
     }
+
+    def changeCurrentPokemonBrut (n : Int) : Unit = changeCurrentPokemon(n - topIndexList)
 
     def moveList (i : Int) : Unit = {
         if (0 <= topIndexList + i && topIndexList + i + 9 < pokemonArray.size) {
@@ -168,6 +179,8 @@ class DrawPokedexPanel extends MyPanel {
 
     override def onKeyPressed (e : KeyEvent) : Unit = {
         e.getKeyChar.toLower match {
+            case 'z' => changeCurrentPokemonBrut(currentPokemonIndex - 1)
+            case 's' => changeCurrentPokemonBrut(currentPokemonIndex + 1)
             case '5' => if (Utils.debug) discoverAll
             case _ => 
         }
