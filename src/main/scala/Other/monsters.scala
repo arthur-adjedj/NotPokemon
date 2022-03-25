@@ -584,7 +584,7 @@ class Magikarp extends Monster {
 
 class Gyarados extends Monster {
     height = "6.5 m"
-    weight = "235.0 kg"
+    weight = "235 kg"
 
     catchRate = 45
 
@@ -691,7 +691,7 @@ class Ivysaur extends Monster {
 
 class Venusaur extends Monster {
     height = "2.0 m"
-    weight = "100.0 kg"
+    weight = "100 kg"
 
     catchRate = 45
 
@@ -899,7 +899,7 @@ class Exeggcute extends Monster {
 
 class Exeggutor extends Monster {
     height = "2.0 m"
-    weight = "120.0 kg"
+    weight = "120 kg"
     
     catchRate = 45
 
@@ -1108,7 +1108,7 @@ class Growlithe extends Monster {
 
 class Arcanine extends Monster {
     height = "1.9 m"
-    weight = "155.0 kg"
+    weight = "155 kg"
 
     catchRate = 75
 
@@ -1500,7 +1500,7 @@ class Porygon extends Monster {
 
 class Snorlax extends Monster {
     height = "2.1 m"
-    weight = "460.0 kg"
+    weight = "460 kg"
 
     catchRate = 25
 
