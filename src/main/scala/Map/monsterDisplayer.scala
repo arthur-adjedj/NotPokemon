@@ -8,6 +8,7 @@ class MonsterDisplayer (imageName_ : String) extends Object with Descriptable {
     var y : Int = 0
     var width : Int = 164
     var height : Int = 164
+    var previousImageName : String = ""
     var imageName : String = imageName_
     var image : BufferedImage = Utils.loadImage(imageName)
     context = "Battle"
@@ -30,8 +31,12 @@ object PlayerMonsterDisplayer extends MonsterDisplayer ("Empty.png") {
     
     override def update : Unit = {
         imageName = Player.currentMonster.imgNameBack
-        image = Utils.loadImage(imageName)
-        y = 141 + Player.currentMonster.uiYShift
+        if (imageName != previousImageName) {
+            previousImageName = imageName
+            image = Utils.loadImage(imageName)
+            y = 141 + Player.currentMonster.uiYShift
+        }
+        
     }
 
     override def onMouseOver (g : Graphics, xMouse : Int, yMouse : Int, widthWindow : Int, heightWindow : Int) : Unit = {
@@ -62,8 +67,12 @@ object OpponentMonsterDisplayer extends MonsterDisplayer ("Empty.png") {
 
     override def update : Unit = {
         imageName = Player.opponent.currentMonster.imgNameFront
-        image = Utils.loadImage(imageName)
-        y = 35
+        if (imageName != previousImageName) {
+            previousImageName = imageName
+            image = Utils.loadImage(imageName)
+            y = 35
+        }
+        
     }
 
     override def onMouseOver (g : Graphics, xMouse : Int, yMouse : Int, widthWindow : Int, heightWindow : Int) : Unit = {
