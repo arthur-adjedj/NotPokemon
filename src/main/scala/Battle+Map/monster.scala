@@ -41,7 +41,7 @@ abstract class Monster extends Object with ScoreForStrategy {
     // For the strategy
     var turnsOnField : Int = 0
     def scoreForStrategy (self : Monster, ennemy : Monster) : Int = {
-        50*(Math.pow(2, attackStage + defenseStage + speedStage / 2)*hpRate*monsterType.multDamage(ennemy.monsterType)*Math.pow(2, -turnsOnField)).toInt
+        1 + 50*(Math.pow(2, attackStage + defenseStage + speedStage / 2)*hpRate*monsterType.multDamage(ennemy.monsterType)*Math.pow(2, -turnsOnField)).toInt
     }
     var action = "monster"
 
@@ -88,6 +88,8 @@ abstract class Monster extends Object with ScoreForStrategy {
     def typeName : String = {monsterType.name}
 
     def enterBattle : Unit = {
+        Utils.frame.pokedexPane.pokemonArray.foreach(x => if (x.originalName == originalName) x.wasSeen = true)
+
         attackBattle = attackStat
         defenseBattle = defenseStat
         speedBattle = speedStat 
@@ -114,6 +116,10 @@ abstract class Monster extends Object with ScoreForStrategy {
 
     def leaveField : Unit = {
         turnsOnField = 0
+    }
+    
+    def isCaught : Unit = {
+        Utils.frame.pokedexPane.pokemonArray.foreach(x => if (x.originalName == originalName) x.wasCaught = true)
     }
 
     def newMonsterSeen (other : Monster) : Unit = {

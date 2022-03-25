@@ -39,7 +39,8 @@ trait Intelligence {
         var allActionsScore = List.concat(classicAttacksScore, buffAttacksScore, debuffAttacksScore, statusAttacksScore, availableTeamScore)
 
         var sumScores = allActionsScore.fold(0)((x, y) => x + y)
-        var random = scala.util.Random.nextInt(sumScores - 1) + 1 // to avoid 0
+        Utils.print(sumScores)
+        var random = if (sumScores == 1) 1 else scala.util.Random.nextInt(sumScores - 1) + 1
 
         for (i <- 0 until allActions.length) {
             Utils.print(allActions(i).name, allActionsScore(i))

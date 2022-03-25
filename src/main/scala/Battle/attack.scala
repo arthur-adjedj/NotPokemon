@@ -7,7 +7,7 @@ abstract class Attack extends Object with ScoreForStrategy {
     var accuracy : Float = 1
     var attackType : Type = Normal
     def scoreForStrategy (self : Monster, ennemy : Monster) : Int = {
-        (power*attackType.multDamage(ennemy.monsterType)*Math.pow(2, self.getStage("attack")) - ennemy.getStage("defense")).toInt
+        1 + (power*attackType.multDamage(ennemy.monsterType)*Math.pow(2, self.getStage("attack")) - ennemy.getStage("defense")).toInt
     }
     def nOfHits() : Int = 1 
     def cast(self : Monster,ennemy: Monster) : Unit = () // this function is called everytime an attack is casted
