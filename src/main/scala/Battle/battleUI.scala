@@ -104,6 +104,8 @@ class DrawPanelBattle (p1 : Character, p2 : Character) extends MyPanel with Repa
     var pokemonBackImg = Utils.loadImage("Monsters/EmptyBack.png")
     var poke_font : Font = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("PokemonPixelFont.ttf"))
 
+    var indexForYShifting : Int = 0
+
     poke_font = poke_font.deriveFont(Font.PLAIN,30)
   
     override def paintComponent (g : Graphics) : Unit = {
@@ -124,6 +126,25 @@ class DrawPanelBattle (p1 : Character, p2 : Character) extends MyPanel with Repa
         DiscussionLabel.display(g)
         endPaintComponent(g)
         
+    }
+
+    override def onKeyPressed (e : KeyEvent) : Unit = {
+        e.getKeyChar.toLower match {
+            case 's' => if (Utils.debug) Player.currentMonster.uiYShift += 1
+            case 'z' => if (Utils.debug) Player.currentMonster.uiYShift -= 1
+            case 'd' => if (Utils.debug) {
+                indexForYShifting = (indexForYShifting + 1).min(Utils.frame.pokedexPane.pokemonArray.size - 1)
+                Player.team(0) = Utils.frame.pokedexPane.pokemonArray(indexForYShifting)
+                Player.currentMonster = Player.team(0)
+            }
+            case 'q' => if (Utils.debug) {
+                indexForYShifting = (indexForYShifting - 1).max(0)
+                Player.team(0) = Utils.frame.pokedexPane.pokemonArray(indexForYShifting)
+                Player.currentMonster = Player.team(0)
+            }
+            case 10 => Utils.print(Player.currentMonster.originalName + " => " + Player.currentMonster.uiYShift) 
+            case _ => 
+        }
     }
 
 }

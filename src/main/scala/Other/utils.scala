@@ -60,7 +60,10 @@ object Utils {
             javax.imageio.ImageIO.read(getClass.getResource(name))
         }
         catch {
-            case _ : Throwable => Utils.print("Issues while importing " + name); javax.imageio.ImageIO.read(getClass.getResource("Empty.png"))
+            case _ : Throwable => {
+                //Utils.print("Issues while importing " + name)
+                javax.imageio.ImageIO.read(getClass.getResource("Empty.png"))
+            }    
         }
     }
 
