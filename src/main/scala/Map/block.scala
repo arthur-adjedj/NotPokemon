@@ -118,6 +118,7 @@ class Door (idKey_ : Int) extends Block ("Blocks/ClosedDoor.png") {
         } else {
             DiscussionLabel.changeText("The door is locked !")
         }
+        walkable = originalWalkable
     }
 }
 
