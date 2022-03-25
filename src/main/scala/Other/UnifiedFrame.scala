@@ -18,7 +18,7 @@ import java.awt.Toolkit
 class UI extends JFrame with MouseListener with MouseMotionListener with KeyListener with MouseWheelListener {
 
     var sizeBlock = 40
-    var mapDisplayer : MapDisplayer = new MapDisplayer2 (this)
+    var mapDisplayer : MapDisplayer = new MapDisplayer1 (this)
 
     var posX : Int = 1000
     var posY : Int = 100

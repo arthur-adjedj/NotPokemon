@@ -69,7 +69,9 @@ class CharacterDisplayer (imgName : String) extends Object with Updatable {
     }
 
     def update : Unit = {
-        mapDisplayer.grid(i)(j).foreach (b => b.walkable = false)
+        if (mapDisplayer != null) {
+            mapDisplayer.grid(i)(j).foreach (b => b.walkable = false)
+        }
     }
 
     def move (moveX : Int, moveY : Int) : Unit = {
@@ -224,7 +226,8 @@ abstract class OpponentDisplayer (imageName_ : String) extends CharacterDisplaye
     
     override def update : Unit = {
         super.update
-        if (!player.alreadyBeaten && !intercepting && interceptsPlayer && !PlayerDisplayer.isMoving) {
+        
+        if (player != null && !player.alreadyBeaten && !intercepting && interceptsPlayer && PlayerDisplayer != null && !PlayerDisplayer.isMoving) {
             var c = PlayerDisplayer
             direction match {
                 case Up => c.direction = Down
