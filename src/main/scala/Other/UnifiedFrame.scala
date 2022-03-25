@@ -15,7 +15,7 @@ import java.awt.Toolkit
 
 
 
-class UI extends JFrame with MouseListener with MouseMotionListener with KeyListener {
+class UI extends JFrame with MouseListener with MouseMotionListener with KeyListener with MouseWheelListener {
 
     var sizeBlock = 40
     var mapDisplayer : MapDisplayer = new MapDisplayer2 (this)
@@ -46,6 +46,7 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
         addMouseListener(this)
         addMouseMotionListener(this)
         addKeyListener(this)
+        addMouseWheelListener(this)
         setLayout(null)
         setUndecorated(true)
         setContentPane(currentPane)
@@ -252,6 +253,12 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
     }
 
     def keyTyped (e : KeyEvent) : Unit = {}
+
+    def mouseWheelMoved (e : MouseWheelEvent) : Unit = {
+        if (currentState == "Pokedex") {
+            pokedexPane.moveList(e.getWheelRotation)
+        }
+    }
 }
 
 object EmptyUI extends UI {}
