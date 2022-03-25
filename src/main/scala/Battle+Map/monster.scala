@@ -371,6 +371,15 @@ abstract class Monster extends Object with ScoreForStrategy {
         }
     }
 
+    def talk : Boolean = {
+        if (alive) {
+            DiscussionLabel.changeText("(" + name + ") : I'm ready for the battle !")
+        } else {
+            DiscussionLabel.changeText("(" + name + ") : I'm K.O. please heal me !")
+        }
+        true
+    }
+
     override def toString : String = {
         name + " is a " + originalName + " monster of type " + typeName + ". "
     }
@@ -383,5 +392,7 @@ object EmptyMonster extends Monster {
     name = "Empty"
     originalName = "Empty"
     alive = false
+
+    override def talk : Boolean = false
 }
 

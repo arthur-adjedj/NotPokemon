@@ -20,6 +20,7 @@ class DrawPanelMap extends MyPanel {
             super.paintComponent(g)
             mapDisplayer.display(g)
             DiscussionLabel.display(g)
+            Utils.mapButtonList.foreach(x => x.display(g))
             endPaintComponent(g)
         }
     }

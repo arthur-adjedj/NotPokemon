@@ -46,7 +46,7 @@ abstract class HpBar {
 
 
 object EnnemyBar{
-    def ennemyBarImg = Utils.loadImage("EnnemyBar.png")
+    var ennemyBarImg = Utils.loadImage("EnnemyBar.png")
     var p2 : Character = EmptyCharacter
     object EnnemyHpBar extends HpBar {
         x = 112
@@ -63,7 +63,7 @@ object EnnemyBar{
 }
 
 object YourBar{
-    def yourBarImg = Utils.loadImage("YourBar.png")
+    var yourBarImg = Utils.loadImage("YourBar.png")
     var p1 : Character = EmptyCharacter
 
     object YourHpBar extends HpBar {
