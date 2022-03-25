@@ -188,6 +188,14 @@ object WaterGun extends Attack {
         "The target is blasted with a forceful shot of water."
 }
 
+object Splash extends Attack {
+    name = "Splash"
+    power = 0
+    attackType = Water
+    override def toString : String = 
+        "Has no effect whatsoever."
+}
+
 object Withdraw extends BuffAttack {
     stat = "defense"
 
