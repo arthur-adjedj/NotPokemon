@@ -72,14 +72,7 @@ class DrawPokedexPanel extends MyPanel {
                                                new Porygon,
                                                new Snorlax)
 
-    Utils.print(pokemonArray.size)
 
-    pokemonArray(0).wasSeen = true
-    pokemonArray(2).wasSeen = true
-    pokemonArray(3).wasSeen = true
-    pokemonArray(3).wasCaught = true
-
-    pokemonArray(pokemonArray.size-1).wasSeen = true
     //position in the array of the currently displayed monster
     var currentPokemonIndex : Int = 0
     var topIndexList : Int = 0

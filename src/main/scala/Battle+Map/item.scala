@@ -94,6 +94,7 @@ class Ball extends Item {
             var opponent = Player.opponent
             opponent.currentMonster.owner = Player
             Player.team(slot) = opponent.currentMonster
+            Player.team(slot).isCaught
             opponent.team(Utils.findFirstOccurenceArray(opponent.team, opponent.currentMonster)) = EmptyMonster
             Player.opponent.playing = false
             opponent.changeMonster(true)

@@ -1,5 +1,5 @@
 object SecondCharacter extends Opponent {
-    team(0) = new Squirtle
+    team(0) = new Magikarp
     team(0).owner = this
     team(0).gainLvl(3,false)
 

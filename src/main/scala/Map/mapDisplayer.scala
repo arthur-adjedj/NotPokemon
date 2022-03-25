@@ -88,7 +88,7 @@ class MapDisplayer1 (frame : UI) extends MapDisplayer (frame : UI) {
 
     n = 1
     iStart = 7
-    jStart = 0
+    jStart = 4
     
     grid(2)(1) = List(new MultiCliff(1, 0))
     grid(3)(1) = List(new MultiCliff(1, 0))
