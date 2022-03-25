@@ -22,6 +22,8 @@ class Pikachu extends Monster {
     attacks(3) = Thunder
 
     description = "When several of these POKEMON gather, their electricity could build and cause lightning storms."
+
+    uiYShift = -8
 }
 
 class Raichu extends Monster {
@@ -48,6 +50,8 @@ class Raichu extends Monster {
     attacks(3) = Thunder
 
     description = "Its long tail serves as a ground to protect itself from its own high voltage power."
+
+    uiYShift = -4
 }
 
 class Voltorb extends Monster {
@@ -74,6 +78,7 @@ class Voltorb extends Monster {
     attacks(3) = Thunder
 
     description = "Usually found in power plants. Easily mistaken for a POKEBALL, they have zapped many people."
+    uiYShift = 23
 }
 
 class Electrode extends Monster {
@@ -100,6 +105,7 @@ class Electrode extends Monster {
     attacks(3) = Thunder
 
     description = "It stores electric energy under very high pressure. It often explodes with little or no provocation."
+    uiYShift = 15
 }
 
 class Electabuzz extends Monster {
@@ -126,6 +132,8 @@ class Electabuzz extends Monster {
     attacks(3) = Thunder
 
     description = "Normally found near power plants, they can wander away and cause major blackouts in cities."
+    uiYShift = -8
+
 }
 
 class Jolteon extends Monster {
@@ -152,6 +160,8 @@ class Jolteon extends Monster {
     attacks(3) = Thunder
 
     description = "It accumulates negative ions in the atmosphere to blast out 10000-volt lightning bolts."
+    uiYShift = -4
+
 }
 
 class Squirtle extends Monster {
@@ -177,7 +187,7 @@ class Squirtle extends Monster {
     attacks(2) = AquaTail
     attacks(3) = TailWhip
 
-    uiYShift = 18
+    uiYShift = 7
 
     description = "After birth, its back swells and hardens into a shell. Powerfully sprays foam from its mouth."
 
@@ -232,6 +242,8 @@ class Blastoise extends Monster {
     attacks(2) = WaterGun
 
     description = "A brutal POKEMON with pressurized water jets on its shell. They are used for high speed tackles."
+
+    uiYShift = 0
 }
 
 class Psyduck extends Monster {
@@ -257,6 +269,8 @@ class Psyduck extends Monster {
     attacks(2) = WaterGun
 
     description = "While lulling its enemies with its vacant look, this wily POKéMON will use psychokinetic powers."
+    uiYShift = 5
+
 }
 
 class Golduck extends Monster {
@@ -282,6 +296,8 @@ class Golduck extends Monster {
     attacks(2) = WaterGun
 
     description = "Often seen swimming elegantly by lake shores. It is often mistaken for the Japanese monster, Kappa."
+    uiYShift = -10
+
 }
 
 class Poliwag extends Monster {
@@ -307,6 +323,8 @@ class Poliwag extends Monster {
     attacks(2) = WaterGun
 
     description = "Its newly grown legs prevent it from running. It appears to prefer swimming than trying to stand."
+    uiYShift = 31
+
 }
 
 class Poliwhirl extends Monster {
@@ -332,6 +350,8 @@ class Poliwhirl extends Monster {
     attacks(2) = WaterGun
 
     description = "Capable of living in or out of water. When out of water, it sweats to keep its body slimy."
+    uiYShift = 15
+
 }
 
 class Seel extends Monster {
@@ -357,6 +377,8 @@ class Seel extends Monster {
     attacks(2) = WaterGun
 
     description = "The protruding horn on its head is very hard. It is used for bashing through thick ice."
+    uiYShift = 15
+
 }
 
 class Shellder extends Monster {
@@ -382,6 +404,7 @@ class Shellder extends Monster {
     attacks(2) = WaterGun
 
     description = "Its hard shell repels any kind of attack. It is vulnerable only when its shell is open."
+    uiYShift = 39
 }
 
 class Krabby extends Monster {
@@ -407,6 +430,8 @@ class Krabby extends Monster {
     attacks(2) = WaterGun
 
     description = "Its pincers are not only powerful weapons, they are used for balance when walking sideways."
+    uiYShift = 21
+
 }
 
 class Kingler extends Monster {
@@ -432,6 +457,8 @@ class Kingler extends Monster {
     attacks(2) = WaterGun
 
     description = "The large pincer has 10000 hp of crushing power. However, its huge size makes it unwieldy to use."
+    uiYShift = -6
+
 }
 
 class Horsea extends Monster {
@@ -457,6 +484,8 @@ class Horsea extends Monster {
     attacks(2) = WaterGun
 
     description = "Known to shoot down flying bugs with precision blasts of ink from the surface of the water."
+    uiYShift = 17
+
 }
 
 class Seadra extends Monster {
@@ -482,6 +511,8 @@ class Seadra extends Monster {
     attacks(2) = WaterGun
 
     description = "Capable of swimming backwards by rapidly flapping its wing-like pectoral fins and stout tail."
+    uiYShift = -4
+
 }
 
 class Goldeen extends Monster {
@@ -507,6 +538,8 @@ class Goldeen extends Monster {
     attacks(2) = WaterGun
 
     description = "Its tail fin billows like an elegant ballroom dress, giving it the nickname of the Water Queen."
+    uiYShift = 5
+
 }
 
 class Seaking extends Monster {
@@ -532,6 +565,8 @@ class Seaking extends Monster {
     attacks(2) = WaterGun
 
     description = "In the autumn spawning season, they can be seen swimming powerfully up rivers and creeks."
+    uiYShift = -2
+
 }
 
 class Staryu extends Monster {
@@ -557,6 +592,8 @@ class Staryu extends Monster {
     attacks(2) = WaterGun
 
     description = "An enigmatic POKEMON that can effortlessly regenerate any appendage it loses in battle."
+    uiYShift = -2
+
 }
 
 class Magikarp extends Monster {
@@ -580,6 +617,8 @@ class Magikarp extends Monster {
     attacks(0) = Splash
 
     description = "In the distant past, it was somewhat stronger than the horribly weak descendants that exist today."
+    uiYShift = -4
+
 }
 
 class Gyarados extends Monster {
@@ -605,6 +644,8 @@ class Gyarados extends Monster {
     attacks(2) = WaterGun
 
     description = "Rarely seen in the wild. Huge and vicious, it is capable of destroying entire cities in a rage."
+    uiYShift = -6
+
 }
 
 class Vaporeon extends Monster {
@@ -630,6 +671,8 @@ class Vaporeon extends Monster {
     attacks(2) = WaterGun
 
     description = "Lives close to water. Its long tail is ridged with a fin which is often mistaken for a mermaid’s."
+    uiYShift = -6
+
 }
 
 
@@ -658,7 +701,7 @@ class Bulbasaur extends Monster {
     attacks(2) = VineWhip
     attacks(3) = Growth
 
-    uiYShift = 23
+    uiYShift = 19
 
     description = "A strange seed was planted on its back at birth. The plant sprouts and grows with this POKEMON."
 }
@@ -687,6 +730,8 @@ class Ivysaur extends Monster {
     attacks(3) = Growth
 
     description = "When the bulb on its back grows large, it appears to lose the ability to stand on its hind legs."
+
+    uiYShift = 2
 }
 
 class Venusaur extends Monster {
@@ -713,6 +758,8 @@ class Venusaur extends Monster {
     attacks(3) = Growth
 
     description = "The plant blooms when it is absorbing solar energy. It stays on the move to seek sunlight."
+
+    uiYShift = 9
 }
 
 class Oddish extends Monster {
@@ -739,6 +786,8 @@ class Oddish extends Monster {
     attacks(3) = Growth
 
     description = "During the day, it keeps its face buried in the ground. At night, it wanders around sowing its seeds."
+    uiYShift = 5
+
 }
 
 class Gloom extends Monster {
@@ -765,5 +814,7 @@ class Gloom extends Monster {
     attacks(3) = Growth
 
     description = "The fluid that oozes from its mouth isn’t drool. It is a nectar that is used to attract prey."
+    uiYShift = 11
+
 }
 
