@@ -138,6 +138,7 @@ class MapItemBlock (item_ : MapItem) extends Block ("Empty.png") {
             taken = true
             c.getMapItem(item)
             originalWalkable = true
+            walkable = originalWalkable
         }
     }
 
