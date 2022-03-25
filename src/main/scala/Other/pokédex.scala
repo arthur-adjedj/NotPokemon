@@ -94,9 +94,9 @@ class DrawPokedexPanel extends MyPanel {
     //TODO grey out the icon when pokémon is seen but not caught
     def drawPokemon(g : Graphics) = {
         if (currentPokemon.wasSeen) {
-            g.drawImage(currentPokemonImage,45,170,null)
+            g.drawImage(currentPokemonImage,53,170,null)
         } else {
-            g.drawImage(unknownPokemon,45,170,null)
+            g.drawImage(unknownPokemon,53,170,null)
         }
     }
 
