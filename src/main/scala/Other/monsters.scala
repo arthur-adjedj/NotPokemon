@@ -695,7 +695,7 @@ class Bulbasaur extends Monster {
     baseXp = 64
 
     monsterType = Grass
-    name = "Bulbizare"
+    name = "Bulbasaur"
     originalName = "Bulbasaur"
 
     attacks(0) = Growl
@@ -1024,7 +1024,7 @@ class Charmander extends Monster {
     baseXp = 62
 
     monsterType = Fire
-    name = "Salameche"
+    name = "Charmander"
     originalName = "Charmander"
 
     attacks(0) = Growl
