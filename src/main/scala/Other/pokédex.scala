@@ -175,7 +175,7 @@ class DrawPokedexPanel extends MyPanel {
 
     override def onKeyPressed (e : KeyEvent) : Unit = {
         e.getKeyChar.toLower match {
-            case '4' => if (Utils.debug) discoverAll
+            case '5' => if (Utils.debug) discoverAll
             case _ => 
         }
     }
