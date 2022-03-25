@@ -4,7 +4,6 @@ import java.sql.Time
 class Battle (p1 : Character, p2 : Character) extends Thread {
     def initialise : Unit = {
         //character can't move or interact on the map during battle
-        PlayerDisplayer.canInteract = false
 
         p1.battle = this
         p2.battle = this
@@ -46,7 +45,6 @@ class Battle (p1 : Character, p2 : Character) extends Thread {
         }
         Utils.waitDiscussionLabel(true)
         Utils.frame.backToMap
-        PlayerDisplayer.canInteract = true
         Utils.frame.battlePane.ready = false
     }
 }
