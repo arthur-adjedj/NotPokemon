@@ -34,9 +34,8 @@ object PlayerMonsterDisplayer extends MonsterDisplayer ("Empty.png") {
         if (imageName != previousImageName) {
             previousImageName = imageName
             image = Utils.loadImage(imageName)
-            y = 141 + Player.currentMonster.uiYShift
         }
-        
+        y = 141 + Player.currentMonster.uiYShift
     }
 
     override def onMouseOver (g : Graphics, xMouse : Int, yMouse : Int, widthWindow : Int, heightWindow : Int) : Unit = {
