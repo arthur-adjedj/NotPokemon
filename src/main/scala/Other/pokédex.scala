@@ -164,7 +164,7 @@ class DrawPokedexPanel extends MyPanel {
 
 
     //TODO add caught/seen icons next to names
-    def drawList(g : Graphics) {
+    def drawList(g : Graphics) : Unit = {
         var yshift : Int = 38 //vertical shift between each line
         for (i <- 0 to 9) {
             if (topIndexList + i < pokemonArray.size) {
