@@ -9,6 +9,9 @@ class DrawPokedexPanel extends MyPanel {
     var backgroundImgName = "/Pokedex/Background.png"
     var backgroundImg = Utils.loadImage(backgroundImgName)
 
+    var wasSeenIcon = Utils.loadImage("/Pokedex/PokeSeen.png")
+    var wasCaughtIcon = Utils.loadImage("/Pokedex/PokeCaught.png")
+
     //image to draw when the pokémon was never caught nor seen
     var unknownPokemon = Utils.loadImage("Pokedex/UnknownMonster.png")
 
@@ -79,6 +82,13 @@ class DrawPokedexPanel extends MyPanel {
     var currentPokemon = pokemonArray(currentPokemonIndex)
     var currentPokemonImage = Utils.loadImage(currentPokemon.imgNameFront)
 
+    pokemonArray(2).wasSeen = true
+    pokemonArray(4).wasSeen = true
+    pokemonArray(5).wasSeen = true
+    pokemonArray(2).wasCaught = true
+    pokemonArray(4).wasCaught = true
+    pokemonArray(5).wasCaught = true
+
 
     def discoverAll : Unit = {
         pokemonArray.foreach(x => x.wasSeen = true)
@@ -106,7 +116,7 @@ class DrawPokedexPanel extends MyPanel {
         g.setFont(poke_font)
 
         g.setColor(Color.WHITE)
-        g.drawString("Pokedex",(614 - metrics.stringWidth(name)) / 2, 55)
+        g.drawString("Pokedex",(614 - metrics.stringWidth("Pokedex")) / 2, 55)
 
         g.setColor(new Color(68,64,69))
         //draws the name of the pokémon
@@ -162,8 +172,7 @@ class DrawPokedexPanel extends MyPanel {
         }
     }
 
-
-    //TODO add caught/seen icons next to names
+    //Draws the left list of pokémons
     def drawList(g : Graphics) : Unit = {
         var yshift : Int = 38 //vertical shift between each line
         for (i <- 0 to 9) {
@@ -172,6 +181,12 @@ class DrawPokedexPanel extends MyPanel {
                     if (! pokemonArray(topIndexList + i).wasSeen) "----------"
                     else pokemonArray(topIndexList + i).name
                     )
+                if(pokemonArray(topIndexList + i).wasCaught){
+                    g.drawImage(wasCaughtIcon, 280, 90+i*yshift,null)
+                }else { if (pokemonArray(topIndexList + i).wasSeen)
+                    g.drawImage(wasSeenIcon, 280, 90+i*yshift,null)
+                }
+                
                 g.drawString(text,328,115 + i*yshift)
             }
         }
