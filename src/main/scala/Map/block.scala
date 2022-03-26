@@ -85,7 +85,7 @@ class IceBlock extends Block ("Blocks/Ice.png") {
     slippery = true
 }
 
-class HealBlock extends Block ("Blocks/Heal.png") {
+class HealBlock extends Block ("Blocks/Item.png") {
     originalWalkable = false
 
     override def interact (c : CharacterDisplayer) : Unit = {
@@ -122,7 +122,7 @@ class Door (idKey_ : Int) extends Block ("Blocks/ClosedDoor.png") {
     }
 }
 
-class MapItemBlock (item_ : MapItem) extends Block ("Empty.png") {
+class MapItemBlock (item_ : MapItem) extends Block ("Blocks/Item.png") {
     var item : MapItem = item_
     var taken : Boolean = false
     originalWalkable = false
