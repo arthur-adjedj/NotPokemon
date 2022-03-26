@@ -21,9 +21,10 @@ object Utils {
     var castAttackButtonList : List[CastAttackButton] = (0 to 3).map(x => new CastAttackButton(x)).toList
     var useItemButtonList : List[UseItemButton] = (0 to 3).map(x => new UseItemButton(x)).toList
     var changeMonsterButtonList : List[ChangeMonsterButton] = (0 to 5).map(x => new ChangeMonsterButton(x)).toList
-    var battleMenuButtonList : List[BattleButton] = List(AttackButton, BagButton, MonsterButton, RunButton, BackButton, NextPageItemButton)
+    var battleMenuButtonList : List[BattleButton] = List(AttackButton, BagButton, MonsterButton, RunButton)
 
-    var battleButtonList : List[BattleButton] = List.concat(battleMenuButtonList, castAttackButtonList, useItemButtonList, changeMonsterButtonList)
+    var battleButtonList : List[BattleButton] = List.concat(battleMenuButtonList, castAttackButtonList, useItemButtonList, changeMonsterButtonList,
+                                                            List(NextPageItemButton, BackButton))
 
     //map
     var showPokemonMapButtonList : List[PokemonMapButton] = (0 to 5).map(x => new PokemonMapButton(x)).toList
