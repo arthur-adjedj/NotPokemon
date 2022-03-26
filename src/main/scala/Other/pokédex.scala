@@ -12,6 +12,12 @@ class DrawPokedexPanel extends MyPanel {
     var wasSeenIcon = Utils.loadImage("/Pokedex/PokeSeen.png")
     var wasCaughtIcon = Utils.loadImage("/Pokedex/PokeCaught.png")
 
+    var sliderBlock = Utils.loadImage("/Pokedex/SliderBlock.png")
+    var greyTopArrow = Utils.loadImage("/Pokedex/GreyTopArrow.png")
+    var greyBotArrow = Utils.loadImage("/Pokedex/GreyBotArrow.png")
+
+    var selectionLayer = Utils.loadImage("/Pokedex/SelectionLayer.png")
+
     //image to draw when the pokémon was never caught nor seen
     var unknownPokemon = Utils.loadImage("Pokedex/UnknownMonster.png")
 
@@ -115,8 +121,11 @@ class DrawPokedexPanel extends MyPanel {
 
         g.setFont(poke_font)
 
+        g.setColor(Color.BLACK)
+        g.drawString("Pokedex",3 + ((614 - metrics.stringWidth("Pokedex")) / 2), 58)
         g.setColor(Color.WHITE)
         g.drawString("Pokedex",(614 - metrics.stringWidth("Pokedex")) / 2, 55)
+        
 
         g.setColor(new Color(68,64,69))
         //draws the name of the pokémon
@@ -182,15 +191,32 @@ class DrawPokedexPanel extends MyPanel {
                     else pokemonArray(topIndexList + i).name
                     )
                 if(pokemonArray(topIndexList + i).wasCaught){
-                    g.drawImage(wasCaughtIcon, 280, 90+i*yshift,null)
+                    g.drawImage(wasCaughtIcon, 280, 89+i*yshift,null)
                 }else { if (pokemonArray(topIndexList + i).wasSeen)
-                    g.drawImage(wasSeenIcon, 280, 90+i*yshift,null)
+                    g.drawImage(wasSeenIcon, 280, 89+i*yshift,null)
                 }
                 
                 g.drawString(text,328,115 + i*yshift)
             }
         }
+        g.drawImage(selectionLayer, 269, 82+(currentPokemonIndex - topIndexList)*yshift, null)
     }
+
+    //This function has 2 uses:
+    // - draws a slider block to show how far down one is on the list
+    // - if one or the other end of the list is reached, replaces the corresponding blue arrow with a grey one
+    def drawSideBar(g : Graphics) : Unit = {
+        if(topIndexList == 0) {
+            g.drawImage(greyTopArrow, 562, 77, null)
+        }
+        if(topIndexList + 10 >= pokemonArray.size) {
+            g.drawImage(greyBotArrow, 562, 435, null)
+        }
+
+        g.drawImage(sliderBlock, 562, 112 + ((topIndexList.toFloat / pokemonArray.size.toFloat )*298).toInt , null)
+
+    }
+
 
     override def onKeyPressed (e : KeyEvent) : Unit = {
         e.getKeyChar.toLower match {
@@ -207,6 +233,7 @@ class DrawPokedexPanel extends MyPanel {
         drawPokemon(g)
         drawText(g)
         drawList(g)
+        drawSideBar(g)
         Utils.buttonList.foreach(x => x.display(g))
         endPaintComponent(g)
     }
