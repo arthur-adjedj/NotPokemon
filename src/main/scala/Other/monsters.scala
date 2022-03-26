@@ -270,7 +270,7 @@ class Psyduck extends Monster {
     attacks(1) = TailWhip
     attacks(2) = WaterGun
 
-    description = "While lulling its enemies with its vacant look, this wily POKéMON will use psychokinetic powers."
+    description = "While lulling its enemies with its vacant look, this wily POKEMON will use psychokinetic powers."
     uiYShift = 5
 
 }
