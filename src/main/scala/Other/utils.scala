@@ -16,19 +16,30 @@ object Utils {
     var frame : UI = EmptyUI
 
     // we need to define those buttons here because we may need them in descriptables
+
+    //battle
     var castAttackButtonList : List[CastAttackButton] = (0 to 3).map(x => new CastAttackButton(x)).toList
     var useItemButtonList : List[UseItemButton] = (0 to 3).map(x => new UseItemButton(x)).toList
     var changeMonsterButtonList : List[ChangeMonsterButton] = (0 to 5).map(x => new ChangeMonsterButton(x)).toList
+    var battleMenuButtonList : List[BattleButton] = List(AttackButton, BagButton, MonsterButton, RunButton, BackButton, NextPageItemButton)
 
-    var battleButtons : List[BattleButton] = List.concat(List(AttackButton, BagButton, MonsterButton, RunButton, BackButton, NextPageItemButton),
-                                    castAttackButtonList, useItemButtonList, changeMonsterButtonList)
+    var battleButtonList : List[BattleButton] = List.concat(battleMenuButtonList, castAttackButtonList, useItemButtonList, changeMonsterButtonList)
 
+    //map
+    var showPokemonMapButtonList : List[PokemonMapButton] = (0 to 5).map(x => new PokemonMapButton(x)).toList
+
+    var mapMenuButtonList : List[MapButton] = List(ShowInventoryButton, ShowTeamButton, ShowPokedexButton, SaveButton)
+
+    var mapButtonList : List[MapButton] = List.concat(mapMenuButtonList, showPokemonMapButtonList)
+
+
+    //pokedex
     var choosePokemonPokedexButtonList : List[ChoosePokemonPokedexButton] = (0 to 9).map(x => new ChoosePokemonPokedexButton(x)).toList
     var moveListPokedexButtonList : List[MoveListPokedexButton] = List(new MoveListPokedexButton(-1), new MoveListPokedexButton(1))
-    var pokedexButtons : List[PokedexButton] = List.concat(choosePokemonPokedexButtonList, moveListPokedexButtonList)
+    var pokedexButtonList : List[PokedexButton] = List.concat(choosePokemonPokedexButtonList, moveListPokedexButtonList)
 
     // cannot create the list and adding buttons during their creation because of a weird behaviour with 'object'
-    var buttonList : List[MyButton] = List.concat(List(CloseButton, HelpButton), battleButtons, pokedexButtons)
+    var buttonList : List[MyButton] = List.concat(List(CloseButton, HelpButton), battleButtonList, pokedexButtonList, mapButtonList)
 
     var descriptables : List[Descriptable] = List.concat(List(PlayerMonsterDisplayer, OpponentMonsterDisplayer), buttonList)
 
@@ -79,6 +90,12 @@ object Utils {
         } else {
             -1
         }
+    }
+
+    def swap [T](array : Array[T], i : Int, j : Int) : Unit = {
+        var temp = array(j)
+        array(j) = array(i)
+        array(i) = temp
     }
 
     def cutString (s : String, charPerLine : Int) : List[String] = {

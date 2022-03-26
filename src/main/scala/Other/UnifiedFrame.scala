@@ -273,5 +273,7 @@ class MyPanel extends JPanel with Repaintable {
     }
 
     def onKeyPressed (e : KeyEvent) : Unit = {}
+
+    def onMousePressed (e : MouseEvent) : Unit = {}
 }
 

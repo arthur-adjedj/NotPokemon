@@ -9,6 +9,7 @@ import javax.swing.{JFrame, JPanel, JLabel}
 abstract class MyButton (imageName_ : String) extends Object with Descriptable {
 
     var originalImageName = imageName_
+    var previousImageName = "" // to avoid loading the same image twice
     var imageName = imageName_
     var x : Int = 0
     var y : Int = 0
@@ -79,16 +80,21 @@ abstract class InvisibleButton extends MyButton("Empty.png") {
 abstract class BattleButton (imageName_ : String) extends MyButton(imageName_) {
     context = "Battle"
     def resetOnMainMenu : Unit = {
-        Utils.buttonList.foreach(x => x.setVisible(false))
-        AttackButton.setVisible(true)
-        BagButton.setVisible(true)
-        MonsterButton.setVisible(true)
-        RunButton.setVisible(true)
+        Utils.battleButtonList.foreach(x => x.setVisible(false))
+        Utils.battleMenuButtonList.foreach(x => x.setVisible(true))
     }
 }
 
 abstract class PokedexButton extends InvisibleButton {
     context = "Pokedex"
+}
+
+abstract class MapButton (imageName_ : String) extends MyButton(imageName_) {
+    context = "Map"
+    def resetOnMainMenu : Unit = {
+        Utils.mapButtonList.foreach(x => x.setVisible(false))
+        Utils.mapMenuButtonList.foreach(x => x.setVisible(true))
+    }
 }
 
 object CloseButton extends MyButton ("Close.png") {
@@ -135,7 +141,10 @@ class CastAttackButton (n_ : Int) extends BattleButton ("Buttons/EmptyButton.png
             text = "Empty"
             clickable = false
         }
-        image = Utils.loadImage(imageName)
+        if (previousImageName != imageName) {
+            previousImageName = imageName
+            image = Utils.loadImage(imageName)
+        }
     }
 
     override def onMouseOver (g : Graphics, x : Int, y : Int, width : Int, height : Int) : Unit = {
@@ -191,7 +200,10 @@ class ChangeMonsterButton (n_ : Int) extends BattleButton ("Buttons/EmptyButton.
             clickable = false
         }
         text = Player.team(n).name
-        image = Utils.loadImage(imageName)
+        if (previousImageName != imageName) {
+            previousImageName = imageName
+            image = Utils.loadImage(imageName)
+        }
     }
 
 }
@@ -234,7 +246,10 @@ class UseItemButton (n_ : Int) extends BattleButton ("Buttons/EmptyButton.png") 
             clickable = false
         }
         text = Player.usableInventory(indexOfObject).name + "(" + Player.usableInventory(indexOfObject).amount + ")"
-        image = Utils.loadImage(imageName)
+        if (previousImageName != imageName) {
+            previousImageName = imageName
+            image = Utils.loadImage(imageName)
+        }
     }
 }
 
@@ -298,7 +313,10 @@ object AttackButton extends BattleButton ("Buttons/AttackButton.png") {
             imageName = "Buttons/EmptyButton.png"
             clickable = false
         }
-        image = Utils.loadImage(imageName)
+        if (previousImageName != imageName) {
+            previousImageName = imageName
+            image = Utils.loadImage(imageName)
+        }
     }
 }
 
@@ -334,7 +352,10 @@ object BagButton extends BattleButton ("Buttons/BagButton.png") {
             imageName = "Buttons/EmptyButton.png"
             clickable = false
         }
-        image = Utils.loadImage(imageName)
+        if (previousImageName != imageName) {
+            previousImageName = imageName
+            image = Utils.loadImage(imageName)
+        }
     }
 }
 
@@ -363,7 +384,10 @@ object MonsterButton extends BattleButton ("Buttons/MonstersButton.png") {
             imageName = "Buttons/EmptyButton.png"
             clickable = false
         }
-        image = Utils.loadImage(imageName)
+        if (previousImageName != imageName) {
+            previousImageName = imageName
+            image = Utils.loadImage(imageName)
+        }
     }
 
 }
@@ -389,7 +413,10 @@ object RunButton extends BattleButton ("Buttons/RunButton.png") {
             imageName = "Buttons/EmptyButton.png"
             clickable = false
         }
-        image = Utils.loadImage(imageName)
+        if (previousImageName != imageName) {
+            previousImageName = imageName
+            image = Utils.loadImage(imageName)
+        }
     }
 }
 
@@ -420,6 +447,77 @@ object NextPageItemButton extends BattleButton ("Buttons/EmptyButton.png") {
             imageName = "Buttons/EmptyButton.png"
             clickable = false
         }
-        image = Utils.loadImage(imageName)
+        if (previousImageName != imageName) {
+            previousImageName = imageName
+            image = Utils.loadImage(imageName)
+        }
+    }
+}
+
+object ShowTeamButton extends MapButton ("Buttons/MonstersButton.png") {
+    x = 3
+    y = 549
+    visible = true
+    text = "Pokemons"
+
+    override def isClicked : Unit = {
+        Utils.mapButtonList.foreach(x => x.setVisible(false))
+        Utils.showPokemonMapButtonList.foreach(x => x.setVisible(true))
+    }
+}
+
+object ShowInventoryButton extends MapButton ("Buttons/BagButton.png") {
+    x = 311
+    y = 405
+    visible = true
+    text = "Bag"
+}
+
+object ShowPokedexButton extends MapButton ("Buttons/AttackButton.png") {
+    x = 3
+    y = 405
+    visible = true
+    text = "Pokedex"
+
+    override def isClicked : Unit = {
+        Utils.frame.backToPokedex
+    }
+}
+
+object SaveButton extends MapButton ("Buttons/RunButton.png") {
+    x = 311
+    y = 549
+    visible = true
+    text = "Save"
+
+    override def isClicked : Unit = {
+        DiscussionLabel.changeText("This functionnality is not implemented yet !")
+    }
+}
+
+class PokemonMapButton (n_ : Int) extends MapButton ("Buttons/EmptyButton.png") {
+    var n : Int = n_
+    x = 3 + 308*(n%2)
+    y = 405 + 144*(n/2)
+
+    override def isClicked : Unit = {
+        if (Player.team(n).talk) {
+            resetOnMainMenu
+        }
+    }
+
+    override def update : Unit = {
+        if (Player.team(n).name != "Empty") {
+            imageName = Player.team(n).monsterType.imageButtonName
+            clickable = visible
+        } else {
+            imageName = "Buttons/EmptyButton.png"
+            clickable = false
+        }
+        text = Player.team(n).name
+        if (previousImageName != imageName) {
+            previousImageName = imageName
+            image = Utils.loadImage(imageName)
+        }
     }
 }
