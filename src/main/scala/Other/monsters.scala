@@ -1322,7 +1322,7 @@ class Rattata extends Monster {
     baseXp = 51
 
     monsterType = Normal
-    name = "Ratatata"
+    name = "Rattata"
     originalName = "Rattata"
 
     attacks(0) = Tackle
