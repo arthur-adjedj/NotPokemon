@@ -13,6 +13,7 @@ case object Right extends Direction
 
 class CharacterDisplayer (imgName : String) extends Object with Updatable {
     var direction : Direction = Down
+    var interceptLength : Int = 0 // for opponents (we need it here for a foreach)
 
     var x : Int = 0
     var y : Int = 0
@@ -21,7 +22,7 @@ class CharacterDisplayer (imgName : String) extends Object with Updatable {
     var i : Int = 0
     var j : Int = 0
 
-    var speed : Int = 1
+    var speed : Int = 10
     var whichMap : Int = 0
     var mover : Mover = new Mover
 
@@ -207,7 +208,6 @@ class CharacterDisplayer (imgName : String) extends Object with Updatable {
 }
 
 abstract class OpponentDisplayer (imageName_ : String) extends CharacterDisplayer(imageName_) {
-    var interceptLength : Int = 0
     var intercepting : Boolean = false
 
     def interceptsPlayer : Boolean = direction match {
@@ -234,12 +234,8 @@ abstract class OpponentDisplayer (imageName_ : String) extends CharacterDisplaye
         var c = PlayerDisplayer
         if (player != null && !player.alreadyBeaten && !intercepting && interceptsPlayer && PlayerDisplayer != null && !PlayerDisplayer.isMoving && c.whichMap == whichMap) {
             
-            direction match {
-                case Up => c.direction = Down
-                case Down => c.direction = Up
-                case Right => c.direction = Left
-                case Left => c.direction = Right
-            }
+            c.direction = Utils.oppositeDirection(direction)
+
             intercepting = true
             c.canInteract = false
             new MoverToBattle(c.i, c.j, this).start
@@ -281,7 +277,11 @@ object PlayerDisplayer extends CharacterDisplayer ("Characters/MainCharacter.png
             case Right => iInteracted += 1
         }}
         mapDisplayer.grid(iInteracted)(jInteracted) foreach (b => b.interact(this))
-        Utils.characterDisplayers.foreach(x => if (x.i == iInteracted && x.j == jInteracted && x.whichMap == whichMap && !(x.player.alreadyBeaten)) Utils.frame.startBattle(player, x.player))
+        Utils.characterDisplayers.foreach(x => 
+            if (x.i == iInteracted && x.j == jInteracted && x.whichMap == whichMap && !(x.player.alreadyBeaten)) {
+                x.direction = Utils.oppositeDirection(direction); 
+                x.interceptLength = 1
+            })
     }
 
     override def changeCoordinates (moveX : Int, moveY : Int) : Unit = {
@@ -324,9 +324,10 @@ object SecondPlayerDisplayer extends OpponentDisplayer ("Characters/FemaleCharac
 
 }
 
-object SecondCharacterDisplayer extends CharacterDisplayer ("Characters/Louis.png") {
+object SecondCharacterDisplayer extends OpponentDisplayer ("Characters/Louis.png") {
 
     player = SecondCharacter
+    interceptLength = 0
 
     direction = Up
     whichMap = 1

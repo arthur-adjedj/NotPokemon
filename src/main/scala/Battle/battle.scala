@@ -2,9 +2,17 @@ import java.util.concurrent.TimeUnit
 import java.sql.Time
 
 class Battle (p1 : Character, p2 : Character) extends Thread {
+    var winner : Character = EmptyCharacter
+    var loser : Character = EmptyCharacter
+
+
     def initialise : Unit = {
         //character can't move or interact on the map during battle
         PlayerDisplayer.canInteract = false
+
+        YourBar.p1 = p1
+        EnnemyBar.p2 = p2
+
         p1.battle = this
         p2.battle = this
 
@@ -44,7 +52,7 @@ class Battle (p1 : Character, p2 : Character) extends Thread {
             p2.currentAttack = EmptyAttack
         }
         Utils.waitDiscussionLabel(true)
-        Utils.frame.backToMap
+        Utils.frame.backToMap(loser.losingMessage)
         Utils.frame.battlePane.ready = false
         PlayerDisplayer.canInteract = true
     }
