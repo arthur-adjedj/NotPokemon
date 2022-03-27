@@ -24,8 +24,6 @@ class MapDisplayer (frame : UI) {
 
     def initialise (sizeB : Int, i : Int = -1, j : Int = -1) : Unit = {
         PlayerDisplayer.mapDisplayer = this
-        SecondCharacterDisplayer.mapDisplayer = this
-        SecondPlayerDisplayer.mapDisplayer = this
         sizeBlock = ui.sizeBlock
         for (i <- 0 to sizeMap - 1) {
             for (j <- 0 to sizeMap - 1) {
@@ -88,6 +86,13 @@ object EmptyMapDisplayer extends MapDisplayer (EmptyUI) {
 }
 
 class MapDisplayer1 (frame : UI) extends MapDisplayer (frame : UI) {
+
+    override def initialise (sizeB : Int, i : Int = -1, j : Int = -1) : Unit = {
+        super.initialise(sizeB, i, j)
+        SecondCharacterDisplayer.mapDisplayer = this
+        SecondPlayerDisplayer.mapDisplayer = this
+    }
+
 
     n = 1
     iStart = 7
