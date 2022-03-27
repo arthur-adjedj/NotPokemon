@@ -137,11 +137,11 @@ class CastAttackButton (n_ : Int) extends BattleButton ("Buttons/EmptyButton.png
             var metrics = g.getFontMetrics(poke_font);
             // Coordonées du texte
             xtext = x + (width - metrics.stringWidth(text)) / 2;
-            ytext = y + ((height - metrics.getHeight()) / 2) + metrics.getAscent();
+            ytext = y + ((height - metrics.getHeight()) / 2) + metrics.getAscent() - 18;
             g.drawImage(image, x, y, null)
             g.drawString(text,xtext,ytext)
             if (Player.currentMonster.attacks(n).name != "Empty") {
-                g.drawImage(Utils.typeIcons(Utils.typeIconNumber(Player.currentMonster.attacks(n).attackType)), x + width/2 - 61, y + height - 48, null)
+                g.drawImage(Utils.typeIcons(Utils.typeIconNumber(Player.currentMonster.attacks(n).attackType)), x + width/2 - 61, y + height - 71, null)
             }
         }
     }
