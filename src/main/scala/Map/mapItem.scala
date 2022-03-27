@@ -29,6 +29,10 @@ class Bike extends MapItem {
     }
 }
 
+class Surf extends MapItem {
+    name = "Surf"
+}
+
 object EmptyMapItem extends MapItem {
 
 }

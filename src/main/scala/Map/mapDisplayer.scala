@@ -157,4 +157,12 @@ class MapDisplayer2(frame : UI) extends MapDisplayer(frame : UI) {
     jStart = 0
 
     grid(3)(3) = List(new Portal(1))
+
+    grid(5)(2) = List(new MapItemBlock(new Surf))
+
+    for (i <- 5 to 10) {
+        for (j <- 5 to 10) {
+            grid(i)(j) = List(new WaterBlock)
+        }
+    }
 }

@@ -191,7 +191,8 @@ class Mover extends Thread {
     override def run : Unit = {
         for (i <- 0 to characterDisplayer.mapDisplayer.sizeBlock - 1) {
             characterDisplayer.changeCoordinates(lastMoveX, lastMoveY)
-            if (i % (characterDisplayer.mapDisplayer.sizeBlock/4) == 0 && !characterDisplayer.sliding) {
+            if (i % (characterDisplayer.mapDisplayer.sizeBlock/4) == 0 && 
+             !Utils.frame.mapPane.mapDisplayer.grid(characterDisplayer.i)(characterDisplayer.j).reverse.head.stopsAnimation) {
                 characterDisplayer.nx = (characterDisplayer.nx + 1) % 4
             }
             if (i != characterDisplayer.mapDisplayer.sizeBlock - 1) {

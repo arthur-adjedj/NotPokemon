@@ -90,7 +90,7 @@ class CharacterDisplayer (imgName : String) extends Object with Updatable {
                 }
 
             if (0 <= i+moveX && i+moveX < mapDisplayer.grid.length && 0 <= j+moveY && j+moveY < mapDisplayer.grid(i).length && !uTurn) {
-                if (mapDisplayer.grid(i+moveX)(j+moveY).reverse.head.walkable || noClip) {
+                if (mapDisplayer.grid(i+moveX)(j+moveY).reverse.head.canBeWalked(this) || noClip) {
 
                     mover = new Mover
                     mover.characterDisplayer = this
@@ -136,13 +136,17 @@ class CharacterDisplayer (imgName : String) extends Object with Updatable {
 
     //update the sprite used to render depending on its orientation
     def updateSprite() = {
-         direction match {
-            case Up => ny = 3
-            case Down => ny = 0
-            case Right => ny = 2
-            case Left => ny = 1
-         }
+        if (mapDisplayer.grid(i)(j).reverse.head.changingDirecton(direction) == -1) {
+            direction match {
+                case Up => ny = 3
+                case Down => ny = 0
+                case Right => ny = 2
+                case Left => ny = 1
+            }
+        } else {
+            ny = mapDisplayer.grid(i)(j).reverse.head.changingDirecton(direction)
         }
+    }
 
     def display (g : Graphics, xMap : Int, yMap : Int, n : Int) : Unit = {
         if (n == whichMap) {
@@ -179,7 +183,7 @@ class CharacterDisplayer (imgName : String) extends Object with Updatable {
 
     def getMapItem (item : MapItem) : Unit = {
         if (item.usable) {
-            if (usableMapInventory.forall(x => x.id != item.id)) {
+            if (usableMapInventory.forall(x => x.name != item.name)) {
                 usableMapInventory.enqueue(item)
             }
         } else {
