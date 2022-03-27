@@ -217,6 +217,11 @@ class DrawPokedexPanel extends MyPanel {
 
     }
 
+    def drawTypeIcon(g : Graphics) : Unit = {
+        if (currentPokemon.wasSeen) 
+            g.drawImage(Utils.typeIcons(Utils.typeIconNumber(currentPokemon.monsterType)), 144, 352, null)
+    }
+
 
     override def onKeyPressed (e : KeyEvent) : Unit = {
         e.getKeyChar.toLower match {
@@ -234,6 +239,7 @@ class DrawPokedexPanel extends MyPanel {
         drawText(g)
         drawList(g)
         drawSideBar(g)
+        drawTypeIcon(g)
         Utils.buttonList.foreach(x => x.display(g))
         endPaintComponent(g)
     }
