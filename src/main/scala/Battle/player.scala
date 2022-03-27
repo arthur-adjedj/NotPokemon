@@ -155,16 +155,23 @@ abstract class Opponent extends Character with Intelligence {
 
 abstract class WildOpponent extends Opponent {
     name = "Wild"
+    var isCaptured : Boolean = false
 
+    override def enterBattle : Unit = {
+        isCaptured = false
+        super.enterBattle
+    }
     override def changeMonster (captured : Boolean) : Unit = {
         // if the monster is captured it displays a different message
-        if (captured) {
-            DiscussionLabel.changeText("You just captured " + currentMonster.name + ".")
-        }
-        if (team.exists(x => x.alive && x.name != "Empty")) {
-            super.changeMonster
+        isCaptured = captured
+        super.changeMonster
+    }
+
+    override def losingMessage : List[String] = {
+        if (isCaptured) {
+            List("You just captured " + currentMonster.name + " !")
         } else {
-            lose(captured)
+            List(currentMonster.name + " just lost !")
         }
     }
 
