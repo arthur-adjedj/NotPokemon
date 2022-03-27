@@ -27,7 +27,11 @@ abstract class Block (imageName_ : String) {
     }
 
     def display (g : Graphics) : Unit = {
-        g.drawImage(img, x, y, null)
+        var frame = Utils.frame
+        // we only draw on the screen (if swing doesn't already handle it)
+        if (-frame.sizeBlock <= x && x <= frame.sizeX && -frame.sizeBlock <= y && y <= frame.sizeY) {
+            g.drawImage(img, x, y, null)
+        }
     }
     
     def updateCoordinatesOnMap (iMap : Int, jMap : Int) : Unit = {
