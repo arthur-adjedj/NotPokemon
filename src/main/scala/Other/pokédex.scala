@@ -93,14 +93,6 @@ class DrawPokedexPanel extends MyPanel {
     var currentPokemon = pokemonArray(currentPokemonIndex)
     var currentPokemonImage = Utils.loadImage(currentPokemon.imgNameFront)
 
-    // pokemonArray(2).wasSeen = true
-    // pokemonArray(4).wasSeen = true
-    // pokemonArray(5).wasSeen = true
-    // pokemonArray(2).wasCaught = true
-    // pokemonArray(4).wasCaught = true
-    // pokemonArray(5).wasCaught = true
-
-
     def discoverAll : Unit = {
         pokemonArray.foreach(x => x.wasSeen = true)
     }
