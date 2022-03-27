@@ -97,7 +97,7 @@ abstract class MapButton (imageName_ : String) extends MyButton(imageName_) {
     }
 }
 
-object CloseButton extends MyButton ("Close.png") {
+object CloseButton extends MyButton ("Buttons/Close.png") {
     context = "All"
     x = 594
     y = 2
@@ -109,7 +109,7 @@ object CloseButton extends MyButton ("Close.png") {
     }
 }
 
-object HelpButton extends MyButton ("Help.png") {
+object HelpButton extends MyButton ("Buttons/Help.png") {
     context = "All"
     x = 0
     y = 0
