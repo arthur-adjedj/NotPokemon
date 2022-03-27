@@ -231,20 +231,19 @@ abstract class OpponentDisplayer (imageName_ : String) extends CharacterDisplaye
     
     override def update : Unit = {
         super.update
-        
-        if (player != null && !player.alreadyBeaten && !intercepting && interceptsPlayer && PlayerDisplayer != null && !PlayerDisplayer.isMoving) {
-            var c = PlayerDisplayer
+        var c = PlayerDisplayer
+        if (player != null && !player.alreadyBeaten && !intercepting && interceptsPlayer && PlayerDisplayer != null && !PlayerDisplayer.isMoving && c.whichMap == whichMap) {
+            
             direction match {
                 case Up => c.direction = Down
                 case Down => c.direction = Up
                 case Right => c.direction = Left
                 case Left => c.direction = Right
             }
-            if (c.whichMap == whichMap) {
-                intercepting = true
-                c.canInteract = false
-                new MoverToBattle(c.i, c.j, this).start
-            }
+            intercepting = true
+            c.canInteract = false
+            new MoverToBattle(c.i, c.j, this).start
+            
         }  
     }
 }
