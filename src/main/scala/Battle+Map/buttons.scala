@@ -131,6 +131,21 @@ class CastAttackButton (n_ : Int) extends BattleButton ("Buttons/EmptyButton.png
         }
     }
 
+    override def display (g : Graphics) : Unit = {
+        if (visible && (context == Utils.frame.currentState || context == "All") || alwaysVisible) {
+            g.setFont(poke_font)
+            var metrics = g.getFontMetrics(poke_font);
+            // Coordonées du texte
+            xtext = x + (width - metrics.stringWidth(text)) / 2;
+            ytext = y + ((height - metrics.getHeight()) / 2) + metrics.getAscent();
+            g.drawImage(image, x, y, null)
+            g.drawString(text,xtext,ytext)
+            if (Player.currentMonster.attacks(n).name != "Empty") {
+                g.drawImage(Utils.typeIcons(Utils.typeIconNumber(Player.currentMonster.attacks(n).attackType)), x + width/2 - 61, y + height - 48, null)
+            }
+        }
+    }
+
     override def update : Unit = {
         if (Player.currentMonster.attacks(n).name != "Empty") {
             imageName = Player.currentMonster.attacks(n).attackType.imageButtonName
