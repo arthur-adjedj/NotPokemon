@@ -44,9 +44,10 @@ class MapDisplayer (frame : UI) {
             Utils.mapDisplayers(n-1) = this
         }
 
+        PlayerDisplayer.initialise
         // we set this coordinates of the map so the player is in the middle of its box
         x = PlayerDisplayer.x - PlayerDisplayer.leftBox - (((PlayerDisplayer.rightBox - PlayerDisplayer.leftBox)/2)/sizeBlock)*sizeBlock
-        y = PlayerDisplayer.y - PlayerDisplayer.topBox - (((PlayerDisplayer.botBox - PlayerDisplayer.topBox)/2)/sizeBlock)*sizeBlock 
+        y = PlayerDisplayer.y - PlayerDisplayer.topBox - (((PlayerDisplayer.botBox - PlayerDisplayer.topBox)/2)/sizeBlock)*sizeBlock
     }
 
     def update : Unit = {
