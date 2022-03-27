@@ -10,8 +10,8 @@ object DiscussionLabel {
     var text1 : String = ""
     var text2 : String = ""
     var charPerLine : Int = 27
-    var x : Int = 40
-    var y : Int = 330
+    var x : Int = 0
+    var y : Int = 285
 
     var visible = true
 
@@ -29,10 +29,10 @@ object DiscussionLabel {
 
     def display (g : Graphics) : Unit = {
         if (visible) {
-            g.drawImage(textBarImg,0,285,null)
+            g.drawImage(textBarImg, x, y, null)
             g.setFont(font)
-            g.drawString(text1, x, y)
-            g.drawString(text2, x, y+36)
+            g.drawString(text1, x + 40, y + 45)
+            g.drawString(text2, x + 40, y + 81 ) // 45 + 36 = 81
         }
     }
 
