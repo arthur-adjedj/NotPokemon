@@ -41,6 +41,7 @@ class DrawPanelMap extends MyPanel {
             case 'o' => SecondPlayerDisplayer.interactExplicitly
 
             case 'a' => PlayerDisplayer.changeCurrentItem
+            case 'p' => Utils.frame.backToPokedex
             case 'n' => if (Utils.debug) PlayerDisplayer.noClip = !PlayerDisplayer.noClip
             case _ =>
         }

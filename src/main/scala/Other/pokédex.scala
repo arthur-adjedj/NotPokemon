@@ -236,6 +236,7 @@ class DrawPokedexPanel extends MyPanel {
         e.getKeyChar.toLower match {
             case 'z' => changeCurrentPokemonBrut(currentPokemonIndex - 1)
             case 's' => changeCurrentPokemonBrut(currentPokemonIndex + 1)
+            case 'm' => Utils.frame.backToMap
             case '5' => if (Utils.debug) discoverAll
             case _ => 
         }
