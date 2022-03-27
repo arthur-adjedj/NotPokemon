@@ -309,7 +309,7 @@ object PlayerDisplayer extends CharacterDisplayer ("Characters/MainCharacter.png
 
 }
 
-object SecondPlayerDisplayer extends OpponentDisplayer ("Characters/FemaleCharacter.png") {
+object SecondPlayerDisplayer extends OpponentDisplayer ("Characters/Louis.png") {
 
     direction = Left
     
@@ -326,7 +326,7 @@ object SecondPlayerDisplayer extends OpponentDisplayer ("Characters/FemaleCharac
 
 }
 
-object SecondCharacterDisplayer extends OpponentDisplayer ("Characters/Louis.png") {
+object SecondCharacterDisplayer extends OpponentDisplayer ("Characters/FemaleCharacter.png") {
 
     player = SecondCharacter
     interceptLength = 0
