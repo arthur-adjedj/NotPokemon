@@ -122,16 +122,18 @@ class CharacterDisplayer (imgName : String) extends Object with Updatable {
     }
 
     def drawSprite (g : Graphics, xMap : Int, yMap : Int, img : BufferedImage, width : Int, height : Int, nx: Int, ny : Int ) : Unit = {
+        var frame = Utils.frame
         /*shift the sprite on the tile such that its feet are at the right place*/
         var xshift = x + (Utils.frame.sizeBlock - width)/2 - xMap
         var yshift = y + (Utils.frame.sizeBlock - height) - yMap
-
-        g.drawImage(img,
-            xshift, yshift, /*upper left corner coords on the map*/
-            xshift + width, yshift +  height, /*lower right corner*/
-            nx * width , ny * height,  /*upper left corner coords of the sprite on the tileset*/
-            (nx + 1) * width  ,(ny + 1) * height , /*lower right corner*/
-            null)
+        if (-frame.sizeBlock <= xshift && xshift <= frame.sizeX && -frame.sizeBlock <= yshift && yshift <= 400) {
+            g.drawImage(img,
+                xshift, yshift, /*upper left corner coords on the map*/
+                xshift + width, yshift +  height, /*lower right corner*/
+                nx * width , ny * height,  /*upper left corner coords of the sprite on the tileset*/
+                (nx + 1) * width  ,(ny + 1) * height , /*lower right corner*/
+                null)
+        }
     }
 
     //update the sprite used to render depending on its orientation
