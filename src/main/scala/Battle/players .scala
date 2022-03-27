@@ -11,9 +11,10 @@ object SecondCharacter extends Opponent {
         PlayerDisplayer.mapDisplayer.update
     }
 
-    override def losingMessage : List[String] = {
-        List("How did you beat me ?", "Anyway ! I'm opening the door so you can exit the maze !", "Do not thank me for that !")
+    override def printEnteringBattleMessage : Unit = {
+        DiscussionLabel.changeText("I'll show you the true power of my pokemons !")
     }
+
 }
 
 object ThirdCharacter extends Opponent {
@@ -27,6 +28,10 @@ object ThirdCharacter extends Opponent {
 
     strat = Utils.controlStrat
     name = "Opponent"
+
+    override def printEnteringBattleMessage : Unit = {
+        DiscussionLabel.changeText("I love pokemons so much ! I am not saying random cringe to make you waste time during this demo at all haha")
+    }
 
     override def losingMessage : List[String] = {
         List("How did you beat me ?", "Anyway ! I'm opening the door so you can exit the maze !", "Do not thank me for that !")

@@ -182,6 +182,11 @@ abstract class WildOpponent extends Opponent {
     override def lose : Unit = {
         lose(false)
     }
+
+    override def printEnteringBattleMessage : Unit = {
+        DiscussionLabel.changeText("A wild " + team(0).name + " appears !")
+    }
+
 }
 
 
