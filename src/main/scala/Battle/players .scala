@@ -30,7 +30,8 @@ object ThirdCharacter extends Opponent {
     name = "Opponent"
 
     override def printEnteringBattleMessage : Unit = {
-        DiscussionLabel.changeText("I love pokemons so much ! I am not saying random cringe to make you waste time during this demo at all haha")
+        DiscussionLabel.changeText(List("I love pokemons so much ! I am not saying random cringe stuff to make you waste time during this demo at all haha !!!!",
+                                        "(C'est marrant parce qu'en fait Louis fait perdre son temps a Louis, bref ...)"))
     }
 
     override def losingMessage : List[String] = {
