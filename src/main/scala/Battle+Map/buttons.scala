@@ -524,7 +524,7 @@ object SaveButton extends MapButton ("Buttons/RunButton.png") {
     }
 }
 
-object OptionsButton extends MapButton ("Buttons/RunButton.png") {
+object OptionsButton extends MapButton ("Buttons/IceButton.png") {
     x = 3
     y = 693
     visible = true
@@ -535,7 +535,7 @@ object OptionsButton extends MapButton ("Buttons/RunButton.png") {
     }
 }
 
-object TrainerButton extends MapButton ("Buttons/RunButton.png") {
+object TrainerButton extends MapButton ("Buttons/FireButton.png") {
     x = 311
     y = 693
     visible = true
