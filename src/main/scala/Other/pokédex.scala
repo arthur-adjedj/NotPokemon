@@ -179,7 +179,10 @@ class DrawPokedexPanel extends MyPanel {
     def moveList (i : Int) : Unit = {
         if (0 <= topIndexList + i && topIndexList + i + 9 < pokemonArray.size) {
             topIndexList += i
+        } else {
+            changeCurrentPokemonBrut(currentPokemonIndex + i)
         }
+
         if (currentPokemonIndex < topIndexList) {
             changeCurrentPokemon(0)
         } else if (currentPokemonIndex > topIndexList + 9) {
