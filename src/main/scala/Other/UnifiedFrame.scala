@@ -175,11 +175,13 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
                 yClick = e.getY
             }
         }
+        currentPane.onMousePressed(e)
     }
 
     def mouseReleased (e : MouseEvent) : Unit = {
         xClick = -1
         yClick = -1
+        currentPane.onMouseRealeased(e)
     }
 
     def mouseDragged (e : MouseEvent) : Unit = {
@@ -189,7 +191,9 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
             posX = (posX - movX).max(0).min(Toolkit.getDefaultToolkit.getScreenSize.getWidth.toInt-getWidth)
             posY = (posY - movY).max(0).min(Toolkit.getDefaultToolkit.getScreenSize.getHeight.toInt-getHeight)
             setLocation(posX, posY)
+
         }
+        currentPane.onMouseDragged(e)
     }
 
     def mouseMoved (e : MouseEvent) : Unit = {
@@ -208,6 +212,8 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
         eventCaught = false
         currentPane.xMouse = e.getX
         currentPane.yMouse = e.getY
+
+        currentPane.onMouseMoved(e)
     }
 
     def keyReleased (e : KeyEvent) : Unit = {}
@@ -275,5 +281,11 @@ class MyPanel extends JPanel with Repaintable {
     def onKeyPressed (e : KeyEvent) : Unit = {}
 
     def onMousePressed (e : MouseEvent) : Unit = {}
+
+    def onMouseRealeased (e : MouseEvent) : Unit = {}
+
+    def onMouseMoved (e : MouseEvent) : Unit = {}
+
+    def onMouseDragged (e : MouseEvent) : Unit = {}
 }
 

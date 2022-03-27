@@ -13,6 +13,11 @@ class DrawPokedexPanel extends MyPanel {
     var wasCaughtIcon = Utils.loadImage("/Pokedex/PokeCaught.png")
 
     var sliderBlock = Utils.loadImage("/Pokedex/SliderBlock.png")
+    var sliderX : Int = 562
+    var sliderY : Int = 112
+    var yClickOnSlider : Int = -1 // The y coordinate of our click on the slider; it's supposed to be constant in order to move it correctly
+
+
     var greyTopArrow = Utils.loadImage("/Pokedex/GreyTopArrow.png")
     var greyBotArrow = Utils.loadImage("/Pokedex/GreyBotArrow.png")
 
@@ -165,6 +170,7 @@ class DrawPokedexPanel extends MyPanel {
                 topIndexList = currentPokemonIndex - 9
             }
         }
+        sliderY = 112 + ((topIndexList.toFloat / pokemonArray.size.toFloat )*298).toInt
 
     }
 
@@ -179,6 +185,9 @@ class DrawPokedexPanel extends MyPanel {
         } else if (currentPokemonIndex > topIndexList + 9) {
             changeCurrentPokemon(9)
         }
+        sliderY = 112 + ((topIndexList.toFloat / pokemonArray.size.toFloat )*298).toInt
+        
+
     }
 
     //Draws the left list of pokémons
@@ -213,7 +222,7 @@ class DrawPokedexPanel extends MyPanel {
             g.drawImage(greyBotArrow, 562, 435, null)
         }
 
-        g.drawImage(sliderBlock, 562, 112 + ((topIndexList.toFloat / pokemonArray.size.toFloat )*298).toInt , null)
+        g.drawImage(sliderBlock, sliderX, sliderY, null)
 
     }
 
@@ -229,6 +238,25 @@ class DrawPokedexPanel extends MyPanel {
             case 's' => changeCurrentPokemonBrut(currentPokemonIndex + 1)
             case '5' => if (Utils.debug) discoverAll
             case _ => 
+        }
+    }
+
+    override def onMousePressed(e : MouseEvent) : Unit = {
+        if (e.getX >= sliderX && e.getX <= sliderX + 48 && e.getY >= sliderY && e.getY <= sliderY + 77) {
+            yClickOnSlider = e.getY - sliderY
+        }
+    }
+
+    override def onMouseRealeased(e : MouseEvent) : Unit = {
+        yClickOnSlider = -1
+    }
+
+    override def onMouseDragged(e : MouseEvent) : Unit = {
+        if (yClickOnSlider != -1) {
+            var newSliderY = e.getY - yClickOnSlider
+            var newTopIndex = (((newSliderY.toFloat-112)/298f) * pokemonArray.size).toInt
+            
+            moveList(newTopIndex - topIndexList)
         }
     }
 
