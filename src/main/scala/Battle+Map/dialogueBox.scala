@@ -29,10 +29,10 @@ object DiscussionLabel {
 
     def display (g : Graphics) : Unit = {
         if (visible) {
-            g.drawImage(textBarImg,0,287,null)
+            g.drawImage(textBarImg,0,285,null)
             g.setFont(font)
             g.drawString(text1, x, y)
-            g.drawString(text2, x, y+30)
+            g.drawString(text2, x, y+36)
         }
     }
 
