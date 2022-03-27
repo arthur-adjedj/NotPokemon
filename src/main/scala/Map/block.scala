@@ -29,7 +29,7 @@ abstract class Block (imageName_ : String) {
     def display (g : Graphics) : Unit = {
         var frame = Utils.frame
         // we only draw on the screen (if swing doesn't already handle it)
-        if (-frame.sizeBlock <= x && x <= frame.sizeX && -frame.sizeBlock <= y && y <= frame.sizeY) {
+        if (-frame.sizeBlock <= x && x <= frame.sizeX && -frame.sizeBlock <= y && y <= 400) {
             g.drawImage(img, x, y, null)
         }
     }
