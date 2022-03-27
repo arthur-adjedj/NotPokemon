@@ -240,7 +240,7 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
 
     def mouseWheelMoved (e : MouseWheelEvent) : Unit = {
         if (currentState == "Pokedex") {
-            pokedexPane.moveList(e.getWheelRotation)
+            pokedexPane.changeCurrentPokemonBrut(pokedexPane.currentPokemonIndex + e.getWheelRotation)
         }
     }
 }
