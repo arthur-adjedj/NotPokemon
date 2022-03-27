@@ -88,6 +88,7 @@ object Utils {
     }
 
     def loadImage (name : String) : BufferedImage = {
+        // we're doing some memoisation to avoid loading the same image twice
         var index = importedImagesString.indexOf(name)
     
         // if the image doesn't load, it returns a wrong image but doesn't crash

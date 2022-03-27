@@ -132,6 +132,7 @@ class DrawPanelBattle (p1 : Character, p2 : Character) extends MyPanel with Repa
 
     override def onKeyPressed (e : KeyEvent) : Unit = {
         e.getKeyChar.toLower match {
+            // for debugging
             case 's' => if (Utils.debug) Player.currentMonster.uiYShift += 1
             case 'z' => if (Utils.debug) Player.currentMonster.uiYShift -= 1
             case 'd' => if (Utils.debug) {

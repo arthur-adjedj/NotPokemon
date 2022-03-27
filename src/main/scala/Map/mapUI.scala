@@ -31,16 +31,15 @@ class DrawPanelMap extends MyPanel {
             case 's' => PlayerDisplayer.move(0, 1)
             case 'q' => PlayerDisplayer.move(-1, 0)
             case 'd' => PlayerDisplayer.move(1, 0)
+            case 'e' => PlayerDisplayer.interactExplicitly
+            case 'a' => PlayerDisplayer.changeCurrentItem
 
             case 'i' => SecondPlayerDisplayer.move(0, -1)
             case 'k' => SecondPlayerDisplayer.move(0, 1)
             case 'j' => SecondPlayerDisplayer.move(-1, 0)
             case 'l' => SecondPlayerDisplayer.move(1, 0)
-
-            case 'e' => PlayerDisplayer.interactExplicitly
             case 'o' => SecondPlayerDisplayer.interactExplicitly
 
-            case 'a' => PlayerDisplayer.changeCurrentItem
             case 'p' => Utils.frame.backToPokedex
             case 'n' => if (Utils.debug) PlayerDisplayer.noClip = !PlayerDisplayer.noClip
             case _ =>

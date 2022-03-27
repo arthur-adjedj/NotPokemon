@@ -158,6 +158,8 @@ abstract class Monster extends Object with ScoreForStrategy {
         var random = scala.util.Random.nextFloat()
         var thisAccuracyEff = this.accuracyBattle * calcModifier(this, "accuracy")
         var otherEvasionEff = other.evasionBattle * calcModifier(other, "evasion")
+        // these checks are done here because we are dealing with the pokemon's status
+        // doing this in Status would make us calling a 'canAttack' function. We decided to keep it here
         if (status.exists(x => x.name == "Freeze")) {
             DiscussionLabel.changeText(name + " cannot attack because he's frozen.")
         } else if (status.exists(x => x.name == "Sleep")) {

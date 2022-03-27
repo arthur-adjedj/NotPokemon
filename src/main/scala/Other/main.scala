@@ -21,10 +21,3 @@ object Debug {
     frame.initialiseMap 
   }
 }
-
-object Tests {
-  def main(argv : Array[String]) : Unit = {
-    Utils.debug = true
-    BattleTest.start
-  }
-}

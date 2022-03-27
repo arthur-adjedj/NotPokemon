@@ -59,7 +59,8 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
     def startBattle (p1 : Character, p2 : Character) : Unit = {
 
         DiscussionLabel.visible = true
-        p2.printEnteringBattleMessage
+        DiscussionLabel.changeText(p1.enteringBattleMessage)
+        DiscussionLabel.changeText(p2.enteringBattleMessage)
         Utils.waitDiscussionLabel
 
         currentState = "Battle"

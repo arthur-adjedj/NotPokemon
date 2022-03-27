@@ -11,7 +11,7 @@ abstract class Attack extends Object with ScoreForStrategy {
     }
     def nOfHits() : Int = 1 
     def cast(self : Monster,ennemy: Monster) : Unit = () // this function is called everytime an attack is casted
-    def handlesDamages (self : Monster, ennemy : Monster) : Int = { // if the function returns -1, the basic formula is used
+    def handlesDamages (self : Monster, ennemy : Monster) : Int = { // if the function returns -1, the basic formula is used, else it's direct damages
         if (power == 0) {
             0
         } else {
@@ -276,8 +276,6 @@ object SkullBash extends BuffAttack {
     power = 130
     override def toString : String = 
         "The user tucks in its head to raise its Defense, then rams the target."
-    override def cast(self: Monster, ennemy: Monster): Unit = 
-        self.defenseStage = (6).min(self.defenseStage+1)    
 }
 
 object VineWhip extends Attack {
@@ -289,12 +287,11 @@ object VineWhip extends Attack {
     attackType = Grass
 }
 
-object Growth extends Attack {
+object Growth extends BuffAttack {
+    stat = "attack"
     name = "Growth"
     override def toString : String = 
         "The user's body grows all at once, raising the Attack stats."
-    override def cast(self: Monster, ennemy: Monster): Unit = 
-        self.attackStage = (6).min(self.attackStage + 1)
 }
 
 object Scratch extends Attack {
@@ -312,10 +309,6 @@ object Ember extends StatusAttack {
     override def toString : String = 
         "The target is attacked with small flames."+
         " This may also leave the target with a burn."
-    override def cast(self: Monster, ennemy: Monster): Unit = {
-        DiscussionLabel.changeText(ennemy.name + " is now burned !")
-        ennemy.receiveStatus(new Burn)
-    }
 }
 
 object Flamethrower extends StatusAttack {
@@ -340,11 +333,4 @@ object Crunch extends DebuffAttack {
     override def toString : String = 
         "The user crunches up the target with sharp fangs."+
         " This may also lower the target's Defense stat."
-    override def cast(self: Monster, ennemy: Monster): Unit = {
-        var random = scala.util.Random.nextFloat()
-        if (random < 0.2f){
-            DiscussionLabel.changeText(ennemy.name + "'s defense is lowered.")
-            ennemy.defenseStage = (-6).max(ennemy.defenseStage-1)
-        }
-    }
 }
