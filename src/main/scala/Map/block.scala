@@ -14,6 +14,11 @@ abstract class Block (imageName_ : String) {
     var originalWalkable : Boolean = true
     var walkable : Boolean = true
     var slippery : Boolean = false
+    var stopsAnimation : Boolean = false
+
+    def changingDirecton (d : Direction) : Int = -1 // if it doesn't change the direction then -1 else the index of the direction on the sprite
+
+    def canBeWalked (c : CharacterDisplayer) : Boolean = walkable
 
     def initialise (iMap : Int, jMap : Int) : Unit = {
         walkable = originalWalkable
@@ -83,6 +88,23 @@ class GrassBlock extends Block ("Blocks/Grass.png") {
 
 class IceBlock extends Block ("Blocks/Ice.png") {
     slippery = true
+    stopsAnimation = true
+}
+
+class WaterBlock extends Block("Blocks/Water.png") {
+    stopsAnimation = true
+    override def canBeWalked (c : CharacterDisplayer) : Boolean = {
+        c.currentItem.name == "Surf"
+    }
+
+    override def changingDirecton (d : Direction) : Int = {
+        d match {
+            case Up => 1
+            case Down => 2
+            case Right => 3
+            case Left => 0
+        }
+    }
 }
 
 class HealBlock extends Block ("Blocks/Item.png") {
