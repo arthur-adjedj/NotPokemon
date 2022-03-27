@@ -11,7 +11,7 @@ object DiscussionLabel {
     var text2 : String = ""
     var charPerLine : Int = 27
     var x : Int = 0
-    var y : Int = 285
+    var y : Int = 286
 
     var visible = true
 

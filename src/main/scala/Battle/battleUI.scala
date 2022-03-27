@@ -113,8 +113,8 @@ class DrawPanelBattle (p1 : Character, p2 : Character) extends MyPanel with Repa
         super.paintComponent(g)
         
         g.setFont(poke_font)
-        g.drawImage(battleGroundImg, 0, 0, null)
         g.drawImage(battleBackgroundImg, 0, 285, null)
+        g.drawImage(battleGroundImg, 0, 0, null)
 
         PlayerMonsterDisplayer.update
         OpponentMonsterDisplayer.update
