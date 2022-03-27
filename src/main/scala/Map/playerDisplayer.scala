@@ -258,11 +258,18 @@ object PlayerDisplayer extends CharacterDisplayer ("Characters/MainCharacter.png
     whichMap = 1
     speed = 10
 
-    var topBox : Int = 120
-    var botBox : Int = 280
-    var leftBox : Int = 80
-    var rightBox : Int = 280
+    var topBox : Int = 0
+    var botBox : Int = 0
+    var leftBox : Int = 0
+    var rightBox : Int = 0
 
+    override def initialise : Unit = {
+        super.initialise
+        topBox = 3*mapDisplayer.sizeBlock
+        botBox = 240
+        leftBox = 4*mapDisplayer.sizeBlock
+        rightBox = Utils.frame.sizeX - leftBox - mapDisplayer.sizeBlock
+    }
     override def interactExplicitly : Unit = {
         var iInteracted : Int = i
         var jInteracted : Int = j
