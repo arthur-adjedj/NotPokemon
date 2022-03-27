@@ -10,6 +10,9 @@ object Utils {
 
     // some global variables
 
+    var importedImagesString : List[String] = List()
+    var importedImages : List[BufferedImage] = List()
+
     var characterDisplayers : List[CharacterDisplayer] = List()
     var repaintables : List[Repaintable] = List()
     var updatable : List[Updatable] = List()
@@ -29,7 +32,7 @@ object Utils {
     //map
     var showPokemonMapButtonList : List[PokemonMapButton] = (0 to 5).map(x => new PokemonMapButton(x)).toList
 
-    var mapMenuButtonList : List[MapButton] = List(ShowInventoryButton, ShowTeamButton, ShowPokedexButton, SaveButton)
+    var mapMenuButtonList : List[MapButton] = List(ShowInventoryButton, ShowTeamButton, ShowPokedexButton, SaveButton, TrainerButton, OptionsButton)
 
     var mapButtonList : List[MapButton] = List.concat(mapMenuButtonList, showPokemonMapButtonList)
 
@@ -84,18 +87,42 @@ object Utils {
     }
 
 
+    // def loadImage (name : String) : BufferedImage = {
+    //     // if the image doesn't load, it returns a wrong image but doesn't crash
+    //     // sometimes, it's the JVM's fault
+    //     try {
+    //         javax.imageio.ImageIO.read(getClass.getResource(name))
+    //     }
+    //     catch {
+    //         case _ : Throwable => {
+    //             Utils.print("Issues while importing " + name)
+    //             javax.imageio.ImageIO.read(getClass.getResource("Empty.png"))
+    //         }    
+    //     }
+    // }
+
     def loadImage (name : String) : BufferedImage = {
+        var index = importedImagesString.indexOf(name)
+    
         // if the image doesn't load, it returns a wrong image but doesn't crash
         // sometimes, it's the JVM's fault
-        try {
-            javax.imageio.ImageIO.read(getClass.getResource(name))
-        }
-        catch {
-            case _ : Throwable => {
-                Utils.print("Issues while importing " + name)
-                javax.imageio.ImageIO.read(getClass.getResource("Empty.png"))
-            }    
-        }
+        if (index == -1) {
+            index = 0
+            try {
+                importedImages = javax.imageio.ImageIO.read(getClass.getResource(name)) :: importedImages
+            }
+            catch {
+                case _ : Throwable => {
+                    Utils.print("Issues while importing " + name)
+                    importedImages = javax.imageio.ImageIO.read(getClass.getResource("Empty.png")) :: importedImages
+                }
+            }
+            importedImagesString = name :: importedImagesString
+
+
+        } 
+        importedImages(index)
+        
     }
 
     def findFirstOccurenceArray [T](array : Array[T], element : T) : Int = {
