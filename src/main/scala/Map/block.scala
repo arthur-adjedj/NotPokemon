@@ -60,19 +60,17 @@ class EmptyBlock extends Block ("Empty.png") {
 
 //renders a "base block" given a certain orientation with updown and leftright in {-1,0,1}
 class MultiBlock(updown : Int, leftright : Int, base : String) extends Block("Maps/Tile.png") {
-    var upDownStr : String = updown match {
-        case (-1) => "Bot"
-        case 1 => "Top"
-        case _ => ""
-    }
-    var leftRightStr : String = leftright match {
-        case (-1) => "Left"
-        case 1 => "Right"
-        case _ => ""
+    imgName = "Blocks/" + base + "Sprites.png"
+    img = Utils.loadImage(imgName)
+
+    override def display (g : Graphics) : Unit = {
+        var frame = Utils.frame
+        // we only draw on the screen (if swing doesn't already handle it)
+        //if (-frame.sizeBlock <= x && x <= frame.sizeX && -frame.sizeBlock <= y && y <= 400) {
+            g.drawImage(img, x, y, x+40, y+40, (leftright+1)*40, (1-updown)*40, (leftright+2)*40,(2-updown)*40, null)
+        //}
     }
 
-    imgName = "Blocks/" + base + upDownStr + leftRightStr + ".png"
-    img = Utils.loadImage(imgName)
 }
 
 class RockBlock extends Block("Blocks/Rock.png") {
@@ -100,7 +98,7 @@ class IceBlock extends Block ("Blocks/Ice.png") {
     stopsAnimation = true
 }
 
-class WaterBlock extends Block("Blocks/Water.png") {
+class MultiWater(updown : Int, leftright : Int) extends MultiBlock(updown, leftright, "Water") {
     stopsAnimation = true
     override def canBeWalked (c : CharacterDisplayer) : Boolean = {
         c.currentItem.name == "Surf"
