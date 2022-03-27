@@ -46,7 +46,7 @@ abstract class HpBar {
 
 
 object EnnemyBar{
-    var ennemyBarImg = Utils.loadImage("EnnemyBar.png")
+    var ennemyBarImg = Utils.loadImage("/Battle/EnnemyBar.png")
     var p2 : Character = EmptyCharacter
     object EnnemyHpBar extends HpBar {
         x = 112
@@ -63,7 +63,7 @@ object EnnemyBar{
 }
 
 object YourBar{
-    var yourBarImg = Utils.loadImage("YourBar.png")
+    var yourBarImg = Utils.loadImage("/Battle/YourBar.png")
     var p1 : Character = EmptyCharacter
 
     object YourHpBar extends HpBar {
@@ -99,7 +99,8 @@ object YourBar{
 }
 
 class DrawPanelBattle (p1 : Character, p2 : Character) extends MyPanel with Repaintable {
-    var battleBackgroundImg = Utils.loadImage("BattleBackground.png")
+    var battleGroundImg = Utils.loadImage("/Battle/BattleGround.png")
+    var battleBackgroundImg = Utils.loadImage("/Battle/BattleBackground.png")
     var pokemonFrontImg = Utils.loadImage("Monsters/EmptyFront.png")
     var pokemonBackImg = Utils.loadImage("Monsters/EmptyBack.png")
     var poke_font : Font = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("PokemonPixelFont.ttf"))
@@ -112,7 +113,8 @@ class DrawPanelBattle (p1 : Character, p2 : Character) extends MyPanel with Repa
         super.paintComponent(g)
         
         g.setFont(poke_font)
-        g.drawImage(battleBackgroundImg, 0, 0, null)
+        g.drawImage(battleGroundImg, 0, 0, null)
+        g.drawImage(battleBackgroundImg, 0, 285, null)
 
         PlayerMonsterDisplayer.update
         OpponentMonsterDisplayer.update
