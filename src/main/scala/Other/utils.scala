@@ -19,6 +19,7 @@ object Utils {
     var frame : UI = EmptyUI
 
     // we need to define those buttons here because we may need them in descriptables
+    // we will move them in part 3 using the companions
 
     //battle
     var castAttackButtonList : List[CastAttackButton] = (0 to 3).map(x => new CastAttackButton(x)).toList
@@ -86,21 +87,6 @@ object Utils {
         }
     }
 
-
-    // def loadImage (name : String) : BufferedImage = {
-    //     // if the image doesn't load, it returns a wrong image but doesn't crash
-    //     // sometimes, it's the JVM's fault
-    //     try {
-    //         javax.imageio.ImageIO.read(getClass.getResource(name))
-    //     }
-    //     catch {
-    //         case _ : Throwable => {
-    //             Utils.print("Issues while importing " + name)
-    //             javax.imageio.ImageIO.read(getClass.getResource("Empty.png"))
-    //         }    
-    //     }
-    // }
-
     def loadImage (name : String) : BufferedImage = {
         var index = importedImagesString.indexOf(name)
     
@@ -110,11 +96,12 @@ object Utils {
             index = 0
             try {
                 importedImages = javax.imageio.ImageIO.read(getClass.getResource(name)) :: importedImages
+                Utils.print("Success while importing " + name)
             }
             catch {
                 case _ : Throwable => {
-                    Utils.print("Issues while importing " + name)
                     importedImages = javax.imageio.ImageIO.read(getClass.getResource("Empty.png")) :: importedImages
+                    Utils.print("Issues while importing " + name)
                 }
             }
             importedImagesString = name :: importedImagesString
