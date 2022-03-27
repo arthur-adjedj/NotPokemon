@@ -179,7 +179,7 @@ class Squirtle extends Monster {
     baseXp = 63
 
     monsterType = Water
-    name = "Carapuuuce"
+    name = "Squirtle"
     originalName = "Squirtle"
 
     attacks(0) = Tackle
