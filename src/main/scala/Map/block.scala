@@ -66,9 +66,9 @@ class MultiBlock(updown : Int, leftright : Int, base : String) extends Block("Ma
     override def display (g : Graphics) : Unit = {
         var frame = Utils.frame
         // we only draw on the screen (if swing doesn't already handle it)
-        //if (-frame.sizeBlock <= x && x <= frame.sizeX && -frame.sizeBlock <= y && y <= 400) {
+        if (-frame.sizeBlock <= x && x <= frame.sizeX && -frame.sizeBlock <= y && y <= 400) {
             g.drawImage(img, x, y, x+40, y+40, (leftright+1)*40, (1-updown)*40, (leftright+2)*40,(2-updown)*40, null)
-        //}
+        }
     }
 
 }

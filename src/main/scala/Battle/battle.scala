@@ -34,7 +34,7 @@ class Battle (p1 : Character, p2 : Character) extends Thread {
             p2.newTurn
             var monsterP1 = p1.currentMonster
             var monsterP2 = p2.currentMonster
-            if (p1.playing && p2.playing) {
+            if (p1.playing && p2.playing) { // we check again because newTurn can change these values
                 
                 if (p1.currentAttack.priority > p2.currentAttack.priority || 
                     (p1.currentAttack.priority == p2.currentAttack.priority && p1.currentMonster.getSpeed >= p2.currentMonster.getSpeed)) {
@@ -55,7 +55,7 @@ class Battle (p1 : Character, p2 : Character) extends Thread {
             p2.currentAttack = EmptyAttack
         }
         Utils.waitDiscussionLabel(true)
-        Utils.frame.backToMap(loser.losingMessage)
+        Utils.frame.backToMap(List.concat(loser.losingMessage, winner.winningMessage))
         Utils.frame.battlePane.ready = false
         PlayerDisplayer.canInteract = true
     }

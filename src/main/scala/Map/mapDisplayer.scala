@@ -20,6 +20,9 @@ class MapDisplayer (frame : UI) {
 
     var menuBackground = Utils.loadImage("/Maps/MenuBackground.png")
 
+    def getWildMonster : Monster = new Rattata
+    def getWildLevel : Int = 1
+
 
 
     def initialise (sizeB : Int, i : Int = -1, j : Int = -1) : Unit = {
@@ -92,6 +95,21 @@ class MapDisplayer1 (frame : UI) extends MapDisplayer (frame : UI) {
         super.initialise(sizeB, i, j)
         SecondCharacterDisplayer.mapDisplayer = this
         SecondPlayerDisplayer.mapDisplayer = this
+    }
+
+    override def getWildMonster : Monster = {
+        var random = scala.util.Random.nextFloat
+        if (random < 0.5f) {
+            new Rattata
+        } else if (random < 0.75f) {
+            new Ponyta
+        } else {
+            new Eevee
+        }
+    }
+
+    override def getWildLevel : Int = {
+        scala.util.Random.nextInt(5) + 2
     }
 
 

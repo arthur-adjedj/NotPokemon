@@ -22,14 +22,6 @@ class Character {
     var playing : Boolean = false
     var runningAway : Boolean = false
 
-    def losingMessage : List[String] = {
-        if (!runningAway) {
-            List(name + " just lost !")
-        } else {
-            List("")
-        }
-    }
-
     def initialise : Unit = {}
 
 
@@ -131,8 +123,20 @@ class Character {
     }
 
 
-    def printEnteringBattleMessage : Unit = {
-        DiscussionLabel.changeText(name + " is entering the battle !")
+    def enteringBattleMessage : List[String] = {
+        List(name + " is entering the battle !")
+    }
+
+    def losingMessage : List[String] = {
+        if (!runningAway) {
+            List(name + " just lost !")
+        } else {
+            List()
+        }
+    }
+
+    def winningMessage : List[String] = {
+        List(name + " just won !")
     }
 
     def win : Unit = {
@@ -157,6 +161,13 @@ abstract class WildOpponent extends Opponent {
     name = "Wild"
     var isCaptured : Boolean = false
 
+    override def initialise : Unit = {
+        super.initialise
+        team(0) = Utils.frame.mapPane.mapDisplayer.getWildMonster
+        team(0).owner = this
+        team(0).gainLvl(Utils.frame.mapPane.mapDisplayer.getWildLevel - 1, false)
+    }
+
     override def enterBattle : Unit = {
         isCaptured = false
         super.enterBattle
@@ -175,8 +186,8 @@ abstract class WildOpponent extends Opponent {
         }
     }
 
-    override def printEnteringBattleMessage : Unit = {
-        DiscussionLabel.changeText("A wild " + team(0).name + " appears !")
+    override def enteringBattleMessage : List[String] = {
+        List("A wild " + team(0).name + " appears !")
     }
 
 }
@@ -295,6 +306,10 @@ object Player extends Character {
         inventory = inventory.map(x => if (x.amount == 0) EmptyItem else x).sortWith((x, y) => x.order <= y.order)
         usableInventory = inventory.map(x => if (x.amount == 0 || !x.usable) EmptyItem else x).sortWith((x, y) => x.order <= y.order)
     }
+
+    override def enteringBattleMessage : List[String] = List()
+    override def losingMessage : List[String] = List()
+    override def winningMessage : List[String] = List()
 
     
 }
