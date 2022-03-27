@@ -18,6 +18,8 @@ class MapDisplayer (frame : UI) {
     var imgName : String = "Maps/1.png"
     var img = Utils.loadImage(imgName)
 
+    var menuBackground = Utils.loadImage("/Maps/MenuBackground.png")
+
 
 
     def initialise (sizeB : Int, i : Int = -1, j : Int = -1) : Unit = {
@@ -71,6 +73,7 @@ class MapDisplayer (frame : UI) {
         //sorts the character rendering order in respect to their depth on screen
         Utils.characterDisplayers = Utils.characterDisplayers.sortWith((p1,p2) => p1.j < p2.j)
         Utils.characterDisplayers.foreach(p => p.display(g, x, y, n))
+        g.drawImage(menuBackground, 0, 400, null)
     }
 
 
