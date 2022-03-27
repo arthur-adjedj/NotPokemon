@@ -169,9 +169,19 @@ class MapDisplayer2(frame : UI) extends MapDisplayer(frame : UI) {
 
     grid(5)(2) = List(new MapItemBlock(new Surf))
 
-    for (i <- 5 to 10) {
-        for (j <- 5 to 10) {
-            grid(i)(j) = List(new WaterBlock)
+    for (i <- 7 to 13) {
+        for (j <- 7 to 13) {
+            grid(i)(j) = List(new MultiWater(0,0))
         }
     }
+    for (i <- 7 to 13) {
+        grid(i)(6) =  List(new MultiWater(1, 0))
+        grid(i)(14) = List(new MultiWater(-1,0))
+        grid(6)(i) =  List(new MultiWater(0,-1))
+        grid(14)(i) = List(new MultiWater(0, 1))
+    }
+    grid(6)(6) =   List(new MultiWater(1,-1))
+    grid(14)(14) = List(new MultiWater(-1,1))
+    grid(14)(6) =  List(new MultiWater(1,1))
+    grid(6)(14) =  List(new MultiWater(-1,-1))
 }
