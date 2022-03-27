@@ -15,7 +15,7 @@ object DiscussionLabel {
 
     var visible = true
 
-    var textBarImg = Utils.loadImage("TextBar.png")
+    var dialogueBoxImg = Utils.loadImage("DialogueBox.png")
     
     var font : Font = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("PokemonPixelFont.ttf"))
     font = font.deriveFont(Font.PLAIN,40)
@@ -29,7 +29,7 @@ object DiscussionLabel {
 
     def display (g : Graphics) : Unit = {
         if (visible) {
-            g.drawImage(textBarImg, x, y, null)
+            g.drawImage(dialogueBoxImg, x, y, null)
             g.setFont(font)
             g.drawString(text1, x + 40, y + 45)
             g.drawString(text2, x + 40, y + 81 ) // 45 + 36 = 81
