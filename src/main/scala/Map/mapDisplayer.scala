@@ -118,6 +118,9 @@ class MapDisplayer1 (frame : UI) extends MapDisplayer (frame : UI) {
             grid(i)(j) = List(new IceBlock)
         }
     }
+    grid(10)(11) = List(new EmptyBlock)
+    grid(10)(10) = List(new EmptyBlock)
+
     for (i <- 7 to 13) {
         grid(i)(6) = List(new IceBlock,new MultiCliff(1, 0))
         grid(i)(14) = List(new IceBlock,new MultiCliff(-1, 0))

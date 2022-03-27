@@ -22,6 +22,14 @@ class Character {
     var playing : Boolean = false
     var runningAway : Boolean = false
 
+    def losingMessage : List[String] = {
+        if (!runningAway) {
+            List(name + " just lost !")
+        } else {
+            List("")
+        }
+    }
+
     def initialise : Unit = {}
 
 
@@ -113,10 +121,8 @@ class Character {
     def changeMonster (b : Boolean) : Unit = {}
 
     def lose : Unit = {
+        battle.loser = this
         if (playing) {
-            if (!runningAway) {
-                printLosingMessage
-            }
             opponent.win
             playing = false
             opponent.playing = false
@@ -124,12 +130,13 @@ class Character {
         }
     }
 
-    def printLosingMessage : Unit = {
-        DiscussionLabel.changeText(name + " just lost.")
+
+    def printEnteringBattleMessage : Unit = {
+        DiscussionLabel.changeText(name + " is entering the battle !")
     }
 
     def win : Unit = {
-
+        battle.winner = this
     }
 }
 
@@ -163,13 +170,11 @@ abstract class WildOpponent extends Opponent {
 
     def lose (captured : Boolean) : Unit = {
         if (playing) {
-            if (!captured) {
-                DiscussionLabel.changeText(currentMonster.name + " just lost.")
-            }
             opponent.win
             playing = false
             opponent.playing = false
             Player.endTurn
+            battle.loser = this
         }
         
     }
@@ -204,6 +209,10 @@ object Player extends Character {
     team(4) = new Rattata
     team(4).gainLvl(5,false)
     team(4).owner = this
+
+    if (Utils.debug) {
+        team(0).gainLvl(50, false)
+    }
 
     gainItem(FreshWater, 5)
     gainItem(MonsterBall, 10)

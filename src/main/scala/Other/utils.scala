@@ -92,7 +92,7 @@ object Utils {
         }
         catch {
             case _ : Throwable => {
-                //Utils.print("Issues while importing " + name)
+                Utils.print("Issues while importing " + name)
                 javax.imageio.ImageIO.read(getClass.getResource("Empty.png"))
             }    
         }
@@ -160,6 +160,15 @@ object Utils {
             (0, 0)
         }
 
+    }
+
+    def oppositeDirection (direction : Direction) : Direction = {
+        direction match {
+            case Up => Down
+            case Down => Up
+            case Right => Left
+            case Left => Right
+        }
     }
 }
 
