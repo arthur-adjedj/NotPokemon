@@ -11,8 +11,8 @@ object SecondCharacter extends Opponent {
         PlayerDisplayer.mapDisplayer.update
     }
 
-    override def printLosingMessage : Unit = {
-        DiscussionLabel.changeText(List("How did you beat me ?", "Anyway ! I'm opening the door so you can exit the maze !", "Do not thank me for that !"))
+    override def losingMessage : List[String] = {
+        List("How did you beat me ?", "Anyway ! I'm opening the door so you can exit the maze !", "Do not thank me for that !")
     }
 }
 
@@ -27,6 +27,10 @@ object ThirdCharacter extends Opponent {
 
     strat = Utils.controlStrat
     name = "Opponent"
+
+    override def losingMessage : List[String] = {
+        List("How did you beat me ?", "Anyway ! I'm opening the door so you can exit the maze !", "Do not thank me for that !")
+    }
 }
 
 object WildCharacter extends WildOpponent {

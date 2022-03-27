@@ -57,12 +57,14 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
     }
 
     def startBattle (p1 : Character, p2 : Character) : Unit = {
-        currentState = "Battle"
+
         DiscussionLabel.visible = true
+        p2.printEnteringBattleMessage
+        Utils.waitDiscussionLabel
+
+        currentState = "Battle"
 
         var b = new Battle(p1, p2)
-        YourBar.p1 = p1
-        EnnemyBar.p2 = p2
         battlePane = new DrawPanelBattle(p1, p2)
         currentPane = battlePane.asInstanceOf[MyPanel]
         currentPane.initialise
@@ -112,6 +114,16 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
             currentPane = mapPane.asInstanceOf[MyPanel]
             setContentPane(currentPane)
         }
+    }
+
+    def backToMap (s : String) : Unit = {
+        backToMap
+        DiscussionLabel.changeText(s)
+    }
+
+    def backToMap (s : List[String]) : Unit = {
+        backToMap
+        DiscussionLabel.changeText(s)
     }
 
     def initialisePokedex : Unit = {
