@@ -53,6 +53,11 @@ abstract class Block (imageName_ : String) {
 
 
 }
+
+class EmptyBlock extends Block ("Empty.png") {
+    override def display (g : Graphics) : Unit = {}
+}
+
 //renders a "base block" given a certain orientation with updown and leftright in {-1,0,1}
 class MultiBlock(updown : Int, leftright : Int, base : String) extends Block("Maps/Tile.png") {
     var upDownStr : String = updown match {
@@ -118,10 +123,6 @@ class HealBlock extends Block ("Blocks/Item.png") {
         c.player.team.foreach(x => x.heal(x.hpMax))
     }
 
-}
-
-class EmptyBlock extends Block ("Empty.png") {
-    override def display (g : Graphics) : Unit = {}
 }
 
 class Door (idKey_ : Int) extends Block ("Blocks/ClosedDoor.png") {
