@@ -524,6 +524,29 @@ object SaveButton extends MapButton ("Buttons/RunButton.png") {
     }
 }
 
+object OptionsButton extends MapButton ("Buttons/RunButton.png") {
+    x = 3
+    y = 693
+    visible = true
+    text = "Options"
+
+    override def isClicked : Unit = {
+        DiscussionLabel.changeText("This functionnality is not implemented yet !")
+    }
+}
+
+object TrainerButton extends MapButton ("Buttons/RunButton.png") {
+    x = 311
+    y = 693
+    visible = true
+    text = Player.name
+
+    override def isClicked : Unit = {
+        DiscussionLabel.changeText("This functionnality is not implemented yet !")
+    }
+}
+
+
 class PokemonMapButton (n_ : Int) extends MapButton ("Buttons/EmptyButton.png") {
     var n : Int = n_
     x = 3 + 308*(n%2)

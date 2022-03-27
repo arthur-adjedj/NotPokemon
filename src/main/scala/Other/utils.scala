@@ -29,7 +29,7 @@ object Utils {
     //map
     var showPokemonMapButtonList : List[PokemonMapButton] = (0 to 5).map(x => new PokemonMapButton(x)).toList
 
-    var mapMenuButtonList : List[MapButton] = List(ShowInventoryButton, ShowTeamButton, ShowPokedexButton, SaveButton)
+    var mapMenuButtonList : List[MapButton] = List(ShowInventoryButton, ShowTeamButton, ShowPokedexButton, SaveButton, TrainerButton, OptionsButton)
 
     var mapButtonList : List[MapButton] = List.concat(mapMenuButtonList, showPokemonMapButtonList)
 
