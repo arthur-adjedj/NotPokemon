@@ -128,6 +128,7 @@ class CharacterDisplayer (imgName : String) extends Object with Updatable {
         var xshift = x + (Utils.frame.sizeBlock - width)/2 - xMap
         var yshift = y + (Utils.frame.sizeBlock - height) - yMap
         if (-frame.sizeBlock <= xshift && xshift <= frame.sizeX && -frame.sizeBlock <= yshift && yshift <= 400) {
+            currentItem.display(g, xshift, yshift, this)
             g.drawImage(img,
                 xshift, yshift, /*upper left corner coords on the map*/
                 xshift + width, yshift +  height, /*lower right corner*/
