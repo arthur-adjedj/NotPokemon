@@ -296,7 +296,7 @@ object PlayerDisplayer extends CharacterDisplayer ("Characters/MainCharacter.png
 
 }
 
-object SecondPlayerDisplayer extends OpponentDisplayer ("Characters/MainCharacter.png") {
+object SecondPlayerDisplayer extends OpponentDisplayer ("Characters/FemaleCharacter.png") {
 
     direction = Left
     
