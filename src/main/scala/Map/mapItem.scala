@@ -1,4 +1,5 @@
 //These items are unique, you cannot stack them
+import java.awt.Graphics
 
 abstract class MapItem {
     var id : Int = -1
@@ -10,6 +11,7 @@ abstract class MapItem {
     def imgName : String = "Items/" + name + ".png"
     def onSelect (p : CharacterDisplayer) : Unit = {}
     def onUnselect (p : CharacterDisplayer) : Unit = {}
+    def display (g : Graphics, x : Int, y : Int, c : CharacterDisplayer) : Unit = {}
 }
 
 class Key (id_ : Int) extends MapItem {
@@ -31,6 +33,13 @@ class Bike extends MapItem {
 
 class Surf extends MapItem {
     name = "Surf"
+    def imgName (direction: Direction) : String = {
+        "Items/Surfboard" + Utils.directionToString(direction) + ".png"
+    }
+
+    override def display (g : Graphics, x : Int, y : Int, c : CharacterDisplayer) : Unit = {
+        g.drawImage(Utils.loadImage(imgName(c.direction)), x+10, y+20, null)
+    }
 }
 
 object EmptyMapItem extends MapItem {

@@ -197,6 +197,15 @@ object Utils {
             case Left => Right
         }
     }
+
+    def directionToString (direction : Direction) : String = {
+        direction match {
+            case Up => "Up"
+            case Down => "Down"
+            case Right => "Right"
+            case Left => "Left"
+        }
+    }
 }
 
 trait Repaintable {
