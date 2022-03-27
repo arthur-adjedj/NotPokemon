@@ -48,6 +48,25 @@ object Utils {
 
     var debug = false
 
+    //BufferedImages of each type. Since these are drawn in multiple contexts, these are loaded at all times.
+    var typeIcons : List[BufferedImage] = List(loadImage("/TypeIcons/NormalIcon.png"),
+                                               loadImage("/TypeIcons/FireIcon.png"),
+                                               loadImage("/TypeIcons/WaterIcon.png"),
+                                               loadImage("/TypeIcons/GrassIcon.png"),
+                                               loadImage("/TypeIcons/ElectricIcon.png"),
+                                               loadImage("/TypeIcons/IceIcon.png"))
+    
+    def typeIconNumber(x : Type) : Int = {x match {
+        case Normal => 0
+        case Fire => 1
+        case Water => 2
+        case Grass => 3
+        case Electric => 4
+        case Ice => 5
+        }
+    }
+
+
     // some strategies
     var aggroStrat = Strategy(1, 0, 0, 0, 0)
     var tempoStrat = Strategy(1, 1, 1, 0, 0)
