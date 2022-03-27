@@ -34,7 +34,7 @@ object WildCharacter extends WildOpponent {
     team(0).owner = this
     team(0).gainLvl(4,false)
 
-    def initialise : Unit = {
+    override def initialise : Unit = {
         team(0) = new Rattata
         team(0).owner = this
         team(0).gainLvl(4,false)

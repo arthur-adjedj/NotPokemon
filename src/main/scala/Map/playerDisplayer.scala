@@ -64,6 +64,7 @@ class CharacterDisplayer (imgName : String) extends Object with Updatable {
 
     def initialise : Unit = {
         //mapDisplayer = Utils.frame.mapDisplayer
+        player.initialise
         mapDisplayer.grid(i)(j) foreach (b => b.walkable = false)
         alignCoordinates
     }

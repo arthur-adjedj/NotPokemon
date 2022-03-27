@@ -22,6 +22,8 @@ class Character {
     var playing : Boolean = false
     var runningAway : Boolean = false
 
+    def initialise : Unit = {}
+
 
     def enterBattle : Unit = {
         playing = true
@@ -216,6 +218,10 @@ object Player extends Character {
     var hisTurn : Boolean = false // used for looping and waiting for the action of the player
     var usableInventory : Array[Item] = Array.fill(40){EmptyItem} // the inventory that is displayed
 
+    override def initialise : Unit = {
+        team.foreach(y => (Utils.frame.pokedexPane.pokemonArray.foreach(x => if (x.originalName == y.originalName && y.owner == Player) x.wasSeen = true)))
+        team.foreach(y => (Utils.frame.pokedexPane.pokemonArray.foreach(x => if (x.originalName == y.originalName && y.owner == Player) x.wasCaught = true)))
+    }
     override def changeMonster : Unit = {
         if (team.forall(x => !x.alive || x.name == "Empty")) {
             lose
