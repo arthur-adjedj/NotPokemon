@@ -1,3 +1,7 @@
+// If you're about to review our code, you can skip this file
+// Every pokémon has the same code, the only change are some constants
+
+
 class Pikachu extends Monster {
     height = "0.4 m"
     weight = "6.0 kg"
