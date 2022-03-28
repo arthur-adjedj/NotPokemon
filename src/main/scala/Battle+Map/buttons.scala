@@ -500,6 +500,10 @@ object ShowInventoryButton extends MapButton ("Buttons/BagButton.png") {
     y = 405
     visible = true
     text = "Bag"
+
+    override def isClicked : Unit = {
+        DiscussionLabel.changeText("This functionnality is not implemented yet !")
+    }
 }
 
 object ShowPokedexButton extends MapButton ("Buttons/AttackButton.png") {
