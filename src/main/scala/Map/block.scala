@@ -175,7 +175,7 @@ class MapItemBlock (item_ : MapItem) extends Block ("Blocks/Item.png") {
 }
 
 
-class Portal (n_ : Int) extends Block ("Empty.png") {
+class Portal (n_ : Int) extends Block ("/Blocks/Portal.png") {
     var n = n_
     originalWalkable = false
 
