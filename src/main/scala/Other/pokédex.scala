@@ -190,8 +190,8 @@ class DrawPokedexPanel extends MyPanel {
         var yshift : Int = 38 //vertical shift between each line
         for (i <- 0 to 9) {
             if (topIndexList + i < pokemonArray.size) {
-                var text = nbToDisplay(topIndexList + i + 1) + " " + (
-                    if (! pokemonArray(topIndexList + i).wasSeen) "----------"
+                var text1 = nbToDisplay(topIndexList + i + 1) + " "
+                var text2 = (if (! pokemonArray(topIndexList + i).wasSeen) "----------"
                     else pokemonArray(topIndexList + i).name
                     )
                 if(pokemonArray(topIndexList + i).wasCaught){
@@ -200,7 +200,8 @@ class DrawPokedexPanel extends MyPanel {
                     g.drawImage(wasSeenIcon, 280, 89+i*yshift,null)
                 }
                 
-                g.drawString(text,328,115 + i*yshift)
+                g.drawString(text1,328,115 + i*yshift)
+                g.drawString(text2,328 + g.getFontMetrics.stringWidth(nbToDisplay(0) + " "), 115 + i*yshift)
             }
         }
         g.drawImage(selectionLayer, 269, 82+(currentPokemonIndex - topIndexList)*yshift, null)
