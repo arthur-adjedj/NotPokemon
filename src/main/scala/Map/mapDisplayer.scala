@@ -180,10 +180,11 @@ class MapDisplayer1 (frame : UI) extends MapDisplayer (frame : UI) {
 
 class MapDisplayer2(frame : UI) extends MapDisplayer(frame : UI) {
     n = 2
-    iStart = 0
-    jStart = 0
+    iStart = 3
+    jStart = 3
 
     grid(3)(3) = List(new Portal(1))
+    grid(17)(17) = List(new TargetedPortal(1, 17, 17))
 
     grid(5)(2) = List(new MapItemBlock(new Surf))
 

@@ -100,9 +100,11 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
         Utils.characterDisplayers.foreach(x => x.initialise)
     }
 
-    def changeMap (map : MapDisplayer) : Unit = {
+    def changeMap (map : MapDisplayer) : Unit = changeMap(map, -1, -1)
+
+    def changeMap (map : MapDisplayer, i : Int, j : Int) : Unit = {
         mapDisplayer = map
-        initialiseMap
+        initialiseMap(i, j)
     }
 
     def backToMap : Unit = {

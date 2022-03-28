@@ -176,12 +176,14 @@ class MapItemBlock (item_ : MapItem) extends Block ("Blocks/Item.png") {
 
 
 class Portal (n_ : Int) extends Block ("Empty.png") {
+    var iTarget : Int = -1
+    var jTarget : Int = -1
     var n = n_
     originalWalkable = true
 
     override def onWalk (c : CharacterDisplayer) : Unit = {
         if (Utils.mapDisplayers(n-1) != EmptyMapDisplayer) {
-            Utils.frame.changeMap(Utils.mapDisplayers(n-1))
+            Utils.frame.changeMap(Utils.mapDisplayers(n-1), iTarget, jTarget)
         } else {
             Utils.mapDisplayers(n-1) = n match {
                 case 1 => new MapDisplayer1(Utils.frame)
@@ -190,4 +192,9 @@ class Portal (n_ : Int) extends Block ("Empty.png") {
             onWalk(c)
        }
     }
+}
+
+class TargetedPortal (n_ : Int, iTarget_ : Int, jTarget_ : Int) extends Portal (n_) {
+    iTarget = iTarget_
+    jTarget = jTarget_
 }
