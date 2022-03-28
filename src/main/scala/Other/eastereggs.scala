@@ -11,19 +11,19 @@ object EasterEgg1 extends EasterEgg {
     override def run : Unit = {
         for (i <- 0 until messages.size - 3) {
             TimeUnit.SECONDS.sleep(secondsToSleep)
-            if (PlayerDisplayer.traveledDistance == 0) {
+            if (!PlayerDisplayer.hasDoneSomething) {
                 DiscussionLabel.changeText(messages(i))
             }
         }
         for (i <- messages.size - 3 until messages.size) {
             TimeUnit.SECONDS.sleep(secondsToSleep)
-            if (PlayerDisplayer.traveledDistance == 0) {
+            if (!PlayerDisplayer.hasDoneSomething) {
                 DiscussionLabel.changeText(messages(i))
                 PlayerDisplayer.player.team.foreach(x => x.gainLvl(5, false))
             }
         }
-        if (PlayerDisplayer.traveledDistance == 0) {
-            TimeUnit.SECONDS.sleep(2*secondsToSleep)
+        TimeUnit.SECONDS.sleep(2*secondsToSleep)
+        if (!PlayerDisplayer.hasDoneSomething) {
             DiscussionLabel.changeText("You are so patient ! I'm offering you a pokemon ! Will you accept it ?")
             Utils.askChoice("Yes No")
             Utils.waitForBooleanFunction(x => Utils.choiceDone != -1)

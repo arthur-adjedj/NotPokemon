@@ -166,6 +166,7 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
     }
 
     def mouseClicked (e : MouseEvent) : Unit = {
+        PlayerDisplayer.hasDoneSomething = true
         if (!DiscussionLabel.changingText && DiscussionLabel.messageQueue.isEmpty) {
             if (Player.hisTurn || Utils.frame.currentState != "Battle") {
                 var clickCaught : Boolean = false
@@ -185,6 +186,7 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
     def mouseEntered (e : MouseEvent) : Unit = {}
     def mouseExited (e : MouseEvent) : Unit = {}
     def mousePressed (e : MouseEvent) : Unit = {
+        PlayerDisplayer.hasDoneSomething = true
         if (xClick == -1 && yClick == -1) {
             if (e.getY >= 0 && e.getY < 20 && e.getX >= 0 && e.getX <= getWidth) {
                 xClick = e.getX
@@ -235,6 +237,7 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
     def keyReleased (e : KeyEvent) : Unit = {}
 
     def keyPressed (e : KeyEvent) : Unit = {
+        PlayerDisplayer.hasDoneSomething = true
         if (listeningToKeyboard) {
             if (!DiscussionLabel.changingText && DiscussionLabel.messageQueue.isEmpty) {
                 e.getKeyChar.toLower match {

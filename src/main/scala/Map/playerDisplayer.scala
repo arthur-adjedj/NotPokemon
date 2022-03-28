@@ -65,6 +65,7 @@ class CharacterDisplayer (imgName : String) extends Object with Updatable {
     // some stats
     var traveledDistance : Int = 0
     var portalsCrossed : Int = 0
+    var hasDoneSomething : Boolean = false
 
     Utils.characterDisplayers = this :: Utils.characterDisplayers
 
