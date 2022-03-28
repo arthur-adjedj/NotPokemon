@@ -177,9 +177,9 @@ class MapItemBlock (item_ : MapItem) extends Block ("Blocks/Item.png") {
 
 class Portal (n_ : Int) extends Block ("Empty.png") {
     var n = n_
-    originalWalkable = false
+    originalWalkable = true
 
-    override def interact (c : CharacterDisplayer) : Unit = {
+    override def onWalk (c : CharacterDisplayer) : Unit = {
         if (Utils.mapDisplayers(n-1) != EmptyMapDisplayer) {
             Utils.frame.changeMap(Utils.mapDisplayers(n-1))
         } else {
@@ -187,7 +187,7 @@ class Portal (n_ : Int) extends Block ("Empty.png") {
                 case 1 => new MapDisplayer1(Utils.frame)
                 case 2 => new MapDisplayer2(Utils.frame)
             } 
-            interact(c)
+            onWalk(c)
        }
     }
 }
