@@ -129,8 +129,8 @@ class DrawPokedexPanel extends MyPanel {
         g.drawString(name,40 + (200 - metrics.stringWidth(name)) / 2 , 113) // the name is horizontally centered inside the box
 
         //as well as his height/weight 
-        g.drawString(characteristics(0),40,422)
-        g.drawString(characteristics(1),40,454)
+        g.drawString(characteristics(0),35,422)
+        g.drawString(characteristics(1),35,454)
 
         //draws the pokémon description
         var shift : Int = 75
