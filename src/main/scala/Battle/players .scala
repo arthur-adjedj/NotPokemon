@@ -14,6 +14,10 @@ object SecondCharacter extends Opponent {
     override def enteringBattleMessage : List[String] = {
         List("I'll show you the true power of my pokemons !")
     }
+    
+    override def losingMessage : List[String] = {
+        List("How did you beat me ?", "Anyway ! I'm opening the door so you can exit the maze !", "Do not thank me for that !")
+    }
 
 }
 
@@ -34,9 +38,7 @@ object ThirdCharacter extends Opponent {
                                         "(C'est marrant parce qu'en fait Louis fait perdre son temps a Louis, bref ...)")
     }
 
-    override def losingMessage : List[String] = {
-        List("How did you beat me ?", "Anyway ! I'm opening the door so you can exit the maze !", "Do not thank me for that !")
-    }
+    
 }
 
 object WildCharacter extends WildOpponent {
