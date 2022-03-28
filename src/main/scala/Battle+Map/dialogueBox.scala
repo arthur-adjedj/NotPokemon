@@ -79,7 +79,7 @@ class TextChanger (liString_ : List[String]) extends Thread {
         if (!DiscussionLabel.messageQueue.isEmpty) {
             DiscussionLabel.changeText(DiscussionLabel.messageQueue.dequeue)
         } else {
-            DiscussionLabel.visible = Utils.frame.currentState == "Battle"
+            DiscussionLabel.visible = List("Battle", "Choice").contains(Utils.frame.currentState)
         }
     }
 
@@ -91,7 +91,7 @@ class TextChanger (liString_ : List[String]) extends Thread {
                 } else {
                     DiscussionLabel.text2 += liString(n)(i)
                 }
-                if (List('.','!').contains(liString(n)(i))) TimeUnit.MILLISECONDS.sleep(pauseTime)
+                if (List('.','!', '?').contains(liString(n)(i))) TimeUnit.MILLISECONDS.sleep(pauseTime)
                 else TimeUnit.MILLISECONDS.sleep(waitTime)
             }
         } else {
@@ -100,7 +100,7 @@ class TextChanger (liString_ : List[String]) extends Thread {
             for (i <- liString(n).indices) {
                 DiscussionLabel.text2 += liString(n)(i)
 
-                if (List('.','!').contains(liString(n)(i))) TimeUnit.MILLISECONDS.sleep(pauseTime)
+                if (List('.','!', '?').contains(liString(n)(i))) TimeUnit.MILLISECONDS.sleep(pauseTime)
                 else TimeUnit.MILLISECONDS.sleep(waitTime)
 
             }

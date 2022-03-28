@@ -97,6 +97,33 @@ abstract class MapButton (imageName_ : String) extends MyButton(imageName_) {
     }
 }
 
+class ChoiceButton (n_ : Int) extends MyButton("Buttons/EmptyButton.png") {
+    context = "Choice"
+    var n : Int = n_
+    x = 3 + 308*(n%2)
+    y = 405 + 144*(n/2)
+
+    override def isClicked : Unit = {
+        Utils.makeChoice(n)
+    }
+
+    override def update : Unit = {
+        Utils.choiceType match {
+            case "Pokemon" => {visible = true; clickable = PlayerDisplayer.player.team(n).name != "Empty"; text = PlayerDisplayer.player.team(n).name;
+                               imageName = PlayerDisplayer.player.team(n).monsterType.imageButtonName}
+            case "Pokemon Slot" => {visible = true; clickable = true; text = PlayerDisplayer.player.team(n).name;
+                               imageName = PlayerDisplayer.player.team(n).monsterType.imageButtonName}
+            case "Yes No" => if (n == 0) {visible = true; clickable = true; text = "No"; imageName = "Buttons/AttackButton.png"} 
+                             else if (n == 1) {visible = true; clickable = true; text = "Yes"; imageName = "Buttons/GrassButton.png"}
+                             else {visible = false; clickable = false}
+            case _ => {visible = false; clickable = false} 
+        }
+        image = Utils.loadImage(imageName)
+        
+    }
+
+}
+
 object CloseButton extends MyButton ("Buttons/Close.png") {
     context = "All"
     x = 594
@@ -547,6 +574,7 @@ object TrainerButton extends MapButton ("Buttons/FireButton.png") {
 
     override def isClicked : Unit = {
         DiscussionLabel.changeText("This functionnality is not implemented yet !")
+        Utils.askChoice("Pokemon")
     }
 }
 

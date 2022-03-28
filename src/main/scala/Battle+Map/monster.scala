@@ -373,6 +373,8 @@ abstract class Monster extends Object with ScoreForStrategy {
         }
     }
 
+    def gainLvl (n : Int) : Unit = gainLvl(n, false)
+
     def talk : Boolean = {
         if (alive) {
             DiscussionLabel.changeText("(" + name + ") : I'm ready for the battle !")
@@ -394,6 +396,7 @@ object EmptyMonster extends Monster {
     name = "Empty"
     originalName = "Empty"
     alive = false
+    monsterType = EmptyType
 
     override def talk : Boolean = false
 }

@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage
 import java.util.concurrent.TimeUnit
 
 import java.lang.Math
+import java.sql.Time
 
 object Utils {
 
@@ -43,14 +44,28 @@ object Utils {
     var moveListPokedexButtonList : List[MoveListPokedexButton] = List(new MoveListPokedexButton(-1), new MoveListPokedexButton(1))
     var pokedexButtonList : List[PokedexButton] = List.concat(choosePokemonPokedexButtonList, moveListPokedexButtonList)
 
+    //all contexts
+    var choiceButtonList : List[ChoiceButton] = (0 to 5).map(x => new ChoiceButton(x)).toList
+    var otherButtonsList : List[MyButton] = List.concat(List(CloseButton, HelpButton), choiceButtonList)
+
     // cannot create the list and adding buttons during their creation because of a weird behaviour with 'object'
-    var buttonList : List[MyButton] = List.concat(List(CloseButton, HelpButton), battleButtonList, pokedexButtonList, mapButtonList)
+
+    var buttonList : List[MyButton] = List.concat(otherButtonsList, battleButtonList, pokedexButtonList, mapButtonList)
+
+
 
     var descriptables : List[Descriptable] = List.concat(List(PlayerMonsterDisplayer, OpponentMonsterDisplayer), buttonList)
 
     var mapDisplayers : Array[MapDisplayer] = Array.fill(2){EmptyMapDisplayer}
 
     var debug = false
+
+    var choiceType : String = "No choice"
+    var choiceDone : Int = -1
+    var lastContext : String = ""
+
+    // These names are ambiguous on purpose to avoid any spoil
+    var easterEggs : List[EasterEgg] = List(EasterEgg1, EasterEgg2, EasterEgg3)
 
     //BufferedImages of each type. Since these are drawn in multiple contexts, these are loaded at all times.
     var typeIcons : List[BufferedImage] = List(loadImage("/TypeIcons/NormalIcon.png"),
@@ -158,6 +173,12 @@ object Utils {
         }
     }
 
+    def waitForBooleanFunction (f : Unit => Boolean) : Unit = {
+        while (!f()) {
+            TimeUnit.MILLISECONDS.sleep(20)
+        }
+    }
+
     def distance (i1 : Int, j1 : Int, i2 : Int, j2 : Int) : Double = {
         Math.sqrt(Math.pow(i2-i1, 2) + Math.pow(j2-j1, 2))
     }
@@ -193,6 +214,22 @@ object Utils {
             case Right => "Right"
             case Left => "Left"
         }
+    }
+
+    def askChoice (typ : String) = {
+        choiceDone = -1
+        lastContext = frame.currentState
+        frame.currentState = "Choice"
+        frame.listeningToKeyboard = false
+        choiceType = typ
+    }
+
+    def makeChoice (n : Int) = {
+        frame.currentState = lastContext
+        choiceDone = n
+        choiceType = "No choice"
+        frame.listeningToKeyboard = true
+        DiscussionLabel.changeText("")
     }
 }
 

@@ -54,6 +54,7 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
 
         setLocation(posX, posY)
         setVisible(true)
+        Utils.easterEggs.foreach(x => x.start)
     }
 
     def startBattle (p1 : Character, p2 : Character) : Unit = {
@@ -243,6 +244,7 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
                     case '2' => if (Utils.debug) backToMap
                     case '3' => if (Utils.debug) backToPokedex
                     case '4' => if (Utils.debug) DiscussionLabel.changeText("This is a very long message ! It is supposed to be displayed on several lines ! I hope it will work correctly ! And of course it works correctly !")
+                    case ' ' => EasterEgg3.press
                     case _ => currentPane.onKeyPressed(e)
                 }
             } else {
