@@ -3,8 +3,8 @@
 
 
 class Pikachu extends Monster {
-    height = "0.4 m"
-    weight = "6.0 kg"
+    height = "0.4m"
+    weight = "6.0kg"
 
     catchRate = 190
     
@@ -31,8 +31,8 @@ class Pikachu extends Monster {
 }
 
 class Raichu extends Monster {
-    height = "0.8 m"
-    weight = "30.0 kg"
+    height = "0.8m"
+    weight = "30.0kg"
 
     catchRate = 75
     
@@ -59,8 +59,8 @@ class Raichu extends Monster {
 }
 
 class Voltorb extends Monster {
-    height = "0.5 m"
-    weight = "10.4 kg"
+    height = "0.5m"
+    weight = "10.4kg"
 
     catchRate = 190
     
@@ -86,8 +86,8 @@ class Voltorb extends Monster {
 }
 
 class Electrode extends Monster {
-    height = "1.2 m"
-    weight = "66.6 kg"
+    height = "1.2m"
+    weight = "66.6kg"
 
     catchRate = 60
     
@@ -113,8 +113,8 @@ class Electrode extends Monster {
 }
 
 class Electabuzz extends Monster {
-    height = "1.1 m"
-    weight = "30.0 kg"
+    height = "1.1m"
+    weight = "30.0kg"
 
     catchRate = 45
     
@@ -141,8 +141,8 @@ class Electabuzz extends Monster {
 }
 
 class Jolteon extends Monster {
-    height = "0.8 m"
-    weight = "24.5 kg"
+    height = "0.8m"
+    weight = "24.5kg"
 
     catchRate = 45
     
@@ -169,8 +169,8 @@ class Jolteon extends Monster {
 }
 
 class Squirtle extends Monster {
-    height = "0.5 m"
-    weight = "9.0 kg"
+    height = "0.5m"
+    weight = "9.0kg"
 
     catchRate = 45
 
@@ -199,7 +199,7 @@ class Squirtle extends Monster {
 
 class Wartortle extends Monster {
     height = "1.0m"
-    weight = "22.5 kg"
+    weight = "22.5kg"
 
 
     catchRate = 45
@@ -226,8 +226,8 @@ class Wartortle extends Monster {
 }
 
 class Blastoise extends Monster {
-    height = "1.6 m"
-    weight = "85.5 kg"
+    height = "1.6m"
+    weight = "85.5kg"
 
     catchRate = 45
 
@@ -253,8 +253,8 @@ class Blastoise extends Monster {
 }
 
 class Psyduck extends Monster {
-    height = "0.8 m"
-    weight = "19.6 kg"
+    height = "0.8m"
+    weight = "19.6kg"
 
     catchRate = 190
 
@@ -280,8 +280,8 @@ class Psyduck extends Monster {
 }
 
 class Golduck extends Monster {
-    height = "1.7 m"
-    weight = "76.6 kg"
+    height = "1.7m"
+    weight = "76.6kg"
 
     catchRate = 75
 
@@ -307,8 +307,8 @@ class Golduck extends Monster {
 }
 
 class Poliwag extends Monster {
-    height = "0.6 m"
-    weight = "12.4 kg"
+    height = "0.6m"
+    weight = "12.4kg"
 
     catchRate = 255
 
@@ -334,8 +334,8 @@ class Poliwag extends Monster {
 }
 
 class Poliwhirl extends Monster {
-    height = "1.0 m"
-    weight = "20.0 kg"
+    height = "1.0m"
+    weight = "20.0kg"
 
     catchRate = 120
 
@@ -361,8 +361,8 @@ class Poliwhirl extends Monster {
 }
 
 class Seel extends Monster {
-    height = "1.1 m"
-    weight = "90.0 kg"
+    height = "1.1m"
+    weight = "90.0kg"
 
     catchRate = 190
 
@@ -388,8 +388,8 @@ class Seel extends Monster {
 }
 
 class Shellder extends Monster {
-    height = "0.3 m"
-    weight = "4.0 kg"
+    height = "0.3m"
+    weight = "4.0kg"
 
     catchRate = 190
 
@@ -414,8 +414,8 @@ class Shellder extends Monster {
 }
 
 class Krabby extends Monster {
-    height = "0.4 m"
-    weight = "6.5 kg"
+    height = "0.4m"
+    weight = "6.5kg"
 
     catchRate = 225
 
@@ -441,8 +441,8 @@ class Krabby extends Monster {
 }
 
 class Kingler extends Monster {
-    height = "1.3 m"
-    weight = "60.0 kg"
+    height = "1.3m"
+    weight = "60.0kg"
 
     catchRate = 60
 
@@ -468,8 +468,8 @@ class Kingler extends Monster {
 }
 
 class Horsea extends Monster {
-    height = "0.4 m"
-    weight = "8.0 kg"
+    height = "0.4m"
+    weight = "8.0kg"
 
     catchRate = 225
 
@@ -495,8 +495,8 @@ class Horsea extends Monster {
 }
 
 class Seadra extends Monster {
-    height = "1.2 m"
-    weight = "25.0 kg"
+    height = "1.2m"
+    weight = "25.0kg"
 
     catchRate = 75
 
@@ -522,8 +522,8 @@ class Seadra extends Monster {
 }
 
 class Goldeen extends Monster {
-    height = "0.6 m"
-    weight = "15.0 kg"
+    height = "0.6m"
+    weight = "15.0kg"
 
     catchRate = 225
 
@@ -549,8 +549,8 @@ class Goldeen extends Monster {
 }
 
 class Seaking extends Monster {
-    height = "1.3 m"
-    weight = "39.0 kg"
+    height = "1.3m"
+    weight = "39.0kg"
 
     catchRate = 60
 
@@ -576,8 +576,8 @@ class Seaking extends Monster {
 }
 
 class Staryu extends Monster {
-    height = "0.8 m"
-    weight = "34.5 kg"
+    height = "0.8m"
+    weight = "34.5kg"
 
     catchRate = 225
 
@@ -603,8 +603,8 @@ class Staryu extends Monster {
 }
 
 class Magikarp extends Monster {
-    height = "0.9 m"
-    weight = "10.0 kg"
+    height = "0.9m"
+    weight = "10.0kg"
 
     catchRate = 255
 
@@ -628,8 +628,8 @@ class Magikarp extends Monster {
 }
 
 class Gyarados extends Monster {
-    height = "6.5 m"
-    weight = "235 kg"
+    height = "6.5m"
+    weight = "235kg"
 
     catchRate = 45
 
@@ -655,8 +655,8 @@ class Gyarados extends Monster {
 }
 
 class Vaporeon extends Monster {
-    height = "1.0 m"
-    weight = "29.0 kg"
+    height = "1.0m"
+    weight = "29.0kg"
 
     catchRate = 45
 
@@ -685,8 +685,8 @@ class Vaporeon extends Monster {
 
 
 class Bulbasaur extends Monster {
-    height = "0.7 m"
-    weight = "6.9 kg"
+    height = "0.7m"
+    weight = "6.9kg"
 
     catchRate = 45
 
@@ -713,8 +713,8 @@ class Bulbasaur extends Monster {
 }
 
 class Ivysaur extends Monster {
-    height = "1.0 m"
-    weight = "13.0 kg"
+    height = "1.0m"
+    weight = "13.0kg"
 
     catchRate = 45
 
@@ -741,8 +741,8 @@ class Ivysaur extends Monster {
 }
 
 class Venusaur extends Monster {
-    height = "2.0 m"
-    weight = "100 kg"
+    height = "2.0m"
+    weight = "100kg"
 
     catchRate = 45
 
@@ -769,8 +769,8 @@ class Venusaur extends Monster {
 }
 
 class Oddish extends Monster {
-    height = "0.5 m"
-    weight = "5.4 kg"
+    height = "0.5m"
+    weight = "5.4kg"
 
     catchRate = 255
 
@@ -797,8 +797,8 @@ class Oddish extends Monster {
 }
 
 class Gloom extends Monster {
-    height = "0.8 m"
-    weight = "8.6 kg"
+    height = "0.8m"
+    weight = "8.6kg"
 
     catchRate = 120
 
@@ -825,8 +825,8 @@ class Gloom extends Monster {
 }
 
 class Vileplume extends Monster {
-    height = "1.2 m"
-    weight = "18.6 kg"
+    height = "1.2m"
+    weight = "18.6kg"
 
     catchRate = 45
 
@@ -852,8 +852,8 @@ class Vileplume extends Monster {
 }
 
 class Bellsprout extends Monster {
-    height = "0.7 m"
-    weight = "4.0 kg"
+    height = "0.7m"
+    weight = "4.0kg"
     
     catchRate = 255
 
@@ -879,8 +879,8 @@ class Bellsprout extends Monster {
 }
 
 class Weepinbell extends Monster {
-    height = "1.0 m"
-    weight = "6.4 kg"
+    height = "1.0m"
+    weight = "6.4kg"
     
     catchRate = 120
 
@@ -906,8 +906,8 @@ class Weepinbell extends Monster {
 }
 
 class Victreebel extends Monster {
-    height = "1.7 m"
-    weight = "15.5 kg"
+    height = "1.7m"
+    weight = "15.5kg"
     
     catchRate = 45
 
@@ -933,8 +933,8 @@ class Victreebel extends Monster {
 }
 
 class Exeggcute extends Monster {
-    height = "0.4 m"
-    weight = "2.5 kg"
+    height = "0.4m"
+    weight = "2.5kg"
     
     catchRate = 90
 
@@ -960,8 +960,8 @@ class Exeggcute extends Monster {
 }
 
 class Exeggutor extends Monster {
-    height = "2.0 m"
-    weight = "120 kg"
+    height = "2.0m"
+    weight = "120kg"
     
     catchRate = 45
 
@@ -987,8 +987,8 @@ class Exeggutor extends Monster {
 }
 
 class Tangela extends Monster {
-    height = "1.0 m"
-    weight = "35.0 kg"
+    height = "1.0m"
+    weight = "35.0kg"
     
     catchRate = 45
 
@@ -1014,8 +1014,8 @@ class Tangela extends Monster {
 }
 
 class Charmander extends Monster {
-    height = "0.6 m"
-    weight = "8.5 kg"
+    height = "0.6m"
+    weight = "8.5kg"
 
     catchRate = 45
 
@@ -1041,8 +1041,8 @@ class Charmander extends Monster {
 }
 
 class Charmeleon extends Monster {
-    height = "1.1 m"
-    weight = "19.0 kg"
+    height = "1.1m"
+    weight = "19.0kg"
 
     catchRate = 45
 
@@ -1068,8 +1068,8 @@ class Charmeleon extends Monster {
 }
 
 class Charizard extends Monster {
-    height = "1.7 m"
-    weight = "90.5 kg"
+    height = "1.7m"
+    weight = "90.5kg"
 
     catchRate = 45
 
@@ -1095,8 +1095,8 @@ class Charizard extends Monster {
 }
 
 class Vulpix extends Monster {
-    height = "0.6 m"
-    weight = "9.9 kg"
+    height = "0.6m"
+    weight = "9.9kg"
 
     catchRate = 190
 
@@ -1122,8 +1122,8 @@ class Vulpix extends Monster {
 }
 
 class Ninetales extends Monster {
-    height = "1.1 m"
-    weight = "19.9 kg"
+    height = "1.1m"
+    weight = "19.9kg"
 
     catchRate = 75
 
@@ -1149,8 +1149,8 @@ class Ninetales extends Monster {
 }
 
 class Growlithe extends Monster {
-    height = "0.7 m"
-    weight = "19.0 kg"
+    height = "0.7m"
+    weight = "19.0kg"
 
     catchRate = 190
 
@@ -1176,8 +1176,8 @@ class Growlithe extends Monster {
 }
 
 class Arcanine extends Monster {
-    height = "1.9 m"
-    weight = "155 kg"
+    height = "1.9m"
+    weight = "155kg"
 
     catchRate = 75
 
@@ -1203,8 +1203,8 @@ class Arcanine extends Monster {
 }
 
 class Ponyta extends Monster {
-    height = "1.0 m"
-    weight = "30.0 kg"
+    height = "1.0m"
+    weight = "30.0kg"
 
     catchRate = 190
 
@@ -1230,8 +1230,8 @@ class Ponyta extends Monster {
 }
 
 class Rapidash extends Monster {
-    height = "1.7 m"
-    weight = "95.0 kg"
+    height = "1.7m"
+    weight = "95.0kg"
 
     catchRate = 60
 
@@ -1257,8 +1257,8 @@ class Rapidash extends Monster {
 }
 
 class Magmar extends Monster {
-    height = "1.3 m"
-    weight = "44.5 kg"
+    height = "1.3m"
+    weight = "44.5kg"
 
     catchRate = 45
 
@@ -1284,8 +1284,8 @@ class Magmar extends Monster {
 }
 
 class Flareon extends Monster {
-    height = "0.9 m"
-    weight = "25.0 kg"
+    height = "0.9m"
+    weight = "25.0kg"
 
     catchRate = 45
 
@@ -1312,8 +1312,8 @@ class Flareon extends Monster {
 
 
 class Rattata extends Monster {
-    height = "0.3 m"
-    weight = "3.5 kg"
+    height = "0.3m"
+    weight = "3.5kg"
 
     catchRate = 255
 
@@ -1339,8 +1339,8 @@ class Rattata extends Monster {
 }
 
 class Raticate extends Monster {
-    height = "0.7 m"
-    weight = "18.5 kg"
+    height = "0.7m"
+    weight = "18.5kg"
 
     catchRate = 127
 
@@ -1366,8 +1366,8 @@ class Raticate extends Monster {
 }
 
 class Meowth extends Monster {
-    height = "0.4 m"
-    weight = "4.2 kg"
+    height = "0.4m"
+    weight = "4.2kg"
 
     catchRate = 255
 
@@ -1393,8 +1393,8 @@ class Meowth extends Monster {
 }
 
 class Persian extends Monster {
-    height = "1.0 m"
-    weight = "32.0 kg"
+    height = "1.0m"
+    weight = "32.0kg"
 
     catchRate = 90
 
@@ -1420,8 +1420,8 @@ class Persian extends Monster {
 }
 
 class Lickitung extends Monster {
-    height = "1.2 m"
-    weight = "65.5 kg"
+    height = "1.2m"
+    weight = "65.5kg"
 
     catchRate = 45
 
@@ -1447,8 +1447,8 @@ class Lickitung extends Monster {
 }
 
 class Chansey extends Monster {
-    height = "1.1 m"
-    weight = "34.6 kg"
+    height = "1.1m"
+    weight = "34.6kg"
 
     catchRate = 30
 
@@ -1474,8 +1474,8 @@ class Chansey extends Monster {
 }
 
 class Kangaskhan extends Monster {
-    height = "2.2 m"
-    weight = "80.0 kg"
+    height = "2.2m"
+    weight = "80.0kg"
 
     catchRate = 45
 
@@ -1501,8 +1501,8 @@ class Kangaskhan extends Monster {
 }
 
 class Tauros extends Monster {
-    height = "1.4 m"
-    weight = "88.4 kg"
+    height = "1.4m"
+    weight = "88.4kg"
 
     catchRate = 45
 
@@ -1528,8 +1528,8 @@ class Tauros extends Monster {
 }
 
 class Eevee extends Monster {
-    height = "0.3 m"
-    weight = "6.5 kg"
+    height = "0.3m"
+    weight = "6.5kg"
 
     catchRate = 45
 
@@ -1555,8 +1555,8 @@ class Eevee extends Monster {
 }
 
 class Porygon extends Monster {
-    height = "0.8 m"
-    weight = "36.5 kg"
+    height = "0.8m"
+    weight = "36.5kg"
 
     catchRate = 45
 
@@ -1582,8 +1582,8 @@ class Porygon extends Monster {
 }
 
 class Snorlax extends Monster {
-    height = "2.1 m"
-    weight = "460 kg"
+    height = "2.1m"
+    weight = "460kg"
 
     catchRate = 25
 
