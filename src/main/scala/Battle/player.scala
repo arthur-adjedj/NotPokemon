@@ -311,5 +311,8 @@ object Player extends Character {
     override def losingMessage : List[String] = List()
     override def winningMessage : List[String] = List()
 
-    
+    def switchPokemon(pika : Monster, n : Int) : Unit  = {
+        Utils.frame.pokedexPane.addCaught(pika)
+        team(n) = pika
+    }
 }

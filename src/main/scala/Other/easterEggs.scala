@@ -33,7 +33,7 @@ object EasterEgg1 extends EasterEgg {
                 DiscussionLabel.changeText("Which slot ?")
                 Utils.askChoice("Pokemon Slot")
                 Utils.waitForBooleanFunction(x => Utils.choiceDone != -1)
-                Player.team(Utils.choiceDone) = pokemon
+                Player.switchPokemon(pokemon,Utils.choiceDone)
                 pokemon.owner = Player
             }
         }
@@ -52,7 +52,7 @@ object EasterEgg2 extends EasterEgg {
                 Utils.askChoice("Pokemon Slot")
                 Utils.waitForBooleanFunction(x => Utils.choiceDone != -1)
                 var pokemon = new Gyarados
-                Player.team(Utils.choiceDone) = pokemon
+                Player.switchPokemon(pokemon,Utils.choiceDone)
                 pokemon.gainLvl(49, false)
                 pokemon.owner = Player
                 DiscussionLabel.changeText(message(1))
@@ -109,7 +109,7 @@ object EasterEgg3 extends EasterEgg {
             DiscussionLabel.changeText("Which slot ?")
             Utils.askChoice("Pokemon Slot")
             Utils.waitForBooleanFunction(x => Utils.choiceDone != -1)
-            Player.team(Utils.choiceDone) = pokemon
+            Player.switchPokemon(pokemon,Utils.choiceDone)
             pokemon.owner = Player
             DiscussionLabel.changeText("I hope you're honest !")
             loop = false

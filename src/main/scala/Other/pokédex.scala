@@ -97,6 +97,15 @@ class DrawPokedexPanel extends MyPanel {
         pokemonArray.foreach(x => x.wasSeen = true)
     }
 
+    def addSeen( pika : Monster) : Unit = {
+        pokemonArray.foreach(x => if (x.originalName == pika.originalName) x.wasSeen = true)
+    }
+
+    def addCaught( pika : Monster) : Unit = {
+        pokemonArray.foreach(x => if (x.originalName == pika.originalName) { x.wasSeen = true; x.wasCaught = true})
+    }
+
+
     //TODO grey out the icon when pokémon is seen but not caught
     def drawPokemon(g : Graphics) = {
         if (currentPokemon.wasSeen) {

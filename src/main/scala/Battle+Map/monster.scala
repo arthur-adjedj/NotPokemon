@@ -108,7 +108,7 @@ abstract class Monster extends Object with ScoreForStrategy {
     }
 
     def enterField : Unit = {
-        Utils.frame.pokedexPane.pokemonArray.foreach(x => if (x.originalName == originalName) x.wasSeen = true)
+        Utils.frame.pokedexPane.addSeen(this)
         newMonsterSeen(owner.opponent.currentMonster)
         owner.opponent.currentMonster.newMonsterSeen(this)
         turnsOnField = 0
