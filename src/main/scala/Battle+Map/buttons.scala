@@ -360,9 +360,7 @@ object AttackButton extends BattleButton ("Buttons/AttackButton.png") {
 
         Utils.castAttackButtonList.foreach(x => x.setVisible(true))
 
-        BackButton.x = 154
-        BackButton.y = 693
-        BackButton.setVisible(true)
+        BackAttackButton.setVisible(true)
     }
 
     override def update : Unit = {
@@ -400,9 +398,7 @@ object BagButton extends BattleButton ("Buttons/BagButton.png") {
 
         NextPageItemButton.currentPage = 0
 
-        BackButton.x = 3
-        BackButton.y = 693
-        BackButton.setVisible(true)
+        BackBagButton.setVisible(true)
     }
 
     override def update : Unit = {
@@ -483,7 +479,9 @@ object RunButton extends BattleButton ("Buttons/RunButton.png") {
     }
 }
 
-object BackButton extends BattleButton ("Buttons/AttackButton.png") {
+object BackAttackButton extends BattleButton ("Buttons/AttackButton.png") {
+    x = 154
+    y = 693
     visible = false
     text = "Back"
 
@@ -491,6 +489,18 @@ object BackButton extends BattleButton ("Buttons/AttackButton.png") {
        resetOnMainMenu
     }
 }
+
+object BackBagButton extends BattleButton ("Buttons/AttackButton.png") {
+    x = 3
+    y = 693
+    visible = false
+    text = "Back"
+
+    override def isClicked : Unit = {
+       resetOnMainMenu
+    }
+}
+
 
 object NextPageItemButton extends BattleButton ("Buttons/EmptyButton.png") {
     var newPos = Utils.buttonPosition(5)

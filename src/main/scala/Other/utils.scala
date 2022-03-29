@@ -29,7 +29,7 @@ object Utils {
     var battleMenuButtonList : List[BattleButton] = List(AttackButton, BagButton, MonsterButton, RunButton)
 
     var battleButtonList : List[BattleButton] = List.concat(battleMenuButtonList, castAttackButtonList, useItemButtonList, changeMonsterButtonList,
-                                                            List(NextPageItemButton, BackButton))
+                                                            List(NextPageItemButton, BackAttackButton, BackBagButton))
 
     //map
     var showPokemonMapButtonList : List[PokemonMapButton] = (0 to 5).map(x => new PokemonMapButton(x)).toList
@@ -85,9 +85,9 @@ object Utils {
         }
     }
 
-
+    //Most common positions, indexed from left to right, up to down
     def buttonPosition(n : Int) : (Int,Int) = (3+ 308*(n%2), 405 + 144*(n/2))
-    
+
     // some strategies
     var aggroStrat = Strategy(1, 0, 0, 0, 0)
     var tempoStrat = Strategy(1, 1, 1, 0, 0)
