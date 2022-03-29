@@ -9,7 +9,7 @@ class MapDisplayer (frame : UI) {
     var iStart : Int = 0
     var jStart : Int = 0
 
-    var sizeMap : Int = 60
+    var sizeMap : Int = 25
     var grid : Array[Array[List[Block]]] = Array.fill(sizeMap)(Array.fill(sizeMap)(List(new EmptyBlock)))
 
     var ui : UI = frame
