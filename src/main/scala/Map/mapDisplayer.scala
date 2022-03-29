@@ -82,6 +82,15 @@ class MapDisplayer (frame : UI) {
         x += moveX
         y += moveY
     }
+
+    //Since trees are such particular objects, being more than 1 block thick and having an image that spans over 9 blocks, we define a special function to add one in the grid
+    //this function covers the multiple blocks of the tree with invisible unwalkable blocks.
+    def addTree(i : Int, j : Int) : Unit = {
+        grid(i)(j) = (new TreeRoot)::grid(i)(j)
+        grid(i+1)(j) = (new InvisibleBlock)::grid(i+1)(j)
+        grid(i)(j+1) = (new InvisibleBlock)::grid(i)(j+1)
+        grid(i+1)(j+1) = (new InvisibleBlock)::grid(i+1)(j+1)
+    }
 }
 
 object EmptyMapDisplayer extends MapDisplayer (EmptyUI) {
@@ -116,6 +125,9 @@ class MapDisplayer1 (frame : UI) extends MapDisplayer (frame : UI) {
     iStart = 7
     jStart = 4
 
+
+    addTree(0, 8)
+    
     grid(2)(1) = List(new MultiCliff(1, 0))
     grid(3)(1) = List(new MultiCliff(1, 0))
     grid(4)(1) = List(new MultiCliff(1, 1))

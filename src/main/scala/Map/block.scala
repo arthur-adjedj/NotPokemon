@@ -58,6 +58,12 @@ class EmptyBlock extends Block ("Empty.png") {
     override def display (g : Graphics) : Unit = {}
 }
 
+class InvisibleBlock extends Block ("Empty.png") {
+    originalWalkable = false
+    override def display (g : Graphics) : Unit = {}
+
+}
+
 //renders a "base block" given a certain orientation with updown and leftright in {-1,0,1}
 class MultiBlock(updown : Int, leftright : Int, base : String) extends Block("Maps/Tile.png") {
     imgName = "Blocks/" + base + "Sprites.png"
@@ -170,6 +176,18 @@ class MapItemBlock (item_ : MapItem) extends Block ("Blocks/Item.png") {
     override def display (g : Graphics) : Unit = {
         if (!taken) {
             super.display(g)
+        }
+    }
+}
+
+class TreeRoot extends Block ("/Blocks/Tree.png") {
+    originalWalkable = false
+
+    override def display (g : Graphics) : Unit = {
+        var frame = Utils.frame
+        if (-frame.sizeBlock <= x && x <= frame.sizeX && -frame.sizeBlock <= y && y <= 400) {
+            //a tree is bigger than 2x2 blocks in size, we consider the root of the tree to be the upmost leftmost block, and fill in the 3 others with invisible unwalkable blocks
+            g.drawImage(img, x-10, y-33, null)
         }
     }
 }
