@@ -328,8 +328,8 @@ object SecondPlayerDisplayer extends OpponentDisplayer ("Characters/Louis.png") 
     player = ThirdCharacter
     speed = 1
 
-    i = 12
-    j = 2
+    i = 14
+    j = 4
 
     whichMap = 1
     speed = 10
