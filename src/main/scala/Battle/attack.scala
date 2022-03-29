@@ -4,7 +4,8 @@ abstract class Attack extends Object with ScoreForStrategy {
     var power : Int = 0
     var critChance : Float = 0
     var priority : Int = 0
-    var accuracy : Float = 1
+    // The accuracy should normally be between 0 and 1, but is set to infinity for undodgeable attack to ensure the ennemy's evasion doesn't counteract
+    var accuracy : Float = 1 
     var attackType : Type = Normal
     def scoreForStrategy (self : Monster, ennemy : Monster) : Int = {
         1 + (power*attackType.multDamage(ennemy.monsterType)*Math.pow(2, self.getStage("attack")) - ennemy.getStage("defense")).toInt
