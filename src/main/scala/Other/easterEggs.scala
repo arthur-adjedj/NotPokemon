@@ -81,7 +81,7 @@ object EasterEgg3 extends EasterEgg {
                 if (List(3, 5).contains(i)) {
                     askForStop(i)
                 }
-                if (i == messages.size) {
+                if (i == messages.size - 1) {
                     loop = false
                 }
                 i += 1
