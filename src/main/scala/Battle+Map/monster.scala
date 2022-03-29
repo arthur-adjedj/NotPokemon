@@ -142,7 +142,7 @@ abstract class Monster extends Object with ScoreForStrategy {
 
     //It adds text to explain the effectiveness of the attack
     def effectivenessText (attack : Attack, other : Monster) : String = {
-        if (attack.handlesDamages(this, other) == -1) {
+        if (attack.handledDamages(this, other) == -1) {
             if (attack.attackType.multDamage(other.monsterType) > 1) "It's super effective !" 
             else if (attack.attackType.multDamage(other.monsterType) < 1) 
                 "It's not very effective..." 
@@ -246,7 +246,7 @@ abstract class Monster extends Object with ScoreForStrategy {
 
     def receiveAttack (attack : Attack, other : Monster) : Unit = {
         // if the attack doesn't handle the damages, the basic formula is used
-        var handledDamages = attack.handlesDamages(other, this)
+        var handledDamages = attack.handledDamages(other, this)
         if (handledDamages != -1) {
             takeDamage(handledDamages)
         } else {

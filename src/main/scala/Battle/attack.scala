@@ -11,7 +11,8 @@ abstract class Attack extends Object with ScoreForStrategy {
     }
     def nOfHits() : Int = 1 
     def cast(self : Monster,ennemy: Monster) : Unit = () // this function is called everytime an attack is casted
-    def handlesDamages (self : Monster, ennemy : Monster) : Int = { // if the function returns -1, the basic formula is used, else it's direct damages
+    // if the attack handles the amount of damages (for example a constant amount of damage) it returns this very amount, else it returns -1
+    def handledDamages (self : Monster, ennemy : Monster) : Int = { 
         if (power == 0) {
             0
         } else {
