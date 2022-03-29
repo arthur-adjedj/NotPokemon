@@ -9,7 +9,7 @@ class MapDisplayer (frame : UI) {
     var iStart : Int = 0
     var jStart : Int = 0
 
-    var sizeMap : Int = 20
+    var sizeMap : Int = 60
     var grid : Array[Array[List[Block]]] = Array.fill(sizeMap)(Array.fill(sizeMap)(List(new EmptyBlock)))
 
     var ui : UI = frame
@@ -63,11 +63,11 @@ class MapDisplayer (frame : UI) {
     }
     
 
-    //TODO: implement a zBuffer system to really draw them in the right order
+    //TODO: implement a zBuffer system to really draw everything in the right order
     def display (g : Graphics) : Unit = {
         g.drawImage(img, -x%sizeBlock - sizeBlock, -y%sizeBlock - sizeBlock, null)
-        for (j <- grid(0).indices) {
-            for (i <- grid.indices) {
+        for (j <- 0 to sizeMap-1) {
+            for (i <- 0 to sizeMap-1) {
                 grid(i)(j) foreach (b => b.updateCoordinates(x, y, sizeBlock))
                 grid(i)(j) foreach (b => b.display(g))
             }
@@ -125,30 +125,30 @@ class MapDisplayer1 (frame : UI) extends MapDisplayer (frame : UI) {
     iStart = 7
     jStart = 4
 
+    for(i <- 0 to sizeMap/2 -1) {
+        addTree(2*i,0)
+        addTree(2*i,sizeMap-2)
+        addTree(0,2*i)
+        addTree(sizeMap-2,2*i)
 
-    addTree(0, 8)
-    
-    grid(2)(1) = List(new MultiCliff(1, 0))
-    grid(3)(1) = List(new MultiCliff(1, 0))
-    grid(4)(1) = List(new MultiCliff(1, 1))
-    grid(4)(2) = List(new MultiCliff(0, 1))
+    }
+
     grid(4)(3) = List(new MultiCliff(0, 1))
-    grid(4)(4) = List(new MultiCliff(-1, 1))
-    grid(3)(4) = List(new MultiCliff(-1, 0))
-    grid(2)(4) = List(new MultiCliff(-1, 0))
+    grid(4)(4) = List(new MultiCliff(0, 1))
+    grid(4)(5) = List(new MultiCliff(-1, 1))
+    grid(3)(5) = List(new MultiCliff(-1, 0))
+    grid(2)(5) = List(new MultiCliff(-1, 0))
 
-    grid(0)(2) = List(new GrassBlock)
-    grid(1)(3) = List(new GrassBlock)
-    grid(0)(3) = List(new GrassBlock)
-    grid(1)(2) = List(new GrassBlock)
+    grid(2)(3) = List(new GrassBlock)
+    grid(2)(4) = List(new GrassBlock)
+    grid(3)(3) = List(new GrassBlock)
+    grid(3)(4) = List(new GrassBlock)
 
     for (i <- 7 to 13) {
         for (j <- 7 to 13) {
             grid(i)(j) = List(new IceBlock)
         }
     }
-    grid(10)(11) = List(new EmptyBlock)
-    grid(10)(10) = List(new EmptyBlock)
 
     for (i <- 7 to 13) {
         grid(i)(6) = List(new IceBlock,new MultiCliff(1, 0))
@@ -176,9 +176,9 @@ class MapDisplayer1 (frame : UI) extends MapDisplayer (frame : UI) {
     grid(9)(11) = List(new IceBlock,new RockBlock)
     grid(9)(10) = List(new IceBlock,new RockBlock)
 
-    grid(10)(1) = List(new HealBlock)
+    grid(10)(3) = List(new HealBlock)
 
-    grid(10)(3) = List(new MapItemBlock(new Bike))
+    grid(11)(3) = List(new MapItemBlock(new Bike))
     
     grid(3)(12) = List(new Door(1))
     grid(1)(12) = List(new MapItemBlock(new Key(1)))
