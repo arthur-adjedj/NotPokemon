@@ -63,18 +63,17 @@ class MapDisplayer (frame : UI) {
     }
     
 
-
+    //TODO: implement a zBuffer system to really draw them in the right order
     def display (g : Graphics) : Unit = {
         g.drawImage(img, -x%sizeBlock - sizeBlock, -y%sizeBlock - sizeBlock, null)
-        for (i <- grid.indices) {
-            for (j <- grid(i).indices) {
+        for (j <- grid(0).indices) {
+            for (i <- grid.indices) {
                 grid(i)(j) foreach (b => b.updateCoordinates(x, y, sizeBlock))
                 grid(i)(j) foreach (b => b.display(g))
             }
+            Utils.characterDisplayers.filter( chara => chara.j == j) foreach (chara => chara.display(g, x, y, n))
         }
         //sorts the character rendering order in respect to their depth on screen
-        Utils.characterDisplayers = Utils.characterDisplayers.sortWith((p1,p2) => p1.j < p2.j)
-        Utils.characterDisplayers.foreach(p => p.display(g, x, y, n))
         g.drawImage(menuBackground, 0, 400, null)
     }
 
@@ -116,7 +115,7 @@ class MapDisplayer1 (frame : UI) extends MapDisplayer (frame : UI) {
     n = 1
     iStart = 7
     jStart = 4
-    
+
     grid(2)(1) = List(new MultiCliff(1, 0))
     grid(3)(1) = List(new MultiCliff(1, 0))
     grid(4)(1) = List(new MultiCliff(1, 1))
