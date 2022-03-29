@@ -181,7 +181,7 @@ class MapDisplayer1 (frame : UI) extends MapDisplayer (frame : UI) {
     grid(11)(3) = List(new MapItemBlock(new Bike))
     
     grid(3)(12) = List(new Door(1))
-    grid(1)(12) = List(new MapItemBlock(new Key(1)))
+    grid(3)(9) = List(new MapItemBlock(new Key(1)))
 
     grid(10)(6) = List(new Door(2))
 
