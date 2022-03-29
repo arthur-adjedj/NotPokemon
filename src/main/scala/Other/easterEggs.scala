@@ -65,7 +65,7 @@ object EasterEgg2 extends EasterEgg {
 }
 
 object EasterEgg3 extends EasterEgg {
-    var messages : List[String] = List("Please stop !", "Really please stop !", "I said STOP !", "Will you stop if I give you a good pokemon ?", "I'm exhauted !",
+    var messages : List[String] = List("Please stop !", "Really please stop !", "I said STOP !", "Will you stop if I give you a good pokemon ?", "I'm exhausted !",
                                       "This is your last chance ! If you stop I give you my best pokemon !")
 
     var count : Int = 0
