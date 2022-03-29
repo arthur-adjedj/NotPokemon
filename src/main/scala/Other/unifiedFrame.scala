@@ -238,22 +238,20 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
 
     def keyPressed (e : KeyEvent) : Unit = {
         PlayerDisplayer.hasDoneSomething = true
-        if (listeningToKeyboard) {
-            if (!DiscussionLabel.changingText && DiscussionLabel.messageQueue.isEmpty) {
-                e.getKeyChar.toLower match {
-                    
-                    // For debugging purposes                    
-                    case '1' => if (Utils.debug) backToBattle
-                    case '2' => if (Utils.debug) backToMap
-                    case '3' => if (Utils.debug) backToPokedex
-                    case '4' => if (Utils.debug) DiscussionLabel.changeText("This is a very long message ! It is supposed to be displayed on several lines ! I hope it will work correctly ! And of course it works correctly !")
-                    case ' ' => EasterEgg3.press
-                    case _ => currentPane.onKeyPressed(e)
-                }
-            } else {
-                DiscussionLabel.skip
+        if (!DiscussionLabel.changingText && DiscussionLabel.messageQueue.isEmpty && listeningToKeyboard) {
+            e.getKeyChar.toLower match {
+                
+                // For debugging purposes                    
+                case '1' => if (Utils.debug) backToBattle
+                case '2' => if (Utils.debug) backToMap
+                case '3' => if (Utils.debug) backToPokedex
+                case '4' => if (Utils.debug) DiscussionLabel.changeText("This is a very long message ! It is supposed to be displayed on several lines ! I hope it will work correctly ! And of course it works correctly !")
+                case ' ' => EasterEgg3.press
+                case _ => currentPane.onKeyPressed(e)
             }
-        }        
+        } else if (e.getKeyChar.toLower != ' '){
+            DiscussionLabel.skip
+        }
     }
 
     def keyTyped (e : KeyEvent) : Unit = {}
