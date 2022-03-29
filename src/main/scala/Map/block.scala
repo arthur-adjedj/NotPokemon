@@ -185,9 +185,9 @@ class TreeRoot extends Block ("/Blocks/Tree.png") {
 
     override def display (g : Graphics) : Unit = {
         var frame = Utils.frame
-        if (-3*frame.sizeBlock <= x && x <= frame.sizeX && -3*frame.sizeBlock <= y && y <= 440) {
-            //a tree is bigger than 2x2 blocks in size, we consider the root of the tree to be the upmost leftmost block, and fill in the 3 others with invisible unwalkable blocks
-            g.drawImage(img, x-10, y-33, null)
+        if (-3*frame.sizeBlock <= x && x <= frame.sizeX && -3*frame.sizeBlock <= y && y <= 480) {
+            //a tree is bigger than 2x2 blocks in size, we consider the root of the tree to be the downmost leftmost block, and fill in the 3 others with invisible unwalkable blocks
+            g.drawImage(img, x-10, y-73, null)
         }
     }
 }
