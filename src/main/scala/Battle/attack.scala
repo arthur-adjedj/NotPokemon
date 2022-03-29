@@ -15,11 +15,7 @@ abstract class Attack extends Object with ScoreForStrategy {
 
     // if the attack handles the amount of damages (for example a constant amount of damage) it returns this very amount, 
     // else it returns -1 and the basic formula is applied
-<<<<<<< HEAD
     // WARNING : this function is meant to be overwritten in these particular cases
-=======
-    // this is the basic function and has to be overriden to have such a behaviour
->>>>>>> 7f8a37641cf2f36e8ffa28697a5b2962e8b1afde
     def handledDamages (self : Monster, ennemy : Monster) : Int = { 
         if (power == 0) { // the basic formula doesn't give 0 damages when the power is 0, hence this special case
             0
