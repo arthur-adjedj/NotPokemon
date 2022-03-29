@@ -97,7 +97,7 @@ class CharacterDisplayer (imgName : String) extends Object with Updatable {
                 }
 
             if (0 <= i+moveX && i+moveX < mapDisplayer.grid.length && 0 <= j+moveY && j+moveY < mapDisplayer.grid(i).length && !uTurn) {
-                if (mapDisplayer.grid(i+moveX)(j+moveY).reverse.head.canBeWalked(this) || noClip) {
+                if (mapDisplayer.grid(i+moveX)(j+moveY).reverse.forall(x => x.canBeWalked(this)) || noClip) {
                     traveledDistance += 1
 
                     mover = new Mover
