@@ -377,7 +377,7 @@ abstract class Monster extends Object with ScoreForStrategy {
 
     def talk : Boolean = {
         if (alive) {
-            DiscussionLabel.changeText("(" + name + ") : I'm ready for the battle !")
+            DiscussionLabel.changeText("(" + name + ") : I'm ready for battle !")
         } else {
             DiscussionLabel.changeText("(" + name + ") : I'm K.O. please heal me !")
         }
