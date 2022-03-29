@@ -22,6 +22,10 @@ class CharacterDisplayer (imgName : String) extends Object with Updatable {
     var i : Int = 0
     var j : Int = 0
 
+    // for the zBuffer
+    var previousI : Int = 0
+    var previousJ : Int = 0
+
     var speed : Int = 10
     var whichMap : Int = 0
     var mover : Mover = new Mover
@@ -116,6 +120,8 @@ class CharacterDisplayer (imgName : String) extends Object with Updatable {
     }
 
     def endMove : Unit = {
+        previousI = i
+        previousJ = j
         mapDisplayer.grid(i)(j) foreach (b => b.onWalk(this))
         if (0 <= i - lastMoveX && i - lastMoveX < mapDisplayer.grid.size && 0 <= j - lastMoveY && j - lastMoveY < mapDisplayer.grid(i).size) {
             // this check is mandatory when changing map
@@ -344,8 +350,8 @@ object SecondCharacterDisplayer extends OpponentDisplayer ("Characters/FemaleCha
 
     direction = Up
     whichMap = 1
-    i = 10
-    j = 11
+    i = 12
+    j = 13
 
 
 }
