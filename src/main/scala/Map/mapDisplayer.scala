@@ -217,7 +217,7 @@ class MapDisplayer2(frame : UI) extends MapDisplayer(frame : UI) {
     iStart = 3
     jStart = 3
 
-    grid(3)(3) = List(new TargetedPortal(1, 18, 10))
+    grid(3)(3) = List(new TargetedPortal(1, 20, 12))
     grid(17)(17) = List(new TargetedPortal(1, 17, 17))
 
     grid(5)(2) = List(new MapItemBlock(new Surf))
