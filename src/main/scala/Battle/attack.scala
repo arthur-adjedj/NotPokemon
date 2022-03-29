@@ -12,9 +12,10 @@ abstract class Attack extends Object with ScoreForStrategy {
     }
     def nOfHits() : Int = 1 
     def cast(self : Monster,ennemy: Monster) : Unit = () // this function is called everytime an attack is casted
-    
+
     // if the attack handles the amount of damages (for example a constant amount of damage) it returns this very amount, 
     // else it returns -1 and the basic formula is applied
+    // this is the basic function and has to be overriden to have such a behaviour
     def handledDamages (self : Monster, ennemy : Monster) : Int = { 
         if (power == 0) {
             0
