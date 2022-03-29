@@ -66,4 +66,6 @@ object Ice extends Type {
     }
 }   
 
-object EmptyType extends Type {}
+object EmptyType extends Type {
+    name = "Empty"
+}
