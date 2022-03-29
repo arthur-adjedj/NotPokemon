@@ -4,8 +4,6 @@ import java.awt.{Color,Graphics,BasicStroke,Font}
 import java.util.concurrent.TimeUnit
 import javax.swing.{JFrame, JPanel, JLabel}
 
-
-
 abstract class MyButton (imageName_ : String) extends Object with Descriptable {
 
     var originalImageName = imageName_
@@ -100,8 +98,9 @@ abstract class MapButton (imageName_ : String) extends MyButton(imageName_) {
 class ChoiceButton (n_ : Int) extends MyButton("Buttons/EmptyButton.png") {
     context = "Choice"
     var n : Int = n_
-    x = 3 + 308*(n%2)
-    y = 405 + 144*(n/2)
+    var newPos = Utils.buttonPosition(n)
+    x = newPos._1
+    y = newPos._2
 
     override def isClicked : Unit = {
         Utils.makeChoice(n)
@@ -150,8 +149,9 @@ object HelpButton extends MyButton ("Buttons/Help.png") {
 
 class CastAttackButton (n_ : Int) extends BattleButton ("Buttons/EmptyButton.png") {
     var n : Int = n_
-    x = 3 + 308*(n%2)
-    y = 405 + 144*(n/2)
+    var newPos = Utils.buttonPosition(n)
+    x = newPos._1
+    y = newPos._2
     override def isClicked : Unit = {
         if (Player.chooseAttack(n)) {
             resetOnMainMenu
@@ -206,8 +206,10 @@ class CastAttackButton (n_ : Int) extends BattleButton ("Buttons/EmptyButton.png
 
 class ChangeMonsterButton (n_ : Int) extends BattleButton ("Buttons/EmptyButton.png") {
     var n : Int = n_
-    x = 3 + 308*(n%2)
-    y = 405 + 144*(n/2)
+    var newPos = Utils.buttonPosition(n)
+    x = newPos._1
+    y = newPos._2
+
 
     override def isClicked : Unit = {
         if (Player.changeMonster(n)) {
@@ -267,8 +269,9 @@ class ChangeMonsterButton (n_ : Int) extends BattleButton ("Buttons/EmptyButton.
 class UseItemButton (n_ : Int) extends BattleButton ("Buttons/EmptyButton.png") {
     var n : Int = n_
     var indexOfObject : Int = 0
-    x = 3 + 308*(n%2)
-    y = 405 + 144*(n/2)
+    var newPos = Utils.buttonPosition(n)
+    x = newPos._1
+    y = newPos._2
 
     override def isClicked : Unit = {
         if (Player.useItem(indexOfObject)) {
@@ -341,8 +344,9 @@ class MoveListPokedexButton (n_ : Int) extends PokedexButton {
 }
 
 object AttackButton extends BattleButton ("Buttons/AttackButton.png") {
-    x = 3
-    y = 405
+    var newPos = Utils.buttonPosition(0)
+    x = newPos._1
+    y = newPos._2
     visible = true
     text = "Attack"
 
@@ -378,8 +382,9 @@ object AttackButton extends BattleButton ("Buttons/AttackButton.png") {
 
 
 object BagButton extends BattleButton ("Buttons/BagButton.png") {
-    x = 311
-    y = 405
+    var newPos = Utils.buttonPosition(1)
+    x = newPos._1
+    y = newPos._2
     visible = true
     text = "Bag"
 
@@ -417,8 +422,9 @@ object BagButton extends BattleButton ("Buttons/BagButton.png") {
 
 
 object MonsterButton extends BattleButton ("Buttons/MonstersButton.png") {
-    x = 3
-    y = 549
+    var newPos = Utils.buttonPosition(2)
+    x = newPos._1
+    y = newPos._2
     visible = true
     text = "Pokemons"
 
@@ -450,8 +456,9 @@ object MonsterButton extends BattleButton ("Buttons/MonstersButton.png") {
 
 
 object RunButton extends BattleButton ("Buttons/RunButton.png") {
-    x = 311
-    y = 549
+    var newPos = Utils.buttonPosition(3)
+    x = newPos._1
+    y = newPos._2
     visible = true
     text = "Run"
 
@@ -486,8 +493,9 @@ object BackButton extends BattleButton ("Buttons/AttackButton.png") {
 }
 
 object NextPageItemButton extends BattleButton ("Buttons/EmptyButton.png") {
-    x = 311
-    y = 693
+    var newPos = Utils.buttonPosition(5)
+    x = newPos._1
+    y = newPos._2
     text = "Next"
     var currentPage = 0
     override def isClicked : Unit = {
@@ -510,9 +518,34 @@ object NextPageItemButton extends BattleButton ("Buttons/EmptyButton.png") {
     }
 }
 
+object ShowPokedexButton extends MapButton ("Buttons/AttackButton.png") {
+    var newPos = Utils.buttonPosition(0)
+    x = newPos._1
+    y = newPos._2
+    visible = true
+    text = "Pokedex"
+
+    override def isClicked : Unit = {
+        Utils.frame.backToPokedex
+    }
+}
+
+object ShowInventoryButton extends MapButton ("Buttons/BagButton.png") {
+    var newPos = Utils.buttonPosition(1)
+    x = newPos._1
+    y = newPos._2
+    visible = true
+    text = "Bag"
+
+    override def isClicked : Unit = {
+        DiscussionLabel.changeText("This functionnality is not implemented yet !")
+    }
+}
+
 object ShowTeamButton extends MapButton ("Buttons/MonstersButton.png") {
-    x = 3
-    y = 549
+    var newPos = Utils.buttonPosition(2)
+    x = newPos._1
+    y = newPos._2
     visible = true
     text = "Pokemons"
 
@@ -522,31 +555,10 @@ object ShowTeamButton extends MapButton ("Buttons/MonstersButton.png") {
     }
 }
 
-object ShowInventoryButton extends MapButton ("Buttons/BagButton.png") {
-    x = 311
-    y = 405
-    visible = true
-    text = "Bag"
-
-    override def isClicked : Unit = {
-        DiscussionLabel.changeText("This functionnality is not implemented yet !")
-    }
-}
-
-object ShowPokedexButton extends MapButton ("Buttons/AttackButton.png") {
-    x = 3
-    y = 405
-    visible = true
-    text = "Pokedex"
-
-    override def isClicked : Unit = {
-        Utils.frame.backToPokedex
-    }
-}
-
 object SaveButton extends MapButton ("Buttons/RunButton.png") {
-    x = 311
-    y = 549
+    var newPos = Utils.buttonPosition(3)
+    x = newPos._1
+    y = newPos._2
     visible = true
     text = "Save"
 
@@ -556,8 +568,9 @@ object SaveButton extends MapButton ("Buttons/RunButton.png") {
 }
 
 object OptionsButton extends MapButton ("Buttons/IceButton.png") {
-    x = 3
-    y = 693
+    var newPos = Utils.buttonPosition(4)
+    x = newPos._1
+    y = newPos._2
     visible = true
     text = "Options"
 
@@ -567,8 +580,9 @@ object OptionsButton extends MapButton ("Buttons/IceButton.png") {
 }
 
 object TrainerButton extends MapButton ("Buttons/FireButton.png") {
-    x = 311
-    y = 693
+    var newPos = Utils.buttonPosition(5)
+    x = newPos._1
+    y = newPos._2
     visible = true
     text = Player.name
 
@@ -581,8 +595,9 @@ object TrainerButton extends MapButton ("Buttons/FireButton.png") {
 
 class PokemonMapButton (n_ : Int) extends MapButton ("Buttons/EmptyButton.png") {
     var n : Int = n_
-    x = 3 + 308*(n%2)
-    y = 405 + 144*(n/2)
+    var newPos = Utils.buttonPosition(n)
+    x = newPos._1
+    y = newPos._2
 
     override def isClicked : Unit = {
         if (Player.team(n).talk) {

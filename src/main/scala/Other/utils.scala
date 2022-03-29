@@ -86,6 +86,8 @@ object Utils {
     }
 
 
+    def buttonPosition(n : Int) : (Int,Int) = (3+ 308*(n%2), 405 + 144*(n/2))
+    
     // some strategies
     var aggroStrat = Strategy(1, 0, 0, 0, 0)
     var tempoStrat = Strategy(1, 1, 1, 0, 0)
