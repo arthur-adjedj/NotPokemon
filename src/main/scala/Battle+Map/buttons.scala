@@ -604,4 +604,19 @@ class PokemonMapButton (n_ : Int) extends MapButton ("Buttons/EmptyButton.png") 
             image = Utils.loadImage(imageName)
         }
     }
+
+    override def display (g : Graphics) : Unit = {
+        if (visible && (context == Utils.frame.currentState || context == "All") || alwaysVisible) {
+            g.setFont(poke_font)
+            var metrics = g.getFontMetrics(poke_font);
+            // Coordonées du texte
+            xtext = x + (width - metrics.stringWidth(text)) / 2;
+            ytext = y + ((height - metrics.getHeight()) / 2) + metrics.getAscent() - (if (Player.team(n).name != "Empty") 8 else 0);
+            g.drawImage(image, x, y, null)
+            g.drawString(text,xtext,ytext)
+            if (Player.team(n).name != "Empty") {
+                g.drawImage(Utils.typeIcons(Utils.typeIconNumber(Player.team(n).monsterType)), x + width/2 - 61, y + height - 62, null)
+            }
+        }
+    }
 }
