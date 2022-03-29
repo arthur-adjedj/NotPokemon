@@ -344,8 +344,8 @@ object SecondCharacterDisplayer extends OpponentDisplayer ("Characters/FemaleCha
 
     direction = Up
     whichMap = 1
-    i = 10
-    j = 11
+    i = 12
+    j = 13
 
 
 }
