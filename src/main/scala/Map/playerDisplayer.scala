@@ -120,13 +120,14 @@ class CharacterDisplayer (imgName : String) extends Object with Updatable {
     }
 
     def endMove : Unit = {
-        previousI = i
-        previousJ = j
         mapDisplayer.grid(i)(j) foreach (b => b.onWalk(this))
         if (0 <= i - lastMoveX && i - lastMoveX < mapDisplayer.grid.size && 0 <= j - lastMoveY && j - lastMoveY < mapDisplayer.grid(i).size) {
             // this check is mandatory when changing map
             mapDisplayer.grid(i-lastMoveX)(j-lastMoveY) foreach (b => b.walkable = b.originalWalkable)
         }
+
+        previousI = i
+        previousJ = j
 
         isMoving = false
         mapDisplayer.grid(i)(j) foreach (b => b.walkable = false)

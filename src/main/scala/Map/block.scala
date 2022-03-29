@@ -203,7 +203,6 @@ class Portal (n_ : Int) extends Block ("/Blocks/Portal.png") {
     override def onWalk (c : CharacterDisplayer) : Unit = {
         if (Utils.mapDisplayers(n-1) != EmptyMapDisplayer) {
             Utils.frame.changeMap(Utils.mapDisplayers(n-1), iTarget, jTarget)
-            c.previousJ = jTarget + 1
             c.portalsCrossed += 1
         } else {
             Utils.mapDisplayers(n-1) = n match {
