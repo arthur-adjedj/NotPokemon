@@ -398,6 +398,8 @@ object EmptyMonster extends Monster {
     alive = false
     monsterType = EmptyType
 
+    override def scoreForStrategy (self : Monster, ennemy : Monster) : Int = -1
+
     override def talk : Boolean = false
 }
 
