@@ -28,7 +28,7 @@ object EasterEgg1 extends EasterEgg {
             Utils.askChoice("Yes No")
             Utils.waitForBooleanFunction(x => Utils.choiceDone != -1)
             if (Utils.choiceDone == 1) {
-                var pokemon = new Eevee
+                var pokemon = new Snorlax
                 pokemon.gainLvl(19)
                 DiscussionLabel.changeText("Which slot ?")
                 Utils.askChoice("Pokemon Slot")
@@ -51,7 +51,7 @@ object EasterEgg2 extends EasterEgg {
                 DiscussionLabel.changeText(message(0))
                 Utils.askChoice("Pokemon Slot")
                 Utils.waitForBooleanFunction(x => Utils.choiceDone != -1)
-                var pokemon = new Gyarados
+                var pokemon = new Eevee
                 Player.switchPokemon(pokemon,Utils.choiceDone)
                 pokemon.gainLvl(49, false)
                 pokemon.owner = Player
@@ -100,7 +100,7 @@ object EasterEgg3 extends EasterEgg {
     def askForStop (n : Int) : Unit = {
         var pokemon : Monster = n match {
             case 3 => new Magikarp
-            case 5 => new Snorlax
+            case 5 => new Gyarados
         }
         pokemon.gainLvl(10*n-1, false)
         Utils.askChoice("Yes No")
