@@ -198,7 +198,9 @@ class CharacterDisplayer (imgName : String) extends Object with Updatable {
                 case Left => iInteracted -= 1
                 case Right => iInteracted += 1
             }
-            mapDisplayer.grid(iInteracted)(jInteracted) foreach (b => b.interact(this))
+            if (0 <= iInteracted && iInteracted < mapDisplayer.grid.length && 0 <= jInteracted && jInteracted < mapDisplayer.grid(iInteracted).length) {
+                mapDisplayer.grid(iInteracted)(jInteracted) foreach (b => b.interact(this))
+            }
         }
     }
 
@@ -296,7 +298,9 @@ object PlayerDisplayer extends CharacterDisplayer ("Characters/MainCharacter.png
             case Left => iInteracted -= 1
             case Right => iInteracted += 1
         }}
-        mapDisplayer.grid(iInteracted)(jInteracted) foreach (b => b.interact(this))
+        if (0 <= iInteracted && iInteracted < mapDisplayer.grid.length && 0 <= jInteracted && jInteracted < mapDisplayer.grid(iInteracted).length) {
+            mapDisplayer.grid(iInteracted)(jInteracted) foreach (b => b.interact(this))
+        }
         Utils.characterDisplayers.foreach(x => 
             if (x.i == iInteracted && x.j == jInteracted && x.whichMap == whichMap && !(x.player.alreadyBeaten)) {
                 x.direction = Utils.oppositeDirection(direction); 
