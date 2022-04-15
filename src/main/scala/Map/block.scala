@@ -166,6 +166,7 @@ class MapItemBlock (item_ : MapItem) extends Block ("Blocks/Item.png") {
 
     override def interact (c : CharacterDisplayer) : Unit = {
         if (!taken) {
+            DiscussionLabel.changeText("You found a "+item.name+" !")
             taken = true
             c.getMapItem(item)
             originalWalkable = true
