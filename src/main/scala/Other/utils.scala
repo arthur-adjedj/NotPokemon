@@ -17,7 +17,7 @@ object Utils {
     var characterDisplayers : List[CharacterDisplayer] = List()
     var repaintables : List[Repaintable] = List()
     var updatable : List[Updatable] = List()
-    var frame : UI = EmptyUI
+    var frame : MyUI = EmptyUI
 
     // we need to define those buttons here because we may need them in descriptables
     // we will move them in part 3 using the companions

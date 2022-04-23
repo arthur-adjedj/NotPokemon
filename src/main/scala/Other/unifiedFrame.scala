@@ -1,3 +1,8 @@
+// package org.interactivemesh.scala.swing.j3d
+
+
+// import javax.media
+
 import java.awt.event._
 import java.awt.{Color,Graphics,BasicStroke,Font}
 import java.awt.event.MouseEvent
@@ -15,7 +20,9 @@ import java.awt.Toolkit
 
 
 
-class UI extends JFrame with MouseListener with MouseMotionListener with KeyListener with MouseWheelListener {
+
+
+class MyUI extends JFrame with MouseListener with MouseMotionListener with KeyListener with MouseWheelListener {
 
     var sizeBlock = 40
     var mapDisplayer : MapDisplayer = new MapDisplayer1 (this)
@@ -263,7 +270,7 @@ class UI extends JFrame with MouseListener with MouseMotionListener with KeyList
     }
 }
 
-object EmptyUI extends UI {}
+object EmptyUI extends MyUI {}
 
 class MyPanel extends JPanel with Repaintable {
     var xMouse : Int = -1

@@ -1,6 +1,6 @@
 import java.awt.Graphics
 
-class MapDisplayer (frame : UI) {
+class MapDisplayer (frame : MyUI) {
 
     var x : Int = 0
     var y : Int = -25
@@ -12,7 +12,7 @@ class MapDisplayer (frame : UI) {
     var sizeMap : Int = 30
     var grid : Array[Array[List[Block]]] = Array.fill(sizeMap)(Array.fill(sizeMap)(List(new EmptyBlock)))
 
-    var ui : UI = frame
+    var ui : MyUI = frame
     var sizeBlock : Int = 0
 
     var imgName : String = "Maps/1.png"
@@ -112,7 +112,7 @@ object EmptyMapDisplayer extends MapDisplayer (EmptyUI) {
 
 }
 
-class MapDisplayer1 (frame : UI) extends MapDisplayer (frame : UI) {
+class MapDisplayer1 (frame : MyUI) extends MapDisplayer (frame : MyUI) {
 
     override def initialise (sizeB : Int, i : Int = -1, j : Int = -1) : Unit = {
         super.initialise(sizeB, i, j)
@@ -212,7 +212,7 @@ class MapDisplayer1 (frame : UI) extends MapDisplayer (frame : UI) {
     grid(20)(12) = List(new TargetedPortal(2, 3, 3))
 }
 
-class MapDisplayer2(frame : UI) extends MapDisplayer(frame : UI) {
+class MapDisplayer2(frame : MyUI) extends MapDisplayer(frame : MyUI) {
     n = 2
     iStart = 3
     jStart = 3
