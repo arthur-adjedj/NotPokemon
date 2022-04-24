@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage
 abstract class Monster extends Object with ScoreForStrategy {
     var xp : Int = 0
     var level : Int = 0
+    var previousLevel : Int = 0
 
     var catchRate : Int = 45
 
@@ -109,6 +110,8 @@ abstract class Monster extends Object with ScoreForStrategy {
 
         monstersSeen = List()
         status = List()
+
+        previousLevel = level
     }
 
     def enterField : Unit = {
@@ -123,10 +126,27 @@ abstract class Monster extends Object with ScoreForStrategy {
     }
 
     def leaveBattle : Unit = {
+        updateLevel
+        if (previousLevel != level) {
+            DiscussionLabel.changeText(name + " is now level " + level)
+            previousLevel = level
+        }
         if (evolving) {
             evolve
         }
         setStats
+
+    }
+
+    def updateLevel : Unit = updateLevel(true)
+
+    def updateLevel (print : Boolean) : Unit = {
+        while (xp >= nextXpStep) {
+            var diff = xp - nextXpStep
+            xp = nextXpStep
+            levelUp
+            gainXp(diff)
+        }
     }
     
     def isCaught : Unit = {
@@ -328,7 +348,7 @@ abstract class Monster extends Object with ScoreForStrategy {
         if (!wild) {
             exp *= 3f/2f
         }
-        monstersSeenAlive.foreach(x => x.gainXp(exp.toInt,true))
+        monstersSeenAlive.foreach(x => x.gainXp(exp.toInt))
         monstersSeenAlive.foreach(x => x.EVHp = (x.EVHp + baseHpStat).min(65535))
         monstersSeenAlive.foreach(x => x.EVAttack = (x.EVAttack + baseAttackStat).min(65535))
         monstersSeenAlive.foreach(x => x.EVDefense = (x.EVDefense + baseDefenseStat).min(65535))
@@ -343,17 +363,12 @@ abstract class Monster extends Object with ScoreForStrategy {
         attackStat = (((baseAttackStat + IVAttack) * 2 + (Math.sqrt(EVAttack)/4f).toInt) * level)/100 + 5
         defenseStat = (((baseDefenseStat + IVDefense) * 2 + (Math.sqrt(EVDefense)/4f).toInt) * level)/100 + 5
         speedStat = (((baseSpeedStat + IVSpeed) * 2 + (Math.sqrt(EVSpeed)/4f).toInt) * level)/100 + 5
+        updateXpSteps
     }
 
-    def gainXp (amount : Int,print : Boolean) : Unit = {
+    def gainXp (amount : Int) : Unit = {
         if (level < 100) {
             xp += amount
-            if (xp >= nextXpStep) {
-                var diff = xp - nextXpStep
-                xp = nextXpStep
-                levelUp(print)
-                gainXp(diff,print)
-            }
         }
     }
 
@@ -374,17 +389,19 @@ abstract class Monster extends Object with ScoreForStrategy {
             heal(hpMax - previousHpMax)
         }
 
+        updateXpSteps
+        if (level > 1 && print) {
+            DiscussionLabel.changeText(name + " is now level " + level)
+        }
+    }
 
-
+    def updateXpSteps : Unit = {
         previousXpStep = nextXpStep
         xpGraph match {
             case "Fast" => nextXpStep = (0.8 * Math.pow(level+1, 3)).toInt
             case "Medium Fast" => nextXpStep = (Math.pow(level+1, 3)).toInt
             case "Medium Slow" => nextXpStep = (1.2 * Math.pow(level+1, 3) - 15 * Math.pow(level+1, 2) + 100 * (level+1) - 140).toInt
             case "Slow" => nextXpStep = (1.25 * Math.pow(level+1, 3)).toInt
-        }
-        if (level > 1 && print) {
-            DiscussionLabel.changeText(name + " is now level " + level)
         }
     }
 
@@ -402,13 +419,19 @@ abstract class Monster extends Object with ScoreForStrategy {
         evolution.alive = alive
         evolution.attacks = attacks
         owner.switchPokemon(evolution, indexInTeam)
-        DiscussionLabel.changeText(name + "is evolving ! It's now a " + evolution.originalName)
+        DiscussionLabel.changeText(name + " is evolving ! It's now a " + evolution.originalName)
         evolution.setStats
+        evolution.hp = evolution.hpMax
     }
 
     def gainLvl (n : Int,print : Boolean) : Unit = {
         for (i <- 1 to n) {
-            gainXp(nextXpStep - xp,print)
+            gainXp(nextXpStep - xp)
+            updateLevel
+        }
+        if (previousLevel != level && print) {
+            DiscussionLabel.changeText(name + " is now level " + level)
+            previousLevel = level
         }
     }
 

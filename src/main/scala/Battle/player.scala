@@ -208,25 +208,20 @@ object EmptyCharacter extends Character {
 }
 
 object Player extends Character {
-    team(0) = new Pikachu
+    switchPokemon(new Pikachu, 0)
     team(0).gainLvl(5,false)
-    team(0).owner = this
 
-    team(2) = new Squirtle
-    team(2).gainLvl(5,false)
-    team(2).owner = this
-
-    team(1) = new Bulbasaur
+    switchPokemon(new Squirtle, 1)
     team(1).gainLvl(5,false)
-    team(1).owner = this
+    
+    switchPokemon(new Bulbasaur, 2)
+    team(2).gainLvl(5,false)
 
-    team(3) = new Charmander
+    switchPokemon(new Charmander, 3)
     team(3).gainLvl(5,false)
-    team(3).owner = this
 
-    team(4) = new Rattata
+    switchPokemon(new Rattata, 4)
     team(4).gainLvl(5,false)
-    team(4).owner = this
 
     if (Utils.debug) {
         team(0).gainLvl(50, false)
