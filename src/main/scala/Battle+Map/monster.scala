@@ -69,7 +69,7 @@ abstract class Monster extends Object with ScoreForStrategy {
     var xpGraph : String = "Fast"
     var previousXpStep : Int = 0
     var nextXpStep : Int = 0
-    def xpRate : Float = {(xp - previousXpStep).toFloat / (nextXpStep - previousXpStep).toFloat}
+    def xpRate : Float = {((xp - previousXpStep).toFloat / (nextXpStep - previousXpStep).toFloat).max(1f)}
     def hpRate : Float = {hp.toFloat / hpMax.toFloat}
 
     var monsterType : Type = EmptyType
