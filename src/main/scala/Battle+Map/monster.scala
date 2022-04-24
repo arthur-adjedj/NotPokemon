@@ -419,9 +419,10 @@ abstract class Monster extends Object with ScoreForStrategy {
         evolution.alive = alive
         evolution.attacks = attacks
         owner.switchPokemon(evolution, indexInTeam)
-        DiscussionLabel.changeText(name + " is evolving ! It's now a " + evolution.originalName)
+        DiscussionLabel.changeText(name + " is evolving ! It's now a " + evolution.originalName + " !")
         evolution.setStats
         evolution.hp = evolution.hpMax
+        owner.currentMonster = owner.team(owner.currentMonster.indexInTeam)
     }
 
     def gainLvl (n : Int,print : Boolean) : Unit = {
