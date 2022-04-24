@@ -1627,6 +1627,29 @@ class Eevee extends Monster {
     uiYShift = 5
 
     description = "Its genetic code is irregular. It may mutate if it is exposed to radiation from element STONEs."
+
+    evolution = new Vaporeon
+    evolveLevel = 30
+
+    override def evolve : Unit = {
+        name.toLowerCase match {
+            case "vaporeon" => evolution = new Vaporeon
+            case "jolteon" => evolution = new Jolteon
+            case "flareon" => evolution = new Flareon
+            case _ => {
+                var random = scala.util.Random.nextFloat()
+                if (random <= 1f/3f) {
+                    evolution = new Vaporeon
+                } else if (random <= 1f/3f) {
+                    evolution = new Jolteon
+                } else {
+                    evolution = new Flareon
+                }
+
+            }
+        }
+        super.evolve
+    }
 }
 
 class Porygon extends Monster {
