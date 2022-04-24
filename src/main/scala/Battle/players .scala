@@ -48,4 +48,8 @@ object MissingCharacter extends Opponent {
     team(0).gainLvl(100)
 
     name = "Missing"
+
+    override def enteringBattleMessage : List[String] = {
+        List("This is just for a test", "If you read this (and your name is not Arthur or Thomas), something went wrong !")
+    }
 } 
