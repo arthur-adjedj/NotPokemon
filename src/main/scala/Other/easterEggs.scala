@@ -34,7 +34,6 @@ object EasterEgg1 extends EasterEgg {
                 Utils.askChoice("Pokemon Slot")
                 Utils.waitForBooleanFunction(x => Utils.choiceDone != -1)
                 Player.switchPokemon(pokemon,Utils.choiceDone)
-                pokemon.owner = Player
             }
         }
     }
@@ -54,7 +53,6 @@ object EasterEgg2 extends EasterEgg {
                 var pokemon = new Eevee
                 Player.switchPokemon(pokemon,Utils.choiceDone)
                 pokemon.gainLvl(49, false)
-                pokemon.owner = Player
                 DiscussionLabel.changeText(message(1))
             } else {
                 TimeUnit.MILLISECONDS.sleep(10)
@@ -110,7 +108,6 @@ object EasterEgg3 extends EasterEgg {
             Utils.askChoice("Pokemon Slot")
             Utils.waitForBooleanFunction(x => Utils.choiceDone != -1)
             Player.switchPokemon(pokemon,Utils.choiceDone)
-            pokemon.owner = Player
             DiscussionLabel.changeText("I hope you're honest !")
             loop = false
             trusted = true

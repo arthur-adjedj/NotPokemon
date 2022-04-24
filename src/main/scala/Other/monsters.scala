@@ -28,6 +28,10 @@ class Pikachu extends Monster {
     description = "When several of these POKEMON gather, their electricity could build and cause lightning storms."
 
     uiYShift = -8
+
+    evolution = new Raichu
+    evolveLevel = 32 // it is supposed to evolve with some items.
+
 }
 
 class Raichu extends Monster {
@@ -83,6 +87,9 @@ class Voltorb extends Monster {
 
     description = "Usually found in power plants. Easily mistaken for a POKEBALL, they have zapped many people."
     uiYShift = 23
+
+    evolution = new Electrode
+    evolveLevel = 30
 }
 
 class Electrode extends Monster {
@@ -137,6 +144,8 @@ class Electabuzz extends Monster {
 
     description = "Normally found near power plants, they can wander away and cause major blackouts in cities."
     uiYShift = -8
+
+
 
 }
 
@@ -195,6 +204,9 @@ class Squirtle extends Monster {
 
     description = "After birth, its back swells and hardens into a shell. Powerfully sprays foam from its mouth."
 
+    evolution = new Wartortle
+    evolveLevel = 16
+
 }
 
 class Wartortle extends Monster {
@@ -222,6 +234,9 @@ class Wartortle extends Monster {
 
     description = "Often hides in water to stalk unwary prey. For swimming fast, it moves its ears to maintain balance."
     uiYShift = -2
+
+    evolution = new Blastoise
+    evolveLevel = 36
 
 }
 
@@ -277,6 +292,9 @@ class Psyduck extends Monster {
     description = "While lulling its enemies with its vacant look, this wily POKEMON will use psychokinetic powers."
     uiYShift = 5
 
+    evolution = new Golduck
+    evolveLevel = 33
+
 }
 
 class Golduck extends Monster {
@@ -330,6 +348,9 @@ class Poliwag extends Monster {
 
     description = "Its newly grown legs prevent it from running. It appears to prefer swimming than trying to stand."
     uiYShift = 31
+
+    evolution = new Poliwhirl
+    evolveLevel = 25
 
 }
 
@@ -438,6 +459,9 @@ class Krabby extends Monster {
     description = "Its pincers are not only powerful weapons, they are used for balance when walking sideways."
     uiYShift = 21
 
+    evolution = new Kingler
+    evolveLevel = 28
+
 }
 
 class Kingler extends Monster {
@@ -492,6 +516,9 @@ class Horsea extends Monster {
     description = "Known to shoot down flying bugs with precision blasts of ink from the surface of the water."
     uiYShift = 17
 
+    evolution = new Seadra
+    evolveLevel = 32
+
 }
 
 class Seadra extends Monster {
@@ -545,6 +572,9 @@ class Goldeen extends Monster {
 
     description = "Its tail fin billows like an elegant ballroom dress, giving it the nickname of the Water Queen."
     uiYShift = 5
+
+    evolution = new Seaking
+    evolveLevel = 33
 
 }
 
@@ -624,6 +654,9 @@ class Magikarp extends Monster {
 
     description = "In the distant past, it was somewhat stronger than the horribly weak descendants that exist today."
     uiYShift = -4
+
+    evolution = new Gyarados
+    evolveLevel = 20
 
 }
 
@@ -710,6 +743,9 @@ class Bulbasaur extends Monster {
     uiYShift = 19
 
     description = "A strange seed was planted on its back at birth. The plant sprouts and grows with this POKEMON."
+
+    evolution = new Ivysaur
+    evolveLevel = 16
 }
 
 class Ivysaur extends Monster {
@@ -738,6 +774,9 @@ class Ivysaur extends Monster {
     description = "When the bulb on its back grows large, it appears to lose the ability to stand on its hind legs."
 
     uiYShift = 2
+
+    evolution = new Venusaur
+    evolveLevel = 32
 }
 
 class Venusaur extends Monster {
@@ -794,6 +833,9 @@ class Oddish extends Monster {
     description = "During the day, it keeps its face buried in the ground. At night, it wanders around sowing its seeds."
     uiYShift = 5
 
+    evolution = new Gloom
+    evolveLevel = 21
+
 }
 
 class Gloom extends Monster {
@@ -821,6 +863,9 @@ class Gloom extends Monster {
 
     description = "The fluid that oozes from its mouth isn’t drool. It is a nectar that is used to attract prey."
     uiYShift = 11
+
+    evolution = new Vileplume
+    evolveLevel = 42 // it is supposed to evolve with some items.
 
 }
 
@@ -876,6 +921,9 @@ class Bellsprout extends Monster {
     uiYShift = 11
 
     description = "A carnivorous POKEMON that traps and eats bugs. It uses its root feet to soak up needed moisture."
+
+    evolution = new Weepinbell
+    evolveLevel = 21
 }
 
 class Weepinbell extends Monster {
@@ -903,6 +951,9 @@ class Weepinbell extends Monster {
     uiYShift = 11
 
     description = "It spits out POISONPOWDER to immobilize the enemy and then finishes it with a spray of ACID."
+
+    evolution = new Victreebel
+    evolveLevel = 42 // it is supposed to evolve with some items.
 }
 
 class Victreebel extends Monster {
@@ -957,6 +1008,9 @@ class Exeggcute extends Monster {
     uiYShift = 29
 
     description = "Often mistaken for eggs. When disturbed, they quickly gather and attack in swarms."
+
+    evolution = new Exeggutor
+    evolveLevel = 21 // it is supposed to evolve with some items.
 }
 
 class Exeggutor extends Monster {
@@ -1038,6 +1092,9 @@ class Charmander extends Monster {
     uiYShift = 5
 
     description = "Obviously prefers hot places. When it rains, steam is said to spout from the tip of its tail."
+
+    evolution = new Charmeleon
+    evolveLevel = 16
 }
 
 class Charmeleon extends Monster {
@@ -1065,6 +1122,9 @@ class Charmeleon extends Monster {
     uiYShift = -2
 
     description = "When it swings its burning tail, it elevates the temperature to unbearably high levels."
+
+    evolution = new Charizard
+    evolveLevel = 36
 }
 
 class Charizard extends Monster {
@@ -1119,6 +1179,9 @@ class Vulpix extends Monster {
     uiYShift = 5
 
     description = "At the time of birth, it has just one tail. The tail splits from its tip as it grows older."
+
+    evolution = new Ninetales
+    evolveLevel = 20 // it is supposed to evolve with some items.
 }
 
 class Ninetales extends Monster {
@@ -1173,6 +1236,9 @@ class Growlithe extends Monster {
     uiYShift = 2
 
     description = "Very protective of its territory. It will bark and bite to repel intruders from its space."
+
+    evolution = new Arcanine
+    evolveLevel = 20 // it is supposed to evolve with some items.
 }
 
 class Arcanine extends Monster {
@@ -1226,7 +1292,10 @@ class Ponyta extends Monster {
     attacks(3) = Flamethrower
     uiYShift = -8
 
-    description = "Its hooves are 10 times harder than diamonds. It can trample anything completely flat in little time."
+    description = "Its hooves are 10 times harder than diamonds. It can trample anything completely flat in little time."   
+
+    evolution = new Rapidash
+    evolveLevel = 40
 }
 
 class Rapidash extends Monster {
@@ -1323,7 +1392,7 @@ class Rattata extends Monster {
     baseSpeedStat = 72
 
     xpGraph = "Medium Fast"
-    baseXp = 51
+    baseXp = 51 // base value is 51
 
     monsterType = Normal
     name = "Rattata"
@@ -1336,6 +1405,9 @@ class Rattata extends Monster {
     uiYShift = 0
 
     description = "Bites anything when it attacks. Small and very quick, it is a common sight in many places."
+
+    evolution = new Raticate
+    evolveLevel = 20
 }
 
 class Raticate extends Monster {
@@ -1390,6 +1462,9 @@ class Meowth extends Monster {
     uiYShift = -4
 
     description = "Adores circular objects. Wanders the streets on a nightly basis to look for dropped loose change."
+    
+    evolution = new Persian
+    evolveLevel = 28
 }
 
 class Persian extends Monster {
@@ -1606,4 +1681,19 @@ class Snorlax extends Monster {
     uiYShift = 15
 
     description = "Very lazy. Just eats and sleeps. As its rotund bulk builds, it becomes steadily more slothful."
+}
+
+
+// this one is used for tests
+class MissingNo extends Monster {
+    baseHpStat = 1
+    baseAttackStat = 1
+    baseDefenseStat = 1
+    baseSpeedStat = 1
+
+    baseXp = 10000
+    
+    attacks(0) = Splash
+
+    override def takeDamage (n : Int) : Unit = die
 }

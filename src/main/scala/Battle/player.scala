@@ -31,8 +31,9 @@ class Character {
         team.foreach(x => x.enterBattle)
         currentMonster = team.filter(x => x.alive)(0)
         currentMonster.enterField
-
     }
+
+    def leaveBattle : Unit = {}
 
     def newTurn : Unit = {
         currentMonster.newTurn
@@ -120,6 +121,7 @@ class Character {
             opponent.playing = false
             Player.endTurn
         }
+        leaveBattle
     }
 
 
@@ -141,6 +143,14 @@ class Character {
 
     def win : Unit = {
         battle.winner = this
+        leaveBattle
+    }
+    
+    def switchPokemon(pika : Monster, n : Int) : Unit  = {
+        Utils.frame.pokedexPane.addCaught(pika)
+        team(n) = pika
+        pika.owner = this
+        pika.indexInTeam = n
     }
 }
 
@@ -239,6 +249,10 @@ object Player extends Character {
         team.foreach(y => (Utils.frame.pokedexPane.pokemonArray.foreach(x => if (x.originalName == y.originalName && y.owner == Player) x.wasSeen = true)))
         team.foreach(y => (Utils.frame.pokedexPane.pokemonArray.foreach(x => if (x.originalName == y.originalName && y.owner == Player) x.wasCaught = true)))
     }
+
+    override def leaveBattle : Unit = {
+        team.foreach(x => x.leaveBattle)
+    }
     override def changeMonster : Unit = {
         if (team.forall(x => !x.alive || x.name == "Empty")) {
             lose
@@ -310,9 +324,4 @@ object Player extends Character {
     override def enteringBattleMessage : List[String] = List()
     override def losingMessage : List[String] = List()
     override def winningMessage : List[String] = List()
-
-    def switchPokemon(pika : Monster, n : Int) : Unit  = {
-        Utils.frame.pokedexPane.addCaught(pika)
-        team(n) = pika
-    }
 }

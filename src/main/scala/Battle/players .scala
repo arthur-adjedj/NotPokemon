@@ -1,7 +1,6 @@
 object SecondCharacter extends Opponent {
-    team(0) = new Magikarp
-    team(0).owner = this
-    team(0).gainLvl(3,false)
+    switchPokemon(new Magikarp, 0)
+    team(0).gainLvl(3)
 
     name = "Opponent"
 
@@ -18,17 +17,14 @@ object SecondCharacter extends Opponent {
     override def losingMessage : List[String] = {
         List("How did you beat me ?", "Anyway ! I'm opening the door so you can exit the maze !", "Do not thank me for that !")
     }
-
 }
 
-object ThirdCharacter extends Opponent {
-    team(0) = new Rattata
-    team(0).owner = this
-    team(0).gainLvl(4,false)
+object LouisBattle extends Opponent {
+    switchPokemon(new Rattata, 0)
+    team(0).gainLvl(4)
 
-    team(1) = new Bulbasaur
-    team(1).owner = this
-    team(1).gainLvl(4,false)
+    switchPokemon(new Bulbasaur, 1)
+    team(1).gainLvl(4)
 
     strat = Utils.controlStrat
     name = "Opponent"
@@ -37,13 +33,19 @@ object ThirdCharacter extends Opponent {
         List("I love pokemons so much ! I am not saying random cringe stuff to make you waste time during this demo at all haha !!!!",
                                         "(C'est marrant parce qu'en fait Louis fait perdre son temps a Louis, bref ...)")
     }
-
-    
 }
 
 object WildCharacter extends WildOpponent {
     team(0) = new Rattata
     team(0).owner = this
     team(0).gainLvl(4,false)
-
+    
 }
+
+// this one is used for tests
+object MissingCharacter extends Opponent {
+    switchPokemon(new MissingNo, 0)
+    team(0).gainLvl(100)
+
+    name = "Missing"
+} 

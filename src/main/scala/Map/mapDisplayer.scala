@@ -118,6 +118,7 @@ class MapDisplayer1 (frame : MyUI) extends MapDisplayer (frame : MyUI) {
         super.initialise(sizeB, i, j)
         SecondCharacterDisplayer.mapDisplayer = this
         SecondPlayerDisplayer.mapDisplayer = this
+        MissingCharacterDisplayer.mapDisplayer = this
     }
 
     override def getWildMonster : Monster = {

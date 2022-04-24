@@ -38,6 +38,11 @@ abstract class Monster extends Object with ScoreForStrategy {
     var accuracyBattle : Float = 1
     var evasionBattle : Float = 1
 
+    var evolution : Monster = EmptyMonster
+    var evolveLevel : Int = 101 // base value is greater than the maximum level so the pokemon cannot evolve
+    var evolving : Boolean = false
+
+
     // For the strategy
     var turnsOnField : Int = 0
     def scoreForStrategy (self : Monster, ennemy : Monster) : Int = {
@@ -49,8 +54,6 @@ abstract class Monster extends Object with ScoreForStrategy {
     var alive : Boolean = true
     var wild : Boolean = false
     var monstersSeen : List[Monster] = List()
-
-    var hpMaxPerLevel : Int = 10
 
     var attackStage : Int = 0
     var defenseStage : Int = 0
@@ -72,6 +75,7 @@ abstract class Monster extends Object with ScoreForStrategy {
 
     var name : String = ""
     var owner : Character = EmptyCharacter
+    var indexInTeam : Int = 0 
 
     //these values are put as strings because their values can greatly vary between pokemons, 
     //from grams to tons and from cm to tens of meters
@@ -116,6 +120,13 @@ abstract class Monster extends Object with ScoreForStrategy {
 
     def leaveField : Unit = {
         turnsOnField = 0
+    }
+
+    def leaveBattle : Unit = {
+        if (evolving) {
+            evolve
+        }
+        setStats
     }
     
     def isCaught : Unit = {
@@ -327,6 +338,13 @@ abstract class Monster extends Object with ScoreForStrategy {
 
     }
 
+    def setStats : Unit = {
+        hpMax = (((baseHpStat + IVHp) * 2 + (Math.sqrt(EVHp)/4f).toInt) * level)/100 + level + 10
+        attackStat = (((baseAttackStat + IVAttack) * 2 + (Math.sqrt(EVAttack)/4f).toInt) * level)/100 + 5
+        defenseStat = (((baseDefenseStat + IVDefense) * 2 + (Math.sqrt(EVDefense)/4f).toInt) * level)/100 + 5
+        speedStat = (((baseSpeedStat + IVSpeed) * 2 + (Math.sqrt(EVSpeed)/4f).toInt) * level)/100 + 5
+    }
+
     def gainXp (amount : Int,print : Boolean) : Unit = {
         if (level < 100) {
             xp += amount
@@ -339,19 +357,22 @@ abstract class Monster extends Object with ScoreForStrategy {
         }
     }
 
+    def levelUp : Unit = levelUp(false)
+
     def levelUp(print : Boolean) : Unit = {
+        if (level >= evolveLevel) {
+            evolving = true
+        }
         level += 1
 
         var previousHpMax = hpMax
-        hpMax = (((baseHpStat + IVHp) * 2 + (Math.sqrt(EVHp)/4f).toInt) * level)/100 + level + 10
+        setStats
+
         if (level == 1) {
             hp = hpMax
         } else {
             heal(hpMax - previousHpMax)
         }
-        attackStat = (((baseAttackStat + IVAttack) * 2 + (Math.sqrt(EVAttack)/4f).toInt) * level)/100 + 5
-        defenseStat = (((baseDefenseStat + IVDefense) * 2 + (Math.sqrt(EVDefense)/4f).toInt) * level)/100 + 5
-        speedStat = (((baseSpeedStat + IVSpeed) * 2 + (Math.sqrt(EVSpeed)/4f).toInt) * level)/100 + 5
 
 
 
@@ -365,6 +386,24 @@ abstract class Monster extends Object with ScoreForStrategy {
         if (level > 1 && print) {
             DiscussionLabel.changeText(name + " is now level " + level)
         }
+    }
+
+    def evolve : Unit = {
+        evolution.xp = xp
+        evolution.level = level
+        evolution.IVHp = IVHp
+        evolution.IVAttack = IVHp
+        evolution.IVDefense = IVDefense
+        evolution.IVSpeed = IVSpeed
+        evolution.EVHp = EVHp
+        evolution.EVAttack = EVHp
+        evolution.EVDefense = EVDefense
+        evolution.EVSpeed = EVSpeed
+        evolution.alive = alive
+        evolution.attacks = attacks
+        owner.switchPokemon(evolution, indexInTeam)
+        DiscussionLabel.changeText(name + "is evolving ! It's now a " + evolution.originalName)
+        evolution.setStats
     }
 
     def gainLvl (n : Int,print : Boolean) : Unit = {
