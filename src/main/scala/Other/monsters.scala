@@ -1392,7 +1392,7 @@ class Rattata extends Monster {
     baseSpeedStat = 72
 
     xpGraph = "Medium Fast"
-    baseXp = 51 // base value is 51
+    baseXp = 51
 
     monsterType = Normal
     name = "Rattata"
