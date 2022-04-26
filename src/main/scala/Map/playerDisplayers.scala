@@ -26,8 +26,6 @@ object SecondCharacterDisplayer extends OpponentDisplayer ("Characters/FemaleCha
     i = 12
     j = 13
 
-    Utils.print("hoerfjzeihj")
-
 }
 
 // this one is used for tests
@@ -37,8 +35,6 @@ object MissingCharacterDisplayer extends OpponentDisplayer ("Characters/MainChar
     interceptLength = 0
     i = 20
     j = 20
-
-    Utils.print("hoer")
 }
 
 object EmptyCharacterDisplayer extends CharacterDisplayer ("Empty.png") {
