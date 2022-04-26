@@ -1,9 +1,10 @@
 //These items are unique, you cannot stack them
 import java.awt.Graphics
 
-abstract class MapItem {
+abstract class MapItem extends Object with Saveable {
     var id : Int = -1
     var name : String = "Nothing"
+    override def toStringSave (tabs : Int) : String = "\t"*tabs + "MapItem : " + name
 
     // to know if we can select this item or not
     var usable : Boolean = true
@@ -18,6 +19,8 @@ class Key (id_ : Int) extends MapItem {
     id = id_
     usable = false
     name = "Key"
+
+    override def toStringSave (tabs : Int) : String = "\t"*tabs + "MapItem : " + name + " " + id
 }
 
 class Bike extends MapItem {

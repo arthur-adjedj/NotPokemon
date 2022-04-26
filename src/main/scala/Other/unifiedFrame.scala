@@ -172,6 +172,10 @@ class MyUI extends JFrame with MouseListener with MouseMotionListener with KeyLi
         currentPane.showHelp = !currentPane.showHelp
     }
 
+    def save : Unit = {
+        Utils.print(Player.toStringSave(0))
+    }
+
     def mouseClicked (e : MouseEvent) : Unit = {
         PlayerDisplayer.hasDoneSomething = true
         if (!DiscussionLabel.changingText && DiscussionLabel.messageQueue.isEmpty) {

@@ -573,7 +573,9 @@ object SaveButton extends MapButton ("Buttons/RunButton.png") {
     text = "Save"
 
     override def isClicked : Unit = {
-        DiscussionLabel.changeText("This functionnality is not implemented yet !")
+        DiscussionLabel.changeText("We're trying !")
+        Utils.frame.save
+
     }
 }
 

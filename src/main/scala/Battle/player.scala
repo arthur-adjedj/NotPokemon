@@ -3,9 +3,11 @@ import java.sql.Time
 import java.lang.Thread
 
 
-class Character {
+class Character extends Object with Saveable {
     var team : Array[Monster] = Array.fill(6){EmptyMonster}
+    List.range(0, team.size).foreach(x => team(x).indexInTeam = x)
     var name : String = ""
+    var index : Int = -1
     var opponent : Character = EmptyCharacter
     var battle : Battle = EmptyBattle
 
@@ -151,6 +153,11 @@ class Character {
         team(n) = pika
         pika.owner = this
         pika.indexInTeam = n
+    }
+
+    override def toStringSave (tabs : Int) : String = {
+        "\t"*tabs + "Index : " + index + "\n" + 
+        "\t"*tabs + "Beaten : " + alreadyBeaten + "\n" 
     }
 }
 
@@ -319,4 +326,29 @@ object Player extends Character {
     override def enteringBattleMessage : List[String] = List()
     override def losingMessage : List[String] = List()
     override def winningMessage : List[String] = List()
+
+    override def toStringSave (tabs : Int) : String = {
+        "\t"*tabs + "Name : " + name + "\n" +
+        team.filter(x => x.name != "Empty").map(x => "\t"*tabs + "Pokemon " + x.indexInTeam + "\n" + x.toStringSave(tabs+1) + "\n").foldLeft("")((x, y) => x+y) + 
+        inventory.filter(x => x.amount > 0).map(x => "\t"*tabs + "Item : " + x.name + " (" + x.amount + ")\n").foldLeft("")((x, y) => x+y) + 
+        PlayerDisplayer.usableMapInventory.map(x => x.toStringSave(tabs) + "\n").foldLeft("")((x, y) => x+y) + 
+        PlayerDisplayer.notUsableMapInventy.map(x => x.toStringSave(tabs) + "\n").foldLeft("")((x, y) => x+y)
+        // "\t"*tabs + ""
+        // "\t"*tabs + ""
+        // "\t"*tabs + ""
+        // "\t"*tabs + ""
+        // "\t"*tabs + ""
+        // "\t"*tabs + ""
+        // "\t"*tabs + ""
+        // "\t"*tabs + ""
+        // "\t"*tabs + ""
+        // "\t"*tabs + ""
+        // "\t"*tabs + ""
+        // "\t"*tabs + ""
+        // "\t"*tabs + ""
+        // "\t"*tabs + ""
+        // "\t"*tabs + ""
+        // "\t"*tabs + ""
+        // "\t"*tabs + ""        
+    }
 }

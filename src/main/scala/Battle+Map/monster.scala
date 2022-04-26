@@ -3,7 +3,7 @@ import java.lang.Math
 import javax.management.Descriptor
 import java.awt.image.BufferedImage
 
-abstract class Monster extends Object with ScoreForStrategy {
+abstract class Monster extends Object with ScoreForStrategy with Saveable {
     var xp : Int = 0
     var level : Int = 0
     var previousLevel : Int = 0
@@ -449,6 +449,38 @@ abstract class Monster extends Object with ScoreForStrategy {
 
     override def toString : String = {
         name + " is a " + originalName + " monster of type " + typeName + ". "
+    }
+
+    override def toStringSave (tabs : Int) : String = {
+        "\t"*tabs + "Specie : " + originalName + "\n" + 
+        "\t"*tabs + "Name : " + name + "\n" + 
+        "\t"*tabs + "Level : " + level + "\n" + 
+        "\t"*tabs + "Xp : " + xp + "\n" + 
+        "\t"*tabs + "IVAttack : " + IVAttack + "\n" + 
+        "\t"*tabs + "IVDefense : " + IVDefense + "\n" + 
+        "\t"*tabs + "IVSpeed : " + IVSpeed + "\n" + 
+        "\t"*tabs + "IVHp : " + IVHp + "\n" + 
+        "\t"*tabs + "EVAttack : " + EVAttack + "\n" + 
+        "\t"*tabs + "EVDefense : " + EVDefense + "\n" + 
+        "\t"*tabs + "EVSpeed : " + EVSpeed + "\n" + 
+        "\t"*tabs + "EVHp : " + EVHp + "\n" + 
+        "\t"*tabs + "Hp : " + hp + "\n" + 
+        "\t"*tabs + "Attack 0 : " + attacks(0).name + "\n" +
+        "\t"*tabs + "Attack 1 : " + attacks(1).name + "\n" +
+        "\t"*tabs + "Attack 2 : " + attacks(2).name + "\n" +
+        "\t"*tabs + "Attack 3 : " + attacks(3).name
+        // "\t"*tabs + ""
+        // "\t"*tabs + ""
+        // "\t"*tabs + ""
+        // "\t"*tabs + ""
+        // "\t"*tabs + ""
+        // "\t"*tabs + ""
+        // "\t"*tabs + ""
+        // "\t"*tabs + ""
+        // "\t"*tabs + ""
+        // "\t"*tabs + ""
+        // "\t"*tabs + ""
+        // "\t"*tabs + ""
     }
 
     levelUp(false)
