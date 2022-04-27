@@ -156,8 +156,10 @@ class Character extends Object with Saveable {
     }
 
     override def toStringSave (tabs : Int) : String = {
-        "\t"*tabs + "Index : " + index + "\n" + 
-        "\t"*tabs + "Beaten : " + alreadyBeaten + "\n" 
+        "\t"*tabs + "Character : " + "\n" + 
+        "\t"*(tabs+1) + "Index : " + index + "\n" + 
+        "\t"*(tabs+1) + "Name : " + name + "\n" + 
+        "\t"*(tabs+1) + "Beaten : " + alreadyBeaten + "\n" 
     }
 }
 
@@ -328,11 +330,10 @@ object Player extends Character {
     override def winningMessage : List[String] = List()
 
     override def toStringSave (tabs : Int) : String = {
-        "\t"*tabs + "Name : " + name + "\n" +
-        team.filter(x => x.name != "Empty").map(x => "\t"*tabs + "Pokemon " + x.indexInTeam + "\n" + x.toStringSave(tabs+1) + "\n").foldLeft("")((x, y) => x+y) + 
-        inventory.filter(x => x.amount > 0).map(x => "\t"*tabs + "Item : " + x.name + " (" + x.amount + ")\n").foldLeft("")((x, y) => x+y) + 
-        PlayerDisplayer.usableMapInventory.map(x => x.toStringSave(tabs) + "\n").foldLeft("")((x, y) => x+y) + 
-        PlayerDisplayer.notUsableMapInventy.map(x => x.toStringSave(tabs) + "\n").foldLeft("")((x, y) => x+y)
+        "\t"*tabs + "Player : " + "\n" +
+        "\t"*(tabs+1) + "Name : " + name + "\n" + 
+        team.filter(x => x.name != "Empty").map(x => "\t"*(tabs+1) + "Pokemon " + x.indexInTeam + " :\n" + x.toStringSave(tabs+2) + "\n").foldLeft("")((x, y) => x+y) + 
+        inventory.filter(x => x.amount > 0).map(x => "\t"*(tabs+1) + "Item : " + x.name + " (" + x.amount + ")\n").foldLeft("")((x, y) => x+y)
         // "\t"*tabs + ""
         // "\t"*tabs + ""
         // "\t"*tabs + ""

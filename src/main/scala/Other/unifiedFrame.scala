@@ -173,7 +173,7 @@ class MyUI extends JFrame with MouseListener with MouseMotionListener with KeyLi
     }
 
     def save : Unit = {
-        Utils.print(Player.toStringSave(0))
+        Utils.print(Utils.characterDisplayers.map(x => x.toStringSave(0)).foldLeft("")((x, y) => x+y))
     }
 
     def mouseClicked (e : MouseEvent) : Unit = {

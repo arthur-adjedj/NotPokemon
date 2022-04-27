@@ -38,6 +38,7 @@ object MissingCharacterDisplayer extends OpponentDisplayer ("Characters/MainChar
 }
 
 object EmptyCharacterDisplayer extends CharacterDisplayer ("Empty.png") {
+    override def toStringSave (tabs : Int) : String = "" 
     override def initialise : Unit = {}
     override def update : Unit = {}
 }

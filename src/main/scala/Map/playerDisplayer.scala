@@ -11,7 +11,7 @@ case object Left extends Direction
 case object Right extends Direction
 
 
-class CharacterDisplayer (imgName : String) extends Object with Updatable {
+class CharacterDisplayer (imgName : String) extends Object with Updatable with Saveable {
     var direction : Direction = Down
     var interceptLength : Int = 0 // for opponents (we need it here for a foreach)
 
@@ -227,6 +227,15 @@ class CharacterDisplayer (imgName : String) extends Object with Updatable {
             Utils.print(player.name + " is using " + item.name)
         }
     }
+
+    override def toStringSave (tabs : Int) : String = {
+        "\t"*tabs + "CharacterDisplayer : " + "\n" + 
+        "\t"*(tabs+1) + "i : " + i + "\n" + 
+        "\t"*(tabs+1) + "j : " + j + "\n" + 
+        "\t"*(tabs+1) + "map : " + whichMap + "\n" + 
+        player.toStringSave(tabs+2)
+    }
+
 }
 
 abstract class OpponentDisplayer (imageName_ : String) extends CharacterDisplayer(imageName_) {
@@ -326,6 +335,16 @@ object PlayerDisplayer extends CharacterDisplayer ("Characters/MainCharacter.png
             g.drawRect(leftBox, topBox, rightBox - leftBox + mapDisplayer.sizeBlock, botBox - topBox + mapDisplayer.sizeBlock)
         }
         super.display(g, xMap, yMap, n)
+    }
+
+    override def toStringSave (tabs : Int) : String = {
+        "\t"*tabs + "PlayerDisplayer : \n" + 
+        "\t"*(tabs+1) + "i : " + i + "\n" + 
+        "\t"*(tabs+1) + "j : " + j + "\n" + 
+        "\t"*(tabs+1) + "map : " + whichMap + "\n" + 
+        player.toStringSave(tabs+2) +
+        usableMapInventory.map(x => x.toStringSave(tabs+1) + "\n").foldLeft("")((x, y) => x+y) + 
+        notUsableMapInventy.map(x => x.toStringSave(tabs+1) + "\n").foldLeft("")((x, y) => x+y)
     }
 
 
