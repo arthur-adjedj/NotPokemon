@@ -218,22 +218,22 @@ object EmptyCharacter extends Character {
 
 object Player extends Character {
     switchPokemon(new Pikachu, 0)
-    team(0).gainLvl(5,false)
+    team(0).gainLvl(5)
 
     switchPokemon(new Squirtle, 1)
-    team(1).gainLvl(5,false)
+    team(1).gainLvl(5)
     
     switchPokemon(new Bulbasaur, 2)
-    team(2).gainLvl(5,false)
+    team(2).gainLvl(5)
 
     switchPokemon(new Charmander, 3)
-    team(3).gainLvl(5,false)
+    team(3).gainLvl(5)
 
     switchPokemon(new Rattata, 4)
-    team(4).gainLvl(5,false)
+    team(4).gainLvl(5)
 
     if (Utils.debug) {
-        team(0).gainLvl(50, false)
+        team(0).gainLvl(50)
     }
 
     gainItem(FreshWater, 5)
@@ -333,7 +333,7 @@ object Player extends Character {
         "\t"*tabs + "Player : " + "\n" +
         "\t"*(tabs+1) + "Name : " + name + "\n" + 
         team.filter(x => x.name != "Empty").map(x => "\t"*(tabs+1) + "Pokemon " + x.indexInTeam + " :\n" + x.toStringSave(tabs+2) + "\n").foldLeft("")((x, y) => x+y) + 
-        inventory.filter(x => x.amount > 0).map(x => "\t"*(tabs+1) + "Item : " + x.name + " (" + x.amount + ")\n").foldLeft("")((x, y) => x+y)
+        inventory.filter(x => x.amount > 0).sortWith((x, y) => x.order <= y.order).map(x => "\t"*(tabs+1) + "Item : " + x.name + " (" + x.amount + ")\n").foldLeft("")((x, y) => x+y)
         // "\t"*tabs + ""
         // "\t"*tabs + ""
         // "\t"*tabs + ""

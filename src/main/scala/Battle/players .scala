@@ -1,8 +1,9 @@
 object SecondCharacter extends Opponent {
     switchPokemon(new Magikarp, 0)
     team(0).gainLvl(3)
-
-    name = "Opponent"
+    
+    name = "Boss 1"
+    index = 0
 
     override def lose : Unit = {
         super.lose
@@ -27,7 +28,8 @@ object LouisBattle extends Opponent {
     team(1).gainLvl(4)
 
     strat = Utils.controlStrat
-    name = "Opponent"
+    name = "Louis"
+    index = 1
 
     override def enteringBattleMessage : List[String] = {
         List("I love pokemons so much ! I am not saying random cringe stuff to make you waste time during this demo at all haha !!!!",
@@ -48,6 +50,7 @@ object MissingCharacter extends Opponent {
     team(0).gainLvl(100)
 
     name = "Missing"
+    index = 2
 
     override def enteringBattleMessage : List[String] = {
         List("This is just for a test", "If you read this (and your name is not Arthur or Thomas), something went wrong !")
