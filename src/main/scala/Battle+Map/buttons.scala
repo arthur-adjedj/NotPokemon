@@ -1,5 +1,4 @@
 import java.io.File
-import java.awt.event.MouseEvent
 import java.awt.{Color,Graphics,BasicStroke,Font}
 import java.util.concurrent.TimeUnit
 import javax.swing.{JFrame, JPanel, JLabel}

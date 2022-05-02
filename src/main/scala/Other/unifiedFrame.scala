@@ -5,7 +5,6 @@
 
 import java.awt.event._
 import java.awt.{Color,Graphics,BasicStroke,Font}
-import java.awt.event.MouseEvent
 import javax.swing.{JFrame, JPanel, JLabel}
 import java.io.File
 import java.awt.font.TextAttribute
@@ -15,7 +14,6 @@ import collection.JavaConverters._
 import java.util.concurrent.TimeUnit
 import scala.runtime.EmptyMethodCache
 import javax.swing.DebugGraphics
-import java.awt.event.MouseMotionListener
 import java.awt.Toolkit
 
 
