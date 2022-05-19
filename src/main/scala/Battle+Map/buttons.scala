@@ -572,7 +572,7 @@ object SaveButton extends MapButton ("Buttons/RunButton.png") {
     text = "Save"
 
     override def isClicked : Unit = {
-        DiscussionLabel.changeText("We're trying !")
+        DiscussionLabel.changeText("The game is saved ! Press 5 to load it !" )
         Utils.save
 
     }

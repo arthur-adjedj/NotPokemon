@@ -320,7 +320,6 @@ object PlayerDisplayer extends CharacterDisplayer ("Characters/MainCharacter.png
         super.teleport(newI, newJ, newMap)
         if (Utils.mapDisplayers(newMap-1) != EmptyMapDisplayer) {
             Utils.frame.changeMap(Utils.mapDisplayers(newMap-1), newI, newJ)
-            portalsCrossed += 1
         } else {
             Utils.mapDisplayers(newMap-1) = newMap match {
                 case 1 => new MapDisplayer1(Utils.frame)

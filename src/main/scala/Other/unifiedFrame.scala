@@ -254,7 +254,7 @@ class MyUI extends JFrame with MouseListener with MouseMotionListener with KeyLi
                 case '2' => if (Utils.debug) backToMap
                 case '3' => if (Utils.debug) backToPokedex
                 case '4' => if (Utils.debug) DiscussionLabel.changeText("This is a very long message ! It is supposed to be displayed on several lines ! I hope it will work correctly ! And of course it works correctly !")
-                case '5' => if (Utils.debug) Utils.loadSave
+                case '5' => Utils.loadSave
                 case ' ' => EasterEgg3.press
                 case _ => currentPane.onKeyPressed(e)
             }

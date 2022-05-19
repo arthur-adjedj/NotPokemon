@@ -248,11 +248,16 @@ object Utils {
 
     def loadSave : Unit = {
         var sizeToRead = 100000
-        var filereader = new FileReader("save.txt")
-        var charArray = new Array[Char](sizeToRead)
-        filereader.read(charArray, 0, sizeToRead)
-        var saveString = String.copyValueOf(charArray)
-        parseSave(saveString)
+        var file = new File("save.txt")
+        if (!file.exists) {
+            DiscussionLabel.changeText("You need a save if you want to load it !")
+        } else {
+            var filereader = new FileReader("save.txt")
+            var charArray = new Array[Char](sizeToRead)
+            filereader.read(charArray, 0, sizeToRead)
+            var saveString = String.copyValueOf(charArray)
+            parseSave(saveString)
+        }
     }
 
     def parseSave (saveString : String) : Unit = {
