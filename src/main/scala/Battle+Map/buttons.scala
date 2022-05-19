@@ -599,7 +599,7 @@ object TrainerButton extends MapButton ("Buttons/FireButton.png") {
 
     override def isClicked : Unit = {
         DiscussionLabel.changeText("This functionnality is not implemented yet !")
-        Utils.askChoice("Pokemon")
+        //Utils.askChoice("Pokemon")
     }
 }
 
