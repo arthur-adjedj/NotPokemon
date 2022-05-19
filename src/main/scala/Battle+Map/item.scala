@@ -93,8 +93,7 @@ class Ball extends Item {
             var slot = Utils.findFirstOccurenceArray(Player.team, EmptyMonster)
             var opponent = Player.opponent
             opponent.currentMonster.owner = Player
-            Player.team(slot) = opponent.currentMonster
-            Player.team(slot).isCaught
+            Player.switchPokemon(opponent.currentMonster, slot)
             opponent.team(Utils.findFirstOccurenceArray(opponent.team, opponent.currentMonster)) = EmptyMonster
             Player.opponent.playing = false
             opponent.changeMonster(true)

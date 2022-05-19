@@ -142,7 +142,7 @@ class Door (idKey_ : Int) extends Block ("Blocks/ClosedDoor.png") {
             otherImgName = imgName
             imgName = temp
             img = Utils.loadImage(imgName)
-        } else if (idKey == -1 || c.notUsableMapInventy.exists(x => x.id == idKey)) {
+        } else if (idKey == -1 || c.notUsableMapInventory.exists(x => x.id == idKey)) {
             unlocked = true
             DiscussionLabel.changeText("You unlocked the door !")
             interact(c)

@@ -20,6 +20,9 @@ import java.awt.Toolkit
 
 
 
+
+
+
 class MyUI extends JFrame with MouseListener with MouseMotionListener with KeyListener with MouseWheelListener {
 
     var sizeBlock = 40
@@ -170,10 +173,6 @@ class MyUI extends JFrame with MouseListener with MouseMotionListener with KeyLi
         currentPane.showHelp = !currentPane.showHelp
     }
 
-    def save : Unit = {
-        Utils.print(Utils.characterDisplayers.map(x => x.toStringSave(0)).foldLeft("")((x, y) => x+y))
-    }
-
     def mouseClicked (e : MouseEvent) : Unit = {
         PlayerDisplayer.hasDoneSomething = true
         if (!DiscussionLabel.changingText && DiscussionLabel.messageQueue.isEmpty) {
@@ -255,6 +254,7 @@ class MyUI extends JFrame with MouseListener with MouseMotionListener with KeyLi
                 case '2' => if (Utils.debug) backToMap
                 case '3' => if (Utils.debug) backToPokedex
                 case '4' => if (Utils.debug) DiscussionLabel.changeText("This is a very long message ! It is supposed to be displayed on several lines ! I hope it will work correctly ! And of course it works correctly !")
+                case '5' => if (Utils.debug) Utils.loadSave
                 case ' ' => EasterEgg3.press
                 case _ => currentPane.onKeyPressed(e)
             }

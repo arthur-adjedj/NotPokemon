@@ -4,7 +4,7 @@ import java.awt.Graphics
 abstract class MapItem extends Object with Saveable {
     var id : Int = -1
     var name : String = "Nothing"
-    override def toStringSave (tabs : Int) : String = "\t"*tabs + "MapItem : " + name
+    override def toStringSave (tabs : Int) : String = "-MapItem : " + name
 
     // to know if we can select this item or not
     var usable : Boolean = true
@@ -20,7 +20,7 @@ class Key (id_ : Int) extends MapItem {
     usable = false
     name = "Key"
 
-    override def toStringSave (tabs : Int) : String = "\t"*tabs + "MapItem : " + name + " " + id
+    override def toStringSave (tabs : Int) : String = "-MapItem : " + name + " " + id
 }
 
 class Bike extends MapItem {

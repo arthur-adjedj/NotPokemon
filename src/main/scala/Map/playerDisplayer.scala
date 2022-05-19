@@ -62,7 +62,7 @@ class CharacterDisplayer (imgName : String) extends Object with Updatable with S
     var sliding : Boolean = false
 
     var usableMapInventory : Queue[MapItem] = Queue()
-    var notUsableMapInventy : Queue[MapItem] = Queue()
+    var notUsableMapInventory : Queue[MapItem] = Queue()
     var currentItem : MapItem = EmptyMapItem
 
 
@@ -70,6 +70,8 @@ class CharacterDisplayer (imgName : String) extends Object with Updatable with S
     var traveledDistance : Int = 0
     var portalsCrossed : Int = 0
     var hasDoneSomething : Boolean = false
+
+    var index : Int = -1
 
     Utils.characterDisplayers = this :: Utils.characterDisplayers
 
@@ -84,6 +86,21 @@ class CharacterDisplayer (imgName : String) extends Object with Updatable with S
         if (mapDisplayer != null) {
             mapDisplayer.grid(i)(j).foreach (b => b.walkable = false)
         }
+    }
+
+    def teleport (newI : Int, newJ : Int, newMap : Int) : Unit = {
+        var preI = i
+        var preJ = j
+
+        i = newI
+        j = newJ
+        whichMap = newMap
+
+        mapDisplayer.grid(preI)(preJ).foreach (b => b.walkable = b.originalWalkable)
+
+        alignCoordinates
+
+
     }
 
     def move (moveX : Int, moveY : Int) : Unit = {
@@ -210,8 +227,8 @@ class CharacterDisplayer (imgName : String) extends Object with Updatable with S
                 usableMapInventory.enqueue(item)
             }
         } else {
-            if (notUsableMapInventy.forall(x => x.id != item.id)) {
-                notUsableMapInventy.enqueue(item)
+            if (notUsableMapInventory.forall(x => x.id != item.id)) {
+                notUsableMapInventory.enqueue(item)
             }
         }
     }
@@ -230,10 +247,11 @@ class CharacterDisplayer (imgName : String) extends Object with Updatable with S
 
     override def toStringSave (tabs : Int) : String = {
         "\t"*tabs + "CharacterDisplayer : " + "\n" + 
+        "\t"*(tabs+1) + "index : " + index + "\n" + 
         "\t"*(tabs+1) + "i : " + i + "\n" + 
         "\t"*(tabs+1) + "j : " + j + "\n" + 
         "\t"*(tabs+1) + "map : " + whichMap + "\n" + 
-        player.toStringSave(tabs+2)
+        player.toStringSave(tabs+1)
     }
 
 }
@@ -297,6 +315,20 @@ object PlayerDisplayer extends CharacterDisplayer ("Characters/MainCharacter.png
         leftBox = 4*mapDisplayer.sizeBlock
         rightBox = Utils.frame.sizeX - leftBox - mapDisplayer.sizeBlock
     }
+
+    override def teleport (newI : Int, newJ : Int, newMap : Int) : Unit = {
+        super.teleport(newI, newJ, newMap)
+        if (Utils.mapDisplayers(newMap-1) != EmptyMapDisplayer) {
+            Utils.frame.changeMap(Utils.mapDisplayers(newMap-1), newI, newJ)
+            portalsCrossed += 1
+        } else {
+            Utils.mapDisplayers(newMap-1) = newMap match {
+                case 1 => new MapDisplayer1(Utils.frame)
+                case 2 => new MapDisplayer2(Utils.frame)
+            } 
+            teleport(newI, newJ, newMap)
+       }
+    }
     override def interactExplicitly : Unit = {
         var iInteracted : Int = i
         var jInteracted : Int = j
@@ -342,9 +374,9 @@ object PlayerDisplayer extends CharacterDisplayer ("Characters/MainCharacter.png
         "\t"*(tabs+1) + "i : " + i + "\n" + 
         "\t"*(tabs+1) + "j : " + j + "\n" + 
         "\t"*(tabs+1) + "map : " + whichMap + "\n" + 
-        player.toStringSave(tabs+2) +
+        player.toStringSave(tabs+1) + 
         usableMapInventory.map(x => x.toStringSave(tabs+1) + "\n").foldLeft("")((x, y) => x+y) + 
-        notUsableMapInventy.map(x => x.toStringSave(tabs+1) + "\n").foldLeft("")((x, y) => x+y)
+        notUsableMapInventory.map(x => if (x.name != "Nothing") x.toStringSave(tabs+1) + "\n").foldLeft("")((x, y) => x+y) 
     }
 
 

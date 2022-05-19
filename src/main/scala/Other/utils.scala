@@ -7,6 +7,11 @@ import java.util.concurrent.TimeUnit
 import java.lang.Math
 import java.sql.Time
 
+import java.io.FileReader
+import java.io.FileWriter
+
+import scala.collection.mutable.Queue
+
 object Utils {
 
     // some global variables
@@ -232,6 +237,179 @@ object Utils {
         choiceType = "No choice"
         frame.listeningToKeyboard = true
         DiscussionLabel.changeText("")
+    }
+
+    def save : Unit = {
+        var saveString = characterDisplayers.map(x => x.toStringSave(0)).foldLeft("")((x, y) => x+"-"+y)
+        var filewriter = new FileWriter("save.txt")
+        filewriter.write(saveString)
+        filewriter.close
+    }
+
+    def loadSave : Unit = {
+        var sizeToRead = 100000
+        var filereader = new FileReader("save.txt")
+        var charArray = new Array[Char](sizeToRead)
+        filereader.read(charArray, 0, sizeToRead)
+        var saveString = String.copyValueOf(charArray)
+        parseSave(saveString)
+    }
+
+    def parseSave (saveString : String) : Unit = {
+        Utils.print(saveString)
+        var splited = saveString.split("-")
+        splited.foreach(find_parse)
+    }
+
+    def find_parse (saveString : String) : Unit = {
+        if (saveString.startsWith("CharacterDisplayer :")) {
+            loadCharacterDisplayer(saveString)
+        } else if (saveString.startsWith("PlayerDisplayer :")) {
+            loadPlayerDisplayer(saveString)
+        } else if (saveString.startsWith("Player : ")) {
+            loadPlayer(saveString)
+        } else if (saveString.startsWith("Pokemon")) {
+            loadPokemon(saveString)
+        } else if (saveString.startsWith("MapItem : ")) {
+            loadMapItem(saveString)
+        } else {
+            Utils.print("Not handled" + saveString)
+        }
+    }
+
+    def loadCharacterDisplayer (saveString : String) : Unit = {
+        var splited = saveString.split("\n")
+        var data = splited.slice(1, splited.length).map(x => x.substring(1, x.length))
+        var index = data(0).split(" : ")(1).toInt
+        var i = data(1).split(" : ")(1).toInt
+        var j = data(2).split(" : ")(1).toInt
+        var map = data(3).split(" : ")(1).toInt
+        var characterString = data.slice(4, data.length).foldLeft("")((x, y) => x + "\n" + y)
+
+        var characterDisplayer = characterDisplayers.filter(x => x.index == index)(0)
+        characterDisplayer.teleport(i, j, map)
+        loadCharacter(characterString, characterDisplayer.player)
+    }
+
+    def loadCharacter (saveString : String, character : Character) : Unit = {
+        var splited = saveString.split("\n")
+        var data = splited.slice(2, splited.length).map(x => x.substring(1, x.length))
+        var name = data(0).split(" : ")(1)
+        var alreadyBeaten = data(1).split(" : ")(1).toBoolean
+        
+        character.name = name
+        character.alreadyBeaten = alreadyBeaten
+    }
+    
+    def loadPlayerDisplayer (saveString : String) : Unit = {
+        var splited = saveString.split("\n")
+        var data = splited.slice(1, splited.length).map(x => if (!x.isEmpty) x.substring(1, x.length) else "")
+        
+        var i = data(0).split(" : ")(1).toInt
+        var j = data(1).split(" : ")(1).toInt
+        var map = data(2).split(" : ")(1).toInt
+        var playerString = data.slice(3, data.length).foldLeft("")((x, y) => x + "\n" + y)
+
+        PlayerDisplayer.teleport(i, j, map)
+
+        PlayerDisplayer.notUsableMapInventory = Queue()
+        PlayerDisplayer.usableMapInventory = Queue()
+
+
+        loadPlayer(playerString)
+
+    }
+
+    def loadPlayer (saveString : String) : Unit = {
+        var splited = saveString.split("\n")
+        var data = splited.slice(3, splited.length).map(x => if (!x.isEmpty) x.substring(1, x.length) else "")
+        
+        var name = data(0).split(" : ")(1)
+        var i = 1
+        while (i < data.length && data(i).split(" : ")(0) == "Item") {
+            var name = data(i).split(" : ")(1).split(" => ")(0)
+            var amount = data(i).split(" : ")(1).split(" => ")(1).toInt
+            Player.gainItem(name, amount)
+            i += 1
+        }
+        Player.team = Array.fill(6){EmptyMonster}
+    }
+
+    def loadPokemon (saveString : String) : Unit = {
+        var splited = saveString.split("\n")
+        var data = splited.slice(0, splited.length).map(x => if (!x.isEmpty) x.substring(1, x.length) else "")
+        var number = data(0).split("n ")(1).split(" :")(0).toInt
+        var specie = data(1).split(" : ")(1)
+        var name = data(2).split(" : ")(1)
+        var level = data(3).split(" : ")(1).toInt
+        var xp = data(4).split(" : ")(1).toInt
+
+        var IVAttack = data(5).split(" : ")(1).toInt
+        var IVDefense = data(6).split(" : ")(1).toInt
+        var IVSpeed = data(7).split(" : ")(1).toInt
+        var IVHp = data(8).split(" : ")(1).toInt
+
+        var EVAttack = data(9).split(" : ")(1).toInt
+        var EVDefense = data(10).split(" : ")(1).toInt
+        var EVSpeed = data(11).split(" : ")(1).toInt
+        var EVHp = data(12).split(" : ")(1).toInt
+
+        var hp = data(13).split(" : ")(1).toInt
+
+        var attack0 = attackFromName(data(14).split(" : ")(1))
+        var attack1 = attackFromName(data(15).split(" : ")(1))
+        var attack2 = attackFromName(data(16).split(" : ")(1))
+        var attack3 = attackFromName(data(17).split(" : ")(1))
+
+
+        var poke = newPokemon(specie)
+
+        poke.name = name
+        poke.level = level 
+        poke.xp = xp
+        poke.IVAttack = IVAttack
+        poke.IVDefense = IVDefense
+        poke.IVSpeed = IVSpeed
+        poke.IVHp = IVHp
+        poke.EVAttack = EVAttack
+        poke.EVDefense = EVDefense
+        poke.EVSpeed = EVSpeed
+        poke.EVHp = EVHp
+        poke.hp = hp
+        poke.attacks(0) = attack0
+        poke.attacks(1) = attack1
+        poke.attacks(2) = attack2
+        poke.attacks(3) = attack3
+
+        poke.setStats
+        
+        Player.switchPokemon(poke, number)
+    }
+    
+    def loadMapItem(saveString : String) : Unit = {
+        var allItems = Array(new Bike, new Surf)
+        var obj = saveString.replace("\n", "").split(" : ")(1)
+        Utils.print(obj)
+        if (obj.startsWith("Key")) {
+            var id = obj.split(" ")(1).toInt
+            PlayerDisplayer.getMapItem(new Key(id))
+        } else {
+            allItems.foreach(x => Utils.print(x.name))
+            var item = allItems.filter(x => x.name == obj)(0)
+            PlayerDisplayer.getMapItem(item)
+        }
+    }
+
+    def newPokemon(specie : String) : Monster = {
+        return frame.pokedexPane.pokemonArray.filter(x => x.originalName == specie)(0).getClass.newInstance
+    }
+
+    def attackFromName(name : String) : Attack = {
+        var allAttacks = Array(QuickAttack, DoubleSlap, ThunderShock, ThunderWave, Growl, Swift, Agility, Thunder, Tackle, TailWhip, WaterGun, Splash,
+                          Withdraw, RapidSpin, WaterPulse, Protect, AquaTail, ShellSmash, IronDefense, HydroPump, SkullBash, VineWhip, Growth, Scratch,
+                          Ember, Flamethrower, Crunch)
+
+        return allAttacks.filter(x => x.name == name)(0)
     }
 }
 

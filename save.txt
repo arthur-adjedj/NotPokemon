@@ -1,0 +1,133 @@
+-CharacterDisplayer : 
+	index : 2
+	i : 20
+	j : 20
+	map : 1
+	Character : 
+		Name : Missing
+		Beaten : false
+-CharacterDisplayer : 
+	index : 1
+	i : 14
+	j : 4
+	map : 1
+	Character : 
+		Name : Louis
+		Beaten : false
+-CharacterDisplayer : 
+	index : 0
+	i : 12
+	j : 13
+	map : 1
+	Character : 
+		Name : Boss 1
+		Beaten : false
+-PlayerDisplayer : 
+	i : 16
+	j : 6
+	map : 1
+	Player : 
+		Name : You
+		Item : Ultra Ball => 10
+		Item : Monster Ball => 20
+		Item : Super Ball => 10
+		Item : Fresh Water => 5
+		Item : Full Restore => 1
+-Pokemon 0 :
+	Specie : Pikachu
+	Name : Pikachu
+	Level : 6
+	Xp : 216
+	IVAttack : 10
+	IVDefense : 0
+	IVSpeed : 14
+	IVHp : 7
+	EVAttack : 0
+	EVDefense : 0
+	EVSpeed : 0
+	EVHp : 0
+	Hp : 21
+	Attack 0 : Quick Attack
+	Attack 1 : Double Slap
+	Attack 2 : Thunder Wave
+	Attack 3 : Thunder
+
+-Pokemon 1 :
+	Specie : Squirtle
+	Name : Squirtle
+	Level : 6
+	Xp : 179
+	IVAttack : 15
+	IVDefense : 2
+	IVSpeed : 1
+	IVHp : 0
+	EVAttack : 0
+	EVDefense : 0
+	EVSpeed : 0
+	EVHp : 0
+	Hp : 21
+	Attack 0 : Tackle
+	Attack 1 : Water Gun
+	Attack 2 : Aqua Tail
+	Attack 3 : Tail Whip
+
+-Pokemon 2 :
+	Specie : Bulbasaur
+	Name : Bulbasaur
+	Level : 6
+	Xp : 179
+	IVAttack : 14
+	IVDefense : 4
+	IVSpeed : 7
+	IVHp : 9
+	EVAttack : 0
+	EVDefense : 0
+	EVSpeed : 0
+	EVHp : 0
+	Hp : 22
+	Attack 0 : Growl
+	Attack 1 : Tackle
+	Attack 2 : Vine Whip
+	Attack 3 : Growth
+
+-Pokemon 3 :
+	Specie : Charmander
+	Name : Charmander
+	Level : 6
+	Xp : 179
+	IVAttack : 0
+	IVDefense : 9
+	IVSpeed : 15
+	IVHp : 5
+	EVAttack : 0
+	EVDefense : 0
+	EVSpeed : 0
+	EVHp : 0
+	Hp : 21
+	Attack 0 : Growl
+	Attack 1 : Scratch
+	Attack 2 : Ember
+	Attack 3 : Flamethrower
+
+-Pokemon 4 :
+	Specie : Rattata
+	Name : Rattata
+	Level : 6
+	Xp : 216
+	IVAttack : 15
+	IVDefense : 12
+	IVSpeed : 3
+	IVHp : 0
+	EVAttack : 0
+	EVDefense : 0
+	EVSpeed : 0
+	EVHp : 0
+	Hp : 19
+	Attack 0 : Tackle
+	Attack 1 : Tail Whip
+	Attack 2 : Quick Attack
+	Attack 3 : Crunch
+
+-MapItem : Bike
+-MapItem : Key 1
+-

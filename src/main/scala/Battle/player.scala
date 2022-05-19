@@ -157,7 +157,6 @@ class Character extends Object with Saveable {
 
     override def toStringSave (tabs : Int) : String = {
         "\t"*tabs + "Character : " + "\n" + 
-        "\t"*(tabs+1) + "Index : " + index + "\n" + 
         "\t"*(tabs+1) + "Name : " + name + "\n" + 
         "\t"*(tabs+1) + "Beaten : " + alreadyBeaten + "\n" 
     }
@@ -302,22 +301,39 @@ object Player extends Character {
         }
     }
 
-    def gainItem (item : Item, amount : Int) : Unit = {
-        def add_amount (o : Item, name : String) : Unit = {
+    def gainItem (item : Item, amount : Int) : Unit = gainItem(item, amount, false)
+
+    def gainItem (item : Item, amount : Int, toSet : Boolean) : Unit = {
+        def add_amount (o : Item, name : String, toSet : Boolean) : Unit = {
             if (o.name == name) {
-                o.amount += amount
+                if (toSet) {
+                    o.amount = amount
+                } else {
+                    o.amount += amount
+                }
             }
         }
 
         var exists = inventory.exists(x => x.name == item.name)
         if (exists) {
-            inventory.foreach(x => add_amount(x, item.name))
+            inventory.foreach(x => add_amount(x, item.name, toSet))
         } else {
             inventory(inventory.filter(x => x.name != "Empty").length) = item
             item.amount = amount
             Utils.print("You found " + amount + " " + item.name)
             updateInventory
         }
+    }
+
+    def gainItem (itemString : String, amount : Int) : Unit = {
+        var item = itemString match {
+            case "Ultra Ball" => UltraBall
+            case "Monster Ball" => MonsterBall
+            case "Super Ball" => SuperBall
+            case "Fresh Water" => FreshWater
+            case "Full Restore" => FullRestore
+        }
+        gainItem(item, amount, true)
     }
 
     def updateInventory : Unit = {
@@ -332,8 +348,8 @@ object Player extends Character {
     override def toStringSave (tabs : Int) : String = {
         "\t"*tabs + "Player : " + "\n" +
         "\t"*(tabs+1) + "Name : " + name + "\n" + 
-        team.filter(x => x.name != "Empty").map(x => "\t"*(tabs+1) + "Pokemon " + x.indexInTeam + " :\n" + x.toStringSave(tabs+2) + "\n").foldLeft("")((x, y) => x+y) + 
-        inventory.filter(x => x.amount > 0).sortWith((x, y) => x.order <= y.order).map(x => "\t"*(tabs+1) + "Item : " + x.name + " (" + x.amount + ")\n").foldLeft("")((x, y) => x+y)
+        inventory.filter(x => x.amount > 0).sortWith((x, y) => x.order <= y.order).map(x => "\t"*(tabs+1) + "Item : " + x.name + " => " + x.amount + "\n").foldLeft("")((x, y) => x+y) + 
+        team.filter(x => x.name != "Empty").map(x => "-Pokemon " + x.indexInTeam + " :\n" + x.toStringSave(1) + "\n").foldLeft("")((x, y) => x+y)
         // "\t"*tabs + ""
         // "\t"*tabs + ""
         // "\t"*tabs + ""

@@ -466,7 +466,7 @@ abstract class Monster extends Object with ScoreForStrategy with Saveable {
         "\t"*tabs + "EVSpeed : " + EVSpeed + "\n" + 
         "\t"*tabs + "EVHp : " + EVHp + "\n" + 
         "\t"*tabs + "Hp : " + hp + "\n" + 
-        List.range(0, attacksNonEmpty.size).map(x => "\t"*tabs + "Attack " + x + " :\n" + "\t"*(tabs+1) + attacksNonEmpty(x).name + "\n").foldLeft("")((x, y) => x+y)
+        List.range(0, attacksNonEmpty.size).map(x => "\t"*tabs + "Attack " + x + " : " + attacksNonEmpty(x).name + "\n").foldLeft("")((x, y) => x+y)
         // "\t"*tabs + "Attack 0 : " + attacks(0).name + "\n" +
         // "\t"*tabs + "Attack 1 : " + attacks(1).name + "\n" +
         // "\t"*tabs + "Attack 2 : " + attacks(2).name + "\n" +

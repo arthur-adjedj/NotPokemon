@@ -13,6 +13,8 @@ object SecondPlayerDisplayer extends OpponentDisplayer ("Characters/Louis.png") 
     whichMap = 1
     speed = 10
 
+    index = 1
+
 
 }
 
@@ -26,6 +28,8 @@ object SecondCharacterDisplayer extends OpponentDisplayer ("Characters/FemaleCha
     i = 12
     j = 13
 
+    index = 0
+
 }
 
 // this one is used for tests
@@ -35,6 +39,8 @@ object MissingCharacterDisplayer extends OpponentDisplayer ("Characters/MainChar
     interceptLength = 0
     i = 20
     j = 20
+
+    index = 2
 }
 
 object EmptyCharacterDisplayer extends CharacterDisplayer ("Empty.png") {
