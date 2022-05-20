@@ -452,7 +452,6 @@ abstract class Monster extends Object with ScoreForStrategy with Saveable {
     }
 
     override def toStringSave (tabs : Int) : String = {
-        var attacksNonEmpty = attacks.filter(x => x.name != "Empty")
         "\t"*tabs + "Specie : " + originalName + "\n" + 
         "\t"*tabs + "Name : " + name + "\n" + 
         "\t"*tabs + "Level : " + level + "\n" + 
@@ -466,7 +465,7 @@ abstract class Monster extends Object with ScoreForStrategy with Saveable {
         "\t"*tabs + "EVSpeed : " + EVSpeed + "\n" + 
         "\t"*tabs + "EVHp : " + EVHp + "\n" + 
         "\t"*tabs + "Hp : " + hp + "\n" + 
-        List.range(0, attacksNonEmpty.size).map(x => "\t"*tabs + "Attack " + x + " : " + attacksNonEmpty(x).name + "\n").foldLeft("")((x, y) => x+y)
+        List.range(0, attacks.size).map(x => "\t"*tabs + "Attack " + x + " : " + attacks(x).name + "\n").foldLeft("")((x, y) => x+y)
         // "\t"*tabs + "Attack 0 : " + attacks(0).name + "\n" +
         // "\t"*tabs + "Attack 1 : " + attacks(1).name + "\n" +
         // "\t"*tabs + "Attack 2 : " + attacks(2).name + "\n" +

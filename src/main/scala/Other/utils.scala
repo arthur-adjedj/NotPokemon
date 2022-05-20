@@ -412,7 +412,7 @@ object Utils {
     def attackFromName(name : String) : Attack = {
         var allAttacks = Array(QuickAttack, DoubleSlap, ThunderShock, ThunderWave, Growl, Swift, Agility, Thunder, Tackle, TailWhip, WaterGun, Splash,
                           Withdraw, RapidSpin, WaterPulse, Protect, AquaTail, ShellSmash, IronDefense, HydroPump, SkullBash, VineWhip, Growth, Scratch,
-                          Ember, Flamethrower, Crunch)
+                          Ember, Flamethrower, Crunch, EmptyAttack)
 
         return allAttacks.filter(x => x.name == name)(0)
     }
